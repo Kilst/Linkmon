@@ -2,7 +2,7 @@ package com.linkmon.game.android;
 
 import java.util.List;
 
-import com.linkmon.game.INotify;
+import com.linkmon.game.INotifications;
 import com.linkmon.game.PushNotification;
 
 import android.annotation.SuppressLint;
@@ -18,7 +18,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-public class NotificationHandler implements INotify {
+public class NotificationHandler implements INotifications {
 	
 	public static Activity activity;
 	

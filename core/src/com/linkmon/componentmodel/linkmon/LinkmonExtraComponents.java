@@ -1,0 +1,48 @@
+package com.linkmon.componentmodel.linkmon;
+
+import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.components.IExtraComponents;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.linkmon.poop.PoopComponent;
+
+public class LinkmonExtraComponents implements IExtraComponents {
+	
+	private LinkmonTimerComponent timerComponent;
+	private LinkmonStatsComponent statsComponent;
+	private LinkmonStatusComponent statusComponent;
+	private PoopComponent poopComponent;
+	
+	public LinkmonExtraComponents() {
+		timerComponent = new LinkmonTimerComponent();
+		statsComponent = new LinkmonStatsComponent();
+		statusComponent = new LinkmonStatusComponent();
+		poopComponent = new PoopComponent();
+	}
+	
+	@Override
+	public void update(GameObject object) {
+		// TODO Auto-generated method stub
+		timerComponent.update(object);
+		statsComponent.update(object);
+		statusComponent.update(object);
+		poopComponent.update(object);
+		
+//		Gdx.app.log("LinkmonExtraComponents", "Fired");
+	}
+	
+	public LinkmonTimerComponent getTimers() {
+		return timerComponent;
+	}
+
+	public LinkmonStatsComponent getStats() {
+		return statsComponent;
+	}
+	public LinkmonStatusComponent getStatus() {
+		return statusComponent;
+	}
+
+	public PoopComponent getPoopComponent() {
+		return poopComponent;
+	}
+
+}

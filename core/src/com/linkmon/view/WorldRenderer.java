@@ -93,19 +93,6 @@ public class WorldRenderer implements ViewListener {
 	}
 	
 	private void updatePoop(Poop poop) {
-//		for(PoopSprite poopSprite : poopSpriteList) {
-//			poopSprite.remove();
-//		}
-//		poopSpriteList.clear();
-//		for(Poop poop : poopList) {
-//			poopSpriteList.add(new PoopSprite(poop, eManager));
-//		}
-//		
-//		for(PoopSprite poopSprite : poopSpriteList) {
-//			if(!world.getChildren().contains(poopSprite, true))
-//				world.addActor(poopSprite);
-//		}
-		
 		world.addActor(new PoopSprite(poop, eManager));
 	}
 	

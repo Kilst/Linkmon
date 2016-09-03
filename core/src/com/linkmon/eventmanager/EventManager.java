@@ -2,9 +2,12 @@ package com.linkmon.eventmanager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerListener;
+import com.linkmon.eventmanager.input.InputEvent;
+import com.linkmon.eventmanager.input.InputListener;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageListener;
 import com.linkmon.eventmanager.network.NetworkEvent;
@@ -19,16 +22,24 @@ public class EventManager {
 	private List<ControllerListener> controllerListeners;
 	private List<NetworkListener> networkListeners;
 	
+	private Stack<InputListener> inputListeners;
+	
 	public EventManager() {
 		viewListeners = new ArrayList<ViewListener>();
 		messageListeners = new ArrayList<MessageListener>();
 		controllerListeners = new ArrayList<ControllerListener>();
 		networkListeners = new ArrayList<NetworkListener>();
+		inputListeners = new Stack<InputListener>();
 	}
 	
 	public synchronized void addControllerListener(ControllerListener listener) {
 		if (!controllerListeners.contains(listener))
 			controllerListeners.add(listener);
+	}
+	
+	public synchronized void addInputListener(InputListener listener) {
+		if (!inputListeners.contains(listener))
+			inputListeners.add(listener);
 	}
 	
 	public synchronized void addMessageListener(MessageListener listener) {
@@ -53,6 +64,18 @@ public class EventManager {
 				
 				listener.onNotify((MessageEvent)event);
 				
+			}
+		}
+		
+		else if (event.getClass() == InputEvent.class) {
+			
+			// Seemed the easiest way to get FILO
+			
+			for (int i = 0; i < inputListeners.size(); i++) {
+				
+				InputListener listener = inputListeners.get(inputListeners.size()-1 - i);
+				if(listener.onNotify((InputEvent)event) == true)
+					break;
 			}
 		}
 		
@@ -91,5 +114,10 @@ public class EventManager {
 	public synchronized void removeViewListener(ViewListener listener) {
 		// TODO Auto-generated method stub
 		viewListeners.remove(listener);
+	}
+
+	public synchronized void removeInputListener(InputListener listener) {
+		// TODO Auto-generated method stub
+		inputListeners.remove(listener);
 	}
 }

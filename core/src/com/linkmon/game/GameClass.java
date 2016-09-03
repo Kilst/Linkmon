@@ -13,7 +13,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
-import com.linkmon.controller.ControllerService;
+import com.linkmon.componentcontroller.ControllerService;
+import com.linkmon.componentcontroller.LibgdxInputController;
+import com.linkmon.componentmodel.LibgdxWorldRenderer;
+import com.linkmon.componentmodel.MService;
+import com.linkmon.componentmodel.World;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
+import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
+import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
+import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
+import com.linkmon.componentmodel.linkmon.LinkmonTimerComponent;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
@@ -50,15 +60,20 @@ public class GameClass extends Game implements ApplicationListener {
 	
 	Player player;
 	
-	private INotify nHandler;
+	private INotifications nHandler;
 	
 	private boolean notificationsSent = false;
+	
+	private LibgdxWorldRenderer libgdxWorldRenderer;
+	private LibgdxInputController inputController;
+	
+	private ControllerService service;
 	
 	public GameClass() {
 		super();
 	}
 	
-	public GameClass(INotify nHandler) {
+	public GameClass(INotifications nHandler) {
 		super();
 		// TODO Auto-generated constructor stub
 		
@@ -68,34 +83,34 @@ public class GameClass extends Game implements ApplicationListener {
 	@Override
 	public void pause() {
 //		GameSave.saveGame(controllerService.getPlayerController().getPlayer());
-		if(eManager != null)
-		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));
-		if(!notificationsSent && controllerService != null) {
-			List<PushNotification> pushList = new ArrayList<PushNotification>();
-			pushList.add(NotificationCreator.getPushNotification(NotificationIds.POOP_NOTIFICATION, (LinkmonTimerLengths.POOP_SECONDS*TimerLengths.MILLI_FROM_SECOND) - (controllerService.getLinkmonController().getElapsedPoop()/TimerLengths.NANO_FROM_MILLI)));
-			pushList.add(NotificationCreator.getPushNotification(NotificationIds.HUNGRY_NOTIFICATION, (controllerService.getLinkmonController().getHungerLevel()*TimerLengths.MILLI_FROM_SECOND*LinkmonTimerLengths.HUNGER_SECONDS)));
-			pushList.add(NotificationCreator.getPushNotification(NotificationIds.DEAD_NOTIFICATION, 86400000000000L));
-			if(System.currentTimeMillis() - controllerService.getPlayerController().getGiftTime() < 1800000000000L);
-				pushList.add(NotificationCreator.getPushNotification(NotificationIds.MYSTERY_GIFT__NOTIFICATION, (controllerService.getPlayerController().getGiftTime()+1800000000000L)));
-			nHandler.sendNotification(pushList);
-			notificationsSent = true;
-			Gdx.app.log("NOTIFY", "Notification sent");
-		}
+//		if(eManager != null)
+//		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));
+//		if(!notificationsSent && controllerService != null) {
+//			List<PushNotification> pushList = new ArrayList<PushNotification>();
+//			pushList.add(NotificationCreator.getPushNotification(NotificationIds.POOP_NOTIFICATION, (LinkmonTimerLengths.POOP_SECONDS*TimerLengths.MILLI_FROM_SECOND) - (controllerService.getLinkmonController().getElapsedPoop()/TimerLengths.NANO_FROM_MILLI)));
+//			pushList.add(NotificationCreator.getPushNotification(NotificationIds.HUNGRY_NOTIFICATION, (controllerService.getLinkmonController().getHungerLevel()*TimerLengths.MILLI_FROM_SECOND*LinkmonTimerLengths.HUNGER_SECONDS)));
+//			pushList.add(NotificationCreator.getPushNotification(NotificationIds.DEAD_NOTIFICATION, 86400000000000L));
+//			if(System.currentTimeMillis() - controllerService.getPlayerController().getGiftTime() < 1800000000000L);
+//				pushList.add(NotificationCreator.getPushNotification(NotificationIds.MYSTERY_GIFT__NOTIFICATION, (controllerService.getPlayerController().getGiftTime()+1800000000000L)));
+//			nHandler.sendNotification(pushList);
+//			notificationsSent = true;
+//			Gdx.app.log("NOTIFY", "Notification sent");
+//		}
 	}
 	
 	@Override
 	public void resume() {
-		notificationsSent = false;
-		nHandler.clearNotification();
-		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));
-		//GameSave.saveGame(player);
-//		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.INTRO_SCREEN));
-		ResourceLoader.getInstance();
-		while (!ResourceLoader.assetManager.update())
-        {
-			
-        }
-		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+//		notificationsSent = false;
+//		nHandler.clearNotification();
+//		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));
+//		//GameSave.saveGame(player);
+////		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.INTRO_SCREEN));
+//		ResourceLoader.getInstance();
+//		while (!ResourceLoader.assetManager.update())
+//        {
+//			
+//        }
+//		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	}
 	
 	@Override
@@ -105,6 +120,8 @@ public class GameClass extends Game implements ApplicationListener {
 //		nHandler.clearNotification();
 		
 		eManager = new EventManager();
+		
+		
 		
 		batch = new SpriteBatch();
 		img = new Texture("background.png");
@@ -121,6 +138,9 @@ public class GameClass extends Game implements ApplicationListener {
         }
 		System.gc();
 		saveLoaded = false;
+		
+		service = new ControllerService(this, world.ui, eManager);
+		inputController = new LibgdxInputController(eManager);
 		
 		try{
 			player = GameSave.loadPlayerSave();
@@ -198,6 +218,8 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		im = new InputMultiplexer();
 		
+		im.addProcessor(inputController.gd);
+		
 		im.addProcessor(world.stage);
 		Gdx.input.setInputProcessor(im);
 		
@@ -215,30 +237,37 @@ public class GameClass extends Game implements ApplicationListener {
 	}
 	
 	public void loadGame(Player player) {
-		controllerService = new ControllerService(player, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
-		world.addLinkmonToWorld(controllerService.getLinkmonController());
-		controllerService.getScreenController().screenUpdated = true;
+//		controllerService = new ControllerService(player, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
+//		world.addLinkmonToWorld(controllerService.getLinkmonController());
+//		controllerService.getScreenController().screenUpdated = true;
 	}
 	
 	public void startGame(String playerName, int eggChoice) {
-		help = new HelpMessages(eManager);
-		help.showIntroMessage();
-		controllerService = new ControllerService(playerName, eggChoice, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
-		world.addLinkmonToWorld(controllerService.getLinkmonController());
-		controllerService.getScreenController().screenUpdated = true;
+//		help = new HelpMessages(eManager);
+//		help.showIntroMessage();
+//		controllerService = new ControllerService(playerName, eggChoice, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
+//		world.addLinkmonToWorld(controllerService.getLinkmonController());
+//		controllerService.getScreenController().screenUpdated = true;
 	}
 
 	@Override
 	public void render () {
+		
+		if(libgdxWorldRenderer == null) {
+			libgdxWorldRenderer = new LibgdxWorldRenderer(service.getMService().getWorld());
+		}
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		batch.begin();
-		batch.draw(img, 0, 0);
+		//batch.draw(img, 0, 0);
+		libgdxWorldRenderer.render(batch);
 		batch.end();
 		
-		if(controllerService != null)
-			controllerService.update();
+//		if(controllerService != null)
+//			controllerService.update();
 		world.render();
-		this.getScreen().render(0);
+//		this.getScreen().render(0);
 	}
 }
