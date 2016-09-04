@@ -22,7 +22,7 @@ public class PoopComponent implements IExtraComponents {
 		
 		poopListRemove = new ArrayList<GameObject>();
 		
-		timer = new Timer(60, true);
+		timer = new Timer(5, true);
 		
 		timer.start();
 	}

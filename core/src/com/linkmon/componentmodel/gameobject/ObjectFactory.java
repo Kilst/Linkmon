@@ -4,12 +4,12 @@ public class ObjectFactory {
 	
 	private static IGameObjectFactory factory;
 	
-	// Must initialize before use
-	public static void init(IGameObjectFactory objectFactory) {
+	// MUST initialize before use
+	public static void init(IGameObjectFactory objectFactory) { // Pass in an object factory (based on framework choice)
 		factory = objectFactory;
 	}
 	
-	public static IGameObjectFactory getInstance() {
+	public static IGameObjectFactory getInstance() { // Returns the factory you initialized
 		return factory;
 	}
 

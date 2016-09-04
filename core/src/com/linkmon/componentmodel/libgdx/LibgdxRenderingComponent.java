@@ -1,7 +1,5 @@
 package com.linkmon.componentmodel.libgdx;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.linkmon.componentmodel.components.IRenderingComponent;
@@ -17,15 +15,17 @@ public class LibgdxRenderingComponent implements IRenderingComponent {
 
 	private boolean flipped;
 	
+	private int id;
+	
 	public void setSprite(GameObject object) {
-		if(sprite == null) {
-			sprite = new Sprite(ResourceLoader.getRegionFromId(object.getId()));
-			object.setWidth(sprite.getWidth());
-			object.setHeight(sprite.getHeight());
-			
-			sprite.setX(object.getX());
-			sprite.setY(object.getY());
-		}
+		sprite = new Sprite(ResourceLoader.getRegionFromId(object.getId()));
+		object.setWidth(sprite.getWidth());
+		object.setHeight(sprite.getHeight());
+		
+		sprite.setX(object.getX());
+		sprite.setY(object.getY());
+		
+		this.id = object.getId();
 	}
 	
 	public void setAnimation(LibgdxAnimationComponent animation) {
@@ -51,6 +51,11 @@ public class LibgdxRenderingComponent implements IRenderingComponent {
 			flipped = (false);
 		else if(object.direction == Direction.LEFT)
 			flipped = (true);
+		
+		if(object.getId() != this.id) {
+			animation.updateAnimations(object);
+			this.id = object.getId();
+		}
 	}
 
 	private void updateSprite(GameObject object) {
@@ -62,12 +67,17 @@ public class LibgdxRenderingComponent implements IRenderingComponent {
 		
 		sprite.setX(object.getX());
 		sprite.setY(object.getY());
+		
+		if(object.getId() != this.id) {
+			setSprite(object);
+			this.id = object.getId();
+		}
 	}
 
 	public void draw(Batch batch, GameObject object) {
 		// TODO Auto-generated method stub
 		if(sprite != null)
-			batch.draw(sprite, sprite.getX(), sprite.getY());
+			batch.draw(sprite, object.getX(), object.getY());
 		else if(animation != null)
 			if(animation.getCurrentAnimation() != null) {
 				if(flipped)

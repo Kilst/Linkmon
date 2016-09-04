@@ -10,6 +10,10 @@ public class AnimationStateAngry implements IAnimationState {
 	public void update(IAnimationComponent animationComp, GameObject object) {
 		// TODO Auto-generated method stub
 		animationComp.setState(this);
+		
+		if(animationComp.getCurrentAnimationEnded() == true) {
+			animationComp.setState(new AnimationStateIdle());
+		}
 	}
 
 }

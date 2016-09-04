@@ -149,4 +149,56 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		// TODO Auto-generated method stub
 		return state;
 	}
+
+	@Override
+	public void updateAnimations(GameObject object) {
+		// TODO Auto-generated method stub
+		Array<AtlasRegion>[] animationRegions;
+		animationRegions = ResourceLoader.getLinkmonAnimFromId(object.getId());
+		
+		idleAnimationFrames = new TextureRegion[animationRegions[0].size];
+		int i = 0;
+		for(AtlasRegion region : animationRegions[0]) {
+			idleAnimationFrames[i] = region;
+			i++;
+		}
+		idle = new Animation(2f/76f,idleAnimationFrames);
+		
+		walkAnimationFrames = new TextureRegion[animationRegions[1].size];
+		i = 0;
+		for(AtlasRegion region : animationRegions[1]) {
+			walkAnimationFrames[i] = region;
+			i++;
+		}
+		walk = new Animation(2f/76f,walkAnimationFrames);
+		
+		waveAnimationFrames = new TextureRegion[animationRegions[2].size];
+		i = 0;
+		for(AtlasRegion region : animationRegions[2]) {
+			waveAnimationFrames[i] = region;
+			i++;
+		}
+		wave = new Animation(2f/76f,waveAnimationFrames);
+		
+		sleepAnimationFrames = new TextureRegion[animationRegions[3].size];
+		i = 0;
+		for(AtlasRegion region : animationRegions[3]) {
+			sleepAnimationFrames[i] = region;
+			i++;
+		}
+		sleep = new Animation(2f/76f,sleepAnimationFrames);
+		
+		angryAnimationFrames = new TextureRegion[animationRegions[4].size];
+		i = 0;
+		for(AtlasRegion region : animationRegions[4]) {
+			angryAnimationFrames[i] = region;
+			i++;
+		}
+		angry = new Animation(2f/76f,angryAnimationFrames);
+		
+		
+		currentAnimation  = idle;
+		
+		state = new AnimationStateIdle();
+	}
 }

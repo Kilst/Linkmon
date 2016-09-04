@@ -16,21 +16,25 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	private int addedAttack;
 	private int addedDefense;
 	private int addedSpeed;
+	
+	private boolean updated = true;
 
 	@Override
 	public void update(GameObject object) {
 		// TODO Auto-generated method stub
-		this.setHealth(this.getHealth() + this.addedHealth);
-		this.setAttack(this.getAttack() + this.addedAttack);
-		this.setDefense(this.getDefense() + this.addedDefense);
-		this.setSpeed(this.getSpeed() + this.addedSpeed);
-		
-		this.addedHealth = 0;
-		this.addedAttack = 0;
-		this.addedDefense = 0;
-		this.addedSpeed = 0;
-		
-		//object.rankCheck();
+		if(updated) {
+			this.setHealth(this.getHealth() + this.addedHealth);
+			this.setAttack(this.getAttack() + this.addedAttack);
+			this.setDefense(this.getDefense() + this.addedDefense);
+			this.setSpeed(this.getSpeed() + this.addedSpeed);
+			
+			this.addedHealth = 0;
+			this.addedAttack = 0;
+			this.addedDefense = 0;
+			this.addedSpeed = 0;
+			
+			//object.rankCheck();
+		}
 	}
 	
 	public int getHealth() {

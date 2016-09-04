@@ -4,6 +4,8 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.linkmon.animations.IAnimationState;
 
 public interface IAnimationComponent {
+	
+	public void updateAnimations(GameObject object);
 
 	public void update(GameObject object);
 	public void setState(IAnimationState state);
