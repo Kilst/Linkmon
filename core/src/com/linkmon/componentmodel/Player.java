@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.gameobject.ObjectFactory;
+import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
@@ -41,7 +42,7 @@ public class Player {
 		
 		this.eManager = eManager;
 		
-		addItem(new GameObject(2, 3, null, null, null, new ItemComponent()), 1);
+		addItem(ObjectId.MEAT, 1);
 	}
 
 	public GameObject getLinkmon() {
@@ -49,7 +50,8 @@ public class Player {
 		return linkmon;
 	}
 	
-	public void addItem(GameObject item, int quantity) {
+	public void addItem(int itemId, int quantity) {
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
 		if(items.contains(item))
 			((ItemComponent)item.getExtraComponents()).add(quantity);
 		else
@@ -64,6 +66,11 @@ public class Player {
 	public int getGold() {
 		// TODO Auto-generated method stub
 		return gold;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 
 }

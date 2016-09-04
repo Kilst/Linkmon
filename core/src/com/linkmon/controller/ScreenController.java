@@ -82,22 +82,22 @@ public class ScreenController implements ControllerListener {
 				game.setScreen(gameUi);
 				break;
 			}
-			case (ScreenType.FEED_WINDOW) : {
-				game.setScreen(new FeedWindow(uiGroup, this, eManager));
-				break;
-			}
-			case (ScreenType.SHOP_WINDOW) : {
-				game.setScreen(new ShopWindow(uiGroup, this, eManager));
-				break;
-			}
-			case (ScreenType.ONLINE_BATTLE_SCREEN) : {
-				game.setScreen(new OnlineBattleScreen(uiGroup, this, eManager));
-				break;
-			}
-			case (ScreenType.ONLINE_SCREEN) : {
-				game.setScreen(new OnlineScreen(uiGroup, this, eManager));
-				break;
-			}
+//			case (ScreenType.FEED_WINDOW) : {
+//				game.setScreen(new FeedWindow(uiGroup, this, eManager));
+//				break;
+//			}
+//			case (ScreenType.SHOP_WINDOW) : {
+//				game.setScreen(new ShopWindow(uiGroup, this, eManager));
+//				break;
+//			}
+//			case (ScreenType.ONLINE_BATTLE_SCREEN) : {
+//				game.setScreen(new OnlineBattleScreen(uiGroup, this, eManager));
+//				break;
+//			}
+//			case (ScreenType.ONLINE_SCREEN) : {
+//				game.setScreen(new OnlineScreen(uiGroup, this, eManager));
+//				break;
+//			}
 			case (ScreenType.CONNECT_SCREEN) : {
 				game.setScreen(new ConnectScreen(uiGroup, eManager));
 				break;
@@ -118,10 +118,10 @@ public class ScreenController implements ControllerListener {
 				game.setScreen(new SpeedTrainWindow(uiGroup, eManager));
 				break;
 			}
-			case (ScreenType.STATS_WINDOW) : {
-				game.setScreen(new StatsWindow(uiGroup, this, eManager));
-				break;
-			}
+//			case (ScreenType.STATS_WINDOW) : {
+//				game.setScreen(new StatsWindow(uiGroup, this, eManager));
+//				break;
+//			}
 			case (ScreenType.STAT_INCREASE_SCREEN) : {
 				game.setScreen(new StatIncreaseWindow(uiGroup, this, linkmonController, eManager));
 				break;

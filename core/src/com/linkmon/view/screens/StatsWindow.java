@@ -23,6 +23,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
@@ -67,20 +69,16 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
 	private Image darken;
 	
-	private ScreenController screenController;
-	
 	private ScrollPane scrollPane;
 	
 	Skin skin2;
 	
 	Skin skin;
 	
-	public StatsWindow(Group group, ScreenController screenController, EventManager eManager) {
+	public StatsWindow(Group group, EventManager eManager) {
 		
 		this.eManager = eManager;
 		uiGroup = group;
-		
-		this.screenController = screenController;
 		
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
@@ -99,7 +97,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		backButton.addListener(new ClickListener(){
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
-	            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	            }
 			});
 	}
@@ -149,29 +147,25 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		String minutes;
 		String hours;
 		
-		if(dob.getMinute() < 10)
-			minutes = "0"+dob.getMinute();
-		else
-			minutes = ""+dob.getMinute();
-		
-		if(dob.getHour() == 0)
-			hours = "12";
-		else if(dob.getHour() < 10)
-			hours = "0"+dob.getHour();
-		else
-			hours = ""+dob.getHour();
-		
-		this.dob.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
+//		if(dob.getMinute() < 10)
+//			minutes = "0"+dob.getMinute();
+//		else
+//			minutes = ""+dob.getMinute();
+//		
+//		if(dob.getHour() == 0)
+//			hours = "12";
+//		else if(dob.getHour() < 10)
+//			hours = "0"+dob.getHour();
+//		else
+//			hours = ""+dob.getHour();
+//		
+//		this.dob.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
 	}
 	
 	@Override
 	public void getPlayerStats(String name, int gold) {
 		// TODO Auto-generated method stub
 		playerNameLabel.setText(name);
-	}
-	
-	public void update() {
-		screenController.updateWindow(this);
 	}
 
 	@Override
@@ -276,12 +270,13 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		container.add(table).size(470*WorldRenderer.scaleXY, Gdx.graphics.getHeight()/1.4f*WorldRenderer.scaleXY);
 		container.row();
 		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
+		
 		addListeners();
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
 		uiGroup.toFront();
-		
-		update();
 	}
 
 	@Override

@@ -55,12 +55,6 @@ public class WorldRenderer implements ViewListener {
 	MessageManager messages;
 	public MessageBox messageBox;
 	
-	List<Poop> poopList;
-	List<PoopSprite> poopSpriteList;
-	
-	LinkmonSprite linkmonSprite;
-	LinkmonController linkmonController;
-	
 	public ChatMessage chatWindow;
 	
 	public WorldRenderer(MessageManager messages, EventManager eManager) {
@@ -75,25 +69,12 @@ public class WorldRenderer implements ViewListener {
 		stage.addActor(ui);
 		stage.addActor(world);
 		
-		poopList = new ArrayList<Poop>();
-		poopSpriteList = new ArrayList<PoopSprite>();
-		
 		// Used to darken the game world
 		darken = new Image(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("darkenWorld.png")))));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.setColor(1f, 1f, 1f, 0.7f);
 		darken.setTouchable(Touchable.disabled);
 //		game.addActor(darken);
-	}
-	
-	public void addLinkmonToWorld(LinkmonController linkmonController) {
-		this.linkmonController = linkmonController;
-		linkmonSprite = new LinkmonSprite(linkmonController.getId(), this.eManager);
-		world.addActor(linkmonSprite);
-	}
-	
-	private void updatePoop(Poop poop) {
-		world.addActor(new PoopSprite(poop, eManager));
 	}
 	
 	private void displayMessageBox(MessageEvent event) {
@@ -161,15 +142,6 @@ public class WorldRenderer implements ViewListener {
 		switch(event.eventId) {
 			case(ViewEvents.UPDATE_LIGHT): {
 				lightOn = event.status;
-				break;
-			}
-			case(ViewEvents.UPDATE_POOP): {
-				poopList = event.poopList;
-				updatePoop(event.poop);
-				break;
-			}
-			case(ViewEvents.UPDATE_LINKMON_SPRITE): {
-				linkmonSprite.evolveLinkmon(linkmonController.getId());
 				break;
 			}
 		}

@@ -18,6 +18,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.model.gameobject.linkmon.BirthDate;
 import com.linkmon.view.WorldRenderer;
@@ -65,7 +67,7 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
 	            	linkmonController.updateLinkmonStats();
-	            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	            }
 			});
 	}

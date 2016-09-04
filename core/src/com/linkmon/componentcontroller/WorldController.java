@@ -1,8 +1,10 @@
 package com.linkmon.componentcontroller;
 
 import com.linkmon.componentmodel.World;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenListener;
 
-public class WorldController {
+public class WorldController implements ScreenListener {
 	
 	private World world;
 	
@@ -19,6 +21,12 @@ public class WorldController {
 			world.setLightOn(false);
 		else
 			world.setLightOn(true);
+	}
+
+	@Override
+	public boolean onNotify(ScreenEvent event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

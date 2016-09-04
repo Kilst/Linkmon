@@ -22,6 +22,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
 import com.linkmon.view.WorldRenderer;
@@ -55,8 +57,6 @@ public class ShopWindow implements Screen, IShopItems {
 	
 	private Skin skin2;
 	
-	private ScreenController screenController;
-	
 	private Image darken;
 	
 	private Button addButton;
@@ -67,9 +67,8 @@ public class ShopWindow implements Screen, IShopItems {
 	
 	private long touchTime;
 	
-	public ShopWindow(Group group, ScreenController screenController, EventManager eManager) {
+	public ShopWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
-		this.screenController = screenController;
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
 		skin2 = new Skin();
@@ -154,7 +153,7 @@ public class ShopWindow implements Screen, IShopItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 		
@@ -225,7 +224,6 @@ public class ShopWindow implements Screen, IShopItems {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		screenController.updateWindow(this);
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
 		uiGroup.toFront();

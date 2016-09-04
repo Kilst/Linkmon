@@ -16,6 +16,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
@@ -32,11 +34,8 @@ public class AttackTrainWindow implements Screen {
 	
 	private int trainingBagHealth = 20;
 	
-	private ScreenController screenController;
-	
-	public AttackTrainWindow( Group group, ScreenController screenController, EventManager eManager) {
+	public AttackTrainWindow( Group group, EventManager eManager) {
 		this.eManager = eManager;
-		this.screenController = screenController;
 		uiGroup = group;
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		container = new Table(skin);
@@ -58,7 +57,7 @@ public class AttackTrainWindow implements Screen {
 	            		trainingBagHealth -= 1;
 	            	else {
 	            		//player.getLinkmon().setAddedAttack(5);
-	            		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.STAT_INCREASE_SCREEN));
+	            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STAT_INCREASE_SCREEN));
 	            	}
 	            }
 			});

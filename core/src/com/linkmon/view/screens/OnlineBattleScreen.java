@@ -19,6 +19,8 @@ import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkEvents;
 import com.linkmon.eventmanager.network.NetworkListener;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
@@ -59,21 +61,19 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	private LinkmonSprite myLinkmonSprite;
 	private LinkmonSprite oppLinkmonSprite;
 	
-	private ScreenController screenController;
 	
 	private Move move1;
 	private Move move2;
 	
-	public OnlineBattleScreen(Group group, ScreenController screenController, EventManager eManager) {
+	public OnlineBattleScreen(Group group, EventManager eManager) {
 		this.eManager = eManager;
-		this.screenController = screenController;
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		//Gdx.app.log("OnlineBattleScreen","Added Listener?");
 	}
 	
 	public void update() {
-		screenController.updateOnlineBattleScreen(this);
+		//screenController.updateOnlineBattleScreen(this);
 //		screenController.updateWindow(this);
 	}
 	
@@ -86,7 +86,7 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	public void show() {
 		// TODO Auto-generated method stub
 		
-		screenController.updateWindow(this);
+		//screenController.updateWindow(this);
 		
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -155,7 +155,7 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		            	buttonTable.setVisible(false);
 	            	}
 	            	catch (Exception e){
-	            		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+	            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	            	}
 	            }
 			});

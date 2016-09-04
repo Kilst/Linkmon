@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.Align;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
@@ -85,19 +87,19 @@ public class TrainWindow implements Screen {
 		attack.addListener(new ClickListener(){
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
-	            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.TRAIN_ATTACK_SCREEN));
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_ATTACK_SCREEN));
 	            }
 			});
 		defense.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.TRAIN_DEFENSE_SCREEN));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_DEFENSE_SCREEN));
             }
 		});
 		speed.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.TRAIN_SPEED_SCREEN));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_SPEED_SCREEN));
             }
 		});
 		health.addListener(new ClickListener(){
@@ -109,7 +111,7 @@ public class TrainWindow implements Screen {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 	}

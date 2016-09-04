@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.widgets.LoadingWidget;
@@ -49,7 +51,8 @@ public class ConnectScreen implements Screen {
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
 	            	eManager.notify(new ControllerEvent(ControllerEvents.CLOSE_CONNECTION));
-	            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+	            	
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	            	
 	            }
 		});
@@ -71,8 +74,10 @@ public class ConnectScreen implements Screen {
 		load = new LoadingWidget();
 		load.setPosition(Gdx.graphics.getWidth()/2-load.getWidth()/2, 0);
 		
-		container.row();
 		container.add(label);
+		container.row();
+		container.add(cancelButton);
+		container.row();
 		uiGroup.addActor(container);
 		uiGroup.addActor(load);
 		

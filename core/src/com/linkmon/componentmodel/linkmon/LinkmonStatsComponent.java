@@ -17,6 +17,8 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	private int addedDefense;
 	private int addedSpeed;
 	
+	private int rank;
+	
 	private boolean updated = true;
 
 	@Override
@@ -116,5 +118,10 @@ public class LinkmonStatsComponent implements IStatsComponent {
 			return RankIds.A;
 		else
 			return RankIds.S;
+	}
+
+	public int getRank() {
+		// TODO Auto-generated method stub
+		return rank;
 	}
 }

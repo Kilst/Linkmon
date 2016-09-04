@@ -17,6 +17,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
@@ -53,15 +55,13 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 
 	private EventManager eManager;
 	
-	private ScreenController screenController;
-	
 	Skin skin2;
 	
 	LinkmonSprite linkmonImg;
 	
 	private boolean giftTimerEnded = false;
 	
-	public OnlineScreen(Group group, ScreenController screenController, EventManager eManager) {
+	public OnlineScreen(Group group, EventManager eManager) {
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		this.eManager = eManager;
@@ -69,7 +69,6 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
-		this.screenController = screenController;
 	}
 	
 	private void addListeners() {
@@ -103,7 +102,7 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ControllerEvent(ControllerEvents.CLOSE_CONNECTION));
-        		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 	}
@@ -164,8 +163,6 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 		uiGroup.toFront();
 		
 		addListeners();
-		
-		screenController.updateWindow(this);
 	}
 	
 	private void showSearch() {

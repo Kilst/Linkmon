@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Array;
+import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.model.gameobject.items.ItemIds;
 import com.linkmon.model.gameobject.linkmon.LinkmonIds;
 
@@ -59,12 +60,12 @@ public class ResourceLoader {
 				region = new TextureRegion(tex);
 		        break;
 			}
-			case 2: {
+			case ObjectId.MEAT: {
 				tex = ResourceLoader.assetManager.get("meat.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;
 			}
-			case 3: {
+			case ObjectId.POOP: {
 				tex = ResourceLoader.assetManager.get("poop.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;

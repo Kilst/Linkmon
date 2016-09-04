@@ -27,6 +27,8 @@ import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
@@ -162,43 +164,36 @@ public class GameUi implements Screen, ViewListener {
 	train.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
             }
 		});
 
 		feed.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
             }
 		});
 		
 		medicine.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-//            	eManager.notify(new MessageEvent(MessageEvents.RANK_UP, "Your Linkmon has ranked up!", 0));
-//            	eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, "Your Linkmon has ranked up!", false));
-//            	eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, "Your Linkmon has ranked up!", false));
-//            	eManager.notify(new MessageEvent(MessageEvents.RANK_UP, "Your Linkmon has ranked up!", 0));
-//            	eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, "Your Linkmon has ranked up!", false));
-            	
-//            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.BATTLE_INTRO_SCREEN));
-            	
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.SHOP_WINDOW));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.SHOP_WINDOW));
             	}
 		});
 		
 		stats.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
             	}
 		});
 		
 		online.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
+            	
             	eManager.notify(new ControllerEvent(ControllerEvents.CONNECT_TO_SERVER));
             	}
 		});
@@ -206,7 +201,7 @@ public class GameUi implements Screen, ViewListener {
 		light.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.LIGHT_SWAP));
+            	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP));
             	}
 		});
 		help.addListener(new ClickListener(){

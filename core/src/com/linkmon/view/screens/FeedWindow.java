@@ -24,6 +24,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.ResourceLoader;
@@ -60,13 +62,10 @@ public class FeedWindow implements Screen, IPlayerItems {
 	
 	private Skin skin;
 	
-	private ScreenController screenController;
-	
 	private Image darken;
 	
-	public FeedWindow(Group group, ScreenController screenController, EventManager eManager) {
+	public FeedWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
-		this.screenController = screenController;
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
 		skin2 = new Skin();
@@ -134,7 +133,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 		
@@ -143,7 +142,7 @@ public class FeedWindow implements Screen, IPlayerItems {
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
             		eManager.notify(new ControllerEvent(ControllerEvents.ITEM_USED, selectedItem));
-            		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             	}
             }
 		});
@@ -152,7 +151,6 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		screenController.updateWindow(this);
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
 		uiGroup.toFront();

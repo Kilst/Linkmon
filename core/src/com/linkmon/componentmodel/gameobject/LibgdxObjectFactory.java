@@ -12,7 +12,7 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 	
 	public GameObject createLinkmon(int id) {
 		
-		GameObject linkmon = new GameObject(0, 1, new LibgdxRenderingComponent(), null,
+		GameObject linkmon = new GameObject(id, ObjectType.LINKMON, new LibgdxRenderingComponent(), null,
 				new LinkmonPhysicsComponent(), new LinkmonExtraComponents());
 		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon));
 		return linkmon;
@@ -20,8 +20,8 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 	
 	public GameObject getObjectFromId(int id) {
 		switch(id) {
-			case 3 : {
-				GameObject poop = new GameObject(id, 0, new LibgdxRenderingComponent(), null, null, null);
+			case (ObjectId.POOP) : {
+				GameObject poop = new GameObject(id, ObjectType.POOP, new LibgdxRenderingComponent(), null, null, null);
 				((LibgdxRenderingComponent)poop.getRenderer()).setSprite(poop);
 				return poop;
 			}

@@ -1,5 +1,7 @@
 package com.linkmon.componentmodel.gamesave;
 
+import com.linkmon.componentmodel.World;
+
 public class JsonSaver extends BaseSaver {
 
 	public JsonSaver(ISaveEncryption encryptor) {
@@ -8,15 +10,17 @@ public class JsonSaver extends BaseSaver {
 	}
 
 	@Override
-	public void save() {
+	public void save(World world) {
 		// TODO Auto-generated method stub
 		this.encryptSave("Save_File");
 	}
 
 	@Override
-	public void load() {
+	public World load() {
 		// TODO Auto-generated method stub
 		this.decryptSave("Save_File");
+		
+		return null;
 	}
 
 }

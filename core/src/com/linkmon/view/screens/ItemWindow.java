@@ -21,6 +21,8 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Food;
 import com.linkmon.model.gameobject.items.Item;
@@ -76,7 +78,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 	}

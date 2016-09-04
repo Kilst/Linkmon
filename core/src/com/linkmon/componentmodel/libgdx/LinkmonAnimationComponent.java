@@ -77,7 +77,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		
 		currentAnimation  = idle;
 		
-		state = new AnimationStateIdle();
+		state = new AnimationStateIdle(this);
 	}
 	
 	public void angry() {
@@ -199,6 +199,6 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		
 		currentAnimation  = idle;
 		
-		state = new AnimationStateIdle();
+		state = new AnimationStateIdle(this);
 	}
 }

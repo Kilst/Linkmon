@@ -12,12 +12,15 @@ import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageListener;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkListener;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewListener;
 
 public class EventManager {
 	
 	private List<ViewListener> viewListeners;
+	private List<ScreenListener> screenListeners;
 	private List<MessageListener> messageListeners;
 	private List<ControllerListener> controllerListeners;
 	private List<NetworkListener> networkListeners;
@@ -26,10 +29,16 @@ public class EventManager {
 	
 	public EventManager() {
 		viewListeners = new ArrayList<ViewListener>();
+		screenListeners = new ArrayList<ScreenListener>();
 		messageListeners = new ArrayList<MessageListener>();
 		controllerListeners = new ArrayList<ControllerListener>();
 		networkListeners = new ArrayList<NetworkListener>();
 		inputListeners = new Stack<InputListener>();
+	}
+	
+	public synchronized void addScreenListener(ScreenListener listener) {
+		if (!screenListeners.contains(listener))
+			screenListeners.add(listener);
 	}
 	
 	public synchronized void addControllerListener(ControllerListener listener) {
@@ -76,6 +85,14 @@ public class EventManager {
 				InputListener listener = inputListeners.get(inputListeners.size()-1 - i);
 				if(listener.onNotify((InputEvent)event) == true)
 					break;
+			}
+		}
+		
+		else if (event.getClass() == ScreenEvent.class) {
+			for (ScreenListener listener : screenListeners) {
+				
+				listener.onNotify((ScreenEvent)event);
+				
 			}
 		}
 		

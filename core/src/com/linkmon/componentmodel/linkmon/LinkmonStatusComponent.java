@@ -7,6 +7,7 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.Timer;
+import com.linkmon.model.gameobject.linkmon.BirthDate;
 
 public class LinkmonStatusComponent implements IExtraComponents {
 	
@@ -83,4 +84,8 @@ public class LinkmonStatusComponent implements IExtraComponents {
 		return hungerLevel;
 	}
 
+	public BirthDate getBirthDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

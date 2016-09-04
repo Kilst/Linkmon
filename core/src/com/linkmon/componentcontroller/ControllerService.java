@@ -15,6 +15,8 @@ public class ControllerService {
 	private PlayerController playerContoller;
 	private LinkmonController linkmonController;
 	
+	private WorldController worldController;
+	
 	public ControllerService(GameClass game, Group ui, EventManager eManager) {
 		
 		ObjectFactory.init(new LibgdxObjectFactory());
@@ -22,7 +24,13 @@ public class ControllerService {
 		mService = new MService(eManager);
 		playerContoller = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
-		screenController = new ScreenController(game, linkmonController, playerContoller, ui, eManager);
+		screenController = new ScreenController(game, ui, eManager);
+		worldController = new WorldController(mService.getWorld());
+		
+		eManager.addScreenListener(playerContoller);
+		eManager.addScreenListener(linkmonController);
+		eManager.addScreenListener(worldController);
+		eManager.addScreenListener(screenController);
 	}
 
 	public MService getMService() {

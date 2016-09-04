@@ -8,6 +8,7 @@ import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.components.IExtraComponents;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.gameobject.ObjectFactory;
+import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.helpers.Timer;
 
 public class PoopComponent implements IExtraComponents {
@@ -29,7 +30,7 @@ public class PoopComponent implements IExtraComponents {
 	
 	private void poopCheck(GameObject object) {
 		if(timer.checkTimer() && poopList.size() < 3) {
-			GameObject poop = ObjectFactory.getInstance().getObjectFromId(3);
+			GameObject poop = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOP);
 			poop.addInputComponent(new PoopInputComponent(object.getWorld().geteManager(), poop));
 			poop.setPosition(object.getX()+(object.getWidth()/2)-(poop.getWidth()/2), object.getY());
 			poopList.add(poop);

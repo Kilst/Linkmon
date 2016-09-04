@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.screens.widgets.ReverseVignette;
 
@@ -48,7 +50,7 @@ public class EvolveScreen implements Screen {
 		vignette.toFront();
 		vignette.act(delta);
 		if(vignette.isFinished())
-			eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+			eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	}
 
 	@Override
