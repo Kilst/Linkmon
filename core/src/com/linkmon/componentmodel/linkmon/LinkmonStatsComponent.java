@@ -4,6 +4,7 @@ import com.linkmon.componentmodel.components.IStatsComponent;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.model.gameobject.linkmon.Linkmon;
 import com.linkmon.model.gameobject.linkmon.RankIds;
+import com.linkmon.model.gameobject.linkmon.StatType;
 
 public class LinkmonStatsComponent implements IStatsComponent {
 	
@@ -132,5 +133,29 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	public int getRank() {
 		// TODO Auto-generated method stub
 		return rank;
+	}
+
+	public void train(int statType) {
+		// TODO Auto-generated method stub
+		updated = true;
+		
+		switch(statType) {
+			case StatType.HEALTH : {
+				setAddedHealth(5);
+				break;
+			}
+			case StatType.ATTACK : {
+				setAddedAttack(5);
+				break;
+			}
+			case StatType.DEFENSE : {
+				setAddedDefense(5);
+				break;
+			}
+			case StatType.SPEED : {
+				setAddedSpeed(5);
+				break;
+			}
+		}	
 	}
 }

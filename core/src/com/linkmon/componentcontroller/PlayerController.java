@@ -36,8 +36,6 @@ public class PlayerController implements ScreenListener {
 		
 	}
 	
-	
-	
 	// View updates
 	
 	public void getPlayerItems(IPlayerItems window) {

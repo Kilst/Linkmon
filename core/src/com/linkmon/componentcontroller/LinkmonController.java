@@ -20,29 +20,7 @@ public class LinkmonController implements ScreenListener {
 	}
 	
 	private void train(int statType) {
-		
-		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
-		
-		switch(statType) {
-			case StatType.HEALTH : {
-				stats.setAddedHealth(5);
-				break;
-			}
-			case StatType.ATTACK : {
-				stats.setAddedAttack(5);
-				break;
-			}
-			case StatType.DEFENSE : {
-				stats.setAddedDefense(5);
-				break;
-			}
-			case StatType.SPEED : {
-				stats.setAddedSpeed(5);
-				break;
-			}
-		}
-		
-		stats.updated = true;
+		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats().train(statType);
 	}
 	
 	
