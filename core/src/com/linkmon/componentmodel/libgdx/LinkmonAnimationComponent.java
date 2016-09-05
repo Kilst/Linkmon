@@ -78,6 +78,9 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		currentAnimation  = idle;
 		
 		state = new AnimationStateIdle(this);
+		
+		object.setWidth(getCurrentKeyFrame().getRegionWidth());
+		object.setHeight(getCurrentKeyFrame().getRegionHeight());
 	}
 	
 	public void angry() {
@@ -199,6 +202,9 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		
 		currentAnimation  = idle;
 		
-		state = new AnimationStateIdle(this);
+		state = new AnimationStateWave(this);
+		
+		object.setWidth(getCurrentKeyFrame().getRegionWidth());
+		object.setHeight(getCurrentKeyFrame().getRegionHeight());
 	}
 }

@@ -71,6 +71,31 @@ public class LinkmonTimerComponent implements ITimerComponent {
 		
 	}
 	
+	public void updateTimers(int growthStage) {
+		switch(growthStage) {
+			case(GrowthStages.BABY) : {
+				setBabyTimers();
+			}
+			case(GrowthStages.ROOKIE) : {
+				setRookieTimers();
+			}
+		}
+	}
+	
+	private void setBabyTimers() {
+		setHungerTimer(new Timer(2, true));
+		hungerTimer.start();
+		setPoopTimer(new Timer(30, true));
+		poopTimer.start();
+	}
+	
+	private void setRookieTimers() {
+		setHungerTimer(new Timer(10, true));
+		hungerTimer.start();
+		setPoopTimer(new Timer(60, true));
+		poopTimer.start();
+	}
+	
 	public boolean isRunning() {
 		return isRunning;
 	}

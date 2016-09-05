@@ -10,12 +10,14 @@ public class LinkmonExtraComponents implements IExtraComponents {
 	private LinkmonTimerComponent timerComponent;
 	private LinkmonStatsComponent statsComponent;
 	private LinkmonStatusComponent statusComponent;
+	private EvolutionComponent evolutionComponent;
 	private PoopComponent poopComponent;
 	
 	public LinkmonExtraComponents() {
 		timerComponent = new LinkmonTimerComponent();
 		statsComponent = new LinkmonStatsComponent();
 		statusComponent = new LinkmonStatusComponent();
+		evolutionComponent = new EvolutionComponent();
 		poopComponent = new PoopComponent();
 	}
 	
@@ -25,6 +27,7 @@ public class LinkmonExtraComponents implements IExtraComponents {
 		timerComponent.update(object);
 		statsComponent.update(object);
 		statusComponent.update(object);
+		evolutionComponent.update(object);
 		poopComponent.update(object);
 		
 //		Gdx.app.log("LinkmonExtraComponents", "Fired");

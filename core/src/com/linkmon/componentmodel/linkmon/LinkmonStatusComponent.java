@@ -18,6 +18,8 @@ public class LinkmonStatusComponent implements IExtraComponents {
 	private boolean isSick; // From not cleaning poops, making pet exhausted, staying hungry too long etc
 	private int careMistakes; // From not cleaning poops, making pet exhausted, staying hungry too long etc
 	private int happiness = 100; // Not sure what to do with this, just an idea
+	
+	private int growthStage = 0;
 
 	private GameObject linkmon;
 	private LinkmonTimerComponent timers;
@@ -90,5 +92,15 @@ public class LinkmonStatusComponent implements IExtraComponents {
 
 	public void setBirthDate() {
 		this.birthDate = new BirthDate();
+	}
+
+	public int getGrowthStage() {
+		// TODO Auto-generated method stub
+		return growthStage;
+	}
+
+	public void updateGrowthStage() {
+		// TODO Auto-generated method stub
+		growthStage += 1;
 	}
 }
