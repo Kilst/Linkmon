@@ -20,8 +20,11 @@ import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.helpers.Timer;
+import com.linkmon.model.gameobject.linkmon.StatType;
 import com.linkmon.view.screens.ScreenType;
 
 public class AttackGame implements Screen {
@@ -105,11 +108,13 @@ public class AttackGame implements Screen {
 		hits.setText(hitsString + (20 - trainingBag.getHealth()) + amountString);
 		
 		if(30 - timer.getTotalElapsedTime() < 1) {
-			eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+			eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "You failed!", true));
 		}
-		if(trainingBag.getHealth() < 1)
-			eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.STAT_INCREASE_SCREEN));
+		if(trainingBag.getHealth() < 1) {
+			eManager.notify(new ScreenEvent(ScreenEvents.TRAIN_LINKMON, StatType.ATTACK));
+			eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STAT_INCREASE_SCREEN));
+		}
 			
 	}
 

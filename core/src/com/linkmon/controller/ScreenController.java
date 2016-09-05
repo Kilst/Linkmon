@@ -122,10 +122,10 @@ public class ScreenController implements ControllerListener {
 //				game.setScreen(new StatsWindow(uiGroup, this, eManager));
 //				break;
 //			}
-			case (ScreenType.STAT_INCREASE_SCREEN) : {
-				game.setScreen(new StatIncreaseWindow(uiGroup, this, linkmonController, eManager));
-				break;
-			}
+//			case (ScreenType.STAT_INCREASE_SCREEN) : {
+//				game.setScreen(new StatIncreaseWindow(uiGroup, this, linkmonController, eManager));
+//				break;
+//			}
 			case (ScreenType.BATTLE_INTRO_SCREEN) : {
 				game.setScreen(new BattleIntroScreen(uiGroup));
 				break;

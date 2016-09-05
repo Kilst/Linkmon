@@ -22,6 +22,7 @@ import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.model.gameobject.linkmon.StatType;
 import com.linkmon.view.WorldRenderer;
 
 public class AttackTrainWindow implements Screen {
@@ -56,7 +57,7 @@ public class AttackTrainWindow implements Screen {
 	            	if(trainingBagHealth > 0)
 	            		trainingBagHealth -= 1;
 	            	else {
-	            		//player.getLinkmon().setAddedAttack(5);
+	            		eManager.notify(new ScreenEvent(ScreenEvents.TRAIN_LINKMON, StatType.ATTACK));
 	            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STAT_INCREASE_SCREEN));
 	            	}
 	            }

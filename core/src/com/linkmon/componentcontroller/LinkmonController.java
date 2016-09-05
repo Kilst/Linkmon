@@ -5,7 +5,10 @@ import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
 import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.model.gameobject.linkmon.StatType;
+import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 
 public class LinkmonController implements ScreenListener {
@@ -16,14 +19,49 @@ public class LinkmonController implements ScreenListener {
 		this.linkmon = linkmon;
 	}
 	
-	public void feedLinkmon(int amount) {
-		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(amount);
+	private void train(int statType) {
+		
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		
+		switch(statType) {
+			case StatType.HEALTH : {
+				stats.setAddedHealth(5);
+				break;
+			}
+			case StatType.ATTACK : {
+				stats.setAddedAttack(5);
+				break;
+			}
+			case StatType.DEFENSE : {
+				stats.setAddedDefense(5);
+				break;
+			}
+			case StatType.SPEED : {
+				stats.setAddedSpeed(5);
+				break;
+			}
+		}
+		
+		stats.updated = true;
 	}
 	
-	public void getStats(ILinkmonStats window) {
+	
+	// Screen Updates
+	
+	public void getLinkmonAddedStats(ILinkmonAddedStats window) {
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		window.getAddedStats(
+				stats.getAddedHealth(),
+				stats.getAddedAttack(),
+				stats.getAddedDefense(),
+				stats.getAddedSpeed()
+				);
+	}
+	
+	public void getLinkmonStats(ILinkmonStats window) {
 		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
 		LinkmonStatusComponent status = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus();
-		((ILinkmonStats)window).getLinkmonStats(
+		window.getLinkmonStats(
 				stats.getHealth(),
 				stats.getAttack(),
 				stats.getDefense(),
@@ -37,6 +75,20 @@ public class LinkmonController implements ScreenListener {
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ScreenEvents.TRAIN_LINKMON): {
+				train(event.value);
+				return false;
+			}
+			case(ScreenEvents.GET_LINKMON_STATS): {
+				getLinkmonStats((ILinkmonStats) event.screen);
+				return false;
+			}
+			case(ScreenEvents.GET_LINKMON_ADDED_STATS): {
+				getLinkmonAddedStats((ILinkmonAddedStats) event.screen);
+				return false;
+			}
+		}
 		return false;
 	}
 }

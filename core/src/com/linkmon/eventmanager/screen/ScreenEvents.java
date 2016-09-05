@@ -10,6 +10,8 @@ public class ScreenEvents {
 	public static final int GET_SHOP_ITEMS = 4;
 	public static final int FEED_LINKMON = 5;
 	public static final int BUY_ITEM = 6;
+	public static final int TRAIN_LINKMON = 7;
+	public static final int GET_LINKMON_ADDED_STATS = 8;
 	public static final int LIGHT_SWAP = 99;
 
 	

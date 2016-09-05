@@ -45,20 +45,11 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 	private EventManager eManager;
 	private Skin skin;
 	
-	private ScreenController screenController;
-	private LinkmonController linkmonController;
-	
-	public StatIncreaseWindow(Group group, ScreenController screenController, LinkmonController linkmonController, EventManager eManager) {
+	public StatIncreaseWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
-		this.screenController = screenController;
-		this.linkmonController = linkmonController;
 		uiGroup = group;
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
-	}
-	
-	public void update() {
-		screenController.updateWindow(this);
 	}
 	
 	private void addListeners() {
@@ -66,7 +57,6 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 		okayButton.addListener(new ClickListener(){
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
-	            	linkmonController.updateLinkmonStats();
 	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	            }
 			});
@@ -90,7 +80,8 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 		defenseString = "Defense: ";
 		speedString = "Speed: ";
 		
-		update();
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_ADDED_STATS, this));
 
 		healthLabel = new Label(healthString, skin);
 		attackLabel = new Label(attackString, skin);

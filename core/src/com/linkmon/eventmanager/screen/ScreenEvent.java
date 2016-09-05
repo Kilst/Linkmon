@@ -7,9 +7,7 @@ import com.linkmon.view.screens.interfaces.MyScreen;
 public class ScreenEvent extends GameEvent {
 	
 	public MyScreen screen;
-	public int screenType;
-	
-	public int move;
+	public int value;
 	public GameObject gameObject;
 
 	public ScreenEvent(int eventId) {
@@ -24,18 +22,11 @@ public class ScreenEvent extends GameEvent {
 		this.screen = screen;
 	}
 	
-	public ScreenEvent(int eventId, int screenType) {
+	public ScreenEvent(int eventId, int value) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		
-		this.screenType = screenType;
-	}
-	
-	public ScreenEvent(int eventId, int move, boolean flag) { // boolean is only there to give it a different method signature :(
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		
-		this.move = move;
+		this.value = value;
 	}
 	
 	public ScreenEvent(int eventId, GameObject object) {

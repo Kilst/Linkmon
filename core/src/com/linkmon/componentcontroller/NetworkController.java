@@ -70,7 +70,7 @@ public class NetworkController implements ScreenListener {
 				break;
 			}
 			case(ScreenEvents.SEND_MOVE): {
-				sendMove(event.move);
+				sendMove(event.value);
 				break;
 			}
 			case(ScreenEvents.CLOSE_CONNECTION): {

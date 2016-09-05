@@ -114,10 +114,10 @@ public class LibgdxScreenController implements ScreenListener {
 				game.setScreen(new StatsWindow(uiGroup, eManager));
 				break;
 			}
-//			case (ScreenType.STAT_INCREASE_SCREEN) : {
-//				game.setScreen(new StatIncreaseWindow(uiGroup, this, linkmonController, eManager));
-//				break;
-//			}
+			case (ScreenType.STAT_INCREASE_SCREEN) : {
+				game.setScreen(new StatIncreaseWindow(uiGroup, eManager));
+				break;
+			}
 			case (ScreenType.BATTLE_INTRO_SCREEN) : {
 				game.setScreen(new BattleIntroScreen(uiGroup));
 				break;
@@ -142,7 +142,7 @@ public class LibgdxScreenController implements ScreenListener {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.SWAP_SCREEN): {
-				swapScreen(event.screenType);
+				swapScreen(event.value);
 				return false;
 			}
 		}

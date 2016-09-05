@@ -19,7 +19,7 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	
 	private int rank;
 	
-	private boolean updated = true;
+	public boolean updated = true;
 	
 	public LinkmonStatsComponent() {
 		health = 100;
@@ -43,6 +43,8 @@ public class LinkmonStatsComponent implements IStatsComponent {
 			this.addedSpeed = 0;
 			
 			//object.rankCheck();
+			
+			updated = false;
 		}
 	}
 	

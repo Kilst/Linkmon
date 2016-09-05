@@ -47,20 +47,6 @@ public class PlayerController implements ScreenListener {
 	public void getPlayerStats(IPlayerStats window) {
 		window.getPlayerStats(player.getName(), player.getGold());
 	}
-	
-	public void getLinkmonStats(ILinkmonStats window) {
-		LinkmonStatsComponent stats = ((LinkmonExtraComponents)player.getLinkmon().getExtraComponents()).getStats();
-		LinkmonStatusComponent status = ((LinkmonExtraComponents)player.getLinkmon().getExtraComponents()).getStatus();
-		window.getLinkmonStats(
-				stats.getHealth(),
-				stats.getAttack(),
-				stats.getDefense(),
-				stats.getSpeed(),
-				status.getCareMistakes(),
-				status.getBirthDate(),
-				stats.getRank()
-				);
-	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
@@ -80,10 +66,6 @@ public class PlayerController implements ScreenListener {
 			}
 			case(ScreenEvents.GET_PLAYER_ITEMS): {
 				getPlayerItems((IPlayerItems) event.screen);
-				return false;
-			}
-			case(ScreenEvents.GET_LINKMON_STATS): {
-				getLinkmonStats((ILinkmonStats) event.screen);
 				return false;
 			}
 		}

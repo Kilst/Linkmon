@@ -268,6 +268,6 @@ public class GameClass extends Game implements ApplicationListener {
 //		if(controllerService != null)
 //			controllerService.update();
 		world.render();
-//		this.getScreen().render(0);
+		this.getScreen().render(0);
 	}
 }
