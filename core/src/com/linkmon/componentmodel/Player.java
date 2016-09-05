@@ -41,7 +41,10 @@ public class Player {
 		
 		this.eManager = eManager;
 		
-		addItem(ObjectId.MEAT, 1);
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(ObjectId.MEAT);
+		((ItemComponent)item.getExtraComponents()).setQuantity(1);
+		
+		addItem(item);
 	}
 
 	public GameObject getLinkmon() {
@@ -58,6 +61,14 @@ public class Player {
 		removeItems();
 	}
 	
+	public void buyItem(GameObject item) {
+		// TODO Auto-generated method stub
+		if(gold >= ((ItemComponent)item.getExtraComponents()).getPrice()) {
+			addItem(item);
+			gold -= ((ItemComponent)item.getExtraComponents()).getPrice();
+		}
+	}
+	
 	private void removeItems() {
 		for(GameObject item : itemsRemoveQueue) {
 			items.remove(item);
@@ -66,12 +77,18 @@ public class Player {
 		itemsRemoveQueue.clear();
 	}
 	
-	public void addItem(int itemId, int quantity) {
-		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
-		if(items.contains(item))
-			((ItemComponent)item.getExtraComponents()).add(quantity);
-		else
-			items.add(item);
+	public void addItem(GameObject newItem) {
+		int amount = ((ItemComponent)newItem.getExtraComponents()).getQuantity();
+		boolean match = false;
+			for(GameObject item : items) {
+				if(item.getId() == newItem.getId()) {
+					((ItemComponent)item.getExtraComponents()).add(amount);
+					match = true;
+				}
+			}
+			
+		if(!match)
+			items.add(newItem);
 	}
 
 	public void addGold(int amount) {
@@ -93,5 +110,4 @@ public class Player {
 		// TODO Auto-generated method stub
 		return items;
 	}
-
 }

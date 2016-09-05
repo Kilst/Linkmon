@@ -28,7 +28,7 @@ public class LinkmonTimerComponent implements ITimerComponent {
 	
 	public LinkmonTimerComponent() {
 		setEvolutionTimer(new Timer(15, true));		
-		setHungerTimer(new Timer(1, true));
+		setHungerTimer(new Timer(5, true));
 		setPoopTimer(new Timer(5, true));
 		setSleepTimer(new Timer(10, true));
 		setSickTimer(new Timer(360, true));		

@@ -166,8 +166,8 @@ public class ShopWindow implements Screen, IShopItems {
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
             		((ItemComponent)selectedItem.getExtraComponents()).setQuantity(amount);
-            		//eManager.notify(new ControllerEvent(ControllerEvents.ITEM_BUY, selectedItem));
-//            		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, selectedItem));
+            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             		((ItemComponent)selectedItem.getExtraComponents()).setQuantity(1);
             		amount = 1;
             		itemAmount.setText("Amount: " + amount);

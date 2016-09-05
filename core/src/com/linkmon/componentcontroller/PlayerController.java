@@ -31,8 +31,8 @@ public class PlayerController implements ScreenListener {
 		player.addGold(amount);
 	}
 	
-	public void buyItem(int itemId, int quantity) {
-		player.addItem(itemId, quantity);
+	public void buyItem(GameObject item) {
+		player.buyItem(item);
 	}
 	
 	public void useItem(GameObject item) {
@@ -70,23 +70,28 @@ public class PlayerController implements ScreenListener {
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
-		case(ScreenEvents.FEED_LINKMON): {
-			feedLinkmon(event.gameObject);
-			return false;
+			case(ScreenEvents.FEED_LINKMON): {
+				feedLinkmon(event.gameObject);
+				return false;
+			}
+			case(ScreenEvents.BUY_ITEM): {
+				buyItem(event.gameObject);
+				return false;
+			}
+			case(ScreenEvents.GET_PLAYER_STATS): {
+				getPlayerStats((IPlayerStats) event.screen);
+				return false;
+			}
+			case(ScreenEvents.GET_PLAYER_ITEMS): {
+				getPlayerItems((IPlayerItems) event.screen);
+				return false;
+			}
+			case(ScreenEvents.GET_LINKMON_STATS): {
+				getLinkmonStats((ILinkmonStats) event.screen);
+				return false;
+			}
 		}
-		case(ScreenEvents.GET_PLAYER_STATS): {
-			getPlayerStats((IPlayerStats) event.screen);
-			return false;
-		}
-		case(ScreenEvents.GET_PLAYER_ITEMS): {
-			getPlayerItems((IPlayerItems) event.screen);
-			return false;
-		}
-		case(ScreenEvents.GET_LINKMON_STATS): {
-			getLinkmonStats((ILinkmonStats) event.screen);
-			return false;
-		}
-	}
-	return false;
+		
+		return false;
 	}
 }
