@@ -1,5 +1,6 @@
 package com.linkmon.eventmanager.screen;
 
+import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.eventmanager.GameEvent;
 import com.linkmon.view.screens.interfaces.MyScreen;
 
@@ -9,6 +10,7 @@ public class ScreenEvent extends GameEvent {
 	public int screenType;
 	
 	public int move;
+	public GameObject gameObject;
 
 	public ScreenEvent(int eventId) {
 		super(eventId);
@@ -34,5 +36,12 @@ public class ScreenEvent extends GameEvent {
 		// TODO Auto-generated constructor stub
 		
 		this.move = move;
+	}
+	
+	public ScreenEvent(int eventId, GameObject object) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		
+		this.gameObject = object;
 	}
 }

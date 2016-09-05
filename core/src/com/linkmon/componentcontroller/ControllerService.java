@@ -10,7 +10,7 @@ import com.linkmon.game.GameClass;
 public class ControllerService {
 	
 	private MService mService;
-	private ScreenController screenController;
+	private LibgdxScreenController screenController;
 	
 	private PlayerController playerContoller;
 	private LinkmonController linkmonController;
@@ -28,7 +28,7 @@ public class ControllerService {
 		playerContoller = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
 		shopController = new ShopController(mService.getShop());
-		screenController = new ScreenController(game, ui, eManager);
+		screenController = new LibgdxScreenController(game, ui, eManager);
 		worldController = new WorldController(mService.getWorld());
 		
 		networkController = new NetworkController(eManager, mService.getPlayer());

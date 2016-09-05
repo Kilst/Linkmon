@@ -1,10 +1,7 @@
 package com.linkmon.componentcontroller;
 
-import java.util.List;
-
 import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
@@ -25,6 +22,10 @@ public class PlayerController implements ScreenListener {
 	}
 	
 	// Request to update models
+	
+	public void feedLinkmon(GameObject item) {
+		player.feedLinkmon(item);
+	}
 	
 	public void addGold(int amount) {
 		player.addGold(amount);
@@ -69,6 +70,10 @@ public class PlayerController implements ScreenListener {
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
+		case(ScreenEvents.FEED_LINKMON): {
+			feedLinkmon(event.gameObject);
+			return false;
+		}
 		case(ScreenEvents.GET_PLAYER_STATS): {
 			getPlayerStats((IPlayerStats) event.screen);
 			return false;

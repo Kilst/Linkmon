@@ -36,7 +36,7 @@ import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.interfaces.IShopItems;
 import com.linkmon.view.screens.traingames.AttackGame;
 
-public class ScreenController implements ScreenListener {
+public class LibgdxScreenController implements ScreenListener {
 	
 	private GameClass game;
 	private Group uiGroup;
@@ -48,7 +48,7 @@ public class ScreenController implements ScreenListener {
 	
 	private GameUi gameUi;
 	
-	public ScreenController(GameClass game, Group uiGroup, EventManager eManager) {
+	public LibgdxScreenController(GameClass game, Group uiGroup, EventManager eManager) {
 		this.game = game;
 		this.uiGroup = uiGroup;
 		this.eManager = eManager;	

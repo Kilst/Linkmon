@@ -13,4 +13,9 @@ public class FoodComponent extends ItemComponent implements UsableItemComponent 
 		((LinkmonExtraComponents)object.getExtraComponents()).getStatus().addHungerLevel(feedAmount);
 	}
 
+	public int getFeedAmount() {
+		// TODO Auto-generated method stub
+		return feedAmount;
+	}
+
 }

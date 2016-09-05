@@ -11,9 +11,9 @@ import com.linkmon.networking.TcpService;
 
 public class NetworkController implements ScreenListener {
 	
-	INetworkService service;
+	private INetworkService service;
 	private EventManager eManager;
-	Player player;
+	private Player player;
 	
 	public NetworkController(EventManager eManager, Player player) {
 //		this.service = new NetworkService();

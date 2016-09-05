@@ -145,7 +145,7 @@ public class FeedWindow implements Screen, IPlayerItems {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
-            		//eManager.notify(new ControllerEvent(ControllerEvents.ITEM_USED, selectedItem));
+            		eManager.notify(new ScreenEvent(ScreenEvents.FEED_LINKMON, selectedItem));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             	}
             }

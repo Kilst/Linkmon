@@ -2,7 +2,7 @@ package com.linkmon.networking;
 
 import java.nio.ByteBuffer;
 
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
+import com.linkmon.componentmodel.BattleLinkmon;
 import com.linkmon.model.gameobject.linkmon.Move;
 import com.linkmon.model.gameobject.linkmon.MoveFactory;
 

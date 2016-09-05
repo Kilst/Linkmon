@@ -7,6 +7,7 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.gameobject.ObjectFactory;
 import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
+import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
@@ -24,6 +25,7 @@ public class Player {
 	private String name;
 	
 	private List<GameObject> items;
+	private List<GameObject> itemsRemoveQueue;
 	
 	private EventManager eManager;
 	
@@ -35,6 +37,7 @@ public class Player {
 		name = "Kilst";
 		
 		items = new ArrayList<GameObject>();
+		itemsRemoveQueue = new ArrayList<GameObject>();
 		
 		this.eManager = eManager;
 		
@@ -44,6 +47,23 @@ public class Player {
 	public GameObject getLinkmon() {
 		// TODO Auto-generated method stub
 		return linkmon;
+	}
+	
+	public void feedLinkmon(GameObject item) {
+		if(items.contains(item)) {
+			((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
+			itemsRemoveQueue.add(item);
+		}
+		
+		removeItems();
+	}
+	
+	private void removeItems() {
+		for(GameObject item : itemsRemoveQueue) {
+			items.remove(item);
+		}
+		
+		itemsRemoveQueue.clear();
 	}
 	
 	public void addItem(int itemId, int quantity) {

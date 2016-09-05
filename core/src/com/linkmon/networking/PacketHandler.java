@@ -56,7 +56,8 @@ public class PacketHandler implements Runnable {
 			case(PacketType.BATTLE_SETUP): {
 				Gdx.app.log("PacketHandler","Got BattleSteup packet");
 				Gdx.app.log("PacketHandler","Created opponent from BattleSetup packet");
-				eManager.notify(new ControllerEvent(ControllerEvents.SET_OPPONENT, Packet.linkmonFromPacket(packet)));
+				Gdx.app.log("PacketHandler","Need to finish NetworkListener/come up with idea on how to handle");
+				//eManager.notify(new ControllerEvent(ControllerEvents.SET_OPPONENT, Packet.linkmonFromPacket(packet)));
 //				eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.ONLINE_BATTLE_SCREEN));
 				break;
 			}

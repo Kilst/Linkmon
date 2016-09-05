@@ -42,7 +42,7 @@ public class NetworkController implements ControllerListener {
 	private void searchOpponents() {
 		Gdx.app.log("NetworkController", "Searching!");
 		player.createBattleLinkmon();
-		service.searchOpponent(player.getBattleLinkmon());
+		//service.searchOpponent(player.getBattleLinkmon());
 	}
 	
 	private void cancelSearch() {
