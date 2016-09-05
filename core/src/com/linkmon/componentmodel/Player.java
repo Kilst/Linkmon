@@ -74,10 +74,9 @@ public class Player {
 	
 	private void removeItems() {
 		for(GameObject item : itemsRemoveQueue) {
+			((ItemComponent)item.getExtraComponents()).setQuantity(((ItemComponent)item.getExtraComponents()).getQuantity()-1);
 			if(((ItemComponent)item.getExtraComponents()).getQuantity() < 1)
 				items.remove(item);
-			else
-				((ItemComponent)item.getExtraComponents()).setQuantity(((ItemComponent)item.getExtraComponents()).getQuantity()-1);
 		}
 		
 		itemsRemoveQueue.clear();
