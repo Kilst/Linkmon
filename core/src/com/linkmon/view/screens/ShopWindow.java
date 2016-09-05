@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
@@ -41,7 +43,7 @@ public class ShopWindow implements Screen, IShopItems {
 	private Group uiGroup;
 	private ItemButton item;
 
-	private Item selectedItem;
+	private GameObject selectedItem;
 	
 	private Button backButton;
 	private Button buyButton;
@@ -161,13 +163,13 @@ public class ShopWindow implements Screen, IShopItems {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
-            		selectedItem.setQuantity(amount);
-            		eManager.notify(new ControllerEvent(ControllerEvents.ITEM_BUY, selectedItem));
+            		((ItemComponent)selectedItem.getExtraComponents()).setQuantity(amount);
+            		//eManager.notify(new ControllerEvent(ControllerEvents.ITEM_BUY, selectedItem));
 //            		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-            		selectedItem.setQuantity(1);
+            		((ItemComponent)selectedItem.getExtraComponents()).setQuantity(1);
             		amount = 1;
             		itemAmount.setText("Amount: " + amount);
-            		itemPrice.setText("Price: " + selectedItem.getPrice());
+            		itemPrice.setText("Price: " + ((ItemComponent)selectedItem.getExtraComponents()).getPrice());
             	}
             }
 		});
@@ -185,7 +187,7 @@ public class ShopWindow implements Screen, IShopItems {
 	            	touchTime = System.nanoTime();
 	            	amount+=1;
 	            	itemAmount.setText(itemAmountString + amount);
-	            	itemPrice.setText(itemPriceString + amount*selectedItem.getPrice());
+	            	itemPrice.setText(itemPriceString + amount*((ItemComponent)selectedItem.getExtraComponents()).getPrice());
             	}
 				return true;
             }
@@ -209,7 +211,7 @@ public class ShopWindow implements Screen, IShopItems {
 	            	if(amount < 1)
 	            		amount = 1;
 	            	itemAmount.setText(itemAmountString + amount);
-	            	itemPrice.setText(itemPriceString + amount*selectedItem.getPrice());
+	            	itemPrice.setText(itemPriceString + amount*((ItemComponent)selectedItem.getExtraComponents()).getPrice());
 	            	touchTime = System.nanoTime();
             	}
 				return true;
@@ -244,7 +246,7 @@ public class ShopWindow implements Screen, IShopItems {
         		if(amount < 1)
             		amount = 1;
         		itemAmount.setText(itemAmountString + amount);
-            	itemPrice.setText(itemPriceString + amount*selectedItem.getPrice());
+            	itemPrice.setText(itemPriceString + amount*((ItemComponent)selectedItem.getExtraComponents()).getPrice());
         	}
 		}
 	}
@@ -281,7 +283,7 @@ public class ShopWindow implements Screen, IShopItems {
 	}
 
 	@Override
-	public void setSelectedItem(Item item) {
+	public void setSelectedItem(GameObject item) {
 		// TODO Auto-generated method stub
 		selectedItem = item;
 		amount = 1;
@@ -289,14 +291,14 @@ public class ShopWindow implements Screen, IShopItems {
 //		itemText.setFontScale(0.5f);
 		itemText.setText(selectedItem.getName());
 		itemAmount.setText("Amount: " + amount);
-		itemPrice.setText("Price: " + selectedItem.getPrice());
+		itemPrice.setText("Price: " + ((ItemComponent)selectedItem.getExtraComponents()).getPrice());
 		tableRight.setVisible(true);
 	}
 
 	@Override
-	public void getShopItems(List<Item> items) {
+	public void getShopItems(List<GameObject> items) {
 		// TODO Auto-generated method stub
-		for(Item shopItem : items) {
+		for(GameObject shopItem : items) {
 			TextureRegion region = ResourceLoader.getItemRegionFromId(shopItem.getId());
 			item = new ItemButton(new TextureRegionDrawable(region), eManager, shopItem, this);
 			tableLeft.add(item).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY);

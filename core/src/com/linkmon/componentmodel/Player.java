@@ -69,4 +69,9 @@ public class Player {
 		return name;
 	}
 
+	public List<GameObject> getItems() {
+		// TODO Auto-generated method stub
+		return items;
+	}
+
 }

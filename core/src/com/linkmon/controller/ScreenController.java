@@ -191,10 +191,10 @@ public class ScreenController implements ControllerListener {
 			((IPlayerStats)window).getPlayerStats(playerController.getName(), playerController.getGold());
 		}
 					
-		if(window instanceof IShopItems)
-			((IShopItems)window).getShopItems(shopController.getItems());
-		if(window instanceof IPlayerItems)
-			((IPlayerItems)window).getPlayerItems(playerController.getItems());
+//		if(window instanceof IShopItems)
+//			((IShopItems)window).getShopItems(shopController.getItems());
+//		if(window instanceof IPlayerItems)
+//			((IPlayerItems)window).getPlayerItems(playerController.getItems());
 		
 		if(window instanceof IPlayableLinkmons)
 			((IPlayableLinkmons)window).updatePlayableLinkmons(playerController.getBattleLinkmon(), playerController.getSavedLinkmon());

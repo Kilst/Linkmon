@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
@@ -128,10 +130,13 @@ public class ItemWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void getPlayerItems(List<Item> itemList) {
+	public void getPlayerItems(List<GameObject> itemList) {
 		// TODO Auto-generated method stub
-		for(Item item : itemList) {
-			if (!items.contains(item) && item.getClass() != Food.class) {
+		for(GameObject item : itemList) {
+			if(item.getExtraComponents() instanceof FoodComponent) {
+				
+			}
+			else {
 				TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
 				ItemButton itemButton = new ItemButton(new TextureRegionDrawable(region), eManager, item, this);
 				items.add(itemButton);
@@ -141,7 +146,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void setSelectedItem(Item item) {
+	public void setSelectedItem(GameObject item) {
 		// TODO Auto-generated method stub
 		
 	}

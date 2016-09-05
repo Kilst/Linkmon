@@ -1,5 +1,7 @@
 package com.linkmon.componentcontroller;
 
+import java.util.List;
+
 import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.items.ItemComponent;
@@ -11,6 +13,7 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
+import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
 
 public class PlayerController implements ScreenListener {
@@ -40,6 +43,10 @@ public class PlayerController implements ScreenListener {
 	
 	// View updates
 	
+	public void getPlayerItems(IPlayerItems window) {
+		window.getPlayerItems(player.getItems());
+	}
+	
 	public void getPlayerStats(IPlayerStats window) {
 		window.getPlayerStats(player.getName(), player.getGold());
 	}
@@ -64,6 +71,10 @@ public class PlayerController implements ScreenListener {
 		switch(event.eventId) {
 		case(ScreenEvents.GET_PLAYER_STATS): {
 			getPlayerStats((IPlayerStats) event.screen);
+			return false;
+		}
+		case(ScreenEvents.GET_PLAYER_ITEMS): {
+			getPlayerItems((IPlayerItems) event.screen);
 			return false;
 		}
 		case(ScreenEvents.GET_LINKMON_STATS): {

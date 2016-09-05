@@ -34,6 +34,8 @@ public class GameObject {
 	public int direction = Direction.LEFT;
 	public boolean isMoving = false;
 	
+	private String name;
+	
 	public GameObject(int id, int type, IRenderingComponent renderingComponent, IInputComponent inputComponent,
 			IPhysicsComponent physicsComponent, IExtraComponents extraComponents) {
 		this.id = id;
@@ -162,5 +164,15 @@ public class GameObject {
 	public void addInputComponent(IInputComponent inputComponent) {
 		// TODO Auto-generated method stub
 		this.inputComponent = inputComponent;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+	
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		this.name = name;
 	}
 }

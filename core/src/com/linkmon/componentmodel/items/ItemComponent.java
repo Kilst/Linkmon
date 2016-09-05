@@ -30,4 +30,9 @@ public class ItemComponent implements IExtraComponents {
 	public int getPrice() {
 		return price;
 	}
+
+	public void setQuantity(int amount) {
+		// TODO Auto-generated method stub
+		this.quantity = amount;
+	}
 }

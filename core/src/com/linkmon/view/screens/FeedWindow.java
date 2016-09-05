@@ -20,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
@@ -49,7 +51,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 	private Group uiGroup;
 	private ItemButton food;
 
-	private Item selectedItem;
+	private GameObject selectedItem;
 	
 	private Button backButton;
 	private Button feedButton;
@@ -126,6 +128,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 		addListeners();
 		
 		tableRight.setVisible(true);
+		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, this));
 	}
 	
 	private void addListeners() {
@@ -141,7 +145,7 @@ public class FeedWindow implements Screen, IPlayerItems {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
-            		eManager.notify(new ControllerEvent(ControllerEvents.ITEM_USED, selectedItem));
+            		//eManager.notify(new ControllerEvent(ControllerEvents.ITEM_USED, selectedItem));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             	}
             }
@@ -194,7 +198,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void setSelectedItem(Item item) {
+	public void setSelectedItem(GameObject item) {
 		// TODO Auto-generated method stub
 		selectedItem = item;
 		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedItem.getId()).getTexture());
@@ -204,19 +208,18 @@ public class FeedWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void getPlayerItems(List<Item> items) {
+	public void getPlayerItems(List<GameObject> items) {
 		Tree tree = new Tree(skin);
 		// TODO Auto-generated method stub
 		
+		Gdx.app.log("ObjectFactory", "Items: " + items.size());
 		Node node;
-		for(Item item : items) {
-			if(item.getClass() == Food.class || item.getClass() == StatFood.class) {
+		for(GameObject item : items) {
+			if(item.getExtraComponents() instanceof FoodComponent) {
 				TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
 				food = new ItemButton(new TextureRegionDrawable(region), eManager, item, this);
 				node = new Node(food);
 				tree.add(node);
-				//tableLeft.add(food).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY);
-				Gdx.app.log("FeedWindow", "Item quantity: " + item.getQuantity());
 			}
 		}
 		tableLeft.add(tree).expand().fill();
