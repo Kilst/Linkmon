@@ -265,8 +265,8 @@ public class GameClass extends Game implements ApplicationListener {
 		libgdxWorldRenderer.render(batch);
 		batch.end();
 		
-//		if(controllerService != null)
-//			controllerService.update();
+		if(service != null)
+			service.update();
 		world.render();
 		this.getScreen().render(0);
 	}

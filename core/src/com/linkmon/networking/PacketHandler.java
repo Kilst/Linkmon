@@ -10,6 +10,8 @@ import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.ScreenType;
@@ -35,7 +37,7 @@ public class PacketHandler implements Runnable {
 		switch(packetId) {
 //			case(PacketType.CONNECT): {
 //				Gdx.app.log("PacketHandler","Got connect packet");
-//				eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
+//				eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
 //				break;
 //			}
 			case(PacketType.DISCONNECT): {
@@ -96,7 +98,6 @@ public class PacketHandler implements Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
@@ -104,8 +105,9 @@ public class PacketHandler implements Runnable {
 						e.printStackTrace();
 					}
 					
-		    		eManager.notify(new ViewEvent(ViewEvents.SERVER_WELCOME, serverWelcome));
-		    		serverWelcome = null;
+		    		client.setServerMessage(serverWelcome);
+		    		eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
+		    		//serverWelcome = null;
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

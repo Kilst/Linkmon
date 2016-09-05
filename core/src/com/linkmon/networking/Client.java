@@ -28,6 +28,8 @@ public class Client {
 	volatile public boolean sending = false;
 	public boolean connected = false;
 	
+	private String serverMessage;
+	
 	private ClientListener listener;
 	
 	EventManager eManager;
@@ -77,5 +79,13 @@ public class Client {
 		Gdx.app.log("Client", "Bad Practice: calling swap screen from client disconnect()!!");
 		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI)); // Shouldn't call a screen event from network
 		
+	}
+
+	public String getServerMessage() {
+		return serverMessage;
+	}
+
+	public void setServerMessage(String serverMessage) {
+		this.serverMessage = serverMessage;
 	}
 }

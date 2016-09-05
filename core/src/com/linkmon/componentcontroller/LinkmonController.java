@@ -23,7 +23,6 @@ public class LinkmonController implements ScreenListener {
 		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats().train(statType);
 	}
 	
-	
 	// Screen Updates
 	
 	public void getLinkmonAddedStats(ILinkmonAddedStats window) {

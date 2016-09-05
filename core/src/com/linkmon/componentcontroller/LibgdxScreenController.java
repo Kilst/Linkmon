@@ -129,20 +129,21 @@ public class LibgdxScreenController implements ScreenListener {
 			}
 		}
 	}
-//	
-//	public void update() {
-//		if(screenUpdated) {
-//			swapScreen(screenType);
-//			screenUpdated = false;
-//		}
-//	}
+	
+	public void update() {
+		if(screenUpdated) {
+			swapScreen(screenType);
+			screenUpdated = false;
+		}
+	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.SWAP_SCREEN): {
-				swapScreen(event.value);
+				screenType = event.value;
+				screenUpdated = true;
 				return false;
 			}
 		}

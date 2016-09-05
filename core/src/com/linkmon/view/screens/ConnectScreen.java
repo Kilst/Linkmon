@@ -13,13 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.network.NetworkEvent;
+import com.linkmon.eventmanager.network.NetworkEvents;
+import com.linkmon.eventmanager.network.NetworkListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.widgets.LoadingWidget;
 
-public class ConnectScreen implements Screen {
+public class ConnectScreen implements Screen, NetworkListener {
 	
 	private Label label;
 	private Button cancelButton;
@@ -39,6 +42,8 @@ public class ConnectScreen implements Screen {
 		this.eManager = eManager;
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
+		eManager.addNetworkListener(this);
 	}
 	
 	public void updateLabel(String text) {
@@ -53,7 +58,6 @@ public class ConnectScreen implements Screen {
 	            	eManager.notify(new ControllerEvent(ControllerEvents.CLOSE_CONNECTION));
 	            	
 	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-	            	
 	            }
 		});
 	}
@@ -114,6 +118,8 @@ public class ConnectScreen implements Screen {
 		label.remove();
 		load.remove();
 		container.remove();
+		
+		eManager.removeNetworkListener(this);
 	}
 
 	@Override
@@ -128,6 +134,18 @@ public class ConnectScreen implements Screen {
 
 	public void setConnected(boolean connected) {
 		this.connected = connected;
+	}
+
+	@Override
+	public boolean onNotify(NetworkEvent event) {
+		// TODO Auto-generated method stub
+			switch(event.eventId) {
+			case(NetworkEvents.CONNECTED): {
+				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
+				break;
+			}
+		}
+		return false;
 	}
 
 }

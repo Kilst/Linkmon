@@ -8,6 +8,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.networking.INetworkService;
 import com.linkmon.networking.TcpService;
+import com.linkmon.view.screens.interfaces.INetworkScreen;
 
 public class NetworkController implements ScreenListener {
 	
@@ -19,7 +20,7 @@ public class NetworkController implements ScreenListener {
 //		this.service = new NetworkService();
 		this.eManager = eManager;
 		this.player = player;
-		
+		eManager.addScreenListener(this);
 	}
 	
 	private void connect() {
@@ -56,6 +57,10 @@ public class NetworkController implements ScreenListener {
 		// TODO Auto-generated method stub
 		service.getMysteryGift();
 	}
+	
+	private void getServerWelcome(INetworkScreen screen) {
+		screen.setServerWelcome(service.getClient().getServerMessage());
+	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
@@ -83,6 +88,10 @@ public class NetworkController implements ScreenListener {
 			}
 			case(ScreenEvents.CANCEL_SEARCH): {
 				cancelSearch();
+				break;
+			}
+			case(ScreenEvents.GET_SERVER_WELCOME): {
+				getServerWelcome((INetworkScreen)event.screen);
 				break;
 			}
 		}

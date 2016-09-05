@@ -22,4 +22,5 @@ public class ScreenEvents {
 	public static final int CLOSE_CONNECTION = 103;
 	public static final int GET_MYSTERY_GIFT = 104;
 	public static final int CANCEL_SEARCH = 105;
+	public static final int GET_SERVER_WELCOME = 106;
 }

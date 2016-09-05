@@ -27,10 +27,11 @@ import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
 import com.linkmon.networking.TcpService;
 import com.linkmon.view.LinkmonSprite;
 import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.screens.interfaces.INetworkScreen;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
 import com.linkmon.view.screens.widgets.LoadingWidget;
 
-public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
+public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, INetworkScreen {
 	
 	private Label serverWelcome;
 	
@@ -163,6 +164,8 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 		uiGroup.toFront();
 		
 		addListeners();
+		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_SERVER_WELCOME, this));
 	}
 	
 	private void showSearch() {
@@ -266,9 +269,9 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ViewEvents.SERVER_WELCOME): {
-				this.welcomeString = event.str;
-				serverWelcome.setText(welcomeString);
-				Gdx.app.log("OnlineScreen","Got Server Welcome: " + welcomeString);
+//				this.welcomeString = event.str;
+//				serverWelcome.setText(welcomeString);
+//				Gdx.app.log("OnlineScreen","Got Server Welcome: " + welcomeString);
 				break;
 			}
 			case(ViewEvents.UPDATE_GIFT_TIMER): {
@@ -276,5 +279,13 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons {
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void setServerWelcome(String welcomeMessage) {
+		// TODO Auto-generated method stub
+		this.welcomeString = welcomeMessage;
+		serverWelcome.setText(welcomeString);
+		Gdx.app.log("OnlineScreen","Got Server Welcome: " + welcomeString);
 	}
 }

@@ -40,6 +40,10 @@ public class ControllerService {
 		eManager.addScreenListener(screenController);
 		eManager.addScreenListener(networkController);
 	}
+	
+	public void update() {
+		screenController.update();
+	}
 
 	public MService getMService() {
 		// TODO Auto-generated method stub

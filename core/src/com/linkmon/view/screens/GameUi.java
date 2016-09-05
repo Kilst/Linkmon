@@ -72,6 +72,8 @@ public class GameUi implements Screen, ViewListener {
 	
 	MyProgressBar pBar;
 	
+	public Label fpsLabel;
+	
 	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
 		
 		this.eManager = eManager;
@@ -141,11 +143,16 @@ public class GameUi implements Screen, ViewListener {
 		
 		addListeners();
 		
+//		fpsLabel = new Label("",skin);
+//		fpsLabel.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		
 //		ChatWindow chat = new ChatWindow(1, ui, eManager);
 		
 		ui.addActor(containerBottom);
 		ui.addActor(containerTop);
 		ui.addActor(light);
+		
+//		ui.addActor(fpsLabel);
 		
 //		ui.addActor(chat);
 		
@@ -157,6 +164,10 @@ public class GameUi implements Screen, ViewListener {
 			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":0"+Calendar.getInstance().get(Calendar.MINUTE));
 		else
 			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE));
+		
+//		fpsLabel.setText("FPS: "+Gdx.graphics.getFramesPerSecond());
+//		
+//		fpsLabel.toFront();
 	}
 	
 	private void addListeners() {
