@@ -5,6 +5,7 @@ import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.componentmodel.libgdx.LinkmonAnimationComponent;
+import com.linkmon.componentmodel.libgdx.LinkmonRenderingComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
@@ -19,7 +20,7 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 	
 	public GameObject createLinkmon(int id) {
 		
-		GameObject linkmon = new GameObject(id, ObjectType.LINKMON, new LibgdxRenderingComponent(), null,
+		GameObject linkmon = new GameObject(id, ObjectType.LINKMON, new LinkmonRenderingComponent(), null,
 				new LinkmonPhysicsComponent(), new LinkmonExtraComponents());
 		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon));
 		
