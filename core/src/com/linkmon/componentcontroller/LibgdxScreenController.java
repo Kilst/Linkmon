@@ -43,6 +43,7 @@ public class LibgdxScreenController implements ScreenListener {
 	
 	private EventManager eManager;
 	
+	private int previousScreenType = ScreenType.MAIN_UI;
 	private int screenType;
 	public boolean screenUpdated = false;
 	
@@ -142,7 +143,13 @@ public class LibgdxScreenController implements ScreenListener {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.SWAP_SCREEN): {
+				previousScreenType = screenType;
 				screenType = event.value;
+				screenUpdated = true;
+				return false;
+			}
+			case(ScreenEvents.SWAP_SCREEN_PREVIOUS): {
+				screenType = previousScreenType;
 				screenUpdated = true;
 				return false;
 			}

@@ -137,7 +137,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
             }
 		});
 		
@@ -146,7 +146,7 @@ public class FeedWindow implements Screen, IPlayerItems {
             public void clicked(InputEvent event, float x, float y){
             	if(selectedItem != null) {
             		eManager.notify(new ScreenEvent(ScreenEvents.FEED_LINKMON, selectedItem));
-            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
             	}
             }
 		});

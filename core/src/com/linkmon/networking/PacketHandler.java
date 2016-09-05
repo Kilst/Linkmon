@@ -90,8 +90,8 @@ public class PacketHandler implements Runnable {
 			}
 			default: {
 				try {
-					serverWelcome = new String(packet, "UTF-8");
-					Gdx.app.log("PacketHandler","Got Server Welcome: " + serverWelcome);
+//					serverWelcome = new String(packet, "UTF-8");
+//					Gdx.app.log("PacketHandler","Got Server Welcome: " + serverWelcome);
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -105,7 +105,7 @@ public class PacketHandler implements Runnable {
 						e.printStackTrace();
 					}
 					
-		    		client.setServerMessage(serverWelcome);
+		    		client.setServerMessage(new String(packet, "UTF-8"));
 		    		eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
 		    		//serverWelcome = null;
 				} catch (UnsupportedEncodingException e) {
