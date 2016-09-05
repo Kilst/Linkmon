@@ -2,6 +2,7 @@ package com.linkmon.componentmodel.gameobject;
 
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.items.FoodComponent;
+import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.componentmodel.libgdx.LinkmonAnimationComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
@@ -40,7 +41,9 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				return poop;
 			}
 			case (ObjectId.MEAT) : {
-				GameObject meat = new GameObject(id, ObjectType.ITEM, null, null, null, new FoodComponent());
+				ItemComponent foodComp = new FoodComponent();
+				foodComp.setPrice(50);
+				GameObject meat = new GameObject(id, ObjectType.ITEM, null, null, null, foodComp);
 				return meat;
 			}
 		}

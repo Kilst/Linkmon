@@ -16,6 +16,8 @@ import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonTimerComponent;
 import com.linkmon.componentmodel.linkmon.poop.PoopInputComponent;
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.view.ViewEvent;
+import com.linkmon.eventmanager.view.ViewEvents;
 
 public class Player {
 	
@@ -63,9 +65,10 @@ public class Player {
 	
 	public void buyItem(GameObject item) {
 		// TODO Auto-generated method stub
-		if(gold >= ((ItemComponent)item.getExtraComponents()).getPrice()) {
+		int price = ((ItemComponent)item.getExtraComponents()).getPrice()*((ItemComponent)item.getExtraComponents()).getQuantity();
+		if(gold >= price) {
 			addItem(item);
-			gold -= ((ItemComponent)item.getExtraComponents()).getPrice();
+			removeGold(price);
 		}
 	}
 	
@@ -91,9 +94,16 @@ public class Player {
 			items.add(newItem);
 	}
 
-	public void addGold(int amount) {
+	private void addGold(int amount) {
 		// TODO Auto-generated method stub
-		gold += amount;		
+		gold += amount;
+		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_GOLD, gold));
+	}
+	
+	private void removeGold(int amount) {
+		// TODO Auto-generated method stub
+		gold -= amount;
+		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_GOLD, gold));
 	}
 
 	public int getGold() {

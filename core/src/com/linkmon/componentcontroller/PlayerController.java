@@ -27,10 +27,6 @@ public class PlayerController implements ScreenListener {
 		player.feedLinkmon(item);
 	}
 	
-	public void addGold(int amount) {
-		player.addGold(amount);
-	}
-	
 	public void buyItem(GameObject item) {
 		player.buyItem(item);
 	}

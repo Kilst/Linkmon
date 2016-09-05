@@ -17,5 +17,4 @@ public class FoodComponent extends ItemComponent implements UsableItemComponent 
 		// TODO Auto-generated method stub
 		return feedAmount;
 	}
-
 }
