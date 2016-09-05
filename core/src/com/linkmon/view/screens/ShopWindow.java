@@ -148,6 +148,8 @@ public class ShopWindow implements Screen, IShopItems {
 		addListeners();
 		
 		tableRight.setVisible(true);
+		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_SHOP_ITEMS, this));
 	}
 	
 	private void addListeners() {

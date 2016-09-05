@@ -187,9 +187,9 @@ public class ScreenController implements ControllerListener {
 					);
 		}
 		
-		if(window instanceof IPlayerStats) {
-			((IPlayerStats)window).getPlayerStats(playerController.getName(), playerController.getGold());
-		}
+//		if(window instanceof IPlayerStats) {
+//			((IPlayerStats)window).getPlayerStats(playerController.getName(), playerController.getGold());
+//		}
 					
 //		if(window instanceof IShopItems)
 //			((IShopItems)window).getShopItems(shopController.getItems());

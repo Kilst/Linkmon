@@ -14,6 +14,7 @@ public class ControllerService {
 	
 	private PlayerController playerContoller;
 	private LinkmonController linkmonController;
+	private ShopController shopController;
 	
 	private NetworkController networkController;
 	
@@ -26,6 +27,7 @@ public class ControllerService {
 		mService = new MService(eManager);
 		playerContoller = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
+		shopController = new ShopController(mService.getShop());
 		screenController = new ScreenController(game, ui, eManager);
 		worldController = new WorldController(mService.getWorld());
 		
@@ -33,6 +35,7 @@ public class ControllerService {
 		
 		eManager.addScreenListener(playerContoller);
 		eManager.addScreenListener(linkmonController);
+		eManager.addScreenListener(shopController);
 		eManager.addScreenListener(worldController);
 		eManager.addScreenListener(screenController);
 		eManager.addScreenListener(networkController);

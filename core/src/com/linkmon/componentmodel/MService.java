@@ -43,4 +43,9 @@ public class MService {
 		// TODO Auto-generated method stub
 		return player;
 	}
+	
+	public Shop getShop() {
+		// TODO Auto-generated method stub
+		return shop;
+	}
 }
