@@ -177,17 +177,7 @@ public class ScreenController implements ControllerListener {
 
 	public void updateWindow(Screen window) {
 		// TODO Auto-generated method stub
-		if(window instanceof ILinkmonStats) {
-			((ILinkmonStats)window).getLinkmonStats(
-						linkmonController.getStats().getHealth(),
-						linkmonController.getStats().getAttack(),
-						linkmonController.getStats().getDefense(),
-						linkmonController.getStats().getSpeed(),
-						linkmonController.getCareMistakes(),
-						linkmonController.getBirthDate(),
-						linkmonController.getRank()
-					);
-		}
+		
 		if(window instanceof ILinkmonAddedStats) {
 			((ILinkmonAddedStats)window).getAddedStats(
 						linkmonController.getStats().getAddedHealth(),

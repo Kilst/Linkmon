@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.componentmodel.linkmon.BirthDate;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
@@ -29,7 +30,6 @@ import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.gameobject.linkmon.BirthDate;
 import com.linkmon.model.gameobject.linkmon.RankIds;
 import com.linkmon.view.WorldRenderer;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
@@ -147,19 +147,19 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		String minutes;
 		String hours;
 		
-//		if(dob.getMinute() < 10)
-//			minutes = "0"+dob.getMinute();
-//		else
-//			minutes = ""+dob.getMinute();
-//		
-//		if(dob.getHour() == 0)
-//			hours = "12";
-//		else if(dob.getHour() < 10)
-//			hours = "0"+dob.getHour();
-//		else
-//			hours = ""+dob.getHour();
-//		
-//		this.dob.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
+		if(dob.getMinute() < 10)
+			minutes = "0"+dob.getMinute();
+		else
+			minutes = ""+dob.getMinute();
+		
+		if(dob.getHour() == 0)
+			hours = "12";
+		else if(dob.getHour() < 10)
+			hours = "0"+dob.getHour();
+		else
+			hours = ""+dob.getHour();
+		
+		this.dob.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
 	}
 	
 	@Override

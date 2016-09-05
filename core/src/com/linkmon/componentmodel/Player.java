@@ -29,10 +29,6 @@ public class Player {
 	
 	public Player(EventManager eManager, int eggChoice) {
 		linkmon = ObjectFactory.getInstance().createLinkmon(eggChoice);
-		linkmon.addInputComponent(new LinkmonInputComponent(eManager, linkmon));
-		linkmon.setX(0);
-		linkmon.setY(40);
-		//linkmon.getPhysicsComponent().setMoveToX(700);
 		
 		gold = 15000;
 		

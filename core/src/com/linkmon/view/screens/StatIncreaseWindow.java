@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.linkmon.componentmodel.linkmon.BirthDate;
 import com.linkmon.controller.LinkmonController;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
@@ -21,7 +22,6 @@ import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.game.GameClass;
-import com.linkmon.model.gameobject.linkmon.BirthDate;
 import com.linkmon.view.WorldRenderer;
 import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
 

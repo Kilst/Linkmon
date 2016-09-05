@@ -20,6 +20,13 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	private int rank;
 	
 	private boolean updated = true;
+	
+	public LinkmonStatsComponent() {
+		health = 100;
+		attack = 10;
+		defense = 7;
+		speed = 8;
+	}
 
 	@Override
 	public void update(GameObject object) {

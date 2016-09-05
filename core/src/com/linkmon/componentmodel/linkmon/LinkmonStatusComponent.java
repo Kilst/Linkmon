@@ -2,15 +2,14 @@ package com.linkmon.componentmodel.linkmon;
 
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.components.IExtraComponents;
-import com.linkmon.componentmodel.components.IStatusComponent;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.Timer;
-import com.linkmon.model.gameobject.linkmon.BirthDate;
 
 public class LinkmonStatusComponent implements IExtraComponents {
 	
+	private BirthDate birthDate;
 	private boolean isHungry;
 	private int hungerLevel = 100;
 	private boolean isSleepy = false; // Check phone clock
@@ -86,6 +85,10 @@ public class LinkmonStatusComponent implements IExtraComponents {
 
 	public BirthDate getBirthDate() {
 		// TODO Auto-generated method stub
-		return null;
+		return birthDate;
+	}
+
+	public void setBirthDate() {
+		this.birthDate = new BirthDate();
 	}
 }

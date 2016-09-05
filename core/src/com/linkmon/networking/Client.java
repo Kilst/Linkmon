@@ -14,6 +14,8 @@ import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.ScreenType;
@@ -72,7 +74,8 @@ public class Client {
 			}
 		eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, message, true));
 		listener = null;
-		//eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+		Gdx.app.log("Client", "Bad Practice: calling swap screen from client disconnect()!!");
+		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI)); // Shouldn't call a screen event from network
 		
 	}
 }

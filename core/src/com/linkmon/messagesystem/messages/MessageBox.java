@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -18,12 +17,8 @@ import com.badlogic.gdx.utils.Align;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
-import com.linkmon.eventmanager.view.ViewEvent;
-import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.WorldRenderer;
-import com.linkmon.view.screens.GameUi;
-import com.linkmon.view.screens.ScreenType;
 
 public class MessageBox extends Table {
 	

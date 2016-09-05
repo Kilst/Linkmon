@@ -194,7 +194,7 @@ public class GameUi implements Screen, ViewListener {
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
             	
-            	eManager.notify(new ControllerEvent(ControllerEvents.CONNECT_TO_SERVER));
+            	eManager.notify(new ScreenEvent(ScreenEvents.CONNECT_TO_SERVER));
             	}
 		});
 		
