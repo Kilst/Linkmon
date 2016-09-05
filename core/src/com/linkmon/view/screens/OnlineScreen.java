@@ -24,7 +24,7 @@ import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
-import com.linkmon.networking.NetworkService;
+import com.linkmon.networking.TcpService;
 import com.linkmon.view.LinkmonSprite;
 import com.linkmon.view.WorldRenderer;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;

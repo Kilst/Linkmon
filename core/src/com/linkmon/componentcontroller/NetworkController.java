@@ -6,11 +6,12 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
-import com.linkmon.networking.NetworkService;
+import com.linkmon.networking.INetworkService;
+import com.linkmon.networking.TcpService;
 
 public class NetworkController implements ScreenListener {
 	
-	NetworkService service;
+	INetworkService service;
 	private EventManager eManager;
 	Player player;
 	
@@ -24,7 +25,7 @@ public class NetworkController implements ScreenListener {
 	private void connect() {
 
 		if(service == null)
-			service = new NetworkService(eManager);
+			service = new TcpService(eManager);
 		service.connect();
 	}
 	

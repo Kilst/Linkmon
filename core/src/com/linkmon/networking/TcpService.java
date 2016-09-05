@@ -6,7 +6,7 @@ import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
 
-public class NetworkService implements Runnable {
+public class TcpService implements INetworkService, Runnable {
 	
 	private Client client;
 	private BattleLinkmon linkmon;
@@ -14,7 +14,7 @@ public class NetworkService implements Runnable {
 	
 	private Thread connectThread;
 	
-	public NetworkService(EventManager eManager) {
+	public TcpService(EventManager eManager) {
 		
 		this.eManager = eManager;
 	}

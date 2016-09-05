@@ -13,14 +13,14 @@ import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
 import com.linkmon.model.Player;
 import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
-import com.linkmon.networking.NetworkService;
+import com.linkmon.networking.TcpService;
 import com.linkmon.networking.Packet;
 import com.linkmon.networking.PacketType;
 import com.linkmon.view.screens.ScreenType;
 
 public class NetworkController implements ControllerListener {
 	
-	NetworkService service;
+	TcpService service;
 	private EventManager eManager;
 	Player player;
 	
@@ -35,7 +35,7 @@ public class NetworkController implements ControllerListener {
 	private void connect() {
 
 		if(service == null)
-			service = new NetworkService(eManager);
+			service = new TcpService(eManager);
 		service.connect();
 	}
 	
