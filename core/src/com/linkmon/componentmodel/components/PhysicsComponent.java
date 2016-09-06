@@ -2,7 +2,7 @@ package com.linkmon.componentmodel.components;
 
 import com.linkmon.componentmodel.gameobject.GameObject;
 
-public class PhysicsComponent implements IPhysicsComponent {
+public abstract class PhysicsComponent implements IPhysicsComponent {
 	
 	protected float moveX = 0;
 	protected float moveY = 0;

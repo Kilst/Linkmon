@@ -6,6 +6,10 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.components.IRenderingComponent;
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.gameobject.ObjectFactory;
+import com.linkmon.componentmodel.gameobject.ObjectId;
+import com.linkmon.componentmodel.gamesave.AESEncryptor;
+import com.linkmon.componentmodel.gamesave.JsonSaver;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.eventmanager.EventManager;
 
@@ -35,6 +39,9 @@ public class World {
 		objects = new ArrayList<GameObject>();
 		objectQueueAdd = new ArrayList<GameObject>();
 		objectQueueRemove = new ArrayList<GameObject>();
+		
+		GameObject poopaScoopa = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOPA_SCOOPA);
+		addObjectToWorld(poopaScoopa);
 	}
 	
 	public void addRenderer(IRenderingComponent renderer) {

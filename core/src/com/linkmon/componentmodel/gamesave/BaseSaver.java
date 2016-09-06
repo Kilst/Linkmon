@@ -8,11 +8,11 @@ abstract class BaseSaver implements ISaveManager {
 		this.encryptor = encryptor;
 	}
 	
-	public String encryptSave(String fileData) {
+	public byte[] encryptSave(String fileData) {
 		return encryptor.encrypt(fileData);
 	}
 	
-	public String decryptSave(String fileData) {
+	public byte[] decryptSave(String fileData) {
 		return encryptor.decrypt(fileData);
 	}
 

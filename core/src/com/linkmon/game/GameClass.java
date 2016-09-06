@@ -137,36 +137,36 @@ public class GameClass extends Game implements ApplicationListener {
 			
         }
 		System.gc();
-		saveLoaded = false;
+		saveLoaded = true;
 		
 		service = new ControllerService(this, world.ui, eManager);
 		inputController = new LibgdxInputController(eManager);
 		
-		try{
-			player = GameSave.loadPlayerSave();
-			System.gc();
-			Thread.sleep(100);
-			
-			player.setItems(GameSave.loadPlayerItemsSave());
-			System.gc();
-			Thread.sleep(100);
-			player.setLinkmon(GameSave.loadLinkmonSave());
-			System.gc();
-			Thread.sleep(100);
-			player.getLinkmon().setStats(GameSave.loadLinkmonStatsSave());
-			System.gc();
-			Thread.sleep(100);
-			player.getLinkmon().setBirthDate(GameSave.loadLinkmonBirthDateSave());
-			System.gc();
-			Thread.sleep(100);
-			GameSave.updateLinkmon(player.getLinkmon());
-			System.gc();
-			Thread.sleep(100);
-			saveLoaded = true;
-		} catch(Exception e) {
-			saveLoaded = false;
-			Gdx.app.log("GameClass (LoadingSave)", "loadPlayerSave");
-		}
+//		try{
+//			player = GameSave.loadPlayerSave();
+//			System.gc();
+//			Thread.sleep(100);
+//			
+//			player.setItems(GameSave.loadPlayerItemsSave());
+//			System.gc();
+//			Thread.sleep(100);
+//			player.setLinkmon(GameSave.loadLinkmonSave());
+//			System.gc();
+//			Thread.sleep(100);
+//			player.getLinkmon().setStats(GameSave.loadLinkmonStatsSave());
+//			System.gc();
+//			Thread.sleep(100);
+//			player.getLinkmon().setBirthDate(GameSave.loadLinkmonBirthDateSave());
+//			System.gc();
+//			Thread.sleep(100);
+//			GameSave.updateLinkmon(player.getLinkmon());
+//			System.gc();
+//			Thread.sleep(100);
+//			saveLoaded = true;
+//		} catch(Exception e) {
+//			saveLoaded = false;
+//			Gdx.app.log("GameClass (LoadingSave)", "loadPlayerSave");
+//		}
 		
 //		try{
 //			player = GameSave.loadPlayerSave();

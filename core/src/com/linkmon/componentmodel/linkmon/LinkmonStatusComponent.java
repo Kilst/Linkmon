@@ -93,6 +93,10 @@ public class LinkmonStatusComponent implements IExtraComponents {
 	public void setBirthDate() {
 		this.birthDate = new BirthDate();
 	}
+	
+	public void setBirthDate(BirthDate birthDate) {
+		this.birthDate = birthDate;
+	}
 
 	public int getGrowthStage() {
 		// TODO Auto-generated method stub
@@ -102,5 +106,20 @@ public class LinkmonStatusComponent implements IExtraComponents {
 	public void updateGrowthStage() {
 		// TODO Auto-generated method stub
 		growthStage += 1;
+	}
+
+	public void setHungerLevel(int hungerLevel) {
+		// TODO Auto-generated method stub
+		this.hungerLevel = hungerLevel;
+	}
+
+	public void setSick(boolean isSick) {
+		// TODO Auto-generated method stub
+		this.isSick = isSick;
+	}
+
+	public void setCareMistakes(int careMistakes) {
+		// TODO Auto-generated method stub
+		this.careMistakes = careMistakes;
 	}
 }

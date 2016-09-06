@@ -77,32 +77,22 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
 		giftButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	
-//            	service = game.service;
-//            	service.connect();
-            	eManager.notify(new ControllerEvent(ControllerEvents.GET_MYSTERY_GIFT));
-            	//eManager.notify(new ViewEvent(ViewEvents.CONNECT_TO_SERVER));
-            	//game.setScreen(game.gameUi);
+            	eManager.notify(new ScreenEvent(ScreenEvents.GET_MYSTERY_GIFT));
             }
 		});
 		
 		connectButton.addListener(new ClickListener(){
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
-	            	
 	            	showSearch();
-//	            	service = game.service;
-//	            	service.connect();
-	            	eManager.notify(new ControllerEvent(ControllerEvents.SEARCH_FOR_OPPONENT));
-	            	//eManager.notify(new ViewEvent(ViewEvents.CONNECT_TO_SERVER));
-	            	//game.setScreen(game.gameUi);
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SEARCH_FOR_OPPONENT));
 	            }
 			});
 		
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ControllerEvent(ControllerEvents.CLOSE_CONNECTION));
+            	eManager.notify(new ScreenEvent(ScreenEvents.CLOSE_CONNECTION));
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
@@ -182,7 +172,7 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	searchingTable.remove();
-            	eManager.notify(new ControllerEvent(ControllerEvents.CANCEL_SEARCH));
+            	eManager.notify(new ScreenEvent(ScreenEvents.CANCEL_SEARCH));
             }
 		});
 		

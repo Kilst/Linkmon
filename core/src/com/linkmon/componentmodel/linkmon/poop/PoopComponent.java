@@ -16,6 +16,8 @@ public class PoopComponent implements IExtraComponents {
 	private List<GameObject> poopList;
 	private List<GameObject> poopListRemove;
 	
+	private long lastPooped  = System.nanoTime();
+	
 	private Timer timer;
 	
 	public PoopComponent() {
@@ -36,8 +38,16 @@ public class PoopComponent implements IExtraComponents {
 			poopList.add(poop);
 			object.getWorld().addObjectToWorld(poop);
 			
+			lastPooped = System.nanoTime();
+			
 			Gdx.app.log("PoopComponent", "Pooped!");
 		}
+	}
+	
+	public void removePoop(GameObject poop) {
+		poopListRemove.add(poop);
+		poop.getWorld().geteManager().removeInputListener(((PoopInputComponent)poop.getInputComponent()));
+		poop.getWorld().removeObjectFromWorld(poop);
 	}
 
 	@Override
@@ -63,5 +73,19 @@ public class PoopComponent implements IExtraComponents {
 	public List<GameObject> getPoopList() {
 		// TODO Auto-generated method stub
 		return poopList;
+	}
+	
+	public long getLastPooped() {
+		return lastPooped;
+	}
+
+	public void setLastPooped(long lastPooped) {
+		// TODO Auto-generated method stub
+		this.lastPooped = lastPooped;
+	}
+
+	public void setPoopList(ArrayList<GameObject> poopList) {
+		// TODO Auto-generated method stub
+		this.poopList = poopList;
 	}
 }

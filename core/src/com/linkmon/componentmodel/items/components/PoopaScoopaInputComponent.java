@@ -4,7 +4,7 @@ import com.linkmon.componentmodel.components.IInputComponent;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.eventmanager.input.InputEvent;
 
-public class HooverInputComponent implements IInputComponent {
+public class PoopaScoopaInputComponent implements IInputComponent {
 
 	@Override
 	public boolean onNotify(InputEvent event) {

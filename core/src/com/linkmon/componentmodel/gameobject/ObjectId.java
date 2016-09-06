@@ -12,4 +12,6 @@ public class ObjectId {
 	// Items 101 - 200
 	public static final int MEAT = 3;
 	public static final int SUPER_MEAT = 4;
+
+	public static final int POOPA_SCOOPA = 5;
 }

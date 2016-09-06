@@ -1,5 +1,6 @@
 package com.linkmon.componentmodel.linkmon;
 
+import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -62,5 +63,11 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 			move = false;
 			object.isMoving = false;
 		}
+	}
+
+	@Override
+	public void testCollision(GameObject gameObject, List<GameObject> objects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

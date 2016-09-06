@@ -33,7 +33,6 @@ public class PlayerController implements ScreenListener {
 	
 	public void useItem(GameObject item) {
 		((UsableItemComponent)item.getExtraComponents()).use(player.getLinkmon());
-		
 	}
 	
 	// View updates

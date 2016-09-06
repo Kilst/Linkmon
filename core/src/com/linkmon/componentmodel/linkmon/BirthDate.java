@@ -28,6 +28,18 @@ public class BirthDate {
 		
 	}
 
+	public BirthDate(int hour2, int minute2, int day2, int month2, int year2, long nano2) {
+		// TODO Auto-generated constructor stub
+		day = day2;
+		month = month2; // Jan starts at 0 for some reason..
+		year = year2;
+		
+		hour = hour2;
+		minute = minute2;
+		
+		nano = nano2;
+	}
+
 	public int getDay() {
 		return day;
 	}

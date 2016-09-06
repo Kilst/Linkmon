@@ -16,7 +16,7 @@ public class AABB {
 		this.y = y;
 		
 		this.width = width;
-		this.height = height;	
+		this.height = height;
 	}
 	
 	public void update(GameObject object) {
@@ -35,5 +35,22 @@ public class AABB {
 		// TODO Auto-generated method stub
 		return contains(position.x, position.y);
 	}
+	
+	public boolean contains(AABB aabb) {
+//	    return bottomLeft.x <= aabb.bottomLeft.x && bottomLeft.y <= aabb.bottomLeft.y
+//	        && aabb.topRight.x <= topRight.x && aabb.topRight.y <= topRight.y;
+	    if (x + width < aabb.x || 
+	    		y + height < aabb.y || 
+                x > aabb.x + aabb.width || 
+               y > aabb.y + aabb.height)
+            {
+                return false;
+            }
+	    else {
+	    	Gdx.app.log("AABB", "Collision detected!\nPoop X: " + aabb.x+ "\nScoopa X: " + x
+			+ "\nPoop Width: " + aabb.width + "\nScoopa Width: " + width);
+	    	return true;
+	    }
+	  }
 
 }

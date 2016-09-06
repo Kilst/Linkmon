@@ -152,13 +152,14 @@ public class GameObject {
 	}
 
 	public AABB getAabb() {
-		aabb = new AABB(x, y, height, height);
+		createAABB();
 		return aabb;
 	}
 
 	private void createAABB() {
 		// TODO Auto-generated method stub
-		aabb = new AABB(x, y, height, height);
+		if(aabb == null)
+			aabb = new AABB(x, y, width, height);
 	}
 
 	public void addInputComponent(IInputComponent inputComponent) {
@@ -174,5 +175,10 @@ public class GameObject {
 	public void setName(String name) {
 		// TODO Auto-generated method stub
 		this.name = name;
+	}
+
+	public int getType() {
+		// TODO Auto-generated method stub
+		return type;
 	}
 }
