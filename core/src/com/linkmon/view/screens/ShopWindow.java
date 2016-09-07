@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -35,7 +36,7 @@ import com.linkmon.view.screens.widgets.ItemButton;
 
 public class ShopWindow implements Screen, IShopItems {
 	
-	private Table container;
+	private Image img;
 	private Table innerContainer;
 	private Table table;
 	private Table tableLeft;
@@ -69,9 +70,13 @@ public class ShopWindow implements Screen, IShopItems {
 	
 	private long touchTime;
 	
+	private Skin skin;
+	
+	private Image heading;
+	
 	public ShopWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
-		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -82,21 +87,25 @@ public class ShopWindow implements Screen, IShopItems {
 		darken.setColor(1f, 1f, 1f, 0.7f);
 		
 		uiGroup = group;
-		container = new Table(skin);
-		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		img = new Image(skin2.getDrawable("TableUI"));
+		img.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		innerContainer = new Table();
-		innerContainer.setBackground(skin2.getDrawable("container"));
+//		innerContainer.setBackground(skin2.getDrawable("TableUI"));
+		innerContainer.setSize(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-150);
+		innerContainer.setY(25);
+		innerContainer.setX(50);
+		//innerContainer.debug();
 		
-		Image image = new Image(new TextureRegion(new Texture(Gdx.files.internal("shopButton.png"))));
+		heading = new Image(new TextureRegion(new Texture(Gdx.files.internal("shopButton.png"))));
 		
 		table = new Table();
 		
-		tableLeft = new Table(skin);
+		tableLeft = new Table();
 		tableLeft.setBackground(skin2.getDrawable("table"));
 		tableLeft.align(Align.topLeft);
 		
-		tableRight = new Table(skin);
+		tableRight = new Table();
 		tableRight.setBackground(skin2.getDrawable("table"));
 		
 		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
@@ -139,12 +148,11 @@ public class ShopWindow implements Screen, IShopItems {
 //		tableLeft.debug();
 //		tableRight.debug();
 		
-		innerContainer.add(image);
+		innerContainer.add(heading);
 		innerContainer.row();
 		innerContainer.add(table).expand().fill();
 		innerContainer.row();
 		innerContainer.add(backButton).align(Align.right).pad(5*WorldRenderer.scaleXY);
-		container.add(innerContainer).size(Gdx.graphics.getWidth()/1.2f*WorldRenderer.scaleXY, Gdx.graphics.getHeight()/1.2f*WorldRenderer.scaleXY);
 		addListeners();
 		
 		tableRight.setVisible(true);
@@ -229,7 +237,8 @@ public class ShopWindow implements Screen, IShopItems {
 	public void show() {
 		// TODO Auto-generated method stub
 		uiGroup.addActor(darken);
-		uiGroup.addActor(container);
+		uiGroup.addActor(img);
+		uiGroup.addActor(innerContainer);
 		uiGroup.toFront();
 	}
 
@@ -275,7 +284,8 @@ public class ShopWindow implements Screen, IShopItems {
 	public void hide() {
 		// TODO Auto-generated method stub
 		darken.remove();
-		container.remove();
+		img.remove();
+		innerContainer.remove();
 	}
 
 	@Override
@@ -301,9 +311,9 @@ public class ShopWindow implements Screen, IShopItems {
 	public void getShopItems(List<GameObject> items) {
 		// TODO Auto-generated method stub
 		for(GameObject shopItem : items) {
-			TextureRegion region = ResourceLoader.getItemRegionFromId(shopItem.getId());
-			item = new ItemButton(new TextureRegionDrawable(region), eManager, shopItem, this);
-			tableLeft.add(item).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY);
+			item = new ItemButton(null, eManager, shopItem, this);			
+			
+			tableLeft.add(item).expandX().fillX();
 		}
 	}
 

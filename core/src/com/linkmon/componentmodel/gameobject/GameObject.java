@@ -1,5 +1,7 @@
 package com.linkmon.componentmodel.gameobject;
 
+import java.util.List;
+
 import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.components.IExtraComponents;
 import com.linkmon.componentmodel.components.IInputComponent;
@@ -50,20 +52,37 @@ public class GameObject {
 		this.extraComponents = extraComponents;
 	}
 	
-	public void update(int inputType) {
+	public void update(List<GameObject> objects) {
 		
-		if(width > 0 && height > 0) {
-			createAABB();
-			aabb.update(this);
-		}
-		
+//		if(width > 0 && height > 0) {
+//			createAABB();
+//			aabb.update(this);
+//		}
+		updateInput();
+		updatePhysics(objects);
+		updateRendering();
+		updateExtras();
+	}
+	
+	public void updateInput() {
 		if(inputComponent != null)
 			inputComponent.update(this);
-		
-		if(physicsComponent != null)
-			physicsComponent.update(this);
+	}
+	
+	public void updatePhysics(List<GameObject> objects) {
+		if(physicsComponent != null) {
+			physicsComponent.update(this, objects);
+			if(aabb != null)
+				aabb.update(this);
+		}
+	}
+	
+	public void updateRendering() {
 		if(renderingComponent != null)
 			renderingComponent.update(this);
+	}
+	
+	public void updateExtras() {
 		if(extraComponents != null)
 			extraComponents.update(this);
 	}

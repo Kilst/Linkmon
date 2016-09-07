@@ -5,154 +5,92 @@ filter: Nearest,Nearest
 repeat: none
 menuBackground
   rotate: false
-  xy: 1, 549
+  xy: 1, 525
   size: 335, 469
   orig: 335, 469
   offset: 0, 0
   index: -1
 onlineBackground
   rotate: false
-  xy: 338, 786
+  xy: 338, 762
   size: 488, 232
   orig: 488, 232
   offset: 0, 0
   index: -1
+TableUI
+  rotate: false
+  xy: 338, 549
+  size: 362, 211
+  split: 167, 41, 170, 34
+  orig: 362, 211
+  offset: 0, 0
+  index: -1
 namePlate
   rotate: false
-  xy: 1, 392
+  xy: 1, 368
   size: 327, 155
   orig: 327, 155
   offset: 0, 0
   index: -1
 mainTitle
   rotate: false
-  xy: 338, 711
+  xy: 1, 293
   size: 263, 73
   orig: 263, 73
   offset: 0, 0
   index: -1
 attackButton
   rotate: false
-  xy: 828, 955
+  xy: 828, 931
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 backButton
   rotate: false
-  xy: 1, 327
+  xy: 1, 228
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 battleButton
   rotate: false
-  xy: 338, 646
+  xy: 828, 866
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 defenseButton
   rotate: false
-  xy: 603, 721
+  xy: 1, 163
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 errorHeading
   rotate: false
-  xy: 828, 890
+  xy: 828, 801
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 feedButton
   rotate: false
-  xy: 1, 262
+  xy: 1, 98
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 feedButtonGreen
   rotate: false
-  xy: 144, 327
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-healthButton
-  rotate: false
-  xy: 338, 581
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-medicButton
-  rotate: false
-  xy: 828, 825
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-mistakeHeading
-  rotate: false
-  xy: 1, 197
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-okayButton
-  rotate: false
-  xy: 144, 262
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-onlineButton
-  rotate: false
-  xy: 1, 132
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-rankUpHeading
-  rotate: false
-  xy: 144, 197
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-shopButton
-  rotate: false
-  xy: 1, 67
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-speedButton
-  rotate: false
-  xy: 144, 132
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-statsButton
-  rotate: false
-  xy: 1, 2
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-trainButton
-  rotate: false
-  xy: 144, 67
+  xy: 1, 33
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 popUp
   rotate: false
-  xy: 481, 609
+  xy: 702, 660
   size: 100, 100
   split: 34, 27, 34, 30
   orig: 100, 100
@@ -160,35 +98,105 @@ popUp
   index: -1
 statLabelATK
   rotate: false
-  xy: 144, 1
+  xy: 144, 227
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
-addButton
+healthButton
   rotate: false
-  xy: 746, 704
-  size: 80, 80
-  orig: 80, 80
+  xy: 144, 162
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+medicButton
+  rotate: false
+  xy: 144, 97
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+mistakeHeading
+  rotate: false
+  xy: 144, 32
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+okayButton
+  rotate: false
+  xy: 828, 736
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+onlineButton
+  rotate: false
+  xy: 804, 671
+  size: 141, 63
+  orig: 141, 63
   offset: 0, 0
   index: -1
 lightButton
   rotate: false
-  xy: 828, 747
+  xy: 702, 582
   size: 92, 76
   orig: 92, 76
   offset: 0, 0
   index: -1
+rankUpHeading
+  rotate: false
+  xy: 338, 484
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+shopButton
+  rotate: false
+  xy: 481, 484
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+speedButton
+  rotate: false
+  xy: 330, 419
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+statsButton
+  rotate: false
+  xy: 473, 419
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+trainButton
+  rotate: false
+  xy: 330, 354
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+addButton
+  rotate: false
+  xy: 473, 337
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
 battleTextBackground
   rotate: false
-  xy: 922, 743
+  xy: 624, 467
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 battleTextWindow
   rotate: false
-  xy: 287, 310
+  xy: 555, 337
   size: 80, 80
   split: 12, 12, 11, 11
   orig: 80, 80
@@ -196,100 +204,116 @@ battleTextWindow
   index: -1
 itemBox
   rotate: false
-  xy: 287, 228
+  xy: 706, 500
   size: 80, 80
   orig: 80, 80
+  offset: 0, 0
+  index: -1
+helpButton
+  rotate: false
+  xy: 266, 305
+  size: 56, 61
+  orig: 56, 61
   offset: 0, 0
   index: -1
 lighten
   rotate: false
-  xy: 287, 146
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-subtractButton
-  rotate: false
-  xy: 287, 64
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-whiteReverseVignette
-  rotate: false
-  xy: 828, 665
+  xy: 324, 272
   size: 80, 80
   orig: 80, 80
   offset: 0, 0
   index: -1
 table
   rotate: false
-  xy: 910, 677
+  xy: 406, 288
   size: 64, 64
   split: 11, 12, 14, 15
   orig: 64, 64
   offset: 0, 0
   index: -1
+subtractButton
+  rotate: false
+  xy: 472, 255
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+whiteReverseVignette
+  rotate: false
+  xy: 554, 255
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
 attackLabel
   rotate: false
-  xy: 338, 549
+  xy: 1, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+defenseLabel
+  rotate: false
+  xy: 706, 468
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+healthLabel
+  rotate: false
+  xy: 616, 435
   size: 85, 30
   orig: 85, 30
   offset: 0, 0
   index: -1
 container
   rotate: false
-  xy: 330, 484
+  xy: 637, 370
   size: 63, 63
   split: 11, 10, 12, 10
   orig: 63, 63
   offset: 0, 0
   index: -1
-helpButton
-  rotate: false
-  xy: 330, 421
-  size: 56, 61
-  orig: 56, 61
-  offset: 0, 0
-  index: -1
-defenseLabel
-  rotate: false
-  xy: 481, 577
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
-settingsButton
-  rotate: false
-  xy: 274, 1
-  size: 56, 61
-  orig: 56, 61
-  offset: 0, 0
-  index: -1
-healthLabel
-  rotate: false
-  xy: 603, 689
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
 rankLabel
   rotate: false
-  xy: 583, 657
+  xy: 804, 639
   size: 85, 30
   orig: 85, 30
   offset: 0, 0
   index: -1
 speedLabel
   rotate: false
-  xy: 583, 625
+  xy: 796, 607
   size: 85, 30
   orig: 85, 30
   offset: 0, 0
   index: -1
+settingsButton
+  rotate: false
+  xy: 637, 307
+  size: 56, 61
+  orig: 56, 61
+  offset: 0, 0
+  index: -1
+spacer
+  rotate: false
+  xy: 971, 962
+  size: 32, 32
+  split: 0, 0, 0, 1
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+spacerHor
+  rotate: false
+  xy: 971, 928
+  size: 32, 32
+  split: 0, 0, 0, 0
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 statBackground
   rotate: false
-  xy: 971, 986
+  xy: 971, 894
   size: 32, 32
   split: 0, 9, 9, 0
   orig: 32, 32
@@ -297,49 +321,49 @@ statBackground
   index: -1
 rank-a
   rotate: false
-  xy: 425, 549
+  xy: 88, 1
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 rank-b
   rotate: false
-  xy: 395, 517
+  xy: 891, 639
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 rank-c
   rotate: false
-  xy: 332, 32
+  xy: 883, 607
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 rank-d
   rotate: false
-  xy: 690, 689
+  xy: 971, 862
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 rank-e
   rotate: false
-  xy: 670, 657
+  xy: 971, 830
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 rank-s
   rotate: false
-  xy: 971, 954
+  xy: 971, 798
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 darkenWorld
   rotate: false
-  xy: 910, 667
+  xy: 947, 726
   size: 8, 8
   orig: 8, 8
   offset: 0, 0

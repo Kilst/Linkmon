@@ -30,7 +30,8 @@ public abstract class LibgdxAnimationComponent implements IAnimationComponent {
 	@Override
 	public void update(GameObject object) {
 		// TODO Auto-generated method stub
-		state.update(this, object);
+		if(state != null)
+			state.update(this, object);
 		updateCurrentAnimation();
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		

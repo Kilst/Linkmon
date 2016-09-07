@@ -19,4 +19,9 @@ public class PoopInputComponent extends InputComponent {
 		
 		super.update(object);		
 	}
+
+	public void setClicked(boolean clicked) {
+		// TODO Auto-generated method stub
+		this.clicked = clicked;
+	}
 }

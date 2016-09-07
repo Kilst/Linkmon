@@ -1,12 +1,15 @@
 package com.linkmon.componentmodel.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.components.CollisionComponent;
 import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.components.PoopaScoopaPhysicsComponent;
+import com.linkmon.componentmodel.libgdx.LibgdxAnimationComponent;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.componentmodel.libgdx.LinkmonAnimationComponent;
 import com.linkmon.componentmodel.libgdx.LinkmonRenderingComponent;
+import com.linkmon.componentmodel.libgdx.PoopaScoopaAnimationComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
@@ -29,7 +32,7 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 		
 		linkmon.addInputComponent(new LinkmonInputComponent(eManager, linkmon));
 		linkmon.setX(0);
-		linkmon.setY(40);
+		linkmon.setY(45);
 		//linkmon.getPhysicsComponent().setMoveToX(700);
 		
 		return linkmon;
@@ -51,9 +54,11 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 			}
 			case (ObjectId.POOPA_SCOOPA) : {
 				ItemComponent foodComp = new ItemComponent();
-				GameObject poopaScoopa2001 = new GameObject(8, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new PoopaScoopaPhysicsComponent(), foodComp);
+				GameObject poopaScoopa2001 = new GameObject(ObjectId.POOPA_SCOOPA, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new PoopaScoopaPhysicsComponent(new CollisionComponent()), foodComp);
 				poopaScoopa2001.setName("PoopaScoopa2001");
-				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
+				poopaScoopa2001.setY(45);
+				//((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
+				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setAnimation(new PoopaScoopaAnimationComponent(poopaScoopa2001));
 				return poopaScoopa2001;
 			}
 		}

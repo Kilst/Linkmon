@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -38,7 +39,6 @@ public class ItemWindow implements Screen, IPlayerItems {
 	private Table container;
 	private Table table;
 	private Group uiGroup;
-	private List<ItemButton> items;
 
 	
 	private Button backButton;
@@ -61,8 +61,6 @@ public class ItemWindow implements Screen, IPlayerItems {
 		
 		table = new Table(skin);
 		table.setBackground(skin.getDrawable("default-rect"));
-		
-		items = new ArrayList<ItemButton>();
 		
 		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
 		backButton = new ImageButton(back);
@@ -139,8 +137,8 @@ public class ItemWindow implements Screen, IPlayerItems {
 			else {
 				TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
 				ItemButton itemButton = new ItemButton(new TextureRegionDrawable(region), eManager, item, this);
-				items.add(itemButton);
 				table.addActor(itemButton);
+				
 			}
 		}
 	}

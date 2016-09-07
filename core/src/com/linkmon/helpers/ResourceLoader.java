@@ -101,41 +101,41 @@ public class ResourceLoader {
 		switch(id)
 		{
 			case LinkmonIds.FIRE_BABY: {
-				atlas = new TextureAtlas("Animations/fire-baby-idle.pack");
+				atlas = assetManager.get("Animations/fire-baby-idle.pack");
 				regions[0] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-baby-walk.pack");
+				atlas = assetManager.get("Animations/fire-baby-walk.pack");
 				regions[1] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-baby-wave.pack");
+				atlas = assetManager.get("Animations/fire-baby-wave.pack");
 				regions[2] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-sleep.pack");
+				atlas = assetManager.get("Animations/fire-boy-sleep.pack");
 				regions[3] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-angry.pack");
+				atlas = assetManager.get("Animations/fire-boy-angry.pack");
 				regions[4] = atlas.getRegions();
 		        break;
 			}
 			case LinkmonIds.FIRE_BOY: {
-				atlas = new TextureAtlas("Animations/fire-boy-idle.pack");
+				atlas = assetManager.get("Animations/fire-boy-idle.pack");
 				regions[0] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-walk.pack");
+				atlas = assetManager.get("Animations/fire-boy-walk.pack");
 				regions[1] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-wave.pack");
+				atlas = assetManager.get("Animations/fire-boy-wave.pack");
 				regions[2] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-sleep.pack");
+				atlas = assetManager.get("Animations/fire-boy-sleep.pack");
 				regions[3] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-angry.pack");
+				atlas = assetManager.get("Animations/fire-boy-angry.pack");
 				regions[4] = atlas.getRegions();
 		        break;
 			}
 			case LinkmonIds.FIRE_CHAMPION: {
-				atlas = new TextureAtlas("Animations/fire-baby-idle.pack");
+				atlas = assetManager.get("Animations/fire-baby-idle.pack");
 				regions[0] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-baby-walk.pack");
+				atlas = assetManager.get("Animations/fire-baby-walk.pack");
 				regions[1] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-baby-wave.pack");
+				atlas = assetManager.get("Animations/fire-baby-wave.pack");
 				regions[2] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-sleep.pack");
+				atlas = assetManager.get("Animations/fire-boy-sleep.pack");
 				regions[3] = atlas.getRegions();
-				atlas = new TextureAtlas("Animations/fire-boy-angry.pack");
+				atlas = assetManager.get("Animations/fire-boy-angry.pack");
 				regions[4] = atlas.getRegions();
 		        break;
 			}	
@@ -165,6 +165,20 @@ public class ResourceLoader {
 			assetManager.load("thoughtBubble(poop).png", Texture.class);
 			assetManager.load("thoughtBubble(sleep).png", Texture.class);
 			
+			assetManager.load("Animations/fire-baby-idle.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-baby-walk.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-baby-wave.pack", TextureAtlas.class);
+//			assetManager.load("Animations/fire-baby-sleep.pack", TextureAtlas.class);
+//			assetManager.load("Animations/fire-baby-angry.pack", TextureAtlas.class);
+			
+			assetManager.load("Animations/fire-boy-idle.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-boy-walk.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-boy-wave.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-boy-sleep.pack", TextureAtlas.class);
+			assetManager.load("Animations/fire-boy-angry.pack", TextureAtlas.class);
+			
+			assetManager.load("Animations/PoopaScoopa/PoopaScoopa.pack", TextureAtlas.class);
+			
 			assetManager.load(UIPath, Texture.class);
 			assetManager.load(UIAtlas, TextureAtlas.class);
 		}
@@ -193,25 +207,39 @@ public class ResourceLoader {
 //		assetManager.unload("maps/tileTextures/sickle.png");
 		loaded = false;
 	}
+	
+	public static Array<AtlasRegion> getAnimationFromId(int id) {
+		// TODO Auto-generated method stub
+		TextureAtlas atlas = null;
+		Array<AtlasRegion> region = null;
+		switch(id)
+		{
+			case ObjectId.POOPA_SCOOPA: {
+				atlas = new TextureAtlas("Animations/PoopaScoopa/PoopaScoopa.pack");
+				region = atlas.getRegions();
+		        break;
+			}
+		}
+		return region;
+	}
 
 	public static TextureRegion getItemRegionFromId(int id) {
 		// TODO Auto-generated method stub
 		Texture tex;
-		TextureAtlas atlas = null;
 		TextureRegion region = null;
 		switch(id)
 		{
-			case ItemIds.LARGE_MEAT: {
+			case ObjectId.MEAT: {
 				tex = ResourceLoader.assetManager.get("meat.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;
 			}
-			case ItemIds.SUPER_MEAT: {
+			case ObjectId.SUPER_MEAT: {
 				tex = ResourceLoader.assetManager.get("meat.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;
 			}
-			case ItemIds.REVIVE_POTION: {
+			case ObjectId.REVIVE_POTION: {
 				tex = ResourceLoader.assetManager.get("potion.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;

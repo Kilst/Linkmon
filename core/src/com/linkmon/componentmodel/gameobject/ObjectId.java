@@ -14,4 +14,6 @@ public class ObjectId {
 	public static final int SUPER_MEAT = 4;
 
 	public static final int POOPA_SCOOPA = 5;
+
+	public static final int REVIVE_POTION = 6;
 }

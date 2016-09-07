@@ -18,7 +18,7 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 	}
 	
 	@Override
-	public void update(GameObject object) {
+	public void update(GameObject object, List<GameObject> objects) {
 		// TODO Auto-generated method stub
 		if(linkmon == null) {
 			linkmon = object;
@@ -31,9 +31,6 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 			Gdx.app.log("LinkmonPhyicsComponent", "getWalkTimer timer ended");
 			move = true;
 		}
-		
-		if(move)
-			move(object);
 	}
 	
 	@Override
@@ -63,11 +60,5 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 			move = false;
 			object.isMoving = false;
 		}
-	}
-
-	@Override
-	public void testCollision(GameObject gameObject, List<GameObject> objects) {
-		// TODO Auto-generated method stub
-		
 	}
 }

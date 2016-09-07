@@ -39,9 +39,6 @@ public class World {
 		objects = new ArrayList<GameObject>();
 		objectQueueAdd = new ArrayList<GameObject>();
 		objectQueueRemove = new ArrayList<GameObject>();
-		
-		GameObject poopaScoopa = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOPA_SCOOPA);
-		addObjectToWorld(poopaScoopa);
 	}
 	
 	public void addRenderer(IRenderingComponent renderer) {
@@ -79,7 +76,7 @@ public class World {
 		updateObjects();
 		
 		for(GameObject object : objects) {
-			object.update(5);
+			object.update(objects);
 		}
 	}
 

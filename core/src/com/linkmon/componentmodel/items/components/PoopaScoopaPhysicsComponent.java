@@ -3,21 +3,41 @@ package com.linkmon.componentmodel.items.components;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.components.CollisionComponent;
+import com.linkmon.componentmodel.components.ICollisionComponent;
 import com.linkmon.componentmodel.components.PhysicsComponent;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.gameobject.ObjectType;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.poop.PoopComponent;
+import com.linkmon.componentmodel.linkmon.poop.PoopInputComponent;
 import com.linkmon.model.gameobject.Direction;
 
 public class PoopaScoopaPhysicsComponent extends PhysicsComponent {
 	
+	public PoopaScoopaPhysicsComponent(CollisionComponent collisionComponent) {
+		super(collisionComponent);
+		// TODO Auto-generated constructor stub
+		move = true;
+	}
+
 	int veloX = -1;
 
 	@Override
-	public void update(GameObject object) {
-		// TODO Auto-generated method stub
-		move(object);
+	public void update(GameObject object, List<GameObject> objects) {
+		if(collisionComponent != null)
+			collisionComponent.testCollision(object, objects);
+		
+		if(move)
+			move(object);
+		
+		if(collisionComponent != null)
+			for(GameObject collideObject : collisionComponent.getCollisionList()) {
+				if(collideObject.getType() == ObjectType.POOP) {
+					// Setting clicked removes the poop completely next frame when PoopComonent updates.
+					((PoopInputComponent)collideObject.getInputComponent()).setClicked(true);
+				}
+			}
 	}
 	
 	@Override
@@ -35,29 +55,5 @@ public class PoopaScoopaPhysicsComponent extends PhysicsComponent {
 		}
 		
 		object.setX(object.getX() + veloX);
-	}
-
-	@Override
-	public void testCollision(GameObject gameObject, List<GameObject> objects) {
-		// TODO Auto-generated method stub
-		List<GameObject> poopList = null;
-		PoopComponent pC = null;
-		
-		for(GameObject object : objects) {
-			if(object != gameObject) {
-				if(object.getType() == ObjectType.LINKMON) {
-					pC = ((LinkmonExtraComponents)object.getExtraComponents()).getPoopComponent();
-					poopList = pC.getPoopList();
-					
-					for(GameObject poop : poopList) {
-						if(gameObject.getAabb().contains(poop.getAabb())) {
-							Gdx.app.log("PoopaScoopaPhysics", "Collision detected!\nPoop X: " + poop.getX()+ "\nScoopa X: " + gameObject.getX()
-							+ "\nPoop Width: " + poop.getWidth() + "\nScoopa Width: " + gameObject.getWidth());
-							pC.removePoop(poop);
-						}
-					}
-				}
-			}
-		}
 	}
 }

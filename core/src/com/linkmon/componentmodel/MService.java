@@ -1,6 +1,9 @@
 package com.linkmon.componentmodel;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.gameobject.ObjectFactory;
+import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.gamesave.AESEncryptor;
 import com.linkmon.componentmodel.gamesave.JsonSaver;
 import com.linkmon.eventmanager.EventManager;
@@ -36,6 +39,9 @@ public class MService {
 		}
 		catch(Exception e) {
 			newGame(0);
+			
+			GameObject poopaScoopa = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOPA_SCOOPA);
+			world.addObjectToWorld(poopaScoopa);
 		}
 	}
 	

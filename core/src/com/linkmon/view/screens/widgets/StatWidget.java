@@ -22,6 +22,8 @@ public class StatWidget extends Table {
 		this.setBackground(skin2.getDrawable("statBackground"));
 		this.getColor().a = 0.7f;
 		
+		this.setSize(width, height);
+		
 		pBar = new MyProgressBar(width, 15);
 		//pBar.alignMiddle(15);
 		
@@ -31,10 +33,10 @@ public class StatWidget extends Table {
 		statAmount.setAlignment(Align.left);
 		statAmount.setFontScale(2f);
 		
-		this.add(statType).fill();
-		this.add(statAmount).fill();
+		this.add(statType).fill().expand();
+		this.add(statAmount).fill().expand();
 		this.row();
-		this.add(pBar).colspan(2).size(width, 15).expand().pad(3*WorldRenderer.scaleXY);
+//		this.add(pBar).colspan(2).size(width, 15).expand().pad(3*WorldRenderer.scaleXY);
 		
 		this.debug();
 	}

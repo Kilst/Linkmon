@@ -17,15 +17,15 @@ public class LibgdxWorldRenderer {
 	}
 	
 	public void render(Batch batch) {
+		
 		world.update();
 		
 		if(world.renderer == null)
 			world.renderer = new LibgdxRenderingComponent();
+		
 		((LibgdxRenderingComponent)world.renderer).draw(batch, null);
 		
 		for(GameObject object : world.getObjects()) {
-			if(object.getPhysicsComponent() != null)
-				object.getPhysicsComponent().testCollision(object, world.getObjects());
 			((LibgdxRenderingComponent)object.getRenderer()).draw(batch, object);
 		}
 	}
