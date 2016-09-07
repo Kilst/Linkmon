@@ -20,6 +20,7 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 	@Override
 	public void update(GameObject object, List<GameObject> objects) {
 		// TODO Auto-generated method stub
+		super.update(object, objects);
 		if(linkmon == null) {
 			linkmon = object;
 			timers = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getTimers();

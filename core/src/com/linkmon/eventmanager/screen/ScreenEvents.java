@@ -24,4 +24,9 @@ public class ScreenEvents {
 	public static final int GET_MYSTERY_GIFT = 104;
 	public static final int CANCEL_SEARCH = 105;
 	public static final int GET_SERVER_WELCOME = 106;
+	
+	
+	
+	// Debugging
+	public static final int DEBUGGING = 1001;
 }

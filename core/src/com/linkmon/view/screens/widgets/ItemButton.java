@@ -48,7 +48,7 @@ public class ItemButton extends Table {
 		this.item = item;
 		screen = view;
 		
-		amount = new Label("" + ((FoodComponent)item.getExtraComponents()).getQuantity(), skin);
+		amount = new Label("Own: " + ((FoodComponent)item.getExtraComponents()).getQuantity(), skin);
 		
 		
 		TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
@@ -66,17 +66,18 @@ public class ItemButton extends Table {
 		
 		this.add(itemImg).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY).align(Align.left);
 		itemImg.setTouchable(Touchable.disabled);
-		this.add(amount).align(Align.bottom);
-		amount.setTouchable(Touchable.disabled);
 		
 		this.add(img).size(6, 80).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(itemName);
+		this.add(itemName).expandX();
 		itemName.setTouchable(Touchable.disabled);
 		
-		this.add(img2).size(6, 80).align(Align.left).padLeft(15).padRight(15).expandX();
+		this.add(img2).size(6, 80).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
+		
+		this.add(amount);
+		amount.setTouchable(Touchable.disabled);
 		
 		
 		this.addListener(new ClickListener(){

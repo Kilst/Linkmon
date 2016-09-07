@@ -3,6 +3,8 @@ package com.linkmon.componentmodel.components;
 import java.util.List;
 
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.gameobject.ObjectType;
+import com.linkmon.componentmodel.linkmon.poop.PoopInputComponent;
 
 public abstract class PhysicsComponent implements IPhysicsComponent {
 	
@@ -19,6 +21,15 @@ public abstract class PhysicsComponent implements IPhysicsComponent {
 	
 	public PhysicsComponent(CollisionComponent collisionComponent) {
 		this.collisionComponent = collisionComponent;
+	}
+	
+	@Override
+	public void update(GameObject object, List<GameObject> objects) {
+		if(collisionComponent != null)
+			collisionComponent.testCollision(object, objects);
+		
+		if(move)
+			move(object);
 	}
 
 	public void setMoveTo(float x, float y) {

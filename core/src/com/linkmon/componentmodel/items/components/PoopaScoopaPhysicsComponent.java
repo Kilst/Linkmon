@@ -25,11 +25,7 @@ public class PoopaScoopaPhysicsComponent extends PhysicsComponent {
 
 	@Override
 	public void update(GameObject object, List<GameObject> objects) {
-		if(collisionComponent != null)
-			collisionComponent.testCollision(object, objects);
-		
-		if(move)
-			move(object);
+		super.update(object, objects);
 		
 		if(collisionComponent != null)
 			for(GameObject collideObject : collisionComponent.getCollisionList()) {

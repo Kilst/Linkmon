@@ -8,6 +8,7 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.model.gameobject.linkmon.StatType;
+import com.linkmon.view.screens.DebuggingScreen;
 import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 
@@ -63,6 +64,10 @@ public class LinkmonController implements ScreenListener {
 			}
 			case(ScreenEvents.GET_LINKMON_ADDED_STATS): {
 				getLinkmonAddedStats((ILinkmonAddedStats) event.screen);
+				return false;
+			}
+			case(ScreenEvents.DEBUGGING): {
+				((DebuggingScreen)event.screen).updateLinkmonPosition(linkmon.getX(), linkmon.getY());
 				return false;
 			}
 		}

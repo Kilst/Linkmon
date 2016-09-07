@@ -2,7 +2,9 @@ package com.linkmon.componentcontroller;
 
 import com.linkmon.componentmodel.World;
 import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.view.screens.DebuggingScreen;
 
 public class WorldController implements ScreenListener {
 	
@@ -26,6 +28,12 @@ public class WorldController implements ScreenListener {
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ScreenEvents.DEBUGGING): {
+				((DebuggingScreen)event.screen).updateObjectCount(world.getObjects().size());
+				return false;
+			}
+		}
 		return false;
 	}
 

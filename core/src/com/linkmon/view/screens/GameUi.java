@@ -172,7 +172,7 @@ public class GameUi implements Screen, ViewListener {
 	
 	private void addListeners() {
 		
-	train.addListener(new ClickListener(){
+		train.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
@@ -222,6 +222,12 @@ public class GameUi implements Screen, ViewListener {
         		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
         		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
             	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, 1, strings));
+            	}
+		});
+		settings.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.DEBUGGING_SCREEN));
             	}
 		});
 	}
