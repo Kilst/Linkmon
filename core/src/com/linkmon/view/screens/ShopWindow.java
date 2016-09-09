@@ -31,11 +31,11 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
 import com.linkmon.view.WorldRenderer;
-import com.linkmon.view.screens.interfaces.IShopItems;
+import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.ItemButton;
 
-public class ShopWindow implements Screen, IShopItems {
+public class ShopWindow implements Screen, IShop {
 	
 	private Image img;
 	private Table innerContainer;
@@ -77,6 +77,10 @@ public class ShopWindow implements Screen, IShopItems {
 	
 	private Image heading;
 	
+	Label playerGold;
+	Image coinsImage;
+	String goldString = "Gold: ";
+	
 	public ShopWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
@@ -84,6 +88,9 @@ public class ShopWindow implements Screen, IShopItems {
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
+		
+		playerGold = new Label(goldString, skin);
+		coinsImage = new Image(skin2.getDrawable("coins"));
 		
 		darken = new Image(skin2.getDrawable("darkenWorld"));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -149,11 +156,16 @@ public class ShopWindow implements Screen, IShopItems {
 //		tableLeft.debug();
 //		tableRight.debug();
 		
-		innerContainer.add(heading);
+		innerContainer.add(heading).colspan(3);
 		innerContainer.row();
-		innerContainer.add(table).expand().fill();
+		innerContainer.add(tableRight).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		innerContainer.add(tableLeft).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY).colspan(2);
 		innerContainer.row();
-		innerContainer.add(backButton).align(Align.right).pad(5*WorldRenderer.scaleXY);
+		Table bottomTable = new Table();
+		bottomTable.add(playerGold).padLeft(15*WorldRenderer.scaleXY);
+		bottomTable.add(coinsImage).align(Align.left).padLeft(15*WorldRenderer.scaleXY);
+		bottomTable.add(backButton).align(Align.right).pad(5*WorldRenderer.scaleXY).expandX();
+		innerContainer.add(bottomTable).colspan(3).expandX().fillX();
 		addListeners();
 		
 		tableRight.setVisible(true);
@@ -326,6 +338,12 @@ public class ShopWindow implements Screen, IShopItems {
 			tableLeft.add(item).expandX().fillX();
 			tableLeft.row();
 		}
+	}
+
+	@Override
+	public void getPlayerGold(int gold) {
+		// TODO Auto-generated method stub
+		playerGold.setText(goldString+gold);
 	}
 
 }

@@ -7,7 +7,7 @@ import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
-import com.linkmon.view.screens.interfaces.IShopItems;
+import com.linkmon.view.screens.interfaces.IShop;
 
 public class ShopController implements ScreenListener {
 	
@@ -19,7 +19,7 @@ public class ShopController implements ScreenListener {
 	
 	// View updates
 	
-		public void getShopItems(IShopItems window) {
+		public void getShopItems(IShop window) {
 			window.getShopItems(shop.getItems());
 		}
 
@@ -28,7 +28,7 @@ public class ShopController implements ScreenListener {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.GET_SHOP_ITEMS): {
-				getShopItems((IShopItems)event.screen);
+				getShopItems((IShop)event.screen);
 				return false;
 			}
 		}

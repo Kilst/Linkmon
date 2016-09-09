@@ -12,6 +12,7 @@ import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
+import com.linkmon.view.screens.interfaces.IShop;
 
 public class PlayerController implements ScreenListener {
 	
@@ -32,7 +33,7 @@ public class PlayerController implements ScreenListener {
 	}
 	
 	public void useItem(GameObject item) {
-		((UsableItemComponent)item.getExtraComponents()).use(player.getLinkmon());
+		((UsableItemComponent)item.getExtraComponents()).use(player.getLinkmon(), player.getWorld());
 	}
 	
 	// View updates
@@ -63,6 +64,10 @@ public class PlayerController implements ScreenListener {
 			}
 			case(ScreenEvents.GET_PLAYER_ITEMS): {
 				getPlayerItems((IPlayerItems) event.screen);
+				return false;
+			}
+			case(ScreenEvents.GET_SHOP_ITEMS): {
+				((IShop)event.screen).getPlayerGold(player.getGold());
 				return false;
 			}
 		}

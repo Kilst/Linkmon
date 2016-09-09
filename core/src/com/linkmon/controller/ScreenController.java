@@ -30,7 +30,7 @@ import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
-import com.linkmon.view.screens.interfaces.IShopItems;
+import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.traingames.AttackGame;
 
 public class ScreenController implements ControllerListener {

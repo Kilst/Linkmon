@@ -1,5 +1,6 @@
 package com.linkmon.componentmodel.items;
 
+import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 
@@ -8,7 +9,7 @@ public class FoodComponent extends ItemComponent implements UsableItemComponent 
 	private int feedAmount = 100;
 
 	@Override
-	public void use(GameObject object) {
+	public void use(GameObject object, World world) {
 		// TODO Auto-generated method stub
 		((LinkmonExtraComponents)object.getExtraComponents()).getStatus().addHungerLevel(feedAmount);
 	}

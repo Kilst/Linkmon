@@ -53,7 +53,7 @@ public class MService {
 		
 		world = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		player = new Player(eManager, eggChoice);
+		player = new Player(eManager, eggChoice, world);
 //		jsonSaver = new JsonSaver(new AESEncryptor());
 //		jsonSaver.save(player);
 		shop = new Shop();

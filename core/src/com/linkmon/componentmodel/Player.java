@@ -35,6 +35,8 @@ public class Player {
 	
 	private EventManager eManager;
 	
+	private World world;
+	
 	public Player() {
 		
 	}
@@ -43,8 +45,10 @@ public class Player {
 		this.eManager = eManager;
 	}
 	
-	public Player(EventManager eManager, int eggChoice) {
+	public Player(EventManager eManager, int eggChoice, World world) {
 		linkmon = ObjectFactory.getInstance().createLinkmon(eggChoice);
+		
+		this.world = world;
 		
 		gold = 15000;
 		
@@ -149,5 +153,13 @@ public class Player {
 	public void setLinkmon(GameObject savedLinkmon) {
 		// TODO Auto-generated method stub
 		this.linkmon = savedLinkmon;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 }

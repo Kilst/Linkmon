@@ -110,11 +110,11 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		itemText = new Label("Item Name",skin);
 		
-		tableRight.add(itemBox).expand().align(Align.top);
+		tableRight.add(itemBox).expand();
 		tableRight.row();
 		tableRight.add(itemText).expand();
 		tableRight.row();
-		tableRight.add(feedButton).expand().align(Align.bottom).padTop(5*WorldRenderer.scaleXY);
+		tableRight.add(feedButton).expand().align(Align.bottom).pad(5*WorldRenderer.scaleXY);
 		
 		table.add(tableRight).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
 		table.add(tableLeft).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);

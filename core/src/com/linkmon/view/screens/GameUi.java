@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.linkmon.controller.LinkmonController;
 import com.linkmon.controller.PlayerController;
 import com.linkmon.eventmanager.EventManager;
@@ -50,11 +52,12 @@ public class GameUi implements Screen, ViewListener {
 	Button help;
 	Button settings;
 	
-	Button light;
+	private ImageButton light;
 	
 	Button online;
 	
 	Label playerGold;
+	Image coinsImage;
 	String goldString;
 	Label time;
 	
@@ -68,11 +71,13 @@ public class GameUi implements Screen, ViewListener {
 	private EventManager eManager;
 	
 	private BitmapFont font;
-	Skin skin2;
+	private Skin skin2;
 	
 	MyProgressBar pBar;
 	
 	public Label fpsLabel;
+	
+	private boolean lightOn = false;
 	
 	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
 		
@@ -113,6 +118,7 @@ public class GameUi implements Screen, ViewListener {
 		labelStyle.font = font;
 		
 		playerGold = new Label("Gold: ", labelStyle);
+		coinsImage = new Image(skin2.getDrawable("coins"));
 		hunger = new Label("Hunger: ", labelStyle);
 		
 		pBar = new MyProgressBar(150, 20);
@@ -128,10 +134,11 @@ public class GameUi implements Screen, ViewListener {
 		
 		help = new ImageButton(skin2.getDrawable("helpButton"));
 		settings = new ImageButton(skin2.getDrawable("settingsButton"));
-		light = new ImageButton(skin2.getDrawable("lightButton"));
+		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
 		light.setPosition(0, (Gdx.graphics.getHeight() - 30*WorldRenderer.scaleY)-light.getHeight());
 		
-		containerTop.add(playerGold).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleY);
+		containerTop.add(playerGold).height(30*WorldRenderer.scaleY).padRight(5);
+		containerTop.add(coinsImage).align(Align.left).expandX();
 		containerTop.add(hunger).height(30*WorldRenderer.scaleY);
 		containerTop.add(pBar).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleY);
 		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleY);
@@ -213,7 +220,15 @@ public class GameUi implements Screen, ViewListener {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP));
+            	if(light.isChecked()) {
+            		Gdx.app.log("MAINUI", "Light on");
+            		light.setChecked(true);
             	}
+            	else if(!light.isChecked()) {
+            		Gdx.app.log("MAINUI", "Light off");
+            		light.setChecked(false);
+            	}
+            }
 		});
 		help.addListener(new ClickListener(){
             @Override 
