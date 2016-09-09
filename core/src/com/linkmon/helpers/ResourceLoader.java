@@ -159,7 +159,7 @@ public class ResourceLoader {
 			assetManager.load("my-robot.png", Texture.class);
 			assetManager.load("fire-boy.png", Texture.class);
 			assetManager.load("meat.png", Texture.class);
-			assetManager.load("potion.png", Texture.class);
+			assetManager.load("starBall.png", Texture.class);
 			assetManager.load("poop.png", Texture.class);
 			assetManager.load("thoughtBubble(food).png", Texture.class);
 			assetManager.load("thoughtBubble(poop).png", Texture.class);
@@ -240,7 +240,7 @@ public class ResourceLoader {
 		        break;
 			}
 			case ObjectId.REVIVE_POTION: {
-				tex = ResourceLoader.assetManager.get("potion.png", Texture.class);
+				tex = ResourceLoader.assetManager.get("starBall.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;
 			}

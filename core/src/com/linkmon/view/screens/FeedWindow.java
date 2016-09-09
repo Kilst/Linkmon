@@ -1,5 +1,6 @@
 package com.linkmon.view.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -43,7 +44,7 @@ import com.linkmon.view.screens.widgets.ItemButton;
 
 public class FeedWindow implements Screen, IPlayerItems {
 	
-	private Table container;
+	private Image container;
 	private Table innerContainer;
 	private Table table;
 	private Table tableLeft;
@@ -52,6 +53,9 @@ public class FeedWindow implements Screen, IPlayerItems {
 	private ItemButton food;
 
 	private GameObject selectedItem;
+	
+	private ItemButton item;
+	private List<ItemButton> buttonList;
 	
 	private Button backButton;
 	private Button feedButton;
@@ -79,22 +83,22 @@ public class FeedWindow implements Screen, IPlayerItems {
 		darken.setColor(1f, 1f, 1f, 0.7f);
 		
 		uiGroup = group;
-		container = new Table(skin);
+		container = new Image(skin2.getDrawable("feedBackground"));
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		innerContainer = new Table();
-		innerContainer.setBackground(skin2.getDrawable("container"));
+		innerContainer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Image image = new Image(new TextureRegion(new Texture(Gdx.files.internal("feedButton.png"))));
 		
 		table = new Table();
 		
 		tableLeft = new Table(skin);
-		tableLeft.setBackground(skin2.getDrawable("table"));
+		tableLeft.setBackground(skin2.getDrawable("statsTable"));
 		tableLeft.align(Align.topLeft);
 		
 		tableRight = new Table(skin);
-		tableRight.setBackground(skin2.getDrawable("table"));
+		tableRight.setBackground(skin2.getDrawable("statsTable"));
 		
 		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
 		backButton = new ImageButton(back);
@@ -124,7 +128,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		innerContainer.add(table).expand().fill();
 		innerContainer.row();
 		innerContainer.add(backButton).align(Align.right).size(128*WorldRenderer.scaleXY, 64*WorldRenderer.scaleXY);
-		container.add(innerContainer).size(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/1.5f);
+//		container.add(innerContainer).size(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/1.5f);
 		addListeners();
 		
 		tableRight.setVisible(true);
@@ -157,6 +161,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		// TODO Auto-generated method stub
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
+		uiGroup.addActor(innerContainer);
 		uiGroup.toFront();
 	}
 
@@ -188,6 +193,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 	public void hide() {
 		// TODO Auto-generated method stub
 		darken.remove();
+		innerContainer.remove();
 		container.remove();
 	}
 
@@ -200,6 +206,12 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void setSelectedItem(GameObject item) {
 		// TODO Auto-generated method stub
+		if(selectedItem != null) {
+			for(ItemButton button : buttonList) {
+				button.testSelected(selectedItem.getId());
+			}
+		}
+		
 		selectedItem = item;
 		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedItem.getId()).getTexture());
 //		itemText.setFontScale(0.5f);
@@ -209,20 +221,14 @@ public class FeedWindow implements Screen, IPlayerItems {
 
 	@Override
 	public void getPlayerItems(List<GameObject> items) {
-		Tree tree = new Tree(skin);
-		// TODO Auto-generated method stub
+		buttonList = new ArrayList<ItemButton>();
 		
-		Gdx.app.log("ObjectFactory", "Items: " + items.size());
-		Node node;
-		for(GameObject item : items) {
-			if(item.getExtraComponents() instanceof FoodComponent) {
-				TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
-				food = new ItemButton(new TextureRegionDrawable(region), eManager, item, this);
-				node = new Node(food);
-				tree.add(node);
-			}
+		for(GameObject feedItem : items) {
+			item = new ItemButton(null, eManager, feedItem, this);			
+			buttonList.add(item);
+			tableLeft.add(item).expandX().fillX();
+			tableLeft.row();
 		}
-		tableLeft.add(tree).expand().fill();
 	}
 
 }

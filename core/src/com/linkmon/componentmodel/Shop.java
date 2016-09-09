@@ -16,6 +16,7 @@ public class Shop {
 		items = new ArrayList<GameObject>();
 		
 		items.add(ObjectFactory.getInstance().getObjectFromId(ObjectId.MEAT));
+		items.add(ObjectFactory.getInstance().getObjectFromId(ObjectId.REVIVE_POTION));
 	}
 	
 //	public void addItem(int itemId, int quantity) {

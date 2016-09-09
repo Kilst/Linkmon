@@ -21,7 +21,7 @@ import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.WorldRenderer;
-import com.linkmon.view.screens.widgets.LoadingWidget;
+import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.ScrollingLabel;
 
 public class IntroScreen implements Screen {
@@ -38,7 +38,7 @@ public class IntroScreen implements Screen {
 	private Image titleImage;
 	private ScrollingLabel introLabel;
 	
-	private LoadingWidget loading;
+	private AnimationWidget loading;
 	
 	private GameClass game;
 	
@@ -51,7 +51,7 @@ public class IntroScreen implements Screen {
 		skin2.addRegions(uiAtlas);
 		this.eManager = eManager;
 		
-		loading = new LoadingWidget();
+		loading = new AnimationWidget(Gdx.files.internal("Animations/Loading/loading.pack"), 0.5f);
 		loading.setPosition(Gdx.graphics.getWidth()-loading.getWidth(), 0);
 	}
 

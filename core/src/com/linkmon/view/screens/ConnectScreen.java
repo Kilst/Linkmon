@@ -20,7 +20,7 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.view.screens.widgets.LoadingWidget;
+import com.linkmon.view.screens.widgets.AnimationWidget;
 
 public class ConnectScreen implements Screen, NetworkListener {
 	
@@ -35,7 +35,7 @@ public class ConnectScreen implements Screen, NetworkListener {
 	
 	EventManager eManager;
 	
-	LoadingWidget load;
+	AnimationWidget load;
 	
 	public ConnectScreen(Group group, EventManager eManager) {
 		
@@ -75,7 +75,7 @@ public class ConnectScreen implements Screen, NetworkListener {
 		
 		cancelButton = new TextButton("Cancel",skin);
 		
-		load = new LoadingWidget();
+		load = new AnimationWidget(Gdx.files.internal("Animations/Loading/loading.pack"), 0.5f);
 		load.setPosition(Gdx.graphics.getWidth()/2-load.getWidth()/2, 0);
 		
 		container.add(label);

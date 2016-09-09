@@ -25,8 +25,8 @@ public class CollisionComponent implements ICollisionComponent {
 		
 		for(GameObject object : objects) {
 			if(object != gameObject) {
-				if(gameObject.getAabb().contains(object.getAabb())) {
-					collideList.add(object);
+				if(gameObject.getAabb().contains(object.getAabb())) { // Test for AABB collision
+					collideList.add(object); // Add object to list to be processed by derived physics class
 				}
 			}
 		}

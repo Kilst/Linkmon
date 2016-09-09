@@ -29,7 +29,7 @@ import com.linkmon.view.LinkmonSprite;
 import com.linkmon.view.WorldRenderer;
 import com.linkmon.view.screens.interfaces.INetworkScreen;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
-import com.linkmon.view.screens.widgets.LoadingWidget;
+import com.linkmon.view.screens.widgets.AnimationWidget;
 
 public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, INetworkScreen {
 	
@@ -164,7 +164,7 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
 		searchingTable.setBackground(skin.getDrawable("default-rect"));
 		Label searching = new Label("Searching", skin);
 		
-		LoadingWidget load = new LoadingWidget();
+		AnimationWidget load = new AnimationWidget(Gdx.files.internal("Animations/Loading/loading.pack"), 0.5f);
 		
 		Button cancelButton = new Button(skin2.getDrawable("backButton"));
 		

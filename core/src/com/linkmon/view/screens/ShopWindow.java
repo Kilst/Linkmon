@@ -1,5 +1,6 @@
 package com.linkmon.view.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -68,6 +69,8 @@ public class ShopWindow implements Screen, IShopItems {
 	private boolean subtractPress;
 	private int direction = 1;
 	
+	private List<ItemButton> buttonList;
+	
 	private long touchTime;
 	
 	private Skin skin;
@@ -87,14 +90,12 @@ public class ShopWindow implements Screen, IShopItems {
 		darken.setColor(1f, 1f, 1f, 0.7f);
 		
 		uiGroup = group;
-		img = new Image(skin2.getDrawable("TableUI"));
+		img = new Image(skin2.getDrawable("shopBackground"));
 		img.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		innerContainer = new Table();
 //		innerContainer.setBackground(skin2.getDrawable("TableUI"));
-		innerContainer.setSize(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-150);
-		innerContainer.setY(25);
-		innerContainer.setX(50);
+		innerContainer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		//innerContainer.debug();
 		
 		heading = new Image(new TextureRegion(new Texture(Gdx.files.internal("shopButton.png"))));
@@ -102,11 +103,11 @@ public class ShopWindow implements Screen, IShopItems {
 		table = new Table();
 		
 		tableLeft = new Table();
-		tableLeft.setBackground(skin2.getDrawable("table"));
+		tableLeft.setBackground(skin2.getDrawable("statsTable"));
 		tableLeft.align(Align.topLeft);
 		
 		tableRight = new Table();
-		tableRight.setBackground(skin2.getDrawable("table"));
+		tableRight.setBackground(skin2.getDrawable("statsTable"));
 		
 		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
 		backButton = new Button(back);
@@ -297,6 +298,12 @@ public class ShopWindow implements Screen, IShopItems {
 	@Override
 	public void setSelectedItem(GameObject item) {
 		// TODO Auto-generated method stub
+		if(selectedItem != null) {
+			for(ItemButton button : buttonList) {
+				button.testSelected(selectedItem.getId());
+			}
+		}
+		
 		selectedItem = item;
 		amount = 1;
 		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedItem.getId()).getTexture());
@@ -310,10 +317,14 @@ public class ShopWindow implements Screen, IShopItems {
 	@Override
 	public void getShopItems(List<GameObject> items) {
 		// TODO Auto-generated method stub
+		
+		buttonList = new ArrayList<ItemButton>();
+		
 		for(GameObject shopItem : items) {
 			item = new ItemButton(null, eManager, shopItem, this);			
-			
+			buttonList.add(item);
 			tableLeft.add(item).expandX().fillX();
+			tableLeft.row();
 		}
 	}
 

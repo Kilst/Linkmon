@@ -1,6 +1,7 @@
 package com.linkmon.view.screens.widgets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.items.FoodComponent;
+import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
@@ -33,6 +35,10 @@ public class ItemButton extends Table {
 	private EventManager eManager;
 	
 	private IItems screen;
+	
+	private TextureRegion green;
+	
+	private boolean selected = false;
 
 	public ItemButton(Drawable imageUp, EventManager eManager1, GameObject item, IItems view) {
 		super();
@@ -43,12 +49,12 @@ public class ItemButton extends Table {
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 
 		this.setTouchable(Touchable.enabled);
-		this.setBackground(skin2.getDrawable("container"));
+		this.setBackground(skin2.getDrawable("cellBackground"));
 		
 		this.item = item;
 		screen = view;
 		
-		amount = new Label("Own: " + ((FoodComponent)item.getExtraComponents()).getQuantity(), skin);
+		amount = new Label("Own: " + ((ItemComponent)item.getExtraComponents()).getQuantity(), skin);
 		
 		
 		TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
@@ -76,16 +82,25 @@ public class ItemButton extends Table {
 		this.add(img2).size(6, 80).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
-		this.add(amount);
+		this.add(amount).align(Align.left).padRight(15).width(50);
 		amount.setTouchable(Touchable.disabled);
+		
+		green = new TextureRegion(skin2.getRegion("green"));
 		
 		
 		this.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	screen.setSelectedItem(getItem());
+            	selected = true;
             }
 		});
+	}
+	
+	public void testSelected(int id) {
+		if(id == item.getId()) {
+			selected = false;
+		}
 	}
 
 	public GameObject getItem() {
@@ -95,6 +110,11 @@ public class ItemButton extends Table {
 	
 	@Override
 	public void draw(Batch batch, float alpha){
+		batch.setColor(1, 1, 1, 0.7f);
+		if(selected)
+			batch.draw(green, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		
+		batch.setColor(1, 1, 1, 1);
 		super.draw(batch, alpha);
 //		amount.draw(batch, alpha);
 	}

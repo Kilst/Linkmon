@@ -52,6 +52,13 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				meat.setName("Meat");
 				return meat;
 			}
+			case (ObjectId.REVIVE_POTION) : {
+				ItemComponent foodComp = new FoodComponent();
+				foodComp.setPrice(5000);
+				GameObject meat = new GameObject(id, ObjectType.ITEM, null, null, null, foodComp);
+				meat.setName("Revive Potion");
+				return meat;
+			}
 			case (ObjectId.POOPA_SCOOPA) : {
 				ItemComponent foodComp = new ItemComponent();
 				GameObject poopaScoopa2001 = new GameObject(ObjectId.POOPA_SCOOPA, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new PoopaScoopaPhysicsComponent(new CollisionComponent()), foodComp);

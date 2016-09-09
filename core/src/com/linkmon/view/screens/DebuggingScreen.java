@@ -20,7 +20,7 @@ import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.view.screens.interfaces.MyScreen;
-import com.linkmon.view.screens.widgets.LoadingWidget;
+import com.linkmon.view.screens.widgets.AnimationWidget;
 
 public class DebuggingScreen implements Screen, MyScreen {
 	
@@ -38,7 +38,7 @@ public class DebuggingScreen implements Screen, MyScreen {
 	
 	EventManager eManager;
 	
-	LoadingWidget load;
+	AnimationWidget load;
 	
 	public DebuggingScreen(Group group, EventManager eManager) {
 		

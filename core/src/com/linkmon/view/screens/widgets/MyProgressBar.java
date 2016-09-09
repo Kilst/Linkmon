@@ -18,13 +18,24 @@ public class MyProgressBar extends Actor {
     private float alignment;
     
     private float progress;
-    private int targetProgress;
+    private float targetProgress;
     
     public MyProgressBar(float width, float height) {
-    	empty = new NinePatch(new Texture(Gdx.files.internal("loadingBarEmpty.png")), 8, 8, 8, 8);
-        full = new NinePatch(new Texture(Gdx.files.internal("loadingBarFull.png")), 8, 8, 8, 8);
+    	empty = new NinePatch(new Texture(Gdx.files.internal("loadingBarEmpty.png")), 0, 0, 0, 0);
+        full = new NinePatch(new Texture(Gdx.files.internal("loadingBarFull.png")), 0, 0, 0, 0);
         progress = 100;
         targetProgress = 100;
+        this.width = width;
+        this.height = height;
+        
+        alignment = 0;
+    }
+    
+    public MyProgressBar(float width, float height, int progress, int target) {
+    	empty = new NinePatch(new Texture(Gdx.files.internal("loadingBarEmpty.png")), 0, 0, 0, 0);
+        full = new NinePatch(new Texture(Gdx.files.internal("loadingBarFull.png")), 0, 0, 0, 0);
+        this.progress = progress;
+        targetProgress = target;
         this.width = width;
         this.height = height;
         
@@ -51,7 +62,7 @@ public class MyProgressBar extends Actor {
 		else if(progress <= 30)
 			batch.setColor(1, 0, 0, 1);
 		if(progress > 0)
-			full.draw(batch, this.getX()+10*WorldRenderer.scaleXY, this.getY()+alignment*WorldRenderer.scaleXY, (progress*(width/115))*WorldRenderer.scaleXY, height*WorldRenderer.scaleXY);
+			full.draw(batch, this.getX()*WorldRenderer.scaleXY, this.getY()+alignment*WorldRenderer.scaleXY, (progress*(width/(targetProgress)))*WorldRenderer.scaleXY, height*WorldRenderer.scaleXY);
 		batch.setColor(1, 1, 1, 1);
 		empty.draw(batch, this.getX(), this.getY()+alignment*WorldRenderer.scaleY, width*WorldRenderer.scaleXY, height*WorldRenderer.scaleXY);
 	}
