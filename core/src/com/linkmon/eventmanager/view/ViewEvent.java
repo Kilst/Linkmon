@@ -12,9 +12,6 @@ public class ViewEvent extends GameEvent {
 	public float x;
 	public float y;
 	
-	public int currentAnimation;
-	public int direction;
-	
 	public boolean status;
 	public List<Object> objects;
 	public List<Poop> poopList;
@@ -23,6 +20,7 @@ public class ViewEvent extends GameEvent {
 	public Item item;
 	public int value;
 	public String str;
+	public int value2;
 	
 	public ViewEvent(int eventId) {
 		super(eventId);
@@ -39,12 +37,7 @@ public class ViewEvent extends GameEvent {
 		this.x = x;
 		this.y = y;
 	}
-	public ViewEvent(int eventId, int currentAnimation, int direction) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		this.currentAnimation = currentAnimation;
-		this.direction = direction;
-	}
+
 	public ViewEvent(int eventId, boolean status) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
@@ -77,5 +70,12 @@ public class ViewEvent extends GameEvent {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		this.value = value;
+	}
+	
+	public ViewEvent(int eventId, int value, int value2) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.value = value;
+		this.value2 = value2;
 	}
 }

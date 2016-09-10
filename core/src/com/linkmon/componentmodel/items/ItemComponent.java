@@ -7,6 +7,18 @@ public class ItemComponent implements IExtraComponents {
 	
 	private int quantity;
 	private int price;
+	
+	private int type;
+	
+	private String itemText;
+	
+	public ItemComponent(int quantity, int price, int type, String itemText) {
+		this.quantity = quantity;
+		this.price = price;
+		this.type = type;
+		this.itemText = itemText;
+	}
+	
 	@Override
 	public void update(GameObject object) {
 		// TODO Auto-generated method stub
@@ -40,5 +52,21 @@ public class ItemComponent implements IExtraComponents {
 		// TODO Auto-generated method stub
 		this.price = price;
 		
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public String getItemText() {
+		return itemText;
+	}
+
+	public void setItemText(String itemText) {
+		this.itemText = itemText;
 	}
 }

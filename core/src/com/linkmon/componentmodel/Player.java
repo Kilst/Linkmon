@@ -11,6 +11,7 @@ import com.linkmon.componentmodel.gamesave.AESEncryptor;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
 import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
+import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
@@ -111,6 +112,10 @@ public class Player {
 			
 		if(!match)
 			items.add(newItem);
+	}
+	
+	private void useItem(GameObject item) {
+		((UsableItemComponent)item.getExtraComponents()).use(linkmon, world);
 	}
 
 	private void addGold(int amount) {

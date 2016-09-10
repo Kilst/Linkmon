@@ -41,7 +41,7 @@ public class AnimationWidget extends Actor {
 //		AtlasRegion animations = new AtlasRegion(ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class));
 		TextureAtlas atlas = new TextureAtlas();
 		
-		Array<AtlasRegion>[] regions = ResourceLoader.getLinkmonAnimFromId(1);
+		Array<AtlasRegion>[] regions = ResourceLoader.getLinkmonAnimFromId(id);
 		
 		
 		TextureRegion[] loadingAnimationFrames = new TextureRegion[regions[0].size];

@@ -1,7 +1,7 @@
 package com.linkmon.networking;
 
 import com.badlogic.gdx.Gdx;
-import com.linkmon.componentmodel.BattleLinkmon;
+import com.linkmon.componentmodel.battles.BattleLinkmon;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;

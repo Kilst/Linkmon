@@ -32,13 +32,13 @@ public class ClientSender implements Runnable {
 		try {
 			
 			byte[] sizePacket = new byte[2]; // Create size packet
-			sizePacket[0] = packet.getPacket()[0]; // add id
-			sizePacket[1] = packet.getPacket()[1]; // add size
+			sizePacket[0] = packet.getPacketBytes()[0]; // add id
+			sizePacket[1] = packet.getPacketBytes()[1]; // add size
 			try{
 				Gdx.app.log("Client2Sender", "Sending size packet!");
 				client.getTcpClient().getOutputStream().write(sizePacket); // Size
 				Gdx.app.log("Client2Sender", "Sending packet!");
-				client.getTcpClient().getOutputStream().write(packet.getPacket()); // Packet
+				client.getTcpClient().getOutputStream().write(packet.getPacketBytes()); // Packet
 			}
 			catch (SocketException e) {
 				// TODO Auto-generated catch block

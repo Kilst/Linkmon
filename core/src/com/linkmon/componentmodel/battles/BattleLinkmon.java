@@ -1,4 +1,4 @@
-package com.linkmon.componentmodel;
+package com.linkmon.componentmodel.battles;
 
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;

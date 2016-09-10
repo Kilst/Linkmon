@@ -52,6 +52,8 @@ public class GameUi implements Screen, ViewListener {
 	Button help;
 	Button settings;
 	
+	private boolean evolve = false;
+	
 	private ImageButton light;
 	
 	Button online;
@@ -302,6 +304,11 @@ public class GameUi implements Screen, ViewListener {
 			}
 			case(ViewEvents.UPDATE_GOLD): {
 				playerGold.setText("Gold: "+ event.value);
+				break;
+			}
+			case(ViewEvents.EVOLVE): {
+				evolve = true;
+				game.setScreen(new EvolutionScreen(ui, eManager, event.value, event.value2));
 				break;
 			}
 		}

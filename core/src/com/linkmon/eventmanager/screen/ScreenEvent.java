@@ -35,4 +35,11 @@ public class ScreenEvent extends GameEvent {
 		
 		this.gameObject = object;
 	}
+
+	public ScreenEvent(int eventId, int value, MyScreen screen) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.screen = screen;
+		this.value = value;		
+	}
 }

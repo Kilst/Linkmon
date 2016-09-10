@@ -40,6 +40,7 @@ public class LinkmonController implements ScreenListener {
 		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
 		LinkmonStatusComponent status = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus();
 		window.getLinkmonStats(
+				linkmon.getId(),
 				stats.getHealth(),
 				stats.getAttack(),
 				stats.getDefense(),

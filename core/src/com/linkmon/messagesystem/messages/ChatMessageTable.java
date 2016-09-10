@@ -26,6 +26,8 @@ import com.linkmon.view.screens.widgets.ScrollingLabel;
 
 public class ChatMessageTable extends Table {
 	
+	private boolean isFinished = false;
+	
 	private TiledDrawable bg;
 	private NinePatch border;
 	
@@ -38,12 +40,12 @@ public class ChatMessageTable extends Table {
 	private Skin skin;
 	private Actor window = this;
 	
-	private WorldRenderer worldRenderer;
-	
 	public ChatMessageTable(Skin skin2) {
-		this.worldRenderer = worldRenderer;
 		border = new NinePatch(skin2.getRegion("battleTextWindow"), 12, 12, 12, 12);
 		bg = new TiledDrawable(skin2.getRegion("battleTextBackground"));
+		
+		setWidth(Gdx.graphics.getWidth());
+		setHeight(Gdx.graphics.getHeight()/3f);
 		
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		window = this;
@@ -52,7 +54,10 @@ public class ChatMessageTable extends Table {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(label.isFinished) {
-            		window.remove();
+            		if(!label.nextMessage()) {
+            			window.remove();
+            			isFinished = true;
+            		}
             	}
             	else
             		label.instantText();
@@ -61,19 +66,21 @@ public class ChatMessageTable extends Table {
 		
 	}
 	
-	public ChatMessageTable(Skin skin2, Actor actor) {
+	public ChatMessageTable(Skin skin2, Actor chatMessage) {
 		border = new NinePatch(skin2.getRegion("battleTextWindow"), 12, 12, 12, 12);
 		bg = new TiledDrawable(skin2.getRegion("battleTextBackground"));
 		
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
-		window = actor;
+		window = chatMessage;
 		this.setTouchable(Touchable.enabled);
 		this.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(label.isFinished) {
-            		if(!label.nextMessage())
+            		if(!label.nextMessage()) {
             			window.remove();
+            			isFinished = true;
+            		}
             	}
             	else
             		label.instantText();
@@ -110,6 +117,14 @@ public class ChatMessageTable extends Table {
 		batch.setColor(1,1,1,1);
 		
 		super.draw(batch, alpha);
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
 	}
 
 }

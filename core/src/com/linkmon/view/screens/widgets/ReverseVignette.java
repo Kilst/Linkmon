@@ -18,7 +18,7 @@ public class ReverseVignette extends Actor {
 			@Override
 			public void act(float delta) {
 				if (vignette.getColor().a <= 1f)
-					vignette.getColor().a += 0.001;
+					vignette.getColor().a += 0.003;
 			}
 		};
 		vignette.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -27,9 +27,12 @@ public class ReverseVignette extends Actor {
 			@Override
 			public void act(float delta) {
 				if (lighten.getColor().a <= 1f)
-					lighten.getColor().a += 0.001;
-				else
+					lighten.getColor().a += 0.003;
+				else {
 					finishedLoading = true;
+//					lighten.remove();
+//					vignette.remove();
+				}
 			}
 		};
 		lighten.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -45,10 +48,14 @@ public class ReverseVignette extends Actor {
 		return finishedLoading;
 	}
 	
+	public void play() {
+		vignette.act(Gdx.graphics.getDeltaTime());
+		lighten.act(Gdx.graphics.getDeltaTime());
+	}
+	
 	@Override
 	public void act(float delta) {
-		vignette.act(delta);
-		lighten.act(delta);
+		
 	}
 	
 	@Override

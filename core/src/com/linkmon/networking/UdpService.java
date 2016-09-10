@@ -1,6 +1,6 @@
 package com.linkmon.networking;
 
-import com.linkmon.componentmodel.BattleLinkmon;
+import com.linkmon.componentmodel.battles.BattleLinkmon;
 
 public class UdpService implements INetworkService, Runnable {
 

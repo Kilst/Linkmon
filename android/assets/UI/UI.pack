@@ -421,6 +421,18 @@ UI3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+evolutionBackground
+  rotate: false
+  xy: 1, 1
+  size: 997, 517
+  orig: 997, 517
+  offset: 0, 0
+  index: -1
+
+UI4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 feedBackground
   rotate: false
   xy: 1, 1

@@ -1,6 +1,10 @@
 package com.linkmon.componentcontroller;
 
+import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.Shop;
+import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.items.ItemComponent;
+import com.linkmon.componentmodel.items.ItemType;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
@@ -19,16 +23,26 @@ public class ShopController implements ScreenListener {
 	
 	// View updates
 	
-		public void getShopItems(IShop window) {
-			window.getShopItems(shop.getItems());
+	public void getShopItems(IShop window, int type) {
+		
+		for(GameObject itemObject : shop.getItems()) {
+			ItemComponent item = ((ItemComponent)itemObject.getExtraComponents());
+			
+			Gdx.app.log("PC", "Test Item!  TypeId: " + type + "   ItemTypeId: " + item.getType());
+			
+			if(type == ItemType.ALL) {
+				window.addShopItem(itemObject.getId(), itemObject.getName(), item.getQuantity(), item.getPrice(), item.getItemText());
+				Gdx.app.log("PC", "Adding Item!");
+			}
 		}
+	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.GET_SHOP_ITEMS): {
-				getShopItems((IShop)event.screen);
+				getShopItems((IShop)event.screen, event.value);
 				return false;
 			}
 		}

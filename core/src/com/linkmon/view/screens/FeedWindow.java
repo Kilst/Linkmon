@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.items.FoodComponent;
+import com.linkmon.componentmodel.items.ItemType;
 import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
@@ -44,15 +45,14 @@ import com.linkmon.view.screens.widgets.ItemButton;
 
 public class FeedWindow implements Screen, IPlayerItems {
 	
-	private Image container;
-	private Table innerContainer;
+	private Image backgroundImage;
+	private Table container;
 	private Table table;
-	private Table tableLeft;
-	private Table tableRight;
+	private Table tableFeed;
+	private Table tableItems;
 	private Group uiGroup;
-	private ItemButton food;
 
-	private GameObject selectedItem;
+	private ItemButton selectedButton;
 	
 	private ItemButton item;
 	private List<ItemButton> buttonList;
@@ -68,37 +68,33 @@ public class FeedWindow implements Screen, IPlayerItems {
 	
 	private Skin skin;
 	
-	private Image darken;
-	
 	public FeedWindow(Group group, EventManager eManager) {
-		this.eManager = eManager;
-		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
+		this.eManager = eManager;
+		
+		uiGroup = group;
+		
+		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
-		darken = new Image(skin2.getDrawable("darkenWorld"));
-		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		darken.setColor(1f, 1f, 1f, 0.7f);
+		backgroundImage = new Image(skin2.getDrawable("feedBackground"));
+		backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		uiGroup = group;
-		container = new Image(skin2.getDrawable("feedBackground"));
+		container = new Table();
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		innerContainer = new Table();
-		innerContainer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Image image = new Image(new TextureRegion(new Texture(Gdx.files.internal("feedButton.png"))));
 		
 		table = new Table();
 		
-		tableLeft = new Table(skin);
-		tableLeft.setBackground(skin2.getDrawable("statsTable"));
-		tableLeft.align(Align.topLeft);
+		tableFeed = new Table(skin);
+		tableFeed.setBackground(skin2.getDrawable("statsTable"));
+		tableFeed.align(Align.topLeft);
 		
-		tableRight = new Table(skin);
-		tableRight.setBackground(skin2.getDrawable("statsTable"));
+		tableItems = new Table(skin);
+		tableItems.setBackground(skin2.getDrawable("statsTable"));
 		
 		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
 		backButton = new ImageButton(back);
@@ -107,33 +103,30 @@ public class FeedWindow implements Screen, IPlayerItems {
 		feedButton = new ImageButton(feed);
 		
 		itemBox = new ItemBox();
-		
 		itemText = new Label("Item Name",skin);
 		
-		tableRight.add(itemBox).expand();
-		tableRight.row();
-		tableRight.add(itemText).expand();
-		tableRight.row();
-		tableRight.add(feedButton).expand().align(Align.bottom).pad(5*WorldRenderer.scaleXY);
+		tableItems.add(itemBox).expand();
+		tableItems.row();
+		tableItems.add(itemText).expand();
+		tableItems.row();
+		tableItems.add(feedButton).expand().align(Align.bottom).pad(5*WorldRenderer.scaleXY);
 		
-		table.add(tableRight).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
-		table.add(tableLeft).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		table.add(tableItems).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		table.add(tableFeed).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
 		
-//		table.debug();
-//		tableLeft.debug();
-//		tableRight.debug();
+		container.add(image);
+		container.row();
+		container.add(table).expand().fill();
+		container.row();
+		container.add(backButton).align(Align.right).size(128*WorldRenderer.scaleXY, 64*WorldRenderer.scaleXY);
 		
-		innerContainer.add(image);
-		innerContainer.row();
-		innerContainer.add(table).expand().fill();
-		innerContainer.row();
-		innerContainer.add(backButton).align(Align.right).size(128*WorldRenderer.scaleXY, 64*WorldRenderer.scaleXY);
-//		container.add(innerContainer).size(Gdx.graphics.getWidth()/1.5f, Gdx.graphics.getHeight()/1.5f);
 		addListeners();
 		
-		tableRight.setVisible(true);
+		tableItems.setVisible(true);
 		
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, this));
+		buttonList = new ArrayList<ItemButton>();
+		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.FOOD, this));
 	}
 	
 	private void addListeners() {
@@ -148,8 +141,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 		feedButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	if(selectedItem != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.FEED_LINKMON, selectedItem));
+            	if(selectedButton != null) {
+            		eManager.notify(new ScreenEvent(ScreenEvents.FEED_LINKMON, selectedButton.getItemId()));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
             	}
             }
@@ -159,9 +152,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		uiGroup.addActor(darken);
+		uiGroup.addActor(backgroundImage);
 		uiGroup.addActor(container);
-		uiGroup.addActor(innerContainer);
 		uiGroup.toFront();
 	}
 
@@ -192,9 +184,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		darken.remove();
-		innerContainer.remove();
 		container.remove();
+		backgroundImage.remove();
 	}
 
 	@Override
@@ -204,31 +195,33 @@ public class FeedWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void setSelectedItem(GameObject item) {
-		// TODO Auto-generated method stub
-		if(selectedItem != null) {
-			for(ItemButton button : buttonList) {
-				button.testSelected(selectedItem.getId());
-			}
-		}
-		
-		selectedItem = item;
-		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedItem.getId()).getTexture());
-//		itemText.setFontScale(0.5f);
-		itemText.setText(selectedItem.getName());
-		tableRight.setVisible(true);
+	public void setPlayerItems(List<GameObject> items) {
+
 	}
 
 	@Override
-	public void getPlayerItems(List<GameObject> items) {
-		buttonList = new ArrayList<ItemButton>();
+	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
+		// TODO Auto-generated method stub
+		item = new ItemButton(eManager, id, name, quantity, price, itemText, this);			
+		buttonList.add(item);
+		tableFeed.add(item).expandX().fillX();
+		tableFeed.row();
+	}
+
+	@Override
+	public void setSelectedItem(ItemButton selectedButton) {
+		// TODO Auto-generated method stub
 		
-		for(GameObject feedItem : items) {
-			item = new ItemButton(null, eManager, feedItem, this);			
-			buttonList.add(item);
-			tableLeft.add(item).expandX().fillX();
-			tableLeft.row();
+		for(ItemButton button : buttonList) {
+			button.testSelected(selectedButton.getItemId());
 		}
+		
+		this.selectedButton = selectedButton;
+
+		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedButton.getItemId()).getTexture());
+//		itemText.setFontScale(0.5f);
+		itemText.setText(selectedButton.getItemName());
+		tableItems.setVisible(true);
 	}
 
 }

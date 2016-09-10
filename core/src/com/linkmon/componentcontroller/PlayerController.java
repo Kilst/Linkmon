@@ -1,7 +1,10 @@
 package com.linkmon.componentcontroller;
 
+import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.items.ItemComponent;
+import com.linkmon.componentmodel.items.ItemType;
 import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
@@ -38,8 +41,17 @@ public class PlayerController implements ScreenListener {
 	
 	// View updates
 	
-	public void getPlayerItems(IPlayerItems window) {
-		window.getPlayerItems(player.getItems());
+	public void getPlayerItems(IPlayerItems window, int type) {
+		for(GameObject itemObject : player.getItems()) {
+			ItemComponent item = ((ItemComponent)itemObject.getExtraComponents());
+			
+			Gdx.app.log("PC", "Test Item!  TypeId: " + type + "   ItemTypeId: " + item.getType());
+			
+			if(item.getType() == type) {
+				window.addPlayerItem(itemObject.getId(), itemObject.getName(), item.getQuantity(), item.getPrice(), item.getItemText());
+				Gdx.app.log("PC", "Adding Item!");
+			}
+		}
 	}
 	
 	public void getPlayerStats(IPlayerStats window) {
@@ -63,7 +75,7 @@ public class PlayerController implements ScreenListener {
 				return false;
 			}
 			case(ScreenEvents.GET_PLAYER_ITEMS): {
-				getPlayerItems((IPlayerItems) event.screen);
+				getPlayerItems((IPlayerItems) event.screen, event.value);
 				return false;
 			}
 			case(ScreenEvents.GET_SHOP_ITEMS): {

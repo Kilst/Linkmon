@@ -30,12 +30,16 @@ public class Client {
 	
 	private String serverMessage;
 	
+	private NetworkingData data;
+	
 	private ClientListener listener;
 	
 	EventManager eManager;
 	
 	public Client(EventManager eManager) {
 		this.eManager = eManager;
+		
+		data = new NetworkingData();
 	}
 	
 	public void connect() {
@@ -52,6 +56,7 @@ public class Client {
 	public void sendPacket(Packet packet) {
 		try{
 			sending = true;
+			data.setCurrentSentPacket(packet.getPacketBytes());
 			new ClientSender(this, packet);
 		} catch (Exception e) {
 			disconnect("Send packet error!");
@@ -87,5 +92,9 @@ public class Client {
 
 	public void setServerMessage(String serverMessage) {
 		this.serverMessage = serverMessage;
+	}
+
+	public NetworkingData getData() {
+		return data;
 	}
 }

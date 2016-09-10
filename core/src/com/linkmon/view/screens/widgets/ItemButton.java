@@ -39,9 +39,22 @@ public class ItemButton extends Table {
 	private TextureRegion green;
 	
 	private boolean selected = false;
-
-	public ItemButton(Drawable imageUp, EventManager eManager1, GameObject item, IItems view) {
+	
+	private String itemName;
+	
+	private int itemId;
+	
+	private ItemButton itemButton = this;
+	
+	private int price;
+	
+	public ItemButton(EventManager eManager2, int id, String name, int quantity, int price, String itemText, IItems view) {
+		// TODO Auto-generated constructor stub
 		super();
+		
+		this.itemId = id;
+		this.itemName = name;
+		this.price = price;
 		
 		Skin skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -50,14 +63,13 @@ public class ItemButton extends Table {
 
 		this.setTouchable(Touchable.enabled);
 		this.setBackground(skin2.getDrawable("cellBackground"));
-		
-		this.item = item;
+
 		screen = view;
 		
-		amount = new Label("Own: " + ((ItemComponent)item.getExtraComponents()).getQuantity(), skin);
+		amount = new Label("Own: " + quantity, skin);
 		
 		
-		TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
+		TextureRegion region = ResourceLoader.getItemRegionFromId(id);
 		
 		Image itemImg = new Image(region);
 		
@@ -67,7 +79,7 @@ public class ItemButton extends Table {
 		Image img2 = new Image(new NinePatch(skin2.getPatch("spacer")));
 		img2.getColor().a = 0.5f;
 		
-		Label itemName = new Label(item.getName()+"\n"+"Adds 100 to hunger!", skin);
+		Label itemNameLabel = new Label(name+"\n\n"+itemText, skin);
 		
 		
 		this.add(itemImg).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY).align(Align.left);
@@ -76,8 +88,8 @@ public class ItemButton extends Table {
 		this.add(img).size(6, 80).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(itemName).expandX();
-		itemName.setTouchable(Touchable.disabled);
+		this.add(itemNameLabel).expandX();
+		itemNameLabel.setTouchable(Touchable.disabled);
 		
 		this.add(img2).size(6, 80).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
@@ -91,21 +103,20 @@ public class ItemButton extends Table {
 		this.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	screen.setSelectedItem(getItem());
+            	screen.setSelectedItem(itemButton);
             	selected = true;
             }
 		});
 	}
-	
+
 	public void testSelected(int id) {
-		if(id == item.getId()) {
+		if(id != itemId) {
 			selected = false;
 		}
 	}
-
-	public GameObject getItem() {
-		// TODO Auto-generated method stub
-		return item;
+	
+	public int getItemId() {
+		return itemId;
 	}
 	
 	@Override
@@ -117,5 +128,15 @@ public class ItemButton extends Table {
 		batch.setColor(1, 1, 1, 1);
 		super.draw(batch, alpha);
 //		amount.draw(batch, alpha);
+	}
+
+	public String getItemName() {
+		// TODO Auto-generated method stub
+		return itemName;
+	}
+
+	public int getPrice() {
+		// TODO Auto-generated method stub
+		return price;
 	}
 }

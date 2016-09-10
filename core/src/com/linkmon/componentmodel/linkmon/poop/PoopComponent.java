@@ -46,16 +46,24 @@ public class PoopComponent implements IExtraComponents {
 	
 	public void removePoop(GameObject poop) {
 		poopListRemove.add(poop);
-		poop.getWorld().geteManager().removeInputListener(((PoopInputComponent)poop.getInputComponent()));
-		poop.getWorld().removeObjectFromWorld(poop);
+//		poop.getWorld().removeObjectFromWorld(poop);
 	}
 
 	@Override
 	public void update(GameObject object) {
 		// TODO Auto-generated method stub
 		
-		poopCheck(object);
+		removePoops(object);
 		
+		poopCheck(object);
+	}
+
+	public List<GameObject> getPoopList() {
+		// TODO Auto-generated method stub
+		return poopList;
+	}
+	
+	private void removePoops(GameObject object) {
 		for(GameObject poop : poopList) {
 			if(((PoopInputComponent)poop.getInputComponent()).isClicked()) {
 				poopListRemove.add(poop);
@@ -64,15 +72,11 @@ public class PoopComponent implements IExtraComponents {
 		
 		for(GameObject poop : poopListRemove) {
 			object.getWorld().removeObjectFromWorld(poop);
+			poop.getWorld().geteManager().removeInputListener(((PoopInputComponent)poop.getInputComponent()));
 			poopList.remove(poop);
 		}
 		
 		poopListRemove.clear();
-	}
-
-	public List<GameObject> getPoopList() {
-		// TODO Auto-generated method stub
-		return poopList;
 	}
 	
 	public long getLastPooped() {

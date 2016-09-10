@@ -2,7 +2,7 @@ package com.linkmon.networking;
 
 import java.nio.ByteBuffer;
 
-import com.linkmon.componentmodel.BattleLinkmon;
+import com.linkmon.componentmodel.battles.BattleLinkmon;
 import com.linkmon.model.gameobject.linkmon.Move;
 import com.linkmon.model.gameobject.linkmon.MoveFactory;
 
@@ -57,7 +57,7 @@ public class Packet {
 		}
 	}
 	
-	public byte[] getPacket() {
+	public byte[] getPacketBytes() {
 		return packet;
 	}
 	

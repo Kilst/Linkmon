@@ -1,7 +1,8 @@
 package com.linkmon.view.screens.interfaces;
 
-import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.view.screens.widgets.ItemButton;
 
-public abstract interface IItems extends MyScreen {	
-	public abstract void setSelectedItem(GameObject item);
+public abstract interface IItems extends MyScreen {
+	
+	void setSelectedItem(ItemButton selectedButton);
 }

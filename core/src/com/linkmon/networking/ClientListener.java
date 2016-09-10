@@ -70,7 +70,12 @@ public class ClientListener implements Runnable {
 						client.disconnect("Timeout error!");
 						break;
 					}
+					
+					// HANDLE PACKET
 					packetHandler.handlePacket(receivedPacket);
+					client.getData().setCurrentReceivedPacket(receivedPacket); // Set packet data
+					////////////////
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -51,7 +51,6 @@ public class EggChoiceScreen implements Screen {
 	private String playerName;
 	
 	private boolean startGame = false;
-	private boolean finishedLoading = false;
 	
 	public EggChoiceScreen(String playerName, Group uiGroup, GameClass game, EventManager eManager) {
 		this.eManager = eManager;
@@ -148,9 +147,8 @@ public class EggChoiceScreen implements Screen {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		if(startGame) {
-			vignette.act(delta);
-			finishedLoading = vignette.isFinished();
-			if(finishedLoading) {
+			vignette.play();
+			if(vignette.isFinished()) {
 				game.startGame(playerName, eggId);
 		    	Gdx.input.setOnscreenKeyboardVisible(false);
 		    	container.remove();

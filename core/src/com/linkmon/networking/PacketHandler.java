@@ -90,20 +90,6 @@ public class PacketHandler implements Runnable {
 			}
 			default: {
 				try {
-//					serverWelcome = new String(packet, "UTF-8");
-//					Gdx.app.log("PacketHandler","Got Server Welcome: " + serverWelcome);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					
 		    		client.setServerMessage(new String(packet, "UTF-8"));
 		    		eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));

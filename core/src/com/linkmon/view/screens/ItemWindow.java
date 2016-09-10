@@ -128,23 +128,19 @@ public class ItemWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void getPlayerItems(List<GameObject> itemList) {
+	public void setPlayerItems(List<GameObject> itemList) {
 		// TODO Auto-generated method stub
-		for(GameObject item : itemList) {
-			if(item.getExtraComponents() instanceof FoodComponent) {
-				
-			}
-			else {
-				TextureRegion region = ResourceLoader.getItemRegionFromId(item.getId());
-				ItemButton itemButton = new ItemButton(new TextureRegionDrawable(region), eManager, item, this);
-				table.addActor(itemButton);
-				
-			}
-		}
+		
 	}
 
 	@Override
-	public void setSelectedItem(GameObject item) {
+	public void setSelectedItem(ItemButton selectedButton) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
 		
 	}

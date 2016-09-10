@@ -21,5 +21,6 @@ public class ViewEvents {
 	public static final int SHOW_CHAT_WINDOW = 17;
 	public static final int LINKMON_ALSEEP = 18;
 	public static final int UPDATE_GIFT_TIMER = 19;
+	public static final int EVOLVE = 20;
 	
 }

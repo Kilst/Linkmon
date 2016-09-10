@@ -37,7 +37,6 @@ import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.MyProgressBar;
-import com.linkmon.view.screens.widgets.StatWidget;
 
 public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
@@ -75,6 +74,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
 	private ScrollPane scrollPane;
 	
+	private AnimationWidget anim;
+	
 	Skin skin2;
 	
 	Skin skin;
@@ -107,13 +108,15 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	}
 	
 	@Override
-	public void getLinkmonStats(int health, int attack, int defense, int speed, int careMistakes, BirthDate dob, int rank) {
+	public void getLinkmonStats(int id, int health, int attack, int defense, int speed, int careMistakes, BirthDate dob, int rank) {
 		
 //		StatWidget widget = new StatWidget(skin, skin2, 280, 150);
 //		
 //		widget.update(attack);
 //		
 //		container.add(widget).align(Align.center);
+		
+		anim = new AnimationWidget(id, 2f/76f);
 		// TODO Auto-generated method stub
 		switch(rank) {
 			case(RankIds.E) : {
@@ -264,7 +267,9 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		scrollPane = new ScrollPane(statsTable, skin);
 		
-		AnimationWidget anim = new AnimationWidget(1, 2f/76f);
+//		anim = new AnimationWidget(0, 2f/76f);
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 		
 		table.add(statsTable).expand().fillX().pad(20*WorldRenderer.scaleXY).align(Align.bottomLeft);
 		table.add(anim).expand().align(Align.bottom);
@@ -275,8 +280,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		table.row();
 		table.add(backButton).expandX().align(Align.right).colspan(2);
 		
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
+//		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
+//		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 		
 //		container.add(table).size(470*WorldRenderer.scaleXY, Gdx.graphics.getHeight()/1.4f*WorldRenderer.scaleXY);
 //		container.row();

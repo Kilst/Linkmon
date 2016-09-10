@@ -2,6 +2,8 @@ package com.linkmon.componentmodel.linkmon;
 
 import com.linkmon.componentmodel.components.IExtraComponents;
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.eventmanager.view.ViewEvent;
+import com.linkmon.eventmanager.view.ViewEvents;
 
 public class EvolutionComponent implements IExtraComponents {
 
@@ -17,6 +19,7 @@ public class EvolutionComponent implements IExtraComponents {
 	}
 	
 	private void evolve(GameObject linkmon, int newId) {
+		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.EVOLVE, (int)linkmon.getId(), (int)newId));
 		linkmon.setId(newId);
 		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().updateGrowthStage();
 		((LinkmonExtraComponents)linkmon.getExtraComponents()).getTimers().updateTimers(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().getGrowthStage());

@@ -2,6 +2,7 @@ package com.linkmon.componentcontroller;
 
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.Player;
+import com.linkmon.componentmodel.battles.BattleLinkmon;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
@@ -16,11 +17,15 @@ public class NetworkController implements ScreenListener {
 	private EventManager eManager;
 	private Player player;
 	
+	private BattleLinkmon bLinkmon;
+	
 	public NetworkController(EventManager eManager, Player player) {
 //		this.service = new NetworkService();
 		this.eManager = eManager;
 		this.player = player;
 		eManager.addScreenListener(this);
+		
+		bLinkmon = new BattleLinkmon(player.getLinkmon());
 	}
 	
 	private void connect() {
@@ -32,8 +37,8 @@ public class NetworkController implements ScreenListener {
 	
 	private void searchOpponents() {
 		Gdx.app.log("NetworkController", "Searching!");
-//		player.createBattleLinkmon();
-//		service.searchOpponent(player.getBattleLinkmon());
+		
+		service.searchOpponent(bLinkmon);
 	}
 	
 	private void cancelSearch() {

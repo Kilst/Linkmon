@@ -109,14 +109,14 @@ public class LinkmonSprite extends GameSprite implements ViewListener {
 				setPosition(event.x, event.y);
 				break;
 			}
-			case(ViewEvents.UPDATE_LINKMON_ANIMATION): {
-				this.anim.animationType = event.currentAnimation;
-				if(event.direction == Direction.RIGHT)
-					this.anim.flipped = true;
-				else
-					this.anim.flipped = false;
-				break;
-			}
+//			case(ViewEvents.UPDATE_LINKMON_ANIMATION): {
+//				this.anim.animationType = event.currentAnimation;
+//				if(event.direction == Direction.RIGHT)
+//					this.anim.flipped = true;
+//				else
+//					this.anim.flipped = false;
+//				break;
+//			}
 			case(ViewEvents.UPDATE_HUNGRY): {
 				if(event.status)
 					addThought(ViewEvents.UPDATE_HUNGRY);

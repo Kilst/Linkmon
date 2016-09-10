@@ -160,7 +160,7 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 	}
 
 	@Override
-	public void getLinkmonStats(int health, int attack, int defense, int speed, int careMistakes, BirthDate dob, int rank) {
+	public void getLinkmonStats(int id, int health, int attack, int defense, int speed, int careMistakes, BirthDate dob, int rank) {
 		// TODO Auto-generated method stub
 		attackString += attack;
 		//if(linkmonController.getAddedAttack() > 0)
