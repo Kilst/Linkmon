@@ -322,6 +322,8 @@ public class ShopWindow implements Screen, IShop {
 	public void setSelectedItem(ItemButton selectedButton) {
 		// TODO Auto-generated method stub
 		
+		amount = 1;
+		
 		for(ItemButton button : buttonList) {
 			button.testSelected(selectedButton.getItemId());
 		}
@@ -331,6 +333,9 @@ public class ShopWindow implements Screen, IShop {
 		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedButton.getItemId()).getTexture());
 //		itemText.setFontScale(0.5f);
 		itemText.setText(selectedButton.getItemName());
+		
+		itemAmount.setText(itemAmountString + amount);
+    	itemPrice.setText(itemPriceString + selectedButton.getPrice());
 	}
 
 }
