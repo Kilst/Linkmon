@@ -72,11 +72,12 @@ public class Player {
 	}
 	
 	public void feedLinkmon(GameObject item) {
-		if(items.contains(item)) {
-			((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
-			itemsRemoveQueue.add(item);
+		for(GameObject itemObject : items) {
+			if(itemObject.getId() == item.getId()) {
+				((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
+				itemsRemoveQueue.add(itemObject);
+			}
 		}
-		
 		removeItems();
 	}
 	

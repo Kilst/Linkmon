@@ -186,7 +186,7 @@ public class ShopWindow implements Screen, IShop {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(selectedButton != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, selectedButton.getItemId()));
+            		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, selectedButton.getItemId(), amount));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             		amount = 1;
             		itemAmount.setText("Amount: " + amount);

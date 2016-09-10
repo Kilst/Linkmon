@@ -3,6 +3,7 @@ package com.linkmon.componentcontroller;
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.componentmodel.gameobject.ObjectFactory;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.ItemType;
 import com.linkmon.componentmodel.items.UsableItemComponent;
@@ -27,11 +28,14 @@ public class PlayerController implements ScreenListener {
 	
 	// Request to update models
 	
-	public void feedLinkmon(GameObject item) {
+	public void feedLinkmon(int itemId) {
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
 		player.feedLinkmon(item);
 	}
 	
-	public void buyItem(GameObject item) {
+	public void buyItem(int id, int amount) {
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(id);
+		((ItemComponent)item.getExtraComponents()).setQuantity(amount);
 		player.buyItem(item);
 	}
 	
@@ -63,11 +67,11 @@ public class PlayerController implements ScreenListener {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.FEED_LINKMON): {
-				feedLinkmon(event.gameObject);
+				feedLinkmon(event.value);
 				return false;
 			}
 			case(ScreenEvents.BUY_ITEM): {
-				buyItem(event.gameObject);
+				buyItem(event.value, event.value2);
 				return false;
 			}
 			case(ScreenEvents.GET_PLAYER_STATS): {

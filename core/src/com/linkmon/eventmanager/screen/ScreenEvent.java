@@ -8,7 +8,7 @@ public class ScreenEvent extends GameEvent {
 	
 	public MyScreen screen;
 	public int value;
-	public GameObject gameObject;
+	public int value2;
 
 	public ScreenEvent(int eventId) {
 		super(eventId);
@@ -28,18 +28,19 @@ public class ScreenEvent extends GameEvent {
 		
 		this.value = value;
 	}
-	
-	public ScreenEvent(int eventId, GameObject object) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		
-		this.gameObject = object;
-	}
 
 	public ScreenEvent(int eventId, int value, MyScreen screen) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		this.screen = screen;
 		this.value = value;		
+	}
+
+	public ScreenEvent(int eventId, int value, int value2) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		
+		this.value = value;
+		this.value2 = value2;
 	}
 }
