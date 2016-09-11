@@ -53,10 +53,13 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
 	private Image linkmonRank;
 	private Image healthLabel;
+	private PBar healthBar;
 	private Image attackLabel;
-	PBar attackBar;
+	private PBar attackBar;
 	private Image defenseLabel;
+	private PBar defenseBar;
 	private Image speedLabel;
+	private PBar speedBar;
 	
 	private Label careMistakes;
 	private Label dob;
@@ -145,7 +148,10 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		defenseLabel = new Image(skin2.getDrawable("defenseLabel"));
 		speedLabel = new Image(skin2.getDrawable("speedLabel"));
 		
+		healthBar = new PBar(skin2, 0, 999);
 		attackBar = new PBar(skin2, 0, 999);
+		defenseBar = new PBar(skin2, 0, 999);
+		speedBar = new PBar(skin2, 0, 999);
 		
 		playerTable = new Table();
 		playerTable.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f);
@@ -164,6 +170,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		statsTable.add(linkmonRank).expandX();
 		statsTable.row();
 		statsTable.add(healthLabel).expandX().align(Align.left);
+		statsTable.row();
+		statsTable.add(healthBar).size(300, 20).align(Align.left);
 		statsTable.add(health);
 		statsTable.row();
 		statsTable.add(attackLabel).expandX().align(Align.left);
@@ -172,9 +180,13 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		statsTable.add(attack);
 		statsTable.row();
 		statsTable.add(defenseLabel).expandX().align(Align.left);
+		statsTable.row();
+		statsTable.add(defenseBar).size(300, 20).align(Align.left);
 		statsTable.add(defense);
 		statsTable.row();
 		statsTable.add(speedLabel).expandX().align(Align.left);
+		statsTable.row();
+		statsTable.add(speedBar).size(300, 20).align(Align.left);
 		statsTable.add(speed);
 		statsTable.row();
 		statsTable.add(careMistakesLabel).expandX().align(Align.left);
@@ -278,8 +290,11 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		this.attack.setText(""+ attack+" / 999");
 		this.attackBar.update(attack);
 		this.defense.setText(""+ defense+" / 999");
+		this.defenseBar.update(defense);
 		this.health.setText(""+ health+" / 9999");
+		this.healthBar.update(health);
 		this.speed.setText(""+ speed+" / 999");
+		this.speedBar.update(999);
 		this.careMistakes.setText(""+ careMistakes);
 		
 		String minutes;
