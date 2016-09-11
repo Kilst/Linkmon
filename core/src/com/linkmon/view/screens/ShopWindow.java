@@ -306,7 +306,7 @@ public class ShopWindow implements Screen, IShop {
 	@Override
 	public void addShopItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(eManager, id, name, quantity, price, itemText, this);			
+		item = new ItemButton(id, name, quantity, price, itemText, this);			
 		buttonList.add(item);
 		tableLeft.add(item).expandX().fillX();
 		tableLeft.row();

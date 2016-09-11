@@ -38,7 +38,7 @@ import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.messagesystem.messages.ChatMessageTable;
 import com.linkmon.view.WorldRenderer;
-import com.linkmon.view.screens.widgets.MyProgressBar;
+import com.linkmon.view.screens.widgets.PBar;
 
 public class GameUi implements Screen, ViewListener {
 	
@@ -75,7 +75,7 @@ public class GameUi implements Screen, ViewListener {
 	private BitmapFont font;
 	private Skin skin2;
 	
-	MyProgressBar pBar;
+	PBar pBar;
 	
 	public Label fpsLabel;
 	
@@ -123,15 +123,14 @@ public class GameUi implements Screen, ViewListener {
 		coinsImage = new Image(skin2.getDrawable("coins"));
 		hunger = new Label("Hunger: ", labelStyle);
 		
-		pBar = new MyProgressBar(150, 20);
-		pBar.alignMiddle(30);
+		pBar = new PBar(skin2, 0, 100);
 		
 //		pBar.update(this.linkmon.getHungerLevel());
 		
 		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
 		containerTop = new Table();
-		containerTop.setSize(Gdx.graphics.getWidth(), 30*WorldRenderer.scaleY);
-		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*WorldRenderer.scaleY);
+		containerTop.setSize(Gdx.graphics.getWidth(), 30*WorldRenderer.scaleXY);
+		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*WorldRenderer.scaleXY);
 		containerTop.setBackground(skin.getDrawable("default-rect"));
 		
 		help = new ImageButton(skin2.getDrawable("helpButton"));
@@ -139,16 +138,14 @@ public class GameUi implements Screen, ViewListener {
 		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
 		light.setPosition(0, (Gdx.graphics.getHeight() - 30*WorldRenderer.scaleY)-light.getHeight());
 		
-		containerTop.add(playerGold).height(30*WorldRenderer.scaleY).padRight(5);
+		containerTop.add(playerGold).height(30*WorldRenderer.scaleXY).padRight(5);
 		containerTop.add(coinsImage).align(Align.left).expandX();
-		containerTop.add(hunger).height(30*WorldRenderer.scaleY);
-		containerTop.add(pBar).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleY);
-		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleY);
+		containerTop.add(hunger).height(30*WorldRenderer.scaleXY);
+		containerTop.add(pBar).size(150*WorldRenderer.scaleXY, 10*WorldRenderer.scaleXY).expandX().align(Align.left);
+		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleXY);
 		
-		containerTop.add(help).padTop(30*WorldRenderer.scaleY);
-		containerTop.add(settings).padTop(30*WorldRenderer.scaleY);
-		
-		
+		containerTop.add(help).padTop(30*WorldRenderer.scaleXY);
+		containerTop.add(settings).padTop(30*WorldRenderer.scaleXY);
 		
 		addListeners();
 		

@@ -397,11 +397,26 @@ green
   orig: 16, 16
   offset: 0, 0
   index: -1
+progressBarBorder
+  rotate: false
+  xy: 37, 1
+  size: 16, 16
+  split: 3, 3, 3, 3
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 darkenWorld
   rotate: false
   xy: 1015, 444
   size: 8, 8
   orig: 8, 8
+  offset: 0, 0
+  index: -1
+progressBarFill
+  rotate: false
+  xy: 55, 1
+  size: 1, 16
+  orig: 1, 16
   offset: 0, 0
   index: -1
 

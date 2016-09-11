@@ -79,6 +79,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
+		// Create Window Elements
+		
 		backgroundImage = new Image(skin2.getDrawable("feedBackground"));
 		backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -91,7 +93,6 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		tableFeed = new Table(skin);
 		tableFeed.setBackground(skin2.getDrawable("statsTable"));
-		tableFeed.align(Align.topLeft);
 		
 		tableItems = new Table(skin);
 		tableItems.setBackground(skin2.getDrawable("statsTable"));
@@ -105,6 +106,9 @@ public class FeedWindow implements Screen, IPlayerItems {
 		itemBox = new ItemBox();
 		itemText = new Label("Item Name",skin);
 		
+		
+		// Build Window Layout
+		
 		tableItems.add(itemBox).expand();
 		tableItems.row();
 		tableItems.add(itemText).expand();
@@ -112,6 +116,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		tableItems.add(feedButton).expand().align(Align.bottom).pad(5*WorldRenderer.scaleXY);
 		
 		table.add(tableItems).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		tableFeed.align(Align.top);
 		table.add(tableFeed).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
 		
 		container.add(image);
@@ -123,6 +128,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		addListeners();
 		
 		tableItems.setVisible(true);
+		
 		
 		buttonList = new ArrayList<ItemButton>();
 		
@@ -202,7 +208,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(eManager, id, name, quantity, price, itemText, this);			
+		item = new ItemButton(id, name, quantity, price, itemText, this);			
 		buttonList.add(item);
 		tableFeed.add(item).expandX().fillX();
 		tableFeed.row();

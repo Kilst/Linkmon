@@ -28,11 +28,7 @@ import com.linkmon.view.screens.interfaces.IItems;
 
 public class ItemButton extends Table {
 	
-	private GameObject item;
-	
 	private Label amount;
-	
-	private EventManager eManager;
 	
 	private IItems screen;
 	
@@ -48,7 +44,7 @@ public class ItemButton extends Table {
 	
 	private int price;
 	
-	public ItemButton(EventManager eManager2, int id, String name, int quantity, int price, String itemText, IItems view) {
+	public ItemButton(int id, String name, int quantity, int price, String itemText, IItems view) {
 		// TODO Auto-generated constructor stub
 		super();
 		
