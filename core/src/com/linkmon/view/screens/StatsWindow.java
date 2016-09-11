@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -32,11 +33,11 @@ import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.linkmon.RankIds;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.widgets.AnimationWidget;
-import com.linkmon.view.screens.widgets.PBar;
+import com.linkmon.view.screens.widgets.MyProgressBar;
 
 public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
@@ -53,13 +54,13 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
 	private Image linkmonRank;
 	private Image healthLabel;
-	private PBar healthBar;
+	private MyProgressBar healthBar;
 	private Image attackLabel;
-	private PBar attackBar;
+	private MyProgressBar attackBar;
 	private Image defenseLabel;
-	private PBar defenseBar;
+	private MyProgressBar defenseBar;
 	private Image speedLabel;
-	private PBar speedBar;
+	private MyProgressBar speedBar;
 	
 	private Label careMistakes;
 	private Label dob;
@@ -96,6 +97,9 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	
 	private Image image;
 	
+	Table tableLeft;
+	Table tableRight;
+	
 	public StatsWindow(Group group, EventManager eManager) {
 		
 		this.eManager = eManager;
@@ -117,16 +121,20 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		//statsLabel = new Label("Stats", skin);
 		backButton = new ImageButton(skin2.getDrawable("backButton"));
 		
-		table = new Table();
+		table = new Table(skin);
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		table.setPosition(0, 0);
+		
+		tableLeft = new Table();
+		tableRight = new Table();
+		tableRight.setBackground(skin2.getDrawable("statsTable"));
 		
 		
 		statsTable = new Table();
 //		statsTable.setBackground(skin2.getDrawable("table"));
 		statsTable.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f);
 		statsTable.setPosition(Gdx.graphics.getWidth()/12, Gdx.graphics.getHeight()/4);
-		statsTable.setBackground(skin2.getDrawable("statsTable"));
+//		statsTable.setBackground(skin2.getDrawable("statsTable"));
 		
 		linkmonLabel = new Label("Linkmon Stats", skin);
 		
@@ -148,10 +156,10 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		defenseLabel = new Image(skin2.getDrawable("defenseLabel"));
 		speedLabel = new Image(skin2.getDrawable("speedLabel"));
 		
-		healthBar = new PBar(skin2, 0, 999);
-		attackBar = new PBar(skin2, 0, 999);
-		defenseBar = new PBar(skin2, 0, 999);
-		speedBar = new PBar(skin2, 0, 999);
+		healthBar = new MyProgressBar(skin2, 0, 9999);
+		attackBar = new MyProgressBar(skin2, 0, 999);
+		defenseBar = new MyProgressBar(skin2, 0, 999);
+		speedBar = new MyProgressBar(skin2, 0, 999);
 		
 		playerTable = new Table();
 		playerTable.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f);
@@ -164,6 +172,11 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		playerGoldLabel = new Label("Gold:", skin);
 		playerGoldText = new Label("", skin);
 		
+		ScrollPaneStyle style = new ScrollPaneStyle();
+		style.background = (skin2.getDrawable("statsTable"));
+		
+		scrollPane = new ScrollPane(statsTable, style);
+		
 		statsTable.add(linkmonLabel).expandX().center().colspan(2);
 		statsTable.row();	
 		statsTable.add(rankLabel).expandX().align(Align.left);
@@ -171,22 +184,22 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		statsTable.row();
 		statsTable.add(healthLabel).expandX().align(Align.left);
 		statsTable.row();
-		statsTable.add(healthBar).size(300, 20).align(Align.left);
+		statsTable.add(healthBar).size(300, 15).align(Align.left);
 		statsTable.add(health);
 		statsTable.row();
 		statsTable.add(attackLabel).expandX().align(Align.left);
 		statsTable.row();
-		statsTable.add(attackBar).size(300, 20).align(Align.left);
+		statsTable.add(attackBar).size(300, 15).align(Align.left);
 		statsTable.add(attack);
 		statsTable.row();
 		statsTable.add(defenseLabel).expandX().align(Align.left);
 		statsTable.row();
-		statsTable.add(defenseBar).size(300, 20).align(Align.left);
+		statsTable.add(defenseBar).size(300, 15).align(Align.left);
 		statsTable.add(defense);
 		statsTable.row();
 		statsTable.add(speedLabel).expandX().align(Align.left);
 		statsTable.row();
-		statsTable.add(speedBar).size(300, 20).align(Align.left);
+		statsTable.add(speedBar).size(300, 15).align(Align.left);
 		statsTable.add(speed);
 		statsTable.row();
 		statsTable.add(careMistakesLabel).expandX().align(Align.left);
@@ -199,6 +212,12 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		statsTable.row();
 		
 		
+		tableLeft.add(playerTable).expandX().fillX().pad(20*UIRenderer.scaleXY).align(Align.left);
+		tableLeft.row();
+		tableLeft.add(scrollPane).expand().fillX().pad(20*UIRenderer.scaleXY).align(Align.bottomLeft);
+		tableLeft.row();
+		
+		
 		
 		playerTable.add(playerHeading).expandX().center().colspan(2);
 		playerTable.row();
@@ -208,16 +227,18 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		playerTable.row();
 		playerTable.add(playerGoldLabel).align(Align.left);
 		playerTable.add(playerGoldText);
-		playerTable.row();
+		playerTable.row();		
 		
-		scrollPane = new ScrollPane(statsTable, skin);
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
+		
+		tableRight.add(anim);
 		
 		table.add(image).colspan(2);
 		table.row();
-		table.add(playerTable).expandX().fillX().pad(20*WorldRenderer.scaleXY).align(Align.left);
-		table.row();
-		table.add(statsTable).expand().fillX().pad(20*WorldRenderer.scaleXY).align(Align.bottomLeft);
-		table.add(anim).expand().align(Align.bottom);
+		
+		table.add(tableLeft).expandX().fillX().pad(20*UIRenderer.scaleXY).align(Align.left);
+		table.add(tableRight).expand().fill().pad(20*UIRenderer.scaleXY);
 		table.row();
 		table.add(backButton).expandX().align(Align.right).colspan(2);
 		
@@ -244,9 +265,6 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		uiGroup.addActor(container);
 		uiGroup.addActor(table);
 		uiGroup.toFront();
-		
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 	}
 	
 	@Override
@@ -294,7 +312,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		this.health.setText(""+ health+" / 9999");
 		this.healthBar.update(health);
 		this.speed.setText(""+ speed+" / 999");
-		this.speedBar.update(999);
+		this.speedBar.update(speed);
 		this.careMistakes.setText(""+ careMistakes);
 		
 		String minutes;

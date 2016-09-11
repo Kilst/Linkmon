@@ -26,7 +26,7 @@ import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
 import com.linkmon.networking.TcpService;
 import com.linkmon.view.LinkmonSprite;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.INetworkScreen;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
 import com.linkmon.view.screens.widgets.AnimationWidget;
@@ -135,8 +135,8 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
 		
 		
 		
-		table.add(leftTable).expand().fill().pad(15*WorldRenderer.scaleXY);
-		table.add(rightTable).expand().fill().pad(15*WorldRenderer.scaleXY);
+		table.add(leftTable).expand().fill().pad(15*UIRenderer.scaleXY);
+		table.add(rightTable).expand().fill().pad(15*UIRenderer.scaleXY);
 		table.row();
 		
 		backButton = new Button(skin2.getDrawable("backButton"));

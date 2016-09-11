@@ -22,7 +22,7 @@ import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.game.GameClass;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
 
 public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
@@ -103,9 +103,9 @@ public class StatIncreaseWindow implements Screen, ILinkmonAddedStats {
 		TextureRegionDrawable okay = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("okayButton.png"))));
 		okayButton = new ImageButton(okay);
 		
-		container.add(statsTable).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.2f*WorldRenderer.scaleY);
+		container.add(statsTable).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.2f*UIRenderer.scaleY);
 		container.row();
-		container.add(okayButton).size(128*WorldRenderer.scaleX, 64*WorldRenderer.scaleY);
+		container.add(okayButton).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY);
 		addListeners();
 		
 		

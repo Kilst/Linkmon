@@ -10,9 +10,9 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.messagesystem.messages.ChatMessageTable;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.ReverseVignette;
+import com.linkmon.view.screens.widgets.messages.MessageTable;
 
 public class EvolutionScreen implements Screen {
 	
@@ -25,8 +25,8 @@ public class EvolutionScreen implements Screen {
 	
 	private Group uiGroup;
 	
-	private ChatMessageTable beginChat;
-	private ChatMessageTable endChat;
+	private MessageTable beginChat;
+	private MessageTable endChat;
 	
 	private EventManager eManager;
 	
@@ -58,13 +58,13 @@ public class EvolutionScreen implements Screen {
 		animation = new AnimationWidget(oldId, 2f/76f);
 		animation.setPosition((Gdx.graphics.getWidth()/2)-(animation.getWidth()/2), Gdx.graphics.getHeight()/3);
 		
-		beginChat = new ChatMessageTable(skin2);
+		beginChat = new MessageTable(skin2);
 		String[] messages = new String[2];
 		messages[0] = "Your Linkmon is evolving!" + "  " + oldId;
 		messages[1] = "I wonder what it will be?";
 		beginChat.setText("EVOLUTION", messages);
 		
-		endChat = new ChatMessageTable(skin2);
+		endChat = new MessageTable(skin2);
 		String[] message = new String[1];
 		message[0] = "Your Linkmon evolved into: " + newId + " <get name from id>";
 		endChat.setText("EVOLUTION", message);

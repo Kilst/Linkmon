@@ -23,7 +23,7 @@ import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IItems;
 
 public class ItemButton extends Table {
@@ -78,7 +78,7 @@ public class ItemButton extends Table {
 		Label itemNameLabel = new Label(name+"\n\n"+itemText, skin);
 		
 		
-		this.add(itemImg).size(80*WorldRenderer.scaleXY, 80*WorldRenderer.scaleXY).pad(5*WorldRenderer.scaleXY).align(Align.left);
+		this.add(itemImg).size(80*UIRenderer.scaleXY, 80*UIRenderer.scaleXY).pad(5*UIRenderer.scaleXY).align(Align.left);
 		itemImg.setTouchable(Touchable.disabled);
 		
 		this.add(img).size(6, 80).align(Align.left).padLeft(15).padRight(15);

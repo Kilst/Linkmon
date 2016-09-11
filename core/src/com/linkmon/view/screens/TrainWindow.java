@@ -24,7 +24,7 @@ import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 
 public class TrainWindow implements Screen {
 	
@@ -76,9 +76,9 @@ public class TrainWindow implements Screen {
 		table.add(health).size(Gdx.graphics.getWidth()/5, image.getRegion().getRegionHeight());
 		container.add(title);
 		container.row();
-		container.add(table).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.4f*WorldRenderer.scaleY);
+		container.add(table).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.4f*UIRenderer.scaleY);
 		container.row();
-		container.add(backButton).align(Align.right).size(128*WorldRenderer.scaleX, 64*WorldRenderer.scaleY);
+		container.add(backButton).align(Align.right).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY);
 		addListeners();
 	}
 	

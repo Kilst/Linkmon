@@ -20,7 +20,7 @@ import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.ScrollingLabel;
 
@@ -91,7 +91,7 @@ public class IntroScreen implements Screen {
 									finishedLoading = true;
 						}
 					};
-					container.add(introLabel).padTop(20*WorldRenderer.scaleXY);
+					container.add(introLabel).padTop(20*UIRenderer.scaleXY);
 				}
 			}
 		};

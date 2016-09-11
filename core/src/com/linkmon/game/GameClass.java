@@ -15,7 +15,6 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.linkmon.componentcontroller.ControllerService;
 import com.linkmon.componentcontroller.LibgdxInputController;
-import com.linkmon.componentmodel.LibgdxWorldRenderer;
 import com.linkmon.componentmodel.MService;
 import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.gameobject.GameObject;
@@ -34,7 +33,8 @@ import com.linkmon.helpers.TimerLengths;
 import com.linkmon.messagesystem.MessageManager;
 import com.linkmon.model.Player;
 import com.linkmon.model.gameobject.linkmon.LinkmonTimerLengths;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.LibgdxWorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.GameUi;
 import com.linkmon.view.screens.IntroScreen;
 import com.linkmon.view.screens.ScreenType;
@@ -43,7 +43,7 @@ public class GameClass extends Game implements ApplicationListener {
 	SpriteBatch batch;
 	Texture img;
 	
-	WorldRenderer world;
+	UIRenderer uiRenderer;
 	
 	GestureDetector gd;
 	InputMultiplexer im;
@@ -58,14 +58,11 @@ public class GameClass extends Game implements ApplicationListener {
 	
 	private HelpMessages help;
 	
-	Player player;
-	
 	private INotifications nHandler;
 	
 	private boolean notificationsSent = false;
 	
 	private LibgdxWorldRenderer libgdxWorldRenderer;
-	private LibgdxInputController inputController;
 	
 	private ControllerService service;
 	
@@ -128,7 +125,7 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		messages = new MessageManager(eManager);
 		
-		world = new WorldRenderer(messages, eManager);
+		uiRenderer = new UIRenderer(messages, eManager);
 		
 		
 		ResourceLoader.getInstance();
@@ -139,99 +136,26 @@ public class GameClass extends Game implements ApplicationListener {
 		System.gc();
 		saveLoaded = true;
 		
-		service = new ControllerService(this, world.ui, eManager);
-		inputController = new LibgdxInputController(eManager);
 		
-//		try{
-//			player = GameSave.loadPlayerSave();
-//			System.gc();
-//			Thread.sleep(100);
-//			
-//			player.setItems(GameSave.loadPlayerItemsSave());
-//			System.gc();
-//			Thread.sleep(100);
-//			player.setLinkmon(GameSave.loadLinkmonSave());
-//			System.gc();
-//			Thread.sleep(100);
-//			player.getLinkmon().setStats(GameSave.loadLinkmonStatsSave());
-//			System.gc();
-//			Thread.sleep(100);
-//			player.getLinkmon().setBirthDate(GameSave.loadLinkmonBirthDateSave());
-//			System.gc();
-//			Thread.sleep(100);
-//			GameSave.updateLinkmon(player.getLinkmon());
-//			System.gc();
-//			Thread.sleep(100);
-//			saveLoaded = true;
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadPlayerSave");
-//		}
-		
-//		try{
-//			player = GameSave.loadPlayerSave();
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadPlayerSave");
-//		}
-//		try{
-//			player.setItems(GameSave.loadPlayerItemsSave());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadPlayerItemsSave");
-//		}
-//		try{
-//			player.setLinkmon(GameSave.loadLinkmonSave());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadLinkmonSave");
-//		}
-//		try{
-//			player.getLinkmon().setStats(GameSave.loadLinkmonStatsSave());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadLinkmonStatsSave");
-//		}
-//		try{
-//			player.getLinkmon().setBirthDate(GameSave.loadLinkmonBirthDateSave());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadLinkmonBirthDateSave");
-//		}
-//		try{
-//			player.getLinkmon().setPoopList(GameSave.loadPoopSave());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "loadPoopSave");
-//		}
-//		try{
-//			GameSave.updateLinkmon(player.getLinkmon());
-//		} catch(Exception e) {
-//			saveLoaded = false;
-//			Gdx.app.log("GameClass (LoadingSave)", "updateLinkmon");
-//		}
-		
-		
-		
-		String message = "" + Gdx.graphics.getWidth() + "   " + Gdx.graphics.getHeight();
-        Gdx.app.log("TIMER", message);
+		service = new ControllerService(this, uiRenderer.ui, eManager);
+		libgdxWorldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
 		
 		im = new InputMultiplexer();
 		
-		im.addProcessor(inputController.gd);
+		im.addProcessor(service.getInputController().gd);
 		
-		im.addProcessor(world.stage);
+		im.addProcessor(uiRenderer.stage);
 		Gdx.input.setInputProcessor(im);
 		
 		if(!saveLoaded) {
-			this.setScreen(new IntroScreen(this, world.ui, eManager));
+			this.setScreen(new IntroScreen(this, uiRenderer.ui, eManager));
 			//startGame("Kilst", 1);
 		}
 		else {
 //			controllerService = new ControllerService(this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
 //			world.addLinkmonToWorld(controllerService.getLinkmonController());
 //			eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-			loadGame(player);
+			//loadGame(player);
 			
 		}
 	}
@@ -253,21 +177,16 @@ public class GameClass extends Game implements ApplicationListener {
 	@Override
 	public void render () {
 		
-		if(libgdxWorldRenderer == null) {
-			libgdxWorldRenderer = new LibgdxWorldRenderer(service.getMService().getWorld());
-		}
-		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		batch.begin();
-		//batch.draw(img, 0, 0);
-		libgdxWorldRenderer.render(batch);
-		batch.end();
+		service.update();
 		
-		if(service != null)
-			service.update();
-		world.render();
+		batch.begin();
+			libgdxWorldRenderer.render(batch);
+		batch.end();
+
+		uiRenderer.render();
 		this.getScreen().render(0);
 	}
 }

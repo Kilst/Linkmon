@@ -113,4 +113,9 @@ public class World {
 	public void setLightOn(boolean isLightOn) {
 		this.isLightOn = isLightOn;
 	}
+
+	public IRenderingComponent getRenderer() {
+		// TODO Auto-generated method stub
+		return renderer;
+	}
 }

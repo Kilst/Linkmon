@@ -28,7 +28,7 @@ import com.linkmon.model.gameobject.linkmon.Move;
 import com.linkmon.model.gameobject.linkmon.MoveFactory;
 import com.linkmon.view.GameSprite;
 import com.linkmon.view.LinkmonSprite;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IBattleView;
 
 public class OnlineBattleScreen implements Screen, IBattleView {
@@ -130,9 +130,9 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		buttonTable = new Table();
 		
 		attack1 = new TextButton("Attack1", skin);
-		buttonTable.add(attack1).size(128*WorldRenderer.scaleX, 64*WorldRenderer.scaleY).bottom();
+		buttonTable.add(attack1).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
 		attack2 = new TextButton("Attack2", skin);
-		buttonTable.add(attack2).size(128*WorldRenderer.scaleX, 64*WorldRenderer.scaleY).bottom();
+		buttonTable.add(attack2).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
 		
 		container.add(buttonTable).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		

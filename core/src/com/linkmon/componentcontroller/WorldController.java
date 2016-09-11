@@ -14,6 +14,10 @@ public class WorldController implements ScreenListener {
 		this.world = world;
 	}
 	
+	public void update() {
+		world.update();
+	}
+	
 	public World getWorld() {
 		return world;
 	}

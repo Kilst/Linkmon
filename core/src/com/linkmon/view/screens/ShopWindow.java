@@ -31,7 +31,7 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.ItemButton;
@@ -137,17 +137,17 @@ public class ShopWindow implements Screen, IShop {
 		tableRight.row();
 		tableRight.add(itemText).expand().colspan(2);
 		tableRight.row();
-		tableRight.add(subtractButton).size(60f*WorldRenderer.scaleXY, 60f*WorldRenderer.scaleXY).expandX().align(Align.right).padRight(15*WorldRenderer.scaleXY);
-		tableRight.add(addButton).size(60f*WorldRenderer.scaleXY, 60f*WorldRenderer.scaleXY).expandX().align(Align.left).padLeft(15*WorldRenderer.scaleXY);
+		tableRight.add(subtractButton).size(60f*UIRenderer.scaleXY, 60f*UIRenderer.scaleXY).expandX().align(Align.right).padRight(15*UIRenderer.scaleXY);
+		tableRight.add(addButton).size(60f*UIRenderer.scaleXY, 60f*UIRenderer.scaleXY).expandX().align(Align.left).padLeft(15*UIRenderer.scaleXY);
 		tableRight.row();
 		tableRight.add(itemAmount).expand().colspan(2);
 		tableRight.row();
 		tableRight.add(itemPrice).expand().colspan(2);
 		tableRight.row();
-		tableRight.add(buyButton).expand().align(Align.bottom).colspan(2).padTop(5*WorldRenderer.scaleXY);
+		tableRight.add(buyButton).expand().align(Align.bottom).colspan(2).padTop(5*UIRenderer.scaleXY);
 		
-		table.add(tableRight).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
-		table.add(tableLeft).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		table.add(tableRight).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(tableLeft).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		
 //		table.debug();
 //		tableLeft.debug();
@@ -155,13 +155,13 @@ public class ShopWindow implements Screen, IShop {
 		
 		innerContainer.add(heading).colspan(3);
 		innerContainer.row();
-		innerContainer.add(tableRight).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
-		innerContainer.add(tableLeft).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY).colspan(2);
+		innerContainer.add(tableRight).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		innerContainer.add(tableLeft).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY).colspan(2);
 		innerContainer.row();
 		Table bottomTable = new Table();
-		bottomTable.add(playerGold).padLeft(15*WorldRenderer.scaleXY);
-		bottomTable.add(coinsImage).align(Align.left).padLeft(15*WorldRenderer.scaleXY);
-		bottomTable.add(backButton).align(Align.right).pad(5*WorldRenderer.scaleXY).expandX();
+		bottomTable.add(playerGold).padLeft(15*UIRenderer.scaleXY);
+		bottomTable.add(coinsImage).align(Align.left).padLeft(15*UIRenderer.scaleXY);
+		bottomTable.add(backButton).align(Align.right).pad(5*UIRenderer.scaleXY).expandX();
 		innerContainer.add(bottomTable).colspan(3).expandX().fillX();
 		addListeners();
 		

@@ -9,6 +9,8 @@ public class ScreenEvent extends GameEvent {
 	public MyScreen screen;
 	public int value;
 	public int value2;
+	
+	public boolean bool;
 
 	public ScreenEvent(int eventId) {
 		super(eventId);
@@ -42,5 +44,12 @@ public class ScreenEvent extends GameEvent {
 		
 		this.value = value;
 		this.value2 = value2;
+	}
+
+	public ScreenEvent(int eventId, boolean bool) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		
+		this.bool = bool;
 	}
 }

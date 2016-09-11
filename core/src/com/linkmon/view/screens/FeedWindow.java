@@ -37,7 +37,7 @@ import com.linkmon.model.gameobject.items.Food;
 import com.linkmon.model.gameobject.items.Item;
 import com.linkmon.model.gameobject.items.ItemIds;
 import com.linkmon.model.gameobject.items.StatFood;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IItems;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.widgets.ItemBox;
@@ -113,17 +113,17 @@ public class FeedWindow implements Screen, IPlayerItems {
 		tableItems.row();
 		tableItems.add(itemText).expand();
 		tableItems.row();
-		tableItems.add(feedButton).expand().align(Align.bottom).pad(5*WorldRenderer.scaleXY);
+		tableItems.add(feedButton).expand().align(Align.bottom).pad(5*UIRenderer.scaleXY);
 		
-		table.add(tableItems).width(200f*WorldRenderer.scaleXY).expandY().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		table.add(tableItems).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		tableFeed.align(Align.top);
-		table.add(tableFeed).expand().fill().padLeft(20*WorldRenderer.scaleXY).padRight(20*WorldRenderer.scaleXY);
+		table.add(tableFeed).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		
 		container.add(image);
 		container.row();
 		container.add(table).expand().fill();
 		container.row();
-		container.add(backButton).align(Align.right).size(128*WorldRenderer.scaleXY, 64*WorldRenderer.scaleXY);
+		container.add(backButton).align(Align.right).size(128*UIRenderer.scaleXY, 64*UIRenderer.scaleXY);
 		
 		addListeners();
 		

@@ -29,7 +29,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Food;
 import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IItems;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.widgets.ItemButton;
@@ -67,9 +67,9 @@ public class ItemWindow implements Screen, IPlayerItems {
 		
 		container.add(image);
 		container.row();
-		container.add(table).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.4f*WorldRenderer.scaleY);
+		container.add(table).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.4f*UIRenderer.scaleY);
 		container.row();
-		container.add(backButton).align(Align.right).size(128*WorldRenderer.scaleX, 64*WorldRenderer.scaleY);
+		container.add(backButton).align(Align.right).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY);
 		addListeners();
 	}
 	

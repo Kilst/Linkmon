@@ -19,7 +19,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 
 public class SpeedTrainWindow implements Screen {
 	
@@ -41,7 +41,7 @@ public class SpeedTrainWindow implements Screen {
 		TextureRegion region = ResourceLoader.getRegionFromId(0);
 		
 		trainingBag = new ImageButton(new TextureRegionDrawable(region));
-		container.add(trainingBag).size(64*WorldRenderer.scaleX, 64*WorldRenderer.scaleY);
+		container.add(trainingBag).size(64*UIRenderer.scaleX, 64*UIRenderer.scaleY);
 		addListeners();
 	}
 	

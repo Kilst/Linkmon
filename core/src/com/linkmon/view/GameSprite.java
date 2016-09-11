@@ -94,7 +94,7 @@ public class GameSprite  extends Actor {
 		
 		
 		sprite = new Sprite(animations[0].first());
-		sprite.setScale(WorldRenderer.scaleX, WorldRenderer.scaleY);
+		sprite.setScale(UIRenderer.scaleX, UIRenderer.scaleY);
 		sprite.setBounds(getX(), getY(), sprite.getWidth(), sprite.getHeight());
 		setBounds(getX(), getY(), sprite.getWidth(), sprite.getHeight());
 		sprite.setY(45);
@@ -149,7 +149,7 @@ public class GameSprite  extends Actor {
 		anim = new LinkmonAnimationController(idleAnimation, walkAnimation, waveAnimation, sleepAnimation, angryAnimation);
 		
 		sprite = new Sprite(animations[0].first());
-		sprite.setScale(WorldRenderer.scaleX, WorldRenderer.scaleY);
+		sprite.setScale(UIRenderer.scaleX, UIRenderer.scaleY);
 		sprite.setBounds(getX(), getY(), sprite.getWidth(), sprite.getHeight());
 		setBounds(getX(), getY(), sprite.getWidth(), sprite.getHeight());
 		sprite.setY(45);

@@ -27,7 +27,7 @@ public class PoopSprite extends Actor {
 		this.eManager = eManager;
 		this.poop = poop1;
 		sprite = new Sprite(ResourceLoader.getRegionFromId(3));
-		sprite.setScale(WorldRenderer.scaleX, WorldRenderer.scaleY);
+		sprite.setScale(UIRenderer.scaleX, UIRenderer.scaleY);
 		sprite.setY(45);
 		this.setY(45);
 		this.setX(poop.getX());
@@ -54,12 +54,12 @@ public class PoopSprite extends Actor {
 
 	public PoopSprite(float x, boolean save) {
 		sprite = new Sprite(ResourceLoader.getRegionFromId(3));
-		sprite.setScale(WorldRenderer.scaleX, WorldRenderer.scaleY);
+		sprite.setScale(UIRenderer.scaleX, UIRenderer.scaleY);
 		sprite.setY(45);
 		this.setY(45);
 		this.setX(x);
 		sprite.setX(x);
-		setBounds(sprite.getX(),sprite.getY(),sprite.getWidth()*WorldRenderer.scaleX,sprite.getHeight()*WorldRenderer.scaleY); // Needed for touch/click events to fire
+		setBounds(sprite.getX(),sprite.getY(),sprite.getWidth()*UIRenderer.scaleX,sprite.getHeight()*UIRenderer.scaleY); // Needed for touch/click events to fire
 		
 		addListener();
 	}

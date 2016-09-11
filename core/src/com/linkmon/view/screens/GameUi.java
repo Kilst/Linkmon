@@ -36,9 +36,9 @@ import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.messagesystem.messages.ChatMessageTable;
-import com.linkmon.view.WorldRenderer;
-import com.linkmon.view.screens.widgets.PBar;
+import com.linkmon.view.UIRenderer;
+import com.linkmon.view.screens.widgets.MyProgressBar;
+import com.linkmon.view.screens.widgets.messages.MessageTable;
 
 public class GameUi implements Screen, ViewListener {
 	
@@ -75,11 +75,12 @@ public class GameUi implements Screen, ViewListener {
 	private BitmapFont font;
 	private Skin skin2;
 	
-	PBar pBar;
+	MyProgressBar pBar;
 	
 	public Label fpsLabel;
 	
 	private boolean lightOn = false;
+	private EvolutionScreen evolutionScreen;
 	
 	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
 		
@@ -104,7 +105,7 @@ public class GameUi implements Screen, ViewListener {
 		float padding = (Gdx.graphics.getWidth()-train.getWidth()*5)/5/2;
 		
 		containerBottom = new Table();
-		containerBottom.setSize(Gdx.graphics.getWidth(), 40*WorldRenderer.scaleY);
+		containerBottom.setSize(Gdx.graphics.getWidth(), 40*UIRenderer.scaleY);
 		containerBottom.setBackground(skin.getDrawable("default-rect"));
 		containerBottom.add(train).padLeft(padding).padRight(padding);
 		containerBottom.add(feed).padLeft(padding).padRight(padding);
@@ -123,29 +124,30 @@ public class GameUi implements Screen, ViewListener {
 		coinsImage = new Image(skin2.getDrawable("coins"));
 		hunger = new Label("Hunger: ", labelStyle);
 		
-		pBar = new PBar(skin2, 0, 100);
+		pBar = new MyProgressBar(skin2, 0, 100);
 		
 //		pBar.update(this.linkmon.getHungerLevel());
 		
 		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
 		containerTop = new Table();
-		containerTop.setSize(Gdx.graphics.getWidth(), 30*WorldRenderer.scaleXY);
-		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*WorldRenderer.scaleXY);
+		containerTop.setSize(Gdx.graphics.getWidth(), 30*UIRenderer.scaleXY);
+		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*UIRenderer.scaleXY);
 		containerTop.setBackground(skin.getDrawable("default-rect"));
 		
 		help = new ImageButton(skin2.getDrawable("helpButton"));
 		settings = new ImageButton(skin2.getDrawable("settingsButton"));
 		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
-		light.setPosition(0, (Gdx.graphics.getHeight() - 30*WorldRenderer.scaleY)-light.getHeight());
+		light.setPosition(0, (Gdx.graphics.getHeight() - 30*UIRenderer.scaleY)-light.getHeight());
 		
-		containerTop.add(playerGold).height(30*WorldRenderer.scaleXY).padRight(5);
+		
+		containerTop.add(playerGold).height(30*UIRenderer.scaleXY).padRight(5);
 		containerTop.add(coinsImage).align(Align.left).expandX();
-		containerTop.add(hunger).height(30*WorldRenderer.scaleXY);
-		containerTop.add(pBar).size(150*WorldRenderer.scaleXY, 10*WorldRenderer.scaleXY).expandX().align(Align.left);
-		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*WorldRenderer.scaleXY);
+		containerTop.add(hunger).height(30*UIRenderer.scaleXY);
+		containerTop.add(pBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
+		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*UIRenderer.scaleXY);
 		
-		containerTop.add(help).padTop(30*WorldRenderer.scaleXY);
-		containerTop.add(settings).padTop(30*WorldRenderer.scaleXY);
+		containerTop.add(help).padTop(30*UIRenderer.scaleXY);
+		containerTop.add(settings).padTop(30*UIRenderer.scaleXY);
 		
 		addListeners();
 		
@@ -218,15 +220,16 @@ public class GameUi implements Screen, ViewListener {
 		light.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP));
-            	if(light.isChecked()) {
-            		Gdx.app.log("MAINUI", "Light on");
-            		light.setChecked(true);
-            	}
-            	else if(!light.isChecked()) {
-            		Gdx.app.log("MAINUI", "Light off");
-            		light.setChecked(false);
-            	}
+//            	if(light.isChecked()) {
+//            		Gdx.app.log("MAINUI", "Light on");
+//            		light.setChecked(true);
+//            	}
+//            	else if(!light.isChecked()) {
+//            		Gdx.app.log("MAINUI", "Light off");
+//            		light.setChecked(false);
+//            	}
+            	game.setScreen(new MenuScreen(eManager, ui));
+            	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP, !light.isChecked()));
             }
 		});
 		help.addListener(new ClickListener(){
@@ -256,6 +259,11 @@ public class GameUi implements Screen, ViewListener {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		update();
+		
+		if(evolve) {
+			game.setScreen(evolutionScreen);
+			evolve = false;
+		}
 	}
 
 	@Override
@@ -305,7 +313,7 @@ public class GameUi implements Screen, ViewListener {
 			}
 			case(ViewEvents.EVOLVE): {
 				evolve = true;
-				game.setScreen(new EvolutionScreen(ui, eManager, event.value, event.value2));
+				evolutionScreen = new EvolutionScreen(ui, eManager, event.value, event.value2);
 				break;
 			}
 		}

@@ -2,6 +2,7 @@ package com.linkmon.componentcontroller;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.linkmon.componentmodel.MService;
+import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.gameobject.LibgdxObjectFactory;
 import com.linkmon.componentmodel.gameobject.ObjectFactory;
 import com.linkmon.eventmanager.EventManager;
@@ -20,6 +21,8 @@ public class ControllerService {
 	
 	private WorldController worldController;
 	
+	private LibgdxInputController inputController;
+	
 	public ControllerService(GameClass game, Group ui, EventManager eManager) {
 		
 		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
@@ -30,6 +33,8 @@ public class ControllerService {
 		shopController = new ShopController(mService.getShop());
 		screenController = new LibgdxScreenController(game, ui, eManager);
 		worldController = new WorldController(mService.getWorld());
+		
+		inputController = new LibgdxInputController(eManager);
 		
 		networkController = new NetworkController(eManager, mService.getPlayer());
 		
@@ -43,11 +48,16 @@ public class ControllerService {
 	
 	public void update() {
 		screenController.update();
+		worldController.update();
+	}
+	
+	public LibgdxInputController getInputController() {
+		return inputController;
 	}
 
-	public MService getMService() {
+	public WorldController getWorldController() {
 		// TODO Auto-generated method stub
-		return mService;
+		return worldController;
 	}
 
 }

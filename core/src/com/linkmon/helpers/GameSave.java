@@ -15,7 +15,7 @@ import com.linkmon.model.gameobject.linkmon.Linkmon;
 import com.linkmon.model.gameobject.linkmon.LinkmonStats;
 import com.linkmon.model.gameobject.linkmon.LinkmonTimerLengths;
 import com.linkmon.model.gameobject.poop.Poop;
-import com.linkmon.view.WorldRenderer;
+import com.linkmon.view.UIRenderer;
 
 public class GameSave {
 	
@@ -277,7 +277,7 @@ public class GameSave {
 		ArrayList<Poop> poopList = new ArrayList<Poop>();
 		PoopListSave poopJson = json.fromJson(PoopListSave.class, Gdx.files.local("poopSave.json"));
 		for (PoopSave poop : poopJson.poopList) {
-			poopList.add(new Poop(0, poop.x, 40*WorldRenderer.scaleY));
+			poopList.add(new Poop(0, poop.x, 40*UIRenderer.scaleY));
 		}
 		
 		Gdx.app.log("GameSave", "poops: " + poopList.size());
@@ -294,7 +294,7 @@ public class GameSave {
 		if(poopList.size() < 3 && count > 0) {
 			for (int i = poopList.size(); i < count; i++) {
 				Gdx.app.log("GameSave", "added poop");
-				poopList.add(new Poop(0,random.nextInt((int)(Gdx.graphics.getWidth()-40*WorldRenderer.scaleX)), 40*WorldRenderer.scaleY));
+				poopList.add(new Poop(0,random.nextInt((int)(Gdx.graphics.getWidth()-40*UIRenderer.scaleX)), 40*UIRenderer.scaleY));
 			}
 		}
 
