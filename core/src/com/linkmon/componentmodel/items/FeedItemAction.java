@@ -13,9 +13,14 @@ public class FeedItemAction implements IItemAction {
 	}
 
 	@Override
-	public void use(GameObject item, GameObject linkmon, World world) {
+	public boolean use(GameObject item, GameObject linkmon, World world) {
 		// TODO Auto-generated method stub
-		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(feedAmount);
+		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().getHungerLevel() < 90) {
+			((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(feedAmount);
+			return true;
+		}
+		else
+			return false;
 	}
 
 }

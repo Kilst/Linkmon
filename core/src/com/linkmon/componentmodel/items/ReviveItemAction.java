@@ -7,9 +7,14 @@ import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 public class ReviveItemAction implements IItemAction {
 
 	@Override
-	public void use(GameObject item, GameObject linkmon, World world) {
+	public boolean use(GameObject item, GameObject linkmon, World world) {
 		// TODO Auto-generated method stub
-		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().setDead(false);
+		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isDead()) {
+			((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().setDead(false);
+			return true;
+		}
+		else
+			return false;
 	}
 
 }

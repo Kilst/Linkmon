@@ -6,8 +6,9 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 public class AddToWorldItemAction implements IItemAction {
 
 	@Override
-	public void use(GameObject item, GameObject linkmon, World world) {
+	public boolean use(GameObject item, GameObject linkmon, World world) {
 		// TODO Auto-generated method stub
 		world.addObjectToWorld(item);
+		return true;
 	}
 }

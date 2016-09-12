@@ -29,8 +29,8 @@ public class ItemComponent implements IExtraComponents {
 		
 	}
 	
-	public void use(GameObject item, GameObject linkmon, World world) {
-		action.use(item, linkmon, world);
+	public boolean use(GameObject item, GameObject linkmon, World world) {
+		return action.use(item, linkmon, world);
 	}
 
 	public int getQuantity() {

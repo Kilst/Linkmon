@@ -5,6 +5,6 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 
 public interface IItemAction {
 	
-	public void use(GameObject item, GameObject linkmon, World world);
+	public boolean use(GameObject item, GameObject linkmon, World world);
 
 }

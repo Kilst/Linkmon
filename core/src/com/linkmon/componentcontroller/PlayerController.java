@@ -41,7 +41,7 @@ public class PlayerController implements ScreenListener {
 	
 	private void useItem(int id) {
 		GameObject item = ObjectFactory.getInstance().getObjectFromId(id);
-		((ItemComponent)item.getExtraComponents()).use(item,player.getLinkmon(), player.getWorld());
+		player.useItem(item);
 	}
 	
 	// View updates

@@ -47,8 +47,8 @@ public class AABB {
                 return false;
             }
 	    else {
-	    	Gdx.app.log("AABB", "Collision detected!\nPoop X: " + aabb.x+ "\nScoopa X: " + x
-			+ "\nPoop Width: " + aabb.width + "\nScoopa Width: " + width);
+//	    	Gdx.app.log("AABB", "Collision detected!\nPoop X: " + aabb.x+ "\nScoopa X: " + x
+//			+ "\nPoop Width: " + aabb.width + "\nScoopa Width: " + width);
 	    	return true;
 	    }
 	  }

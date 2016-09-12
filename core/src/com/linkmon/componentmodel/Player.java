@@ -8,6 +8,7 @@ import com.linkmon.componentmodel.gameobject.ObjectFactory;
 import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.UsableItemComponent;
+import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
@@ -81,7 +82,7 @@ public class Player {
 		}
 	}
 	
-	private void removeItems() {
+	private void removeItemsFromQueue() {
 		for(GameObject item : itemsRemoveQueue) {
 			((ItemComponent)item.getExtraComponents()).setQuantity(((ItemComponent)item.getExtraComponents()).getQuantity()-1);
 			if(((ItemComponent)item.getExtraComponents()).getQuantity() < 1)
@@ -89,6 +90,15 @@ public class Player {
 		}
 		
 		itemsRemoveQueue.clear();
+	}
+	
+	private void removeItem(GameObject item) {
+		for(GameObject itemObject : items) {
+			if(itemObject.getId() == item.getId()) {
+				itemsRemoveQueue.add(itemObject);
+			}
+		}
+		removeItemsFromQueue();
 	}
 	
 	public void addItem(GameObject newItem) {
@@ -105,8 +115,9 @@ public class Player {
 			items.add(newItem);
 	}
 	
-	private void useItem(GameObject item) {
-		((UsableItemComponent)item.getExtraComponents()).use(item,linkmon, world);
+	public void useItem(GameObject item) {
+		if(((ItemComponent)item.getExtraComponents()).use(item,getLinkmon(), getWorld()))
+			removeItem(item);
 	}
 
 	private void addGold(int amount) {
