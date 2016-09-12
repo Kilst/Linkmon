@@ -39,9 +39,6 @@ public class MService {
 		}
 		catch(Exception e) {
 			newGame(0);
-			
-			GameObject poopaScoopa = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOPA_SCOOPA);
-			world.addObjectToWorld(poopaScoopa);
 		}
 	}
 	
