@@ -30,7 +30,12 @@ public class Player {
 	private World world;
 	
 	public Player() {
+		gold = 15000;
 		
+		name = "Kilst";
+		
+		items = new ArrayList<GameObject>();
+		itemsRemoveQueue = new ArrayList<GameObject>();
 	}
 	
 	public void addeManager(EventManager eManager) {
@@ -168,5 +173,14 @@ public class Player {
 
 	public void setWorld(World world) {
 		this.world = world;
+	}
+
+	public void setItems(int[][] savedItems) {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < savedItems.length; i++) {
+			GameObject item = ObjectFactory.getInstance().getObjectFromId(savedItems[i][0]);
+			((ItemComponent)item.getExtraComponents()).setQuantity(savedItems[i][1]);
+			items.add(item);
+		}
 	}
 }

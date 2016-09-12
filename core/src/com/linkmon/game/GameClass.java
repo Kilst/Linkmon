@@ -79,6 +79,7 @@ public class GameClass extends Game implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		service.saveGame();
 //		GameSave.saveGame(controllerService.getPlayerController().getPlayer());
 //		if(eManager != null)
 //		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));

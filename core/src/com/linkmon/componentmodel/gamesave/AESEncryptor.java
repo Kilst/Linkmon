@@ -5,7 +5,8 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
- 
+import java.util.Base64;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -33,10 +34,46 @@ public class AESEncryptor implements ISaveEncryption {
 	}
 
 	@Override
-	public byte[] decrypt(String data) {
+	public byte[] decrypt(byte[] data) {
 		// TODO Auto-generated method stub
-		Gdx.app.log("DECRYPT SAVE GAME", data);
-		return doCrypto(Cipher.DECRYPT_MODE, key, data);
+		return deCrypto(Cipher.DECRYPT_MODE, key, data);
+	}
+	
+	private byte[] deCrypto(int encryptMode, String key, byte[] data) {
+		
+		byte[] outputBytes = new byte[1];
+		
+			Key secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
+	        Cipher cipher = null;
+			try {
+				cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        try {
+				cipher.init(encryptMode, secretKey);
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        Gdx.app.log("DOCRYPTO SAVE GAME", "INPUT LENGTH " +data.length);
+	        
+	        try {
+				outputBytes = cipher.doFinal(data);
+			} catch (IllegalBlockSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BadPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        Gdx.app.log("DOCRYPTO SAVE GAME", "OUTPUT LENGTH " + outputBytes.length);
+		return outputBytes;
 	}
 	
 	private byte[] doCrypto(int encryptMode, String key, String data) {
@@ -46,7 +83,7 @@ public class AESEncryptor implements ISaveEncryption {
 			Key secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
 	        Cipher cipher = null;
 			try {
-				cipher = Cipher.getInstance("AES/CTR/PKCS5Padding");
+				cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,6 +99,7 @@ public class AESEncryptor implements ISaveEncryption {
 			}
 	        
 	        byte[] inputBytes = data.getBytes(StandardCharsets.UTF_8);
+	        Gdx.app.log("DOCRYPTO SAVE GAME", "INPUT LENGTH " +inputBytes.length);
 	        
 	        try {
 				outputBytes = cipher.doFinal(inputBytes);
@@ -72,7 +110,7 @@ public class AESEncryptor implements ISaveEncryption {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+	        Gdx.app.log("DOCRYPTO SAVE GAME", "OUTPUT LENGTH " +outputBytes.length);
 		return outputBytes;
 	}
 

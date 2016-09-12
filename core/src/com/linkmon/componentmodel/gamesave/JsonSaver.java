@@ -1,27 +1,11 @@
 package com.linkmon.componentmodel.gamesave;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import java.util.Base64;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.linkmon.componentmodel.Player;
-import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.gameobject.ObjectFactory;
-import com.linkmon.componentmodel.gameobject.ObjectId;
-import com.linkmon.componentmodel.items.ItemComponent;
-import com.linkmon.componentmodel.linkmon.BirthDate;
-import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
-import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
-import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
-import com.linkmon.componentmodel.linkmon.poop.PoopComponent;
-import com.linkmon.helpers.TimerLengths;
-import com.linkmon.model.gameobject.linkmon.LinkmonStats;
-import com.linkmon.model.gameobject.linkmon.LinkmonTimerLengths;
 
 public class JsonSaver extends BaseSaver {
 
@@ -46,14 +30,18 @@ public class JsonSaver extends BaseSaver {
 		Json json = new Json();
 		
 		jsonText = json.toJson(save);
-//		Gdx.app.log("SAVE GAME", jsonText);
+		Gdx.app.log("SAVE GAME", jsonText);
 		
-		while(jsonText.length()%16 != 0)
-			jsonText+="/0";
 		
 		encryptedBytes = this.encryptSave(jsonText);
 		
+		Gdx.app.log("SAVE GAME", "encryptedBytes length: " + encryptedBytes.length);
+		
 		FileHandle file = Gdx.files.local("playerSave.json");
+		
+		Gdx.app.log("SAVE GAME BEFORE ENCODE", new String(encryptedBytes, StandardCharsets.UTF_8));
+		String saveString = new String(Base64.getEncoder().encode(encryptedBytes), StandardCharsets.UTF_8);
+		Gdx.app.log("SAVE GAME", saveString);
 		file.writeBytes(encryptedBytes, false);
 	}
 
@@ -63,12 +51,9 @@ public class JsonSaver extends BaseSaver {
 		
 		FileHandle file = Gdx.files.local("playerSave.json");
 		
-		String playerJson = file.readString();
-		while(playerJson.length()%16 != 0)
-			playerJson+="/0";
-		byte[] decryptedBytes = this.decryptSave(playerJson);
+		byte[] decryptedBytes = this.decryptSave(file.readBytes());
 		String saveString = new String(decryptedBytes, StandardCharsets.UTF_8);
-		Gdx.app.log("SAVE GAME", saveString);
+		Gdx.app.log("LOAD GAME", saveString);
 		
 		Json json = new Json();
 		

@@ -24,26 +24,29 @@ public class MService {
 	}
 
 	private void load() {
+		
 		try {
 		
-//			world = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//			
-//			shop = new Shop();
-//			
-//			jsonSaver = new JsonSaver(new AESEncryptor());
-//			
-//			player = jsonSaver.load();
-//			player.addeManager(eManager);
+			world = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			
+			shop = new Shop();
+			
+			jsonSaver = new JsonSaver(new AESEncryptor());
+			
+			player = jsonSaver.load();
+			player.addeManager(eManager);
 			
 			world.addObjectToWorld(player.getLinkmon());
 		}
 		catch(Exception e) {
 			newGame(0);
+			
 		}
 	}
 	
-	private void loadGame() {
-		
+	public void saveGame() {
+		jsonSaver = new JsonSaver(new AESEncryptor());
+		jsonSaver.save(player);
 	}
 	
 	private void newGame(int eggChoice) {

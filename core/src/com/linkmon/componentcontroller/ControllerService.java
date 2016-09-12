@@ -60,4 +60,9 @@ public class ControllerService {
 		return worldController;
 	}
 
+	public void saveGame() {
+		// TODO Auto-generated method stub
+		mService.saveGame();
+	}
+
 }

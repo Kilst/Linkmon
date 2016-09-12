@@ -21,7 +21,7 @@ public class GameSave {
 	public int playerGold;
 	
 //	// Player Items
-//	public int[][] items;
+	public int[][] items;
 	
 	// Linkmon
 	
@@ -61,6 +61,9 @@ public class GameSave {
 	
 	public long savedTime;
 	
+	public GameSave() {
+		
+	}
 	
 	public GameSave(Player player) {
 		
@@ -71,12 +74,12 @@ public class GameSave {
 		
 		// Player Items
 		
-//		this.items = new int[player.getItems().size()][2];
-//		
-//		for(int i = 0; i < player.getItems().size(); i++) {
-//			this.items[i][0] = player.getItems().get(i).getId();
-//			this.items[i][1] = ((ItemComponent)player.getItems().get(i).getExtraComponents()).getQuantity();
-//		}
+		this.items = new int[player.getItems().size()][2];
+		
+		for(int i = 0; i < player.getItems().size(); i++) {
+			this.items[i][0] = player.getItems().get(i).getId();
+			this.items[i][1] = ((ItemComponent)player.getItems().get(i).getExtraComponents()).getQuantity();
+		}
 		
 		// Linkmon
 		
@@ -126,6 +129,8 @@ public class GameSave {
 		Player player = new Player();
 		player.setName(this.playerName);
 		player.setGold(this.playerGold);
+		
+		player.setItems(items);
 		
 		player.setLinkmon(getSavedLinkmon());
 		
