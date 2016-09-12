@@ -13,6 +13,7 @@ public class NetworkEvent extends GameEvent {
 	public String serverWelcome;
 	
 	public int screen;
+	public int[] values;
 	
 	public NetworkEvent(int eventId, BattleLinkmon battleLinkmon) {
 		super(eventId);
@@ -48,5 +49,11 @@ public class NetworkEvent extends GameEvent {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		this.screen = screen;
+	}
+	
+	public NetworkEvent(int eventId, int[] values) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.values = values;
 	}
 }

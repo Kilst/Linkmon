@@ -42,7 +42,7 @@ public class NetworkController implements ScreenListener {
 	}
 	
 	private void cancelSearch() {
-		Gdx.app.log("NetworkController", "Searching!");
+		Gdx.app.log("NetworkController", "Cancelling Searching!");
 		service.cancelSearch();
 	}
 	

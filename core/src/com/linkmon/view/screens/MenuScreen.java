@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
@@ -29,6 +30,8 @@ public class MenuScreen implements Screen, MyScreen {
 	private ImageButton statsButton;
 	private ImageButton cryoGenicsButton;
 	private ImageButton achievementsButton;
+	
+	private ImageButton backButton;
 	
 	private Group ui;
 	
@@ -51,10 +54,11 @@ public class MenuScreen implements Screen, MyScreen {
 		table.setBackground(skin.getDrawable("container"));
 		
 		shopButton = new ImageButton(skin.getDrawable("shopButton"));
-		itemButton = new ImageButton(skin.getDrawable("shopButton"));
+		itemButton = new ImageButton(skin.getDrawable("itemButton"));
 		statsButton = new ImageButton(skin.getDrawable("statsButton"));
-		cryoGenicsButton = new ImageButton(skin.getDrawable("okayButton"));
-		achievementsButton = new ImageButton(skin.getDrawable("okayButton"));
+		cryoGenicsButton = new ImageButton(skin.getDrawable("cryoGenicsButton"));
+		achievementsButton = new ImageButton(skin.getDrawable("achievementButton"));
+		backButton = new ImageButton(skin.getDrawable("backButton"));
 		
 		darken = new Image(skin.getDrawable("darkenWorld"));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -64,17 +68,17 @@ public class MenuScreen implements Screen, MyScreen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		table.add(shopButton);
+		table.add(shopButton).pad(20);
+		table.add(itemButton).pad(20);
+		table.row().pad(20);
+		table.add(statsButton).pad(20);
+		table.add(cryoGenicsButton).pad(20);
 		table.row();
-		table.add(itemButton);
+		table.add(achievementsButton).pad(20).colspan(2);
 		table.row();
-		table.add(statsButton);
-		table.row();
-		table.add(cryoGenicsButton);
-		table.row();
-		table.add(achievementsButton);
+		table.add(backButton).expandX().colspan(2).padTop(20).align(Align.right);
 		
-		rootTable.add(table).width(Gdx.graphics.getWidth()/4);
+		rootTable.add(table);
 		
 		addListeners();
 		
@@ -84,10 +88,17 @@ public class MenuScreen implements Screen, MyScreen {
 	
 	private void addListeners() {
 		
-		shopButton.addListener(new ClickListener(){
+		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
+            }
+		});
+		
+		shopButton.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.SHOP_WINDOW));
             }
 		});
 		
@@ -101,7 +112,7 @@ public class MenuScreen implements Screen, MyScreen {
 		statsButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
             }
 		});
 		

@@ -48,7 +48,7 @@ public class GameUi implements Screen, ViewListener {
 	
 	Button feed;
 	Button medicine;
-	Button stats;
+	Button menu;
 	Button help;
 	Button settings;
 	
@@ -79,7 +79,6 @@ public class GameUi implements Screen, ViewListener {
 	
 	public Label fpsLabel;
 	
-	private boolean lightOn = false;
 	private EvolutionScreen evolutionScreen;
 	
 	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
@@ -99,7 +98,7 @@ public class GameUi implements Screen, ViewListener {
 		train = new ImageButton(skin2.getDrawable("trainButton"));
 		feed = new ImageButton(skin2.getDrawable("feedButton"));
 		medicine = new ImageButton(skin2.getDrawable("shopButton"));
-		stats = new ImageButton(skin2.getDrawable("statsButton"));
+		menu = new ImageButton(skin2.getDrawable("menuButton"));
 		online = new ImageButton(skin2.getDrawable("onlineButton"));
 		
 		float padding = (Gdx.graphics.getWidth()-train.getWidth()*5)/5/2;
@@ -109,8 +108,8 @@ public class GameUi implements Screen, ViewListener {
 		containerBottom.setBackground(skin.getDrawable("default-rect"));
 		containerBottom.add(train).padLeft(padding).padRight(padding);
 		containerBottom.add(feed).padLeft(padding).padRight(padding);
-		containerBottom.add(medicine).padLeft(padding).padRight(padding);
-		containerBottom.add(stats).padLeft(padding).padRight(padding);
+//		containerBottom.add(medicine).padLeft(padding).padRight(padding);
+		containerBottom.add(menu).padLeft(padding).padRight(padding).expandX().align(Align.left);
 		containerBottom.add(online).padLeft(padding).padRight(padding);
 		
 		font = new BitmapFont(Gdx.files.internal("fontSmall-export.fnt"),
@@ -201,10 +200,10 @@ public class GameUi implements Screen, ViewListener {
             	}
 		});
 		
-		stats.addListener(new ClickListener(){
+		menu.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
+            	game.setScreen(new MenuScreen(eManager, ui));
             	}
 		});
 		
@@ -220,15 +219,6 @@ public class GameUi implements Screen, ViewListener {
 		light.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-//            	if(light.isChecked()) {
-//            		Gdx.app.log("MAINUI", "Light on");
-//            		light.setChecked(true);
-//            	}
-//            	else if(!light.isChecked()) {
-//            		Gdx.app.log("MAINUI", "Light off");
-//            		light.setChecked(false);
-//            	}
-            	game.setScreen(new MenuScreen(eManager, ui));
             	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP, !light.isChecked()));
             }
 		});

@@ -28,7 +28,7 @@ public class LinkmonTimerComponent implements ITimerComponent {
 	
 	public LinkmonTimerComponent() {
 		setEvolutionTimer(new Timer(15, true));		
-		setHungerTimer(new Timer(5, true));
+		setHungerTimer(new Timer(1, true));
 		setPoopTimer(new Timer(5, true));
 		setSleepTimer(new Timer(10, true));
 		setSickTimer(new Timer(360, true));		
@@ -83,14 +83,14 @@ public class LinkmonTimerComponent implements ITimerComponent {
 	}
 	
 	private void setBabyTimers() {
-		setHungerTimer(new Timer(2, true));
+		setHungerTimer(new Timer(1, true));
 		hungerTimer.start();
 		setPoopTimer(new Timer(30, true));
 		poopTimer.start();
 	}
 	
 	private void setRookieTimers() {
-		setHungerTimer(new Timer(10, true));
+		setHungerTimer(new Timer(1, true));
 		hungerTimer.start();
 		setPoopTimer(new Timer(60, true));
 		poopTimer.start();
