@@ -35,6 +35,7 @@ public class MService {
 			
 			player = jsonSaver.load();
 			player.addeManager(eManager);
+			player.setWorld(world);
 			
 			world.addObjectToWorld(player.getLinkmon());
 		}

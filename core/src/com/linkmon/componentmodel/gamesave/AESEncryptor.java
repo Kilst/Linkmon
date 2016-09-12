@@ -29,17 +29,17 @@ public class AESEncryptor implements ISaveEncryption {
 	@Override
 	public byte[] encrypt(String data) {
 		// TODO Auto-generated method stub
-		Gdx.app.log("ENCRYPT SAVE GAME", data);
-		return doCrypto(Cipher.ENCRYPT_MODE, key, data);
+		byte[] inputBytes = data.getBytes(StandardCharsets.UTF_8);
+		return doCrypto(Cipher.ENCRYPT_MODE, key, inputBytes);
 	}
 
 	@Override
 	public byte[] decrypt(byte[] data) {
 		// TODO Auto-generated method stub
-		return deCrypto(Cipher.DECRYPT_MODE, key, data);
+		return doCrypto(Cipher.DECRYPT_MODE, key, data);
 	}
 	
-	private byte[] deCrypto(int encryptMode, String key, byte[] data) {
+	private byte[] doCrypto(int encryptMode, String key, byte[] data) {
 		
 		byte[] outputBytes = new byte[1];
 		
@@ -75,43 +75,4 @@ public class AESEncryptor implements ISaveEncryption {
 	        Gdx.app.log("DOCRYPTO SAVE GAME", "OUTPUT LENGTH " + outputBytes.length);
 		return outputBytes;
 	}
-	
-	private byte[] doCrypto(int encryptMode, String key, String data) {
-		
-		byte[] outputBytes = new byte[1];
-		
-			Key secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
-	        Cipher cipher = null;
-			try {
-				cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        try {
-				cipher.init(encryptMode, secretKey);
-			} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        
-	        byte[] inputBytes = data.getBytes(StandardCharsets.UTF_8);
-	        Gdx.app.log("DOCRYPTO SAVE GAME", "INPUT LENGTH " +inputBytes.length);
-	        
-	        try {
-				outputBytes = cipher.doFinal(inputBytes);
-			} catch (IllegalBlockSizeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (BadPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        Gdx.app.log("DOCRYPTO SAVE GAME", "OUTPUT LENGTH " +outputBytes.length);
-		return outputBytes;
-	}
-
 }

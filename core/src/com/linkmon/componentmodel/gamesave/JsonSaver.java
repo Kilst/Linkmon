@@ -35,13 +35,8 @@ public class JsonSaver extends BaseSaver {
 		
 		encryptedBytes = this.encryptSave(jsonText);
 		
-		Gdx.app.log("SAVE GAME", "encryptedBytes length: " + encryptedBytes.length);
-		
 		FileHandle file = Gdx.files.local("playerSave.json");
 		
-		Gdx.app.log("SAVE GAME BEFORE ENCODE", new String(encryptedBytes, StandardCharsets.UTF_8));
-		String saveString = new String(Base64.getEncoder().encode(encryptedBytes), StandardCharsets.UTF_8);
-		Gdx.app.log("SAVE GAME", saveString);
 		file.writeBytes(encryptedBytes, false);
 	}
 
