@@ -17,6 +17,7 @@ public class Shop {
 		
 		items.add(ObjectFactory.getInstance().getObjectFromId(ObjectId.MEAT));
 		items.add(ObjectFactory.getInstance().getObjectFromId(ObjectId.REVIVE_POTION));
+		items.add(ObjectFactory.getInstance().getObjectFromId(ObjectId.POOPA_SCOOPA));
 	}
 	
 //	public void addItem(int itemId, int quantity) {

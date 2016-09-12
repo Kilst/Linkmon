@@ -9,6 +9,8 @@ import com.linkmon.helpers.Timer;
 
 public class LinkmonStatusComponent implements IExtraComponents {
 	
+	private boolean isDead;
+	
 	private BirthDate birthDate;
 	private boolean isHungry;
 	private int hungerLevel = 100;
@@ -121,5 +123,13 @@ public class LinkmonStatusComponent implements IExtraComponents {
 	public void setCareMistakes(int careMistakes) {
 		// TODO Auto-generated method stub
 		this.careMistakes = careMistakes;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 }

@@ -9,7 +9,6 @@ import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.gamesave.JsonSaver;
 import com.linkmon.componentmodel.gamesave.AESEncryptor;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
-import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
@@ -71,15 +70,15 @@ public class Player {
 		return linkmon;
 	}
 	
-	public void feedLinkmon(GameObject item) {
-		for(GameObject itemObject : items) {
-			if(itemObject.getId() == item.getId()) {
-				((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
-				itemsRemoveQueue.add(itemObject);
-			}
-		}
-		removeItems();
-	}
+//	public void feedLinkmon(GameObject item) {
+//		for(GameObject itemObject : items) {
+//			if(itemObject.getId() == item.getId()) {
+//				((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
+//				itemsRemoveQueue.add(itemObject);
+//			}
+//		}
+//		removeItems();
+//	}
 	
 	public void buyItem(GameObject item) {
 		// TODO Auto-generated method stub
@@ -116,7 +115,7 @@ public class Player {
 	}
 	
 	private void useItem(GameObject item) {
-		((UsableItemComponent)item.getExtraComponents()).use(linkmon, world);
+		((UsableItemComponent)item.getExtraComponents()).use(item,linkmon, world);
 	}
 
 	private void addGold(int amount) {

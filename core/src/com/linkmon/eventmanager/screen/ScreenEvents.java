@@ -13,6 +13,8 @@ public class ScreenEvents {
 	public static final int TRAIN_LINKMON = 7;
 	public static final int GET_LINKMON_ADDED_STATS = 8;
 	public static final int SWAP_SCREEN_PREVIOUS = 9;
+	public static final int USE_ITEM = 10;
+	
 	public static final int LIGHT_SWAP = 99;
 
 	

@@ -16,29 +16,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.items.FoodComponent;
 import com.linkmon.componentmodel.items.ItemType;
-import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.controller.ControllerEvent;
-import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
-import com.linkmon.eventmanager.view.ViewEvent;
-import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.gameobject.items.Food;
-import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.model.gameobject.items.ItemIds;
-import com.linkmon.model.gameobject.items.StatFood;
 import com.linkmon.view.UIRenderer;
-import com.linkmon.view.screens.interfaces.IItems;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.ItemButton;
@@ -148,7 +135,7 @@ public class FeedWindow implements Screen, IPlayerItems {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	if(selectedButton != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.FEED_LINKMON, selectedButton.getItemId()));
+            		eManager.notify(new ScreenEvent(ScreenEvents.USE_ITEM, selectedButton.getItemId()));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
             	}
             }

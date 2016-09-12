@@ -28,10 +28,10 @@ public class PlayerController implements ScreenListener {
 	
 	// Request to update models
 	
-	public void feedLinkmon(int itemId) {
-		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
-		player.feedLinkmon(item);
-	}
+//	public void feedLinkmon(int itemId) {
+//		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
+//		player.feedLinkmon(item);
+//	}
 	
 	public void buyItem(int id, int amount) {
 		GameObject item = ObjectFactory.getInstance().getObjectFromId(id);
@@ -39,8 +39,9 @@ public class PlayerController implements ScreenListener {
 		player.buyItem(item);
 	}
 	
-	public void useItem(GameObject item) {
-		((UsableItemComponent)item.getExtraComponents()).use(player.getLinkmon(), player.getWorld());
+	private void useItem(int id) {
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(id);
+		((ItemComponent)item.getExtraComponents()).use(item,player.getLinkmon(), player.getWorld());
 	}
 	
 	// View updates
@@ -55,6 +56,10 @@ public class PlayerController implements ScreenListener {
 				window.addPlayerItem(itemObject.getId(), itemObject.getName(), item.getQuantity(), item.getPrice(), item.getItemText());
 				Gdx.app.log("PC", "Adding Item!");
 			}
+			else if(type == ItemType.ALL) {
+				window.addPlayerItem(itemObject.getId(), itemObject.getName(), item.getQuantity(), item.getPrice(), item.getItemText());
+				Gdx.app.log("PC", "Adding Item!");
+			}
 		}
 	}
 	
@@ -66,8 +71,8 @@ public class PlayerController implements ScreenListener {
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
-			case(ScreenEvents.FEED_LINKMON): {
-				feedLinkmon(event.value);
+			case(ScreenEvents.USE_ITEM): {
+				useItem(event.value);
 				return false;
 			}
 			case(ScreenEvents.BUY_ITEM): {

@@ -105,7 +105,7 @@ public class MenuScreen implements Screen, MyScreen {
 		itemButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ITEM_WINDOW));
             }
 		});
 		

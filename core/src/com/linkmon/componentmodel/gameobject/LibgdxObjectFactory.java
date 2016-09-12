@@ -2,9 +2,11 @@ package com.linkmon.componentmodel.gameobject;
 
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.components.CollisionComponent;
-import com.linkmon.componentmodel.items.FoodComponent;
+import com.linkmon.componentmodel.items.AddToWorldItemAction;
+import com.linkmon.componentmodel.items.FeedItemAction;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.ItemType;
+import com.linkmon.componentmodel.items.ReviveItemAction;
 import com.linkmon.componentmodel.items.components.PoopaScoopaPhysicsComponent;
 import com.linkmon.componentmodel.libgdx.LibgdxAnimationComponent;
 import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
@@ -47,19 +49,19 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				return poop;
 			}
 			case (ObjectId.MEAT) : {
-				ItemComponent foodComp = new FoodComponent(1, 50, ItemType.FOOD, "Adds to Linkmons fullness", 100);
+				ItemComponent foodComp = new ItemComponent(new FeedItemAction(100), 1, 50, ItemType.FOOD, "Adds to Linkmons fullness");
 				GameObject meat = new GameObject(id, ObjectType.ITEM, null, null, null, foodComp);
 				meat.setName("Meat");
 				return meat;
 			}
 			case (ObjectId.REVIVE_POTION) : {
-				ItemComponent itemComp = new ItemComponent(1, 5000, ItemType.POTION, "Revives your Linkmon if dead.");
+				ItemComponent itemComp = new ItemComponent(new ReviveItemAction(), 1, 5000, ItemType.POTION, "Revives your Linkmon if dead.");
 				GameObject revive = new GameObject(id, ObjectType.ITEM, null, null, null, itemComp);
 				revive.setName("Revive Potion");
 				return revive;
 			}
 			case (ObjectId.POOPA_SCOOPA) : {
-				ItemComponent foodComp = new ItemComponent(1, 50000, ItemType.PLACEABLE, "Automatically cleans poop!");
+				ItemComponent foodComp = new ItemComponent(new AddToWorldItemAction(), 1, 500, ItemType.PLACEABLE, "Automatically cleans poop!");
 				GameObject poopaScoopa2001 = new GameObject(ObjectId.POOPA_SCOOPA, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new PoopaScoopaPhysicsComponent(new CollisionComponent()), foodComp);
 				poopaScoopa2001.setName("PoopaScoopa2001");
 				poopaScoopa2001.setY(45);

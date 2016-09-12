@@ -1,9 +1,12 @@
 package com.linkmon.componentmodel.items;
 
+import com.linkmon.componentmodel.World;
 import com.linkmon.componentmodel.components.IExtraComponents;
 import com.linkmon.componentmodel.gameobject.GameObject;
 
 public class ItemComponent implements IExtraComponents {
+	
+	private IItemAction action;
 	
 	private int quantity;
 	private int price;
@@ -12,7 +15,8 @@ public class ItemComponent implements IExtraComponents {
 	
 	private String itemText;
 	
-	public ItemComponent(int quantity, int price, int type, String itemText) {
+	public ItemComponent(IItemAction action, int quantity, int price, int type, String itemText) {
+		this.action = action;
 		this.quantity = quantity;
 		this.price = price;
 		this.type = type;
@@ -23,6 +27,10 @@ public class ItemComponent implements IExtraComponents {
 	public void update(GameObject object) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void use(GameObject item, GameObject linkmon, World world) {
+		action.use(item, linkmon, world);
 	}
 
 	public int getQuantity() {

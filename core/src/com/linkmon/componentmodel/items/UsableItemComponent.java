@@ -7,6 +7,6 @@ import com.linkmon.componentmodel.gameobject.GameObject;
 public interface UsableItemComponent {
 	
 	public void update(GameObject object);
-	public void use(GameObject object, World world);
+	public void use(GameObject item, GameObject linkmon, World world);
 
 }

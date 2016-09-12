@@ -1,7 +1,6 @@
 package com.linkmon.view.screens.widgets;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,20 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.items.FoodComponent;
-import com.linkmon.componentmodel.items.ItemComponent;
-import com.linkmon.eventmanager.EventManager;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.gameobject.items.Item;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IItems;
 
