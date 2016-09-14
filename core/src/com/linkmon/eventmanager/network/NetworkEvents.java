@@ -20,4 +20,9 @@ public class NetworkEvents {
 	
 	
 	public static final int BATTLE_UPDATE = 201;
+	public static final int SET_OPPONENT = 22;
+	public static final int BATTLE_SETUP = 23;
+	public static final int UPDATE_GIFT_TIMER = 24;
+	public static final int RECIEVE_GIFT = 25;
+	public static final int UPDATE_HEALTH = 26;
 }

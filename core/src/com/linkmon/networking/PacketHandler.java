@@ -35,11 +35,11 @@ public class PacketHandler implements Runnable {
 		int packetId = (int)packet[0];
 		Gdx.app.log("PacketHandler","Handling packet!  ID: " + packetId);
 		switch(packetId) {
-//			case(PacketType.CONNECT): {
-//				Gdx.app.log("PacketHandler","Got connect packet");
-//				eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
-//				break;
-//			}
+			case(PacketType.CONNECT): {
+				Gdx.app.log("PacketHandler","Got connect packet");
+				eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
+				break;
+			}
 			case(PacketType.DISCONNECT): {
 				Gdx.app.log("PacketHandler","Got disconnect packet");
 				client.disconnect("PacketHandler: Disconnected from the server!");
@@ -52,20 +52,19 @@ public class PacketHandler implements Runnable {
 				bytes[1] = packet[3];
 				bytes[2] = packet[4];
 				bytes[3] = packet[5];
-				eManager.notify(new ControllerEvent(ControllerEvents.RECIEVE_GIFT, Packet.byteArrayToInt(bytes)));
+				eManager.notify(new NetworkEvent(NetworkEvents.RECIEVE_GIFT, Packet.byteArrayToInt(bytes)));
 				break;
 			}
 			case(PacketType.BATTLE_SETUP): {
 				Gdx.app.log("PacketHandler","Got BattleSteup packet");
 				Gdx.app.log("PacketHandler","Created opponent from BattleSetup packet");
 				Gdx.app.log("PacketHandler","Need to finish NetworkListener/come up with idea on how to handle");
-				//eManager.notify(new ControllerEvent(ControllerEvents.SET_OPPONENT, Packet.linkmonFromPacket(packet)));
-//				eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.ONLINE_BATTLE_SCREEN));
+				eManager.notify(new NetworkEvent(NetworkEvents.SET_OPPONENT, Packet.linkmonFromPacket(packet)));
 				break;
 			}
 			case(PacketType.UPDATE_HEALTH): {
 				int[] healths = Packet.healthFromPacket(packet);
-				eManager.notify(new ControllerEvent(ControllerEvents.UPDATE_HEALTH, healths[0], healths[1]));
+				eManager.notify(new NetworkEvent(NetworkEvents.UPDATE_HEALTH, healths[0], healths[1]));
 				Gdx.app.log("PacketHandler","My Health: " + healths[0] + "  Opponent Health: " + healths[1]);
 				break;
 			}

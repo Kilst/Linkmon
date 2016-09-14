@@ -109,6 +109,14 @@ public class GameClass extends Game implements ApplicationListener {
 //			
 //        }
 //		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+		
+		System.gc();
+		
+		ResourceLoader.getInstance();
+		while (!ResourceLoader.assetManager.update())
+        {
+			
+        }
 	}
 	
 	@Override
@@ -147,32 +155,6 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		im.addProcessor(uiRenderer.stage);
 		Gdx.input.setInputProcessor(im);
-		
-		if(!saveLoaded) {
-			this.setScreen(new IntroScreen(this, uiRenderer.ui, eManager));
-			//startGame("Kilst", 1);
-		}
-		else {
-//			controllerService = new ControllerService(this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
-//			world.addLinkmonToWorld(controllerService.getLinkmonController());
-//			eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-			//loadGame(player);
-			
-		}
-	}
-	
-	public void loadGame(Player player) {
-//		controllerService = new ControllerService(player, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
-//		world.addLinkmonToWorld(controllerService.getLinkmonController());
-//		controllerService.getScreenController().screenUpdated = true;
-	}
-	
-	public void startGame(String playerName, int eggChoice) {
-//		help = new HelpMessages(eManager);
-//		help.showIntroMessage();
-//		controllerService = new ControllerService(playerName, eggChoice, this, world.ui, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), eManager);
-//		world.addLinkmonToWorld(controllerService.getLinkmonController());
-//		controllerService.getScreenController().screenUpdated = true;
 	}
 
 	@Override

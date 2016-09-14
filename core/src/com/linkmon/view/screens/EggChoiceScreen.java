@@ -149,7 +149,7 @@ public class EggChoiceScreen implements Screen {
 		if(startGame) {
 			vignette.play();
 			if(vignette.isFinished()) {
-				game.startGame(playerName, eggId);
+//				game.startGame(playerName, eggId);
 		    	Gdx.input.setOnscreenKeyboardVisible(false);
 		    	container.remove();
 			}

@@ -65,6 +65,10 @@ public class WorldController implements ScreenListener {
 			}
 			case(ScreenEvents.DEBUGGING_SPAWNER): {
 				startObjectSpawner();
+//				if(objectSpawner != null) {
+//					stopObjectSpawner();
+//					objectSpawner = null;
+//				}
 				return false;
 			}
 		}

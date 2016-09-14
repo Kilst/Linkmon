@@ -13,7 +13,7 @@ public class ControllerService {
 	private MService mService;
 	private LibgdxScreenController screenController;
 	
-	private PlayerController playerContoller;
+	private PlayerController playerController;
 	private LinkmonController linkmonController;
 	private ShopController shopController;
 	
@@ -28,7 +28,7 @@ public class ControllerService {
 		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
 		
 		mService = new MService(eManager);
-		playerContoller = new PlayerController(mService.getPlayer());
+		playerController = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
 		shopController = new ShopController(mService.getShop());
 		screenController = new LibgdxScreenController(game, ui, eManager);
@@ -38,7 +38,7 @@ public class ControllerService {
 		
 		networkController = new NetworkController(eManager, mService.getPlayer());
 		
-		eManager.addScreenListener(playerContoller);
+		eManager.addScreenListener(playerController);
 		eManager.addScreenListener(linkmonController);
 		eManager.addScreenListener(shopController);
 		eManager.addScreenListener(worldController);
@@ -49,6 +49,7 @@ public class ControllerService {
 	public void update() {
 		screenController.update();
 		worldController.update();
+		playerController.update();
 	}
 	
 	public LibgdxInputController getInputController() {

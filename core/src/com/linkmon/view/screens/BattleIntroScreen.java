@@ -41,12 +41,6 @@ public class BattleIntroScreen implements Screen, IBattleIntroView {
 	}
 
 	@Override
-	public void getSprites(int myLinkmonId, int opponentLinkmonId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void getOpponentStats(int health, int attack, int defense, int speed) {
 		// TODO Auto-generated method stub
 		

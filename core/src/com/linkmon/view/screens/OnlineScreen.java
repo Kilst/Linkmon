@@ -17,6 +17,9 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.network.NetworkEvent;
+import com.linkmon.eventmanager.network.NetworkEvents;
+import com.linkmon.eventmanager.network.NetworkListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
@@ -31,7 +34,7 @@ import com.linkmon.view.screens.interfaces.INetworkScreen;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 
-public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, INetworkScreen {
+public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen {
 	
 	private Label serverWelcome;
 	
@@ -66,7 +69,6 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		this.eManager = eManager;
-		eManager.addViewListener(this);
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
@@ -252,23 +254,6 @@ public class OnlineScreen implements Screen, ViewListener, IPlayableLinkmons, IN
 		selectBox.showList();
 		
 		// Add listBox of linkmons to select
-	}
-
-	@Override
-	public void onNotify(ViewEvent event) {
-		// TODO Auto-generated method stub
-		switch(event.eventId) {
-			case(ViewEvents.SERVER_WELCOME): {
-//				this.welcomeString = event.str;
-//				serverWelcome.setText(welcomeString);
-//				Gdx.app.log("OnlineScreen","Got Server Welcome: " + welcomeString);
-				break;
-			}
-			case(ViewEvents.UPDATE_GIFT_TIMER): {
-				giftTimerEnded = event.status;
-				break;
-			}
-		}
 	}
 
 	@Override

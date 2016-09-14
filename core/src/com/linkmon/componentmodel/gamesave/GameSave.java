@@ -1,11 +1,8 @@
 package com.linkmon.componentmodel.gamesave;
 
-import java.util.ArrayList;
-
 import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.gameobject.ObjectFactory;
-import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.linkmon.BirthDate;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
@@ -130,7 +127,7 @@ public class GameSave {
 		player.setName(this.playerName);
 		player.setGold(this.playerGold);
 		
-		player.setItems(items);
+		player.setSavedItems(items);
 		
 		player.setLinkmon(getSavedLinkmon());
 		

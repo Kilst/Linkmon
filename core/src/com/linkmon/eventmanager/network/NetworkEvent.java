@@ -1,7 +1,7 @@
 package com.linkmon.eventmanager.network;
 
+import com.linkmon.componentmodel.battles.BattleLinkmon;
 import com.linkmon.eventmanager.GameEvent;
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
 import com.linkmon.model.gameobject.linkmon.Move;
 
 public class NetworkEvent extends GameEvent {
@@ -12,8 +12,9 @@ public class NetworkEvent extends GameEvent {
 	public int oppHealth;
 	public String serverWelcome;
 	
-	public int screen;
+	public int value;
 	public int[] values;
+	public boolean status;
 	
 	public NetworkEvent(int eventId, BattleLinkmon battleLinkmon) {
 		super(eventId);
@@ -45,15 +46,21 @@ public class NetworkEvent extends GameEvent {
 		serverWelcome = welcome;
 	}
 
-	public NetworkEvent(int eventId, int screen) {
+	public NetworkEvent(int eventId, int value) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
-		this.screen = screen;
+		this.value = value;
 	}
 	
 	public NetworkEvent(int eventId, int[] values) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		this.values = values;
+	}
+	
+	public NetworkEvent(int eventId, boolean status) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.status = status;
 	}
 }

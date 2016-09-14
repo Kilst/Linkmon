@@ -119,7 +119,7 @@ public class MenuScreen implements Screen, MyScreen {
 		cryoGenicsButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CRYO_SCREEN));
             }
 		});
 		

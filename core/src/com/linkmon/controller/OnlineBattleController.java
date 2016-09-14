@@ -57,7 +57,7 @@ public class OnlineBattleController implements ControllerListener {
 	}
 	
 	public void setSprites(OnlineBattleScreen battleScreen) {
-		battleScreen.getSprites(battle.playerLinkmon.getId(), battle.opponentLinkmon.getId());
+//		battleScreen.getSprites(battle.playerLinkmon.getId(), battle.opponentLinkmon.getId());
 	}
 	
 	public void updateBattleScreen(OnlineBattleScreen battleScreen) {

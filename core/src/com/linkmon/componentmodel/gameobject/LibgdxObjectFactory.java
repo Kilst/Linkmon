@@ -1,6 +1,7 @@
 package com.linkmon.componentmodel.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.aminigame.EggPhysicsComponent;
 import com.linkmon.componentmodel.components.CollisionComponent;
 import com.linkmon.componentmodel.items.AddToWorldItemAction;
 import com.linkmon.componentmodel.items.FeedItemAction;
@@ -67,6 +68,12 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				poopaScoopa2001.setY(45);
 				//((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
 				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setAnimation(new PoopaScoopaAnimationComponent(poopaScoopa2001));
+				return poopaScoopa2001;
+			}
+			case (77) : {
+				GameObject poopaScoopa2001 = new GameObject(2, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new EggPhysicsComponent(new CollisionComponent()), null);
+				poopaScoopa2001.setName("Egg");
+				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
 				return poopaScoopa2001;
 			}
 		}

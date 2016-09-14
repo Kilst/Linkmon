@@ -8,10 +8,12 @@ import com.linkmon.eventmanager.network.NetworkEvents;
 import com.linkmon.eventmanager.network.NetworkListener;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 
-public class OnlineBattle implements NetworkListener {
+public class OnlineBattle {
 	
 	private BattleLinkmon player;
 	private BattleLinkmon opponent;
+	
+	private String opponentName = "a";
 	
 	private String[] battleMessages;
 	
@@ -66,16 +68,21 @@ public class OnlineBattle implements NetworkListener {
 		battleMessages[0] = "";
 	}
 
-	@Override
-	public boolean onNotify(NetworkEvent event) {
+	public BattleLinkmon getPlayer() {
 		// TODO Auto-generated method stub
-		switch(event.eventId) {
-			case(NetworkEvents.BATTLE_UPDATE): {
-				updateBattle(event.values[0], event.values[1], event.values[2], event.values[3], event.values[4],
-						event.values[5], event.values[6], event.values[7], event.values[8], event.values[9]);
-				break;
-			}
-		}
-		return false;
+		return player;
+	}
+
+	public BattleLinkmon getOpponent() {
+		// TODO Auto-generated method stub
+		return opponent;
+	}
+
+	public String getOpponentName() {
+		return opponentName;
+	}
+
+	public void setOpponentName(String opponentName) {
+		this.opponentName = opponentName;
 	}
 }

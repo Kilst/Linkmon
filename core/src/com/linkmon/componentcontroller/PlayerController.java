@@ -10,6 +10,9 @@ import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
+import com.linkmon.eventmanager.network.NetworkEvent;
+import com.linkmon.eventmanager.network.NetworkEvents;
+import com.linkmon.eventmanager.network.NetworkListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
@@ -94,5 +97,10 @@ public class PlayerController implements ScreenListener {
 		}
 		
 		return false;
+	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		player.update();
 	}
 }

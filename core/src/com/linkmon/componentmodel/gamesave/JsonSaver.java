@@ -35,7 +35,7 @@ public class JsonSaver extends BaseSaver {
 		
 		encryptedBytes = this.encryptSave(jsonText);
 		
-		FileHandle file = Gdx.files.local("playerSave.json");
+		FileHandle file = Gdx.files.local("playerSave.sav");
 		
 		file.writeBytes(encryptedBytes, false);
 	}
@@ -44,7 +44,7 @@ public class JsonSaver extends BaseSaver {
 	public Player load() {
 		// TODO Auto-generated method stub
 		
-		FileHandle file = Gdx.files.local("playerSave.json");
+		FileHandle file = Gdx.files.local("playerSave.sav");
 		
 		byte[] decryptedBytes = this.decryptSave(file.readBytes());
 		String saveString = new String(decryptedBytes, StandardCharsets.UTF_8);

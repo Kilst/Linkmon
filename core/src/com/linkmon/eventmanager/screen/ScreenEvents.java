@@ -26,10 +26,13 @@ public class ScreenEvents {
 	public static final int GET_MYSTERY_GIFT = 104;
 	public static final int CANCEL_SEARCH = 105;
 	public static final int GET_SERVER_WELCOME = 106;
-	
+	public static final int GET_ONLINE_SPRITES = 107;
+	public static final int UPDATE_ONLINE_BALLTE = 108;
 	
 	
 	// Debugging
 	public static final int DEBUGGING = 1001;
 	public static final int DEBUGGING_SPAWNER = 1002;
+	
+	
 }

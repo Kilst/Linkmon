@@ -200,7 +200,7 @@ public class ScreenController implements ControllerListener {
 			((IPlayableLinkmons)window).updatePlayableLinkmons(playerController.getBattleLinkmon(), playerController.getSavedLinkmon());
 		
 		if(window instanceof IBattleView) {
-			((IBattleView)window).getSprites(linkmonController.getId(), onlineBattleController.getOpponentId());
+//			((IBattleView)window).getSprites(linkmonController.getId(), onlineBattleController.getOpponentId());
 			((IBattleView)window).getMoves(linkmonController.getMove1(), linkmonController.getMove2());
 		}
 	}

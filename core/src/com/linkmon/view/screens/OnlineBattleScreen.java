@@ -2,9 +2,11 @@ package com.linkmon.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,6 +26,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.eventmanager.view.ViewListener;
+import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.linkmon.Move;
 import com.linkmon.model.gameobject.linkmon.MoveFactory;
 import com.linkmon.view.GameSprite;
@@ -32,6 +35,8 @@ import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IBattleView;
 
 public class OnlineBattleScreen implements Screen, IBattleView {
+	
+	private Image background;
 	private Table container;
 	private Group uiGroup;
 	volatile private Button attack1;
@@ -65,10 +70,17 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	private Move move1;
 	private Move move2;
 	
+	private Skin skin2;
+	
 	public OnlineBattleScreen(Group group, EventManager eManager) {
 		this.eManager = eManager;
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
+		skin2 = new Skin();
+		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
+		skin2.addRegions(uiAtlas);
+		
 		//Gdx.app.log("OnlineBattleScreen","Added Listener?");
 	}
 	
@@ -88,23 +100,20 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		
 		//screenController.updateWindow(this);
 		
+		background = new Image(skin2.getDrawable("statsBackground"));
+		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		container.setBackground(skin.getDrawable("default-rect"));
+//		container.setBackground(skin.getDrawable("default-rect"));
 		
 		oppTable = new Table();
 		oppHealth = new Label("Health: " + oppHealth, skin);
 		oppName  = new Label("Opponent", skin);
 		
-		Table oppImageTable = new Table();
-		oppImageTable.add(oppLinkmonSprite);
-		Table oppStatsTable = new Table();
-		oppStatsTable.add(oppName);
-		oppStatsTable.row();
-		oppStatsTable.add(oppHealth);
-		
-		oppTable.add(oppImageTable).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3);
-		oppTable.add(oppStatsTable).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3);
+		oppTable.add(oppName);
+		oppTable.row();
+		oppTable.add(oppHealth);
 		
 		container.add(oppTable).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		container.row();
@@ -113,16 +122,10 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		playerTable = new Table();
 		health = new Label(""+ playerHealth, skin);
 		name  = new Label("", skin);
-		
-		Table playerImageTable = new Table();
-		playerImageTable.add(myLinkmonSprite);
-		Table playerStatsTable = new Table();
-		playerStatsTable.add(name);
-		playerStatsTable.row();
-		playerStatsTable.add(health);
-		
-		playerTable.add(playerStatsTable).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3);
-		playerTable.add(playerImageTable).size(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/3);
+
+		playerTable.add(name);
+		playerTable.row();
+		playerTable.add(health);
 
 		container.add(playerTable).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		container.row();
@@ -136,6 +139,12 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		
 		container.add(buttonTable).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_ONLINE_SPRITES, this));
+		eManager.notify(new ScreenEvent(ScreenEvents.UPDATE_ONLINE_BALLTE, this));
+		
+		uiGroup.addActor(background);
+		uiGroup.addActor(oppLinkmonSprite);
+		uiGroup.addActor(myLinkmonSprite);
 		uiGroup.addActor(container);
 		uiGroup.toFront();
 		addListeners();
@@ -195,7 +204,9 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		container.setVisible(false);
+		background.remove();
+		oppLinkmonSprite.remove();
+		myLinkmonSprite.remove();
 		container.remove();
 	}
 	@Override
@@ -205,10 +216,12 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	}
 
 	@Override
-	public void getSprites(int myLinkmonId, int opponentLinkmonId) {
+	public void getSprites(int myLinkmonId, String name, int opponentLinkmonId, String opponentName) {
 		// TODO Auto-generated method stub
 		myLinkmonSprite = new LinkmonSprite(myLinkmonId);
+		myLinkmonSprite.setPosition(0, 0);
 		oppLinkmonSprite = new LinkmonSprite(opponentLinkmonId);
+		myLinkmonSprite.setPosition(300, 300);
 	}
 
 	@Override
@@ -225,10 +238,6 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		
 		health.setText("Health: " + playerHealth);
 		oppHealth.setText("Health: " + opponentHealth);
-	}
-	
-	public void showBattleMessage(String text) {
-		
 	}
 
 	@Override

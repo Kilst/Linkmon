@@ -29,6 +29,10 @@ public class Player {
 	
 	private World world;
 	
+	private long lastGiftTime;
+	
+	private int giftId = -1; // no opengl context from network. since objects get created with textures
+	
 	public Player() {
 		gold = 15000;
 		
@@ -36,6 +40,15 @@ public class Player {
 		
 		items = new ArrayList<GameObject>();
 		itemsRemoveQueue = new ArrayList<GameObject>();
+	}
+	
+	public void update() {
+		if(giftId != -1) {
+			GameObject item = ObjectFactory.getInstance().getObjectFromId(giftId);
+			addItem(item);
+			giftId = -1;
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity(), false));
+		}
 	}
 	
 	public void addeManager(EventManager eManager) {
@@ -66,16 +79,6 @@ public class Player {
 		// TODO Auto-generated method stub
 		return linkmon;
 	}
-	
-//	public void feedLinkmon(GameObject item) {
-//		for(GameObject itemObject : items) {
-//			if(itemObject.getId() == item.getId()) {
-//				((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addHungerLevel(((FoodComponent)item.getExtraComponents()).getFeedAmount());
-//				itemsRemoveQueue.add(itemObject);
-//			}
-//		}
-//		removeItems();
-//	}
 	
 	public void buyItem(GameObject item) {
 		// TODO Auto-generated method stub
@@ -175,12 +178,33 @@ public class Player {
 		this.world = world;
 	}
 
-	public void setItems(int[][] savedItems) {
+	public void setSavedItems(int[][] savedItems) {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < savedItems.length; i++) {
 			GameObject item = ObjectFactory.getInstance().getObjectFromId(savedItems[i][0]);
 			((ItemComponent)item.getExtraComponents()).setQuantity(savedItems[i][1]);
 			items.add(item);
 		}
+	}
+	
+	public boolean checkGiftTime() {
+		if(System.currentTimeMillis() - lastGiftTime > 50000) {
+			lastGiftTime = System.currentTimeMillis();
+			return true;
+		}
+		else {
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left", false));
+			return false;
+		}
+	}
+
+	public long getLastGiftTime() {
+		return lastGiftTime;
+	}
+
+	public void receiveGift(int itemId) {
+		// TODO Auto-generated method stub
+		giftId = itemId;
+		
 	}
 }
