@@ -28,11 +28,15 @@ public class ChatMessage extends Actor {
 	
 	private UIRenderer worldRenderer;
 	
-	public ChatMessage(int id, String[] messages, UIRenderer worldRenderer, Group gameUi, EventManager eManager) {
+	private int messageType;
+	
+	public ChatMessage(int id, int messageType, String[] messages, UIRenderer worldRenderer, Group gameUi, EventManager eManager) {
 		
 		this.worldRenderer = worldRenderer;
 		this.gameUi = gameUi;
 		this.eManager = eManager;
+		
+		this.messageType = messageType;
 		
 		skin = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -88,7 +92,7 @@ public class ChatMessage extends Actor {
 		characterImage.remove();
 		chatTable.remove();
 		worldRenderer.chatWindow = null;
-		eManager.notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE));
+		eManager.notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE, messageType));
 		return super.remove();
 	}
 }

@@ -15,6 +15,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.ScreenType;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class PacketHandler implements Runnable {
 	
@@ -73,13 +74,11 @@ public class PacketHandler implements Runnable {
 				Gdx.app.log("PacketHandler","Got winLoss packet: " + packet[1]);
 				
 				if(packet[22] == 0)
-					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "You win!!!", false));
+					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.NETWORK_MESSAGE, "You win!!!"));
 				else
-					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "You lost :(", false));
+					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.NETWORK_MESSAGE, "You lost :("));
 				
-				eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
-				
-				eManager.notify(new ControllerEvent(ControllerEvents.WIN_LOSS, rewards));
+				eManager.notify(new NetworkEvent(NetworkEvents.WIN_LOSS, rewards));
 				break;
 			}
 			case(PacketType.HEARTBEAT): {
@@ -89,8 +88,8 @@ public class PacketHandler implements Runnable {
 			}
 			default: {
 				try {
-					
-		    		client.setServerMessage(new String(packet, "UTF-8"));
+					//eManager.notify(new NetworkEvent(NetworkEvents.SERVER_WELCOME, new String(packet, "UTF-8")));
+		    		client.getData().setServerWelcomeMessage(new String(packet, "UTF-8"));
 		    		eManager.notify(new NetworkEvent(NetworkEvents.CONNECTED));
 		    		//serverWelcome = null;
 				} catch (UnsupportedEncodingException e) {

@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.view.screens.interfaces.IBattleIntroView;
+import com.linkmon.view.screens.interfaces.IOnlineScreen;
 
-public class BattleIntroScreen implements Screen, IBattleIntroView {
+public class BattleIntroScreen implements Screen, IOnlineScreen {
 	
 	
 	private Table container;
@@ -38,12 +38,6 @@ public class BattleIntroScreen implements Screen, IBattleIntroView {
 	public void exponentialSpeedEquation(float x) {
 //		y = Math.pow(0.25f, x);
 		imageSpeed = 150*((float) Math.pow(0.993, x));
-	}
-
-	@Override
-	public void getOpponentStats(int health, int attack, int defense, int speed) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -88,6 +82,12 @@ public class BattleIntroScreen implements Screen, IBattleIntroView {
 
 	@Override
 	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showMessage() {
 		// TODO Auto-generated method stub
 		
 	}

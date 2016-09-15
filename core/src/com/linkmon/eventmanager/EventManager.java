@@ -10,6 +10,8 @@ import com.linkmon.eventmanager.input.InputEvent;
 import com.linkmon.eventmanager.input.InputListener;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageListener;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
@@ -24,6 +26,7 @@ public class EventManager {
 	private List<MessageListener> messageListeners;
 	private List<ControllerListener> controllerListeners;
 	private List<NetworkListener> networkListeners;
+	private List<ModelListener> modelListeners;
 	
 	private Stack<InputListener> inputListeners;
 	
@@ -33,7 +36,14 @@ public class EventManager {
 		messageListeners = new ArrayList<MessageListener>();
 		controllerListeners = new ArrayList<ControllerListener>();
 		networkListeners = new ArrayList<NetworkListener>();
+		modelListeners = new ArrayList<ModelListener>();
 		inputListeners = new Stack<InputListener>();
+	}
+	
+	public synchronized void addModelListener(ModelListener listener) {
+		// TODO Auto-generated method stub
+		if (!modelListeners.contains(listener))
+			modelListeners.add(listener);
 	}
 	
 	public synchronized void addScreenListener(ScreenListener listener) {
@@ -88,6 +98,14 @@ public class EventManager {
 			}
 		}
 		
+		else if (event.getClass() == ModelEvent.class) {
+			for (ModelListener listener : modelListeners) {
+				
+				listener.onNotify((ModelEvent)event);
+				
+			}
+		}
+		
 		else if (event.getClass() == ScreenEvent.class) {
 			for (ScreenListener listener : screenListeners) {
 				
@@ -136,5 +154,10 @@ public class EventManager {
 	public synchronized void removeInputListener(InputListener listener) {
 		// TODO Auto-generated method stub
 		inputListeners.remove(listener);
+	}
+
+	public synchronized void removeModelListener(ModelListener listener) {
+		// TODO Auto-generated method stub
+		modelListeners.remove(listener);
 	}
 }

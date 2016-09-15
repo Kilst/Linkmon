@@ -24,8 +24,8 @@ public class ItemMessage extends MessageBox {
 	private Button backbutton;
 	private UIRenderer worldRenderer;
 
-	public ItemMessage(String messageString, UIRenderer worldRenderer1, EventManager eManager) {
-		super(messageString, worldRenderer1, eManager);
+	public ItemMessage(int messageType, String messageString, UIRenderer worldRenderer1, EventManager eManager) {
+		super(messageType, messageString, worldRenderer1, eManager);
 		// TODO Auto-generated constructor stub
 		
 		this.worldRenderer = worldRenderer1;

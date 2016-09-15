@@ -44,8 +44,13 @@ public class MessageBox extends Table {
 	
 	UIRenderer worldRenderer;
 	
-	public MessageBox(String messageString, UIRenderer worldRenderer, EventManager eManager) {
+	IMessageAction action;
+	
+	public int messageType;
+	
+	public MessageBox(int messageType, String messageString, UIRenderer worldRenderer, EventManager eManager) {
 		this.seteManager(eManager);
+		this.messageType = messageType;
 		this.messageString = messageString;
 		this.setTransform(true);
 		messageBox = this;
@@ -59,6 +64,7 @@ public class MessageBox extends Table {
 		this.worldRenderer = worldRenderer;
 		
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
 		this.setBackground(skin2.getDrawable("container"));
 		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.setPosition(0, 0);

@@ -134,7 +134,7 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		messages = new MessageManager(eManager);
 		
-		uiRenderer = new UIRenderer(messages, eManager);
+		uiRenderer = new UIRenderer(messages, this, eManager);
 		
 		
 		ResourceLoader.getInstance();

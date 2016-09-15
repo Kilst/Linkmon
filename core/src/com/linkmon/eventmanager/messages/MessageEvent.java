@@ -41,11 +41,26 @@ public class MessageEvent extends GameEvent {
 		this.rank = rank;
 	}
 
-	public MessageEvent(int eventId, int value, String[] messages) {
+	public MessageEvent(int eventId, int messageType, int value, String[] messages) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		
+		this.messageType = messageType;
 		this.value = value;
 		this.messages = messages;
+	}
+
+	public MessageEvent(int eventId, int messageType, String message) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		
+		this.messageType = messageType;
+		this.message = message;
+	}
+
+	public MessageEvent(int eventId, int messageType) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.messageType = messageType;
 	}
 }

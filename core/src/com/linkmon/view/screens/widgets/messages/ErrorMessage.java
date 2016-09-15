@@ -14,6 +14,8 @@ import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.UIRenderer;
@@ -22,15 +24,26 @@ import com.linkmon.view.screens.ScreenType;
 
 public class ErrorMessage extends MessageBox {
 	
-	private boolean returnToMain;
+	private IMessageAction action;
 
-	public ErrorMessage(String messageString, UIRenderer worldRenderer, EventManager eManager, boolean returnToMain) {
-		super(messageString, worldRenderer, eManager);
+	public ErrorMessage(int messageType, String messageString, UIRenderer worldRenderer, EventManager eManager) {
+		super(messageType, messageString, worldRenderer, eManager);
 		// TODO Auto-generated constructor stub
 		this.setHeading("errorHeading");
 		this.setText(messageString);
 		
-		this.returnToMain = returnToMain;
+		this.setOkay();
+		
+		addToUi();
+	}
+	
+	public ErrorMessage(IMessageAction action, int messageType, String messageString, UIRenderer worldRenderer, EventManager eManager) {
+		super(messageType, messageString, worldRenderer, eManager);
+		// TODO Auto-generated constructor stub
+		
+		this.action = action;
+		this.setHeading("errorHeading");
+		this.setText(messageString);
 		
 		this.setOkay();
 		
@@ -48,9 +61,9 @@ public class ErrorMessage extends MessageBox {
             public void clicked(InputEvent event, float x, float y){
             	messageBox.remove();
             	darken.remove();
-            	if(returnToMain)
-            		geteManager().notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-            	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE));
+            	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE, messageType));
+            	if(messageType == MessageType.NETWORK_MESSAGE)
+            		geteManager().notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             	worldRenderer.messageBox = null;
             }
 		});

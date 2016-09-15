@@ -31,6 +31,11 @@ public class MyProgressBar extends Table {
     	updated = true;
     }
     
+    public void setTarget(int targetProgress) {
+    	this.targetProgress = targetProgress;
+    	updated = true;
+    }
+    
     @Override
     public void draw(Batch batch, float alpha){
     	super.draw(batch, alpha);

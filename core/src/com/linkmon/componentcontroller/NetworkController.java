@@ -77,7 +77,7 @@ public class NetworkController implements ScreenListener, NetworkListener {
 	}
 	
 	private void getServerWelcome(INetworkScreen screen) {
-		screen.setServerWelcome(service.getClient().getServerMessage());
+		screen.setServerWelcome(service.getClient().getData().getServerWelcomeMessage());
 	}
 
 	@Override
@@ -114,11 +114,21 @@ public class NetworkController implements ScreenListener, NetworkListener {
 				break;
 			}
 			case(ScreenEvents.GET_ONLINE_SPRITES): {
-				((IBattleView)event.screen).getSprites(battle.getPlayer().getId(), player.getName(), battle.getOpponent().getId(), battle.getOpponentName());
+				((IBattleView)event.screen).getSprites(battle.getPlayer().getId(), battle.getOpponent().getId());
+				break;
+			}
+			case(ScreenEvents.GET_ONLINE_STATS): {
+				((IBattleView)event.screen).getMoves(battle.getPlayer().getMove1(), battle.getPlayer().getMove2());
+				((IBattleView)event.screen).getStats(battle.getPlayer().getHealth(), player.getName(), battle.getOpponent().getHealth(), battle.getOpponentName());
 				break;
 			}
 			case(ScreenEvents.UPDATE_ONLINE_BALLTE): {
-				((IBattleView)event.screen).updateHealths(battle.getPlayer().getHealth(), battle.getOpponent().getHealth());
+				if(battle.isUpdated()) {
+					((IBattleView)event.screen).updateHealths(battle.getPlayer().getHealth(), battle.getOpponent().getHealth());
+					battle.setUpdated(false);
+				}
+				if(battle.isEnded())
+					((IBattleView)event.screen).battleEnded();
 				break;
 			}
 		}
@@ -140,7 +150,19 @@ public class NetworkController implements ScreenListener, NetworkListener {
 			}
 			case(NetworkEvents.SET_OPPONENT): {
 				battle = new OnlineBattle(bLinkmon, event.battleLinkmon, eManager);
-				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_BATTLE_SCREEN));
+				///////////////////////////////////////////////////////////////////////////////////////////////////
+				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_BATTLE_SCREEN)); // BAD
+				break;
+			}
+			case(NetworkEvents.UPDATE_HEALTH): {
+				battle.getPlayer().setHealth(event.myHealth);
+				battle.getOpponent().setHealth(event.oppHealth);
+				battle.setUpdated(true);
+				break;
+			}
+			case(NetworkEvents.WIN_LOSS): {
+				player.receiveRewards(event.values);
+				battle.setEnded(true);
 				break;
 			}
 		}

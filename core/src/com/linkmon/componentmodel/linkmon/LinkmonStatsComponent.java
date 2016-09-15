@@ -24,7 +24,7 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	
 	public LinkmonStatsComponent() {
 		health = 100;
-		attack = 700;
+		attack = 9;
 		defense = 7;
 		speed = 8;
 	}

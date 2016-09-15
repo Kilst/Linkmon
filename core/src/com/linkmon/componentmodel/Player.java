@@ -9,11 +9,15 @@ import com.linkmon.componentmodel.gameobject.ObjectId;
 import com.linkmon.componentmodel.items.ItemComponent;
 import com.linkmon.componentmodel.items.UsableItemComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
+import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class Player {
 	
@@ -47,7 +51,7 @@ public class Player {
 			GameObject item = ObjectFactory.getInstance().getObjectFromId(giftId);
 			addItem(item);
 			giftId = -1;
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity(), false));
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE,  "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
 		}
 	}
 	
@@ -86,7 +90,7 @@ public class Player {
 		if(gold >= price) {
 			addItem(item);
 			removeGold(price);
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "Bought item: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity(), false));
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE, "Bought item: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
 		}
 	}
 	
@@ -137,7 +141,7 @@ public class Player {
 	private void removeGold(int amount) {
 		// TODO Auto-generated method stub
 		gold -= amount;
-		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_GOLD, gold));
+		linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_GOLD, gold));
 	}
 
 	public int getGold() {
@@ -193,7 +197,7 @@ public class Player {
 			return true;
 		}
 		else {
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left", false));
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE,MessageType.GAME_MESSAGE,  "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left"));
 			return false;
 		}
 	}
@@ -206,5 +210,15 @@ public class Player {
 		// TODO Auto-generated method stub
 		giftId = itemId;
 		
+	}
+
+	public void receiveRewards(int[] rewards) {
+		// TODO Auto-generated method stub
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		stats.setHealth(stats.getHealth()+rewards[0]);
+		stats.setAttack(stats.getAttack()+rewards[1]);
+		stats.setDefense(stats.getDefense()+rewards[2]);
+		stats.setSpeed(stats.getSpeed()+rewards[3]);
+		addGold(rewards[4]);
 	}
 }

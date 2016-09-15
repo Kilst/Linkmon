@@ -31,10 +31,11 @@ import com.linkmon.networking.TcpService;
 import com.linkmon.view.LinkmonSprite;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.INetworkScreen;
+import com.linkmon.view.screens.interfaces.IOnlineScreen;
 import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 
-public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen {
+public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, IOnlineScreen, NetworkListener {
 	
 	private Label serverWelcome;
 	
@@ -66,6 +67,7 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen {
 	private boolean giftTimerEnded = false;
 	
 	public OnlineScreen(Group group, EventManager eManager) {
+		eManager.addNetworkListener(this);
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		this.eManager = eManager;
@@ -95,7 +97,7 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.CLOSE_CONNECTION));
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+//            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 	}
@@ -262,5 +264,18 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen {
 		this.welcomeString = welcomeMessage;
 		serverWelcome.setText(welcomeString);
 		Gdx.app.log("OnlineScreen","Got Server Welcome: " + welcomeString);
+	}
+
+	@Override
+	public void showMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onNotify(NetworkEvent event) {
+		// TODO Auto-generated method stub
+		
+		return false;
 	}
 }

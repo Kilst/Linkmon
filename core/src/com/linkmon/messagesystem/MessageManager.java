@@ -7,6 +7,7 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.eventmanager.messages.MessageListener;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class MessageManager implements MessageListener {
 	
@@ -15,12 +16,20 @@ public class MessageManager implements MessageListener {
 	private List<MessageEvent> messageQueue;
 	private List<MessageEvent> messageQueueRemove;
 	private MessageEvent currentMessage;
+	
+	private List<MessageEvent> networkMessageQueue;
+	private List<MessageEvent> networkMessageQueueRemove;
+	private MessageEvent currentNetworkMessage;
 	private EventManager eManager;
 	
 	public MessageManager(EventManager eManager) {
 		this.eManager = eManager;
 		messageQueue = new ArrayList<MessageEvent>();
 		messageQueueRemove = new ArrayList<MessageEvent>();
+		
+		networkMessageQueue = new ArrayList<MessageEvent>();
+		networkMessageQueueRemove = new ArrayList<MessageEvent>();
+		
 		this.eManager.addMessageListener(this);
 	}
 	
@@ -29,7 +38,12 @@ public class MessageManager implements MessageListener {
 		return currentMessage;
 	}
 	
-	private void update() {
+	public MessageEvent getCurrentNetworkMessage() {
+		// TODO Auto-generated method stub
+		return currentNetworkMessage;
+	}
+	
+	private void updateGameMessages() {
 		if(currentMessage == null) {
 			for(MessageEvent message : messageQueue){
 				currentMessage = message; // Set current message
@@ -41,19 +55,44 @@ public class MessageManager implements MessageListener {
 			}
 		}
 	}
+	
+	private void updateNetworkMessages() {
+		if(currentNetworkMessage == null) {
+			for(MessageEvent message : networkMessageQueue){
+				currentNetworkMessage = message; // Set current message
+				networkMessageQueueRemove.add(currentNetworkMessage);
+				break;
+			}
+			for(MessageEvent message : networkMessageQueueRemove){
+				networkMessageQueue.remove(message); // Remove message
+			}
+		}
+	}
 
 	@Override
 	public boolean onNotify(MessageEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(MessageEvents.CLEAR_CURRENT_MESSAGE) : {
-				currentMessage = null;
-				update();
+				if(event.messageType == MessageType.GAME_MESSAGE) {
+					currentMessage = null;
+					updateGameMessages();
+				}
+				else if(event.messageType == MessageType.NETWORK_MESSAGE) {
+					currentNetworkMessage = null;
+					updateNetworkMessages();
+				}
 				break;
 			}
 			default:{
-				messageQueue.add(event);
-				update();
+				if(event.messageType == MessageType.GAME_MESSAGE) {
+					messageQueue.add(event);
+					updateGameMessages();
+				}
+				else if(event.messageType == MessageType.NETWORK_MESSAGE) {
+					networkMessageQueue.add(event);
+					updateNetworkMessages();
+				}
 				break;
 			}
 		}

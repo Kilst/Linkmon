@@ -31,6 +31,10 @@ public class OnlineBattle {
 	
 	private EventManager eManager;
 	
+	private boolean updated = true;
+	
+	private boolean ended = false;
+	
 	public OnlineBattle(BattleLinkmon player, BattleLinkmon opponent, EventManager eManager) {
 		
 		this.eManager = eManager;
@@ -61,6 +65,8 @@ public class OnlineBattle {
 		this.opponentDodge = opponentDodge;
 		
 		buildBattleString();
+		
+		setUpdated(true);
 	}
 	
 	private void buildBattleString() {
@@ -84,5 +90,23 @@ public class OnlineBattle {
 
 	public void setOpponentName(String opponentName) {
 		this.opponentName = opponentName;
+	}
+
+	public boolean isUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(boolean updated) {
+		this.updated = updated;
+	}
+	
+	public boolean isEnded() {
+		// TODO Auto-generated method stub
+		return ended;
+	}
+
+	public void setEnded(boolean ended) {
+		// TODO Auto-generated method stub
+		this.ended = ended;
 	}
 }

@@ -19,6 +19,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.view.screens.ScreenType;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class Client {
 	
@@ -44,8 +45,8 @@ public class Client {
 	
 	public void connect() {
 		hints = new SocketHints();
-		hints.connectTimeout = 2000;
-		hints.socketTimeout = 40000;
+//		hints.connectTimeout = 2000;
+//		hints.socketTimeout = 40000;
 		client = Gdx.net.newClientSocket(Protocol.TCP, "60.242.191.232", 5566, hints);
 		this.connected = true;
 		listener = new ClientListener(this, eManager);
@@ -79,19 +80,10 @@ public class Client {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, message, true));
+		eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, MessageType.NETWORK_MESSAGE,  message));
 		listener = null;
 		Gdx.app.log("Client", "Bad Practice: calling swap screen from client disconnect()!!");
-		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI)); // Shouldn't call a screen event from network
 		
-	}
-
-	public String getServerMessage() {
-		return serverMessage;
-	}
-
-	public void setServerMessage(String serverMessage) {
-		this.serverMessage = serverMessage;
 	}
 
 	public NetworkingData getData() {

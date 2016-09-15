@@ -29,6 +29,9 @@ import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
+import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
@@ -39,8 +42,9 @@ import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.widgets.MyProgressBar;
 import com.linkmon.view.screens.widgets.messages.MessageTable;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
-public class GameUi implements Screen, ViewListener {
+public class GameUi implements Screen, ModelListener {
 	
 	Table containerBottom;
 	Table containerTop;
@@ -84,7 +88,7 @@ public class GameUi implements Screen, ViewListener {
 	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
 		
 		this.eManager = eManager;
-		this.eManager.addViewListener(this);
+		this.eManager.addModelListener(this);
 
 		this.game = game;
 
@@ -228,7 +232,7 @@ public class GameUi implements Screen, ViewListener {
             	String[] strings = new String[2];
         		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
         		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
-            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, 1, strings));
+            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, strings));
             	}
 		});
 		settings.addListener(new ClickListener(){
@@ -290,18 +294,18 @@ public class GameUi implements Screen, ViewListener {
 	}
 
 	@Override
-	public void onNotify(ViewEvent event) {
+	public void onNotify(ModelEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
-			case(ViewEvents.UPDATE_HUNGER_LEVEL): {
+			case(ModelEvents.UPDATE_HUNGER_LEVEL): {
 				pBar.update(event.value);
 				break;
 			}
-			case(ViewEvents.UPDATE_GOLD): {
+			case(ModelEvents.UPDATE_GOLD): {
 				playerGold.setText("Gold: "+ event.value);
 				break;
 			}
-			case(ViewEvents.EVOLVE): {
+			case(ModelEvents.EVOLVE): {
 				evolve = true;
 				evolutionScreen = new EvolutionScreen(ui, eManager, event.value, event.value2);
 				break;

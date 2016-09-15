@@ -27,6 +27,9 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
+import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
@@ -36,7 +39,7 @@ import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.ItemButton;
 
-public class ShopWindow implements Screen, IShop {
+public class ShopWindow implements Screen, IShop, ModelListener {
 	
 	private Image img;
 	private Table innerContainer;
@@ -84,6 +87,7 @@ public class ShopWindow implements Screen, IShop {
 	
 	public ShopWindow(Group group, EventManager eManager) {
 		this.eManager = eManager;
+		eManager.addModelListener(this);
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
 		skin2 = new Skin();
@@ -187,7 +191,6 @@ public class ShopWindow implements Screen, IShop {
             public void clicked(InputEvent event, float x, float y){
             	if(selectedButton != null) {
             		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, selectedButton.getItemId(), amount));
-            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             		amount = 1;
             		itemAmount.setText("Amount: " + amount);
             		itemPrice.setText("Price: " + selectedButton.getPrice());
@@ -336,6 +339,17 @@ public class ShopWindow implements Screen, IShop {
 		
 		itemAmount.setText(itemAmountString + amount);
     	itemPrice.setText(itemPriceString + selectedButton.getPrice());
+	}
+
+	@Override
+	public void onNotify(ModelEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ModelEvents.UPDATE_GOLD): {
+				playerGold.setText("Gold: "+ event.value);
+				break;
+			}
+		}
 	}
 
 }

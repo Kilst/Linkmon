@@ -37,11 +37,11 @@ public class AnimationWidget extends Actor {
 		this.setSize(loadingAnimationFrames[0].getRegionWidth(), loadingAnimationFrames[0].getRegionHeight());
 	}
 	
-	public AnimationWidget(int id, float frameDuration) {
+	public AnimationWidget(int linkmonId, float frameDuration) {
 //		AtlasRegion animations = new AtlasRegion(ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class));
 		TextureAtlas atlas = new TextureAtlas();
 		
-		Array<AtlasRegion>[] regions = ResourceLoader.getLinkmonAnimFromId(id);
+		Array<AtlasRegion>[] regions = ResourceLoader.getLinkmonAnimFromId(linkmonId);
 		
 		
 		TextureRegion[] loadingAnimationFrames = new TextureRegion[regions[0].size];

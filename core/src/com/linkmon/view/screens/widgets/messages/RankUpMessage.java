@@ -9,8 +9,8 @@ public class RankUpMessage extends MessageBox {
 
 	public Image rankImage;
 	
-	public RankUpMessage(String messageString, int rank, UIRenderer worldRenderer, EventManager eManager) {
-		super(messageString, worldRenderer, eManager);
+	public RankUpMessage(int messageType, String messageString, int rank, UIRenderer worldRenderer, EventManager eManager) {
+		super(messageType, messageString, worldRenderer, eManager);
 		// TODO Auto-generated constructor stub
 
 		this.setHeading("rankUpHeading");

@@ -15,10 +15,6 @@ public class NetworkingData {
 	
 	private String serverWelcomeMessage;
 	
-	private BattleLinkmon myLinkmon; // Probably should create an "OnlineBattle" class for these like before. Except thought-out.
-	private BattleLinkmon opponentLinkmon; // The class should be down in the model, and accessed through the NetworkController.
-	
-	
 	public byte[] getLastSentPacket() {
 		return lastSentPacket;
 	}

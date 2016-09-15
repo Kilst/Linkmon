@@ -3,6 +3,8 @@ package com.linkmon.componentmodel.linkmon;
 import com.badlogic.gdx.Gdx;
 import com.linkmon.componentmodel.components.IExtraComponents;
 import com.linkmon.componentmodel.gameobject.GameObject;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
 import com.linkmon.helpers.Timer;
@@ -57,7 +59,7 @@ public class LinkmonStatusComponent implements IExtraComponents {
 		if(hungerTimer.checkTimer()) {
 			Gdx.app.log("LinkmonStatusComponent", "Hunger timer ended");
 			addHungerLevel(-1);
-			linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_HUNGER_LEVEL, hungerLevel));
+			linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_HUNGER_LEVEL, hungerLevel));
 		}
 	}
 	

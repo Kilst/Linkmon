@@ -63,7 +63,7 @@ public class OnlineBattleController implements ControllerListener {
 	public void updateBattleScreen(OnlineBattleScreen battleScreen) {
 		if(battle != null && battle.updated) {
 //			battleScreen.getSprites(battle.playerLinkmon.getId(), battle.opponentLinkmon.getId());
-			battleScreen.updateHealths(battle.playerLinkmon.getHealth(), battle.opponentLinkmon.getHealth());
+//			battleScreen.updateHealths(battle.playerLinkmon.getHealth(), battle.opponentLinkmon.getHealth());
 			if(battleScreen.buttonTable != null)
 				battleScreen.buttonTable.setVisible(true);
 			// Update player move/crit/dodge

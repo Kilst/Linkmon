@@ -14,7 +14,9 @@ import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.game.GameClass;
 import com.linkmon.messagesystem.MessageManager;
+import com.linkmon.view.screens.interfaces.IOnlineScreen;
 import com.linkmon.view.screens.widgets.messages.ChatMessage;
 import com.linkmon.view.screens.widgets.messages.ErrorMessage;
 import com.linkmon.view.screens.widgets.messages.MessageBox;
@@ -40,9 +42,12 @@ public class UIRenderer implements ScreenListener {
 	
 	public ChatMessage chatWindow;
 	
-	public UIRenderer(MessageManager messages, EventManager eManager) {
+	private GameClass game;
+	
+	public UIRenderer(MessageManager messages, GameClass game, EventManager eManager) {
 		this.messages = messages;
 		this.eManager = eManager;
+		this.game = game;
 		
 		this.eManager.addScreenListener(this);
 		
@@ -61,19 +66,19 @@ public class UIRenderer implements ScreenListener {
 	private void displayMessageBox(MessageEvent event) {
 		switch(event.eventId) {
 			case(MessageEvents.RANK_UP) : {
-				messageBox = new RankUpMessage(event.message, event.rank, this, eManager);
+				messageBox = new RankUpMessage(event.messageType, event.message, event.rank, this, eManager);
 				break;
 			}
 			case(MessageEvents.DISCONNECTED_SERVER) : {
-				messageBox = new ErrorMessage(event.message, this, eManager, event.returnToMain);
+				messageBox = new ErrorMessage(event.messageType, event.message, this, eManager);
 				break;
 			}
 			case(MessageEvents.POOP_MISTAKE) : {
-				messageBox = new ErrorMessage(event.message, this, eManager, event.returnToMain);
+				messageBox = new ErrorMessage(event.messageType, event.message, this, eManager);
 				break;
 			}
 			case(MessageEvents.EXAHUSTED_TRAIN_MESSAGE) : {
-				messageBox = new ErrorMessage(event.message, this, eManager, event.returnToMain);
+				messageBox = new ErrorMessage(event.messageType, event.message, this, eManager);
 				break;
 			}
 		}
@@ -82,7 +87,7 @@ public class UIRenderer implements ScreenListener {
 	private void displayChatWindow(MessageEvent event) {
 		switch(event.eventId) {
 			case(MessageEvents.SHOW_CHAT) : {
-				chatWindow = new ChatMessage(event.value, event.messages, this, ui, eManager);
+				chatWindow = new ChatMessage(event.value, event.messageType, event.messages, this, ui, eManager);
 				chatWindow.show();
 				break;
 			}
@@ -90,10 +95,15 @@ public class UIRenderer implements ScreenListener {
 	}
 	
 	public void render() {
-		if((messageBox == null && chatWindow == null) && messages.getCurrentMessage() != null) {
-			Gdx.app.log("WorldRenderer","Displaying message!");
-			displayMessageBox(messages.getCurrentMessage());
-			displayChatWindow(messages.getCurrentMessage());
+		if((messageBox == null && chatWindow == null)) {
+			if(game.getScreen() instanceof IOnlineScreen && messages.getCurrentNetworkMessage() != null) {
+				displayMessageBox(messages.getCurrentNetworkMessage());
+			}
+			else if (messages.getCurrentMessage() != null) {
+				Gdx.app.log("WorldRenderer","Displaying message!");
+				displayMessageBox(messages.getCurrentMessage());
+				displayChatWindow(messages.getCurrentMessage());
+			}
 		}
 		
 		stage.act();
