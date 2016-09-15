@@ -22,7 +22,7 @@ import com.linkmon.view.screens.widgets.messages.ErrorMessage;
 import com.linkmon.view.screens.widgets.messages.MessageBox;
 import com.linkmon.view.screens.widgets.messages.RankUpMessage;
 
-public class UIRenderer implements ScreenListener {
+public class UIRenderer {
 	
 	public static final float scaleX = Gdx.graphics.getWidth()/1024;
 	public static final float scaleY = Gdx.graphics.getHeight()/600;
@@ -31,10 +31,6 @@ public class UIRenderer implements ScreenListener {
 	
 	public Stage stage;
 	public Group ui;
-	
-	Image darken;
-	
-	private boolean lightOn = true;
 	
 	EventManager eManager;
 	MessageManager messages;
@@ -49,18 +45,9 @@ public class UIRenderer implements ScreenListener {
 		this.eManager = eManager;
 		this.game = game;
 		
-		this.eManager.addScreenListener(this);
-		
 		stage = new Stage();
 		ui = new Group();
 		stage.addActor(ui);
-		
-		// Used to darken the game world
-		darken = new Image(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("darkenWorld.png")))));
-		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		darken.setColor(1f, 1f, 1f, 0.7f);
-		darken.setTouchable(Touchable.disabled);
-//		game.addActor(darken);
 	}
 	
 	private void displayMessageBox(MessageEvent event) {
@@ -110,31 +97,5 @@ public class UIRenderer implements ScreenListener {
 		if(chatWindow != null)
 			chatWindow.toFront();
 		stage.draw();
-		
-		// Used to darken the game world by time of day
-		if(!lightOn) {
-			if(!ui.getChildren().contains(darken, true)) {
-				
-				ui.addActor(darken);
-				darken.toBack();
-			}
-			else
-				darken.toBack();
-		}
-		else if(ui.getChildren().contains(darken, true)) {
-			ui.removeActor(darken);
-		}
-	}
-
-	@Override
-	public boolean onNotify(ScreenEvent event) {
-		// TODO Auto-generated method stub
-		switch(event.eventId) {
-			case(ScreenEvents.LIGHT_SWAP): {
-				lightOn = event.bool;
-				break;
-			}
-		}
-		return false;
 	}
 }

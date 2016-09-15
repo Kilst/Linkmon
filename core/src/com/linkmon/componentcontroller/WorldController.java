@@ -59,6 +59,10 @@ public class WorldController implements ScreenListener {
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
+			case(ScreenEvents.LIGHT_SWAP): {
+				swapLight();
+				return false;
+			}
 			case(ScreenEvents.DEBUGGING): {
 				((DebuggingScreen)event.screen).updateObjectCount(world.getObjects().size());
 				return false;

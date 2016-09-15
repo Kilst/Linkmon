@@ -9,13 +9,13 @@ import com.linkmon.model.gameobject.Direction;
 
 public class LibgdxRenderingComponent implements IRenderingComponent {
 	
-	private Sprite sprite;
+	protected Sprite sprite;
 	
-	private LibgdxAnimationComponent animation;
+	protected LibgdxAnimationComponent animation;
 
-	private boolean flipped;
+	protected boolean flipped;
 	
-	private int id;
+	protected int id;
 	
 	public void setSprite(GameObject object) {
 		sprite = new Sprite(ResourceLoader.getRegionFromId(object.getId()));
