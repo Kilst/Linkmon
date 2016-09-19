@@ -1,8 +1,5 @@
 package com.linkmon.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -11,35 +8,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Vector2;
 import com.linkmon.componentcontroller.ControllerService;
-import com.linkmon.componentcontroller.LibgdxInputController;
-import com.linkmon.componentmodel.MService;
-import com.linkmon.componentmodel.World;
-import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
-import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
-import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
-import com.linkmon.componentmodel.linkmon.LinkmonStatusComponent;
-import com.linkmon.componentmodel.linkmon.LinkmonTimerComponent;
+import com.linkmon.componentcontroller.MiniGameController;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.controller.ControllerEvent;
-import com.linkmon.eventmanager.controller.ControllerEvents;
-import com.linkmon.helpers.GameSave;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.helpers.HelpMessages;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.helpers.TimerLengths;
 import com.linkmon.messagesystem.MessageManager;
-import com.linkmon.model.Player;
-import com.linkmon.model.gameobject.linkmon.LinkmonTimerLengths;
 import com.linkmon.view.LibgdxWorldRenderer;
 import com.linkmon.view.UIRenderer;
-import com.linkmon.view.screens.GameUi;
-import com.linkmon.view.screens.IntroScreen;
-import com.linkmon.view.screens.ScreenType;
 
-public class GameClass extends Game implements ApplicationListener {
+public class GameClass extends Game implements ApplicationListener, ScreenListener {
 	SpriteBatch batch;
 	Texture img;
 	
@@ -62,7 +43,8 @@ public class GameClass extends Game implements ApplicationListener {
 	
 	private boolean notificationsSent = false;
 	
-	private LibgdxWorldRenderer libgdxWorldRenderer;
+	private LibgdxWorldRenderer worldRenderer;
+	private LibgdxWorldRenderer miniGameRenderer;
 	
 	private ControllerService service;
 	
@@ -80,6 +62,7 @@ public class GameClass extends Game implements ApplicationListener {
 	@Override
 	public void pause() {
 		service.saveGame();
+//		service.close();
 //		GameSave.saveGame(controllerService.getPlayerController().getPlayer());
 //		if(eManager != null)
 //		eManager.notify(new ControllerEvent(ControllerEvents.SAVE_GAME));
@@ -127,7 +110,7 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		eManager = new EventManager();
 		
-		
+		eManager.addScreenListener(this);
 		
 		batch = new SpriteBatch();
 		img = new Texture("background.png");
@@ -147,7 +130,8 @@ public class GameClass extends Game implements ApplicationListener {
 		
 		
 		service = new ControllerService(this, uiRenderer.ui, eManager);
-		libgdxWorldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
+//		MiniGameController miniGame = new MiniGameController(eManager);
+		worldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
 		
 		im = new InputMultiplexer();
 		
@@ -166,10 +150,23 @@ public class GameClass extends Game implements ApplicationListener {
 		service.update();
 		
 		batch.begin();
-			libgdxWorldRenderer.render(batch);
+			worldRenderer.render(batch);
 		batch.end();
 
 		uiRenderer.render();
 		this.getScreen().render(0);
+	}
+
+	@Override
+	public boolean onNotify(ScreenEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ScreenEvents.START_MINIGAME): {
+				MiniGameController game = new MiniGameController(eManager);
+				miniGameRenderer = new LibgdxWorldRenderer(game.getWorld());
+				return false;
+			}
+		}
+		return false;
 	}
 }

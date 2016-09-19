@@ -31,19 +31,20 @@ public class ControllerService {
 		playerController = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
 		shopController = new ShopController(mService.getShop());
-		screenController = new LibgdxScreenController(game, ui, eManager);
 		worldController = new WorldController(mService.getWorld());
-		
 		inputController = new LibgdxInputController(eManager);
-		
 		networkController = new NetworkController(eManager, mService.getPlayer());
 		
 		eManager.addScreenListener(playerController);
 		eManager.addScreenListener(linkmonController);
 		eManager.addScreenListener(shopController);
 		eManager.addScreenListener(worldController);
-		eManager.addScreenListener(screenController);
+		
 		eManager.addScreenListener(networkController);
+		
+		screenController = new LibgdxScreenController(game, ui, eManager);
+		
+		eManager.addScreenListener(screenController);
 	}
 	
 	public void update() {
@@ -64,6 +65,11 @@ public class ControllerService {
 	public void saveGame() {
 		// TODO Auto-generated method stub
 		mService.saveGame();
+	}
+
+	public void close() {
+		// TODO Auto-generated method stub
+		networkController.close();
 	}
 
 }

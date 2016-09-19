@@ -6,8 +6,10 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.linkmon.componentmodel.MyVector2;
+import com.linkmon.componentmodel.components.InputType;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.input.InputEvent;
+import com.linkmon.eventmanager.input.InputEvents;
 
 public class LibgdxInputController implements GestureListener {
 	
@@ -25,7 +27,8 @@ public class LibgdxInputController implements GestureListener {
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		// TODO Auto-generated method stub
 //		Gdx.app.log("InputController", "touchDown");
-		eManager.notify(new InputEvent(0, new MyVector2(x,Gdx.graphics.getHeight()-y))); // minus height, inverted y-axis
+		eManager.notify(new InputEvent(InputType.CLICKED, new MyVector2(x,Gdx.graphics.getHeight()-y))); // minus height, inverted y-axis
+//		eManager.notify(new InputEvent(InputType.BUTTON_EVENT, button));
 		return false;
 	}
 

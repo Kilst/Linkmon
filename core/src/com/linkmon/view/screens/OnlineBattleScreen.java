@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.controller.LinkmonController;
@@ -36,6 +37,7 @@ import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IBattleView;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.BattleStats;
+import com.linkmon.view.screens.widgets.messages.MessageTable;
 
 public class OnlineBattleScreen implements Screen, IBattleView {
 	
@@ -69,6 +71,8 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	private AnimationWidget myLinkmonSprite;
 	private AnimationWidget oppLinkmonSprite;
 	
+	private MessageTable battleMessage;
+	
 	
 	private Move move1;
 	private Move move2;
@@ -93,6 +97,13 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	public void show() {
 		// TODO Auto-generated method stub
 		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
+		
 		background = new Image(skin2.getDrawable("statsBackground"));
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -111,11 +122,15 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		container.row();
 		
 		buttonTable = new Table();
-		buttonTable.setBackground(skin2.getDrawable("table"));
+		buttonTable.setBackground(skin2.getDrawable("newContainer"));
 		
-		attack1 = new TextButton("Attack1", skin);
+		battleMessage = new MessageTable(skin2);
+		battleMessage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/5f);
+		battleMessage.setVisible(false);
+		
+		attack1 = new TextButton("Attack1", buttonStyle);
 		buttonTable.add(attack1).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
-		attack2 = new TextButton("Attack2", skin);
+		attack2 = new TextButton("Attack2", buttonStyle);
 		buttonTable.add(attack2).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
 		
 		container.add(buttonTable).height(Gdx.graphics.getHeight()/5f).expandX().fillX();
@@ -127,11 +142,10 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		uiGroup.addActor(oppLinkmonSprite);
 		uiGroup.addActor(myLinkmonSprite);
 		uiGroup.addActor(container);
+		uiGroup.addActor(battleMessage);
 		uiGroup.toFront();
 		addListeners();
 		finishedLoading  = true;
-		
-		container.debug();
 	}
 	
 	private void addListeners() {

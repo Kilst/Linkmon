@@ -162,10 +162,16 @@ public class NetworkController implements ScreenListener, NetworkListener {
 			}
 			case(NetworkEvents.WIN_LOSS): {
 				player.receiveRewards(event.values);
-				battle.setEnded(true);
+				//battle.setEnded(true);
 				break;
 			}
 		}
 		return false;
+	}
+
+	public void close() {
+		// TODO Auto-generated method stub
+		if(service != null)
+			service.disconnect();
 	}
 }

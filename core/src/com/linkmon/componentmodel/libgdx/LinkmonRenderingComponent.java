@@ -44,6 +44,8 @@ public class LinkmonRenderingComponent extends LibgdxRenderingComponent {
 	}
 	
 	private void checkThoughts(GameObject linkmon) {
+		if(((LinkmonExtraComponents)linkmon.getExtraComponents()) == null)
+			return;
 		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isHungry()) {
 			if(thoughtBubble[0] == null)
 				thoughtBubble[0] = new Sprite(ResourceLoader.getRegionFromId(4));

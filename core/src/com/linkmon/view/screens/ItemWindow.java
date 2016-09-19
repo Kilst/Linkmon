@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -66,6 +68,13 @@ public class ItemWindow implements Screen, IPlayerItems {
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
+		
 		// Create Window Elements
 		
 		backgroundImage = new Image(skin2.getDrawable("shopBackground"));
@@ -74,27 +83,35 @@ public class ItemWindow implements Screen, IPlayerItems {
 		container = new Table();
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		Image image = new Image(skin2.getDrawable("itemsButton"));
+		Table heading = new Table();
+		heading.setBackground(skin2.getDrawable("title"));
+		heading.setSize(250, 136);
+		Label title = new Label("ITEMS", skin);
+		title.setFontScale(1.1f);
+		heading.add(title).padBottom(15);
+		heading.setPosition((Gdx.graphics.getWidth()/2)-heading.getWidth()/2, Gdx.graphics.getHeight()-heading.getHeight());
 		
 		table = new Table();
+		table.setBackground(skin2.getDrawable("newContainer"));
 		
 		tableUse = new Table(skin);
-		tableUse.setBackground(skin2.getDrawable("statsTable"));
+		tableUse.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		tableItems = new Table(skin);
-		tableItems.setBackground(skin2.getDrawable("statsTable"));
+		tableItems.setBackground(skin2.getDrawable("tableNoHeading"));
 		
-		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
-		backButton = new ImageButton(back);
+		backButton = new TextButton("Back", buttonStyle);
 		
-		TextureRegionDrawable feed = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("feedButtonGreen.png"))));
-		useButton = new ImageButton(feed);
+		useButton = new TextButton("Use", buttonStyle);
 		
 		itemBox = new ItemBox();
 		itemText = new Label("Item Name",skin);
 		
 		
 		// Build Window Layout
+		
+		table.add(heading).expandX().colspan(2).padTop(-100);
+		table.row();
 		
 		tableItems.add(itemBox).expand();
 		tableItems.row();
@@ -105,12 +122,11 @@ public class ItemWindow implements Screen, IPlayerItems {
 		table.add(tableItems).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		tableUse.align(Align.top);
 		table.add(tableUse).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.row();
+		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
-		container.add(image);
-		container.row();
+		
 		container.add(table).expand().fill();
-		container.row();
-		container.add(backButton).align(Align.right).size(128*UIRenderer.scaleXY, 64*UIRenderer.scaleXY);
 		
 		addListeners();
 		
@@ -195,7 +211,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this);			
+		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);
 		buttonList.add(item);
 		tableUse.add(item).expandX().fillX();
 		tableUse.row();

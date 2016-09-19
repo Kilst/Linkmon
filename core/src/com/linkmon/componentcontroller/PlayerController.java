@@ -31,11 +31,6 @@ public class PlayerController implements ScreenListener {
 	
 	// Request to update models
 	
-//	public void feedLinkmon(int itemId) {
-//		GameObject item = ObjectFactory.getInstance().getObjectFromId(itemId);
-//		player.feedLinkmon(item);
-//	}
-	
 	public void buyItem(int id, int amount) {
 		GameObject item = ObjectFactory.getInstance().getObjectFromId(id);
 		((ItemComponent)item.getExtraComponents()).setQuantity(amount);

@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.eventmanager.EventManager;
@@ -25,13 +27,13 @@ public class MenuScreen implements Screen, MyScreen {
 	
 	private Table table;
 
-	private ImageButton shopButton;
-	private ImageButton itemButton;
-	private ImageButton statsButton;
-	private ImageButton cryoGenicsButton;
-	private ImageButton achievementsButton;
+	private TextButton shopButton;
+	private TextButton itemButton;
+	private TextButton statsButton;
+	private TextButton cryoGenicsButton;
+	private TextButton achievementsButton;
 	
-	private ImageButton backButton;
+	private TextButton backButton;
 	
 	private Group ui;
 	
@@ -43,24 +45,34 @@ public class MenuScreen implements Screen, MyScreen {
 		
 		this.ui = ui;
 		
-		Skin skin = new Skin();
+		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
+		Skin skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
-		skin.addRegions(uiAtlas);
+		skin2.addRegions(uiAtlas);
+		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
 		
 		rootTable = new Table();
 		rootTable.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		table = new Table();
-		table.setBackground(skin.getDrawable("container"));
+		table.setBackground(skin2.getDrawable("newContainer"));
 		
-		shopButton = new ImageButton(skin.getDrawable("shopButton"));
-		itemButton = new ImageButton(skin.getDrawable("itemButton"));
-		statsButton = new ImageButton(skin.getDrawable("statsButton"));
-		cryoGenicsButton = new ImageButton(skin.getDrawable("cryoGenicsButton"));
-		achievementsButton = new ImageButton(skin.getDrawable("achievementButton"));
-		backButton = new ImageButton(skin.getDrawable("backButton"));
+		shopButton = new TextButton("Shop", buttonStyle);
+		itemButton = new TextButton("Items", buttonStyle);
+		statsButton = new TextButton("Stats", buttonStyle);
+		cryoGenicsButton = new TextButton("CryoGenics", buttonStyle);
+		achievementsButton = new TextButton("Achievements", buttonStyle);
 		
-		darken = new Image(skin.getDrawable("darkenWorld"));
+		backButton = new TextButton("Back", buttonStyle);
+		
+		darken = new Image(skin2.getDrawable("darkenWorld"));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.getColor().a = 0.7f;
 	}
@@ -76,7 +88,7 @@ public class MenuScreen implements Screen, MyScreen {
 		table.row();
 		table.add(achievementsButton).pad(20).colspan(2);
 		table.row();
-		table.add(backButton).expandX().colspan(2).padTop(20).align(Align.right);
+		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
 		rootTable.add(table);
 		
@@ -91,7 +103,7 @@ public class MenuScreen implements Screen, MyScreen {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 		

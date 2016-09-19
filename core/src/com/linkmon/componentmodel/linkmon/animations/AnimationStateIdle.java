@@ -17,11 +17,11 @@ public class AnimationStateIdle extends BaseAnimationState {
 	public void update(IAnimationComponent animationComp, GameObject object) {
 		// TODO Auto-generated method stub
 		animationComp.setState(this);
-		if(((LinkmonExtraComponents)object.getExtraComponents()).getTimers().getWaveTimer().checkTimer() && !object.isMoving) {
+		if(((LinkmonExtraComponents)object.getExtraComponents()).getTimers().getWaveTimer().checkTimer() && object.isMoving) {
 			animationComp.setState(new AnimationStateWave(animationComp));
 			return;
 		}
-		else if(object.isMoving) {
+		 if(object.isMoving) {
 			animationComp.setState(new AnimationStateWalk(animationComp));
 			return;
 		}

@@ -29,11 +29,15 @@ public class InputComponent implements IInputComponent {
 	@Override
 	public boolean onNotify(InputEvent event) {
 		// TODO Auto-generated method stub
-		if(object.getAabb().contains(event.getPosition())) {
-			Gdx.app.log("InputComponent", "clicked!");
-			clicked = true;
-			updated = true;
-			return true;
+		switch(event.eventId) {
+			case(InputType.CLICKED) : {
+				if(object.getAabb().contains(event.getPosition())) {
+					Gdx.app.log("InputComponent", "clicked!");
+					clicked = true;
+					updated = true;
+					return true;
+				}
+			}
 		}
 		return false;
 	}

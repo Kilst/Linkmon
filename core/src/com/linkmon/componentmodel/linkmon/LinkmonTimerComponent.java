@@ -17,6 +17,8 @@ public class LinkmonTimerComponent implements ITimerComponent {
 	private Timer sleepMistakeTimer;
 	private Timer sickTimer;
 	private Timer sickMistakeTimer;
+	private Timer exhaustionTimer;
+	
 	private Timer deathTimer;
 	
 	private Timer oldAgeTimer;
@@ -27,6 +29,7 @@ public class LinkmonTimerComponent implements ITimerComponent {
 	private boolean isRunning = false;
 	
 	public LinkmonTimerComponent() {
+		setExhaustionTimer(new Timer(24*36, true));
 		setEvolutionTimer(new Timer(15, true));		
 		setHungerTimer(new Timer(1, true));
 		setPoopTimer(new Timer(5, true));
@@ -202,6 +205,15 @@ public class LinkmonTimerComponent implements ITimerComponent {
 
 	public void setWalkTimer(Timer walkTimer) {
 		this.walkTimer = walkTimer;
+	}
+
+	public Timer getExhaustionTimer() {
+		// TODO Auto-generated method stub
+		return exhaustionTimer;
+	}
+
+	public void setExhaustionTimer(Timer exhaustionTimer) {
+		this.exhaustionTimer = exhaustionTimer;
 	}
 
 }

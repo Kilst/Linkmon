@@ -32,7 +32,7 @@ public class BattleStats extends Table {
 		
 		pBar = new MyProgressBar(skin2, 100, 100);
 		
-		this.background(skin2.getDrawable("statsTable"));
+		this.background(skin2.getDrawable("tableNoHeading"));
 		
 		this.add(nameLabel).align(Align.left);
 		this.row();

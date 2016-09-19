@@ -30,13 +30,13 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 		
 		GameObject linkmon = new GameObject(id, ObjectType.LINKMON, new LinkmonRenderingComponent(), null,
 				new LinkmonPhysicsComponent(), new LinkmonExtraComponents());
-		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon));
+		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon.getId()));
 		
 		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().setBirthDate();
 		
 		linkmon.addInputComponent(new LinkmonInputComponent(eManager, linkmon));
 		linkmon.setX(0);
-		linkmon.setY(45);
+		linkmon.setY(65);
 		//linkmon.getPhysicsComponent().setMoveToX(700);
 		
 		return linkmon;
@@ -65,7 +65,7 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				ItemComponent foodComp = new ItemComponent(new AddToWorldItemAction(), 1, 500, ItemType.PLACEABLE, "Automatically cleans poop!");
 				GameObject poopaScoopa2001 = new GameObject(ObjectId.POOPA_SCOOPA, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new PoopaScoopaPhysicsComponent(new CollisionComponent()), foodComp);
 				poopaScoopa2001.setName("PoopaScoopa2001");
-				poopaScoopa2001.setY(45);
+				poopaScoopa2001.setY(65);
 				//((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
 				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setAnimation(new PoopaScoopaAnimationComponent(poopaScoopa2001));
 				return poopaScoopa2001;

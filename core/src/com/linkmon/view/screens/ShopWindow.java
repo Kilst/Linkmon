@@ -12,11 +12,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -79,7 +82,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	
 	private Skin skin;
 	
-	private Image heading;
+	private Table heading;
 	
 	Label playerGold;
 	Image coinsImage;
@@ -94,6 +97,13 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
+		
 		playerGold = new Label(goldString, skin);
 		coinsImage = new Image(skin2.getDrawable("coins"));
 		
@@ -102,29 +112,34 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		img.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		innerContainer = new Table();
-//		innerContainer.setBackground(skin2.getDrawable("TableUI"));
+		innerContainer.setBackground(skin2.getDrawable("newContainer"));
 		innerContainer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		//innerContainer.debug();
 		
-		heading = new Image(new TextureRegion(new Texture(Gdx.files.internal("shopButton.png"))));
+		heading = new Table();
+		heading.setBackground(skin2.getDrawable("title"));
+		heading.setSize(250, 136);
+		Label title = new Label("SHOP", skin);
+		title.setFontScale(1.1f);
+		heading.add(title).padBottom(15);
+		heading.setPosition((Gdx.graphics.getWidth()/2)-heading.getWidth()/2, Gdx.graphics.getHeight()-heading.getHeight());
 		
 		table = new Table();
 		
 		tableLeft = new Table();
-		tableLeft.setBackground(skin2.getDrawable("statsTable"));
+		tableLeft.setBackground(skin2.getDrawable("tableNoHeading"));
 		tableLeft.align(Align.topLeft);
 		
 		tableRight = new Table();
-		tableRight.setBackground(skin2.getDrawable("statsTable"));
+		tableRight.setBackground(skin2.getDrawable("tableNoHeading"));
 		
-		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
-		backButton = new Button(back);
+		backButton = new TextButton("Back", buttonStyle);
+		backButton.setPosition(Gdx.graphics.getWidth()-backButton.getWidth()-70, 55);
 		
-		TextureRegionDrawable feed = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("feedButtonGreen.png"))));
-		buyButton = new ImageButton(feed);
+		buyButton = new TextButton("Buy", buttonStyle);
 		
-		addButton = new ImageButton(skin2.getDrawable("addButton"));
-		subtractButton = new ImageButton(skin2.getDrawable("subtractButton"));
+		addButton = new ImageButton(skin2.getDrawable("newAddButton"));
+		subtractButton = new ImageButton(skin2.getDrawable("newSubtractButton"));
 		
 		itemBox = new ItemBox();
 		
@@ -141,8 +156,8 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		tableRight.row();
 		tableRight.add(itemText).expand().colspan(2);
 		tableRight.row();
-		tableRight.add(subtractButton).size(60f*UIRenderer.scaleXY, 60f*UIRenderer.scaleXY).expandX().align(Align.right).padRight(15*UIRenderer.scaleXY);
-		tableRight.add(addButton).size(60f*UIRenderer.scaleXY, 60f*UIRenderer.scaleXY).expandX().align(Align.left).padLeft(15*UIRenderer.scaleXY);
+		tableRight.add(subtractButton).expandX().align(Align.right).padRight(5);
+		tableRight.add(addButton).expandX().align(Align.left).padLeft(5);
 		tableRight.row();
 		tableRight.add(itemAmount).expand().colspan(2);
 		tableRight.row();
@@ -252,6 +267,8 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		// TODO Auto-generated method stub
 		uiGroup.addActor(img);
 		uiGroup.addActor(innerContainer);
+		uiGroup.addActor(heading);
+		uiGroup.addActor(backButton);
 		uiGroup.toFront();
 	}
 
@@ -298,6 +315,8 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		// TODO Auto-generated method stub
 		img.remove();
 		innerContainer.remove();
+		heading.remove();
+		backButton.remove();
 	}
 
 	@Override
@@ -309,7 +328,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	@Override
 	public void addShopItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this);			
+		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);			
 		buttonList.add(item);
 		tableLeft.add(item).expandX().fillX();
 		tableLeft.row();

@@ -15,9 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -40,18 +42,18 @@ import com.linkmon.eventmanager.view.ViewListener;
 import com.linkmon.game.GameClass;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
+import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.widgets.MyProgressBar;
 import com.linkmon.view.screens.widgets.messages.MessageTable;
 import com.linkmon.view.screens.widgets.messages.MessageType;
 
-public class GameUi implements Screen, ModelListener {
+public class GameUi implements Screen, IPlayerStats, ModelListener {
 	
 	Table containerBottom;
 	Table containerTop;
 	Button train;
 	
 	Button feed;
-	Button medicine;
 	Button menu;
 	Button help;
 	Button settings;
@@ -67,7 +69,11 @@ public class GameUi implements Screen, ModelListener {
 	String goldString;
 	Label time;
 	
+	MyProgressBar hungerBar;
 	public Label hunger;
+	
+	MyProgressBar exhaustionBar;
+	public Label exhaustion;
 	
 	public Group ui;
 	
@@ -78,8 +84,6 @@ public class GameUi implements Screen, ModelListener {
 	
 	private BitmapFont font;
 	private Skin skin2;
-	
-	MyProgressBar pBar;
 	
 	public Label fpsLabel;
 	
@@ -98,23 +102,32 @@ public class GameUi implements Screen, ModelListener {
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
-
-		train = new ImageButton(skin2.getDrawable("trainButton"));
-		feed = new ImageButton(skin2.getDrawable("feedButton"));
-		medicine = new ImageButton(skin2.getDrawable("shopButton"));
-		menu = new ImageButton(skin2.getDrawable("menuButton"));
-		online = new ImageButton(skin2.getDrawable("onlineButton"));
 		
-		float padding = (Gdx.graphics.getWidth()-train.getWidth()*5)/5/2;
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("mainUIButton");
+		buttonStyle.down = skin2.getDrawable("mainUIButton");
+		buttonStyle.up = skin2.getDrawable("mainUIButton");
+		buttonStyle.font = skin.getFont("default-font");
+
+		train = new TextButton("Train",buttonStyle);
+		train.padTop(10).padRight(3);
+		feed = new TextButton("Feed", buttonStyle);
+		feed.padTop(10).padRight(3);
+		menu = new TextButton("Menu", buttonStyle);
+		menu.padTop(10).padRight(3);
+		online = new TextButton("Online", buttonStyle);
+		online.padTop(10).padRight(3);
 		
 		containerBottom = new Table();
-		containerBottom.setSize(Gdx.graphics.getWidth(), 40*UIRenderer.scaleY);
-		containerBottom.setBackground(skin.getDrawable("default-rect"));
-		containerBottom.add(train).padLeft(padding).padRight(padding);
-		containerBottom.add(feed).padLeft(padding).padRight(padding);
-//		containerBottom.add(medicine).padLeft(padding).padRight(padding);
-		containerBottom.add(menu).padLeft(padding).padRight(padding).expandX().align(Align.left);
-		containerBottom.add(online).padLeft(padding).padRight(padding);
+		containerBottom.setSize(Gdx.graphics.getWidth(), train.getHeight());
+		containerBottom.add(menu);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
+		containerBottom.add(train);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
+		containerBottom.add(feed);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink"))).expandX().fillX();
+		containerBottom.add(online);
 		
 		font = new BitmapFont(Gdx.files.internal("fontSmall-export.fnt"),
 		         Gdx.files.internal("fontSmall-export.png"), false);
@@ -125,11 +138,13 @@ public class GameUi implements Screen, ModelListener {
 		
 		playerGold = new Label("Gold: ", labelStyle);
 		coinsImage = new Image(skin2.getDrawable("coins"));
+		
+		
 		hunger = new Label("Hunger: ", labelStyle);
+		hungerBar = new MyProgressBar(skin2, 0, 100);
 		
-		pBar = new MyProgressBar(skin2, 0, 100);
-		
-//		pBar.update(this.linkmon.getHungerLevel());
+		exhaustion = new Label("Energy: ", labelStyle);
+		exhaustionBar = new MyProgressBar(skin2, 0, 100);
 		
 		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
 		containerTop = new Table();
@@ -146,7 +161,9 @@ public class GameUi implements Screen, ModelListener {
 		containerTop.add(playerGold).height(30*UIRenderer.scaleXY).padRight(5);
 		containerTop.add(coinsImage).align(Align.left).expandX();
 		containerTop.add(hunger).height(30*UIRenderer.scaleXY);
-		containerTop.add(pBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
+		containerTop.add(hungerBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
+		containerTop.add(exhaustion).height(30*UIRenderer.scaleXY);
+		containerTop.add(exhaustionBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
 		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*UIRenderer.scaleXY);
 		
 		containerTop.add(help).padTop(30*UIRenderer.scaleXY);
@@ -166,7 +183,6 @@ public class GameUi implements Screen, ModelListener {
 //		ui.addActor(fpsLabel);
 		
 //		ui.addActor(chat);
-		
 	}
 	
 	public void update() {
@@ -195,13 +211,6 @@ public class GameUi implements Screen, ModelListener {
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
             }
-		});
-		
-		medicine.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.SHOP_WINDOW));
-            	}
 		});
 		
 		menu.addListener(new ClickListener(){
@@ -246,7 +255,7 @@ public class GameUi implements Screen, ModelListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		eManager.notify(new ControllerEvent(ControllerEvents.UPDATE_LOAD));
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 	}
 
 	@Override
@@ -298,7 +307,11 @@ public class GameUi implements Screen, ModelListener {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ModelEvents.UPDATE_HUNGER_LEVEL): {
-				pBar.update(event.value);
+				hungerBar.update(event.value);
+				break;
+			}
+			case(ModelEvents.UPDATE_EXHAUSTION_LEVEL): {
+				exhaustionBar.update(event.value);
 				break;
 			}
 			case(ModelEvents.UPDATE_GOLD): {
@@ -311,5 +324,11 @@ public class GameUi implements Screen, ModelListener {
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void getPlayerStats(String name, int gold) {
+		// TODO Auto-generated method stub
+		playerGold.setText("Gold: "+ gold);
 	}
 }

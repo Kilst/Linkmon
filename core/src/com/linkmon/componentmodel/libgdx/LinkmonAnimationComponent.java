@@ -27,12 +27,12 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
     TextureRegion[] angryAnimationFrames;
     Animation angry;
     
-    public LinkmonAnimationComponent(GameObject object) {
+    public LinkmonAnimationComponent(int linkmonId) {
 		super();
 		// TODO Auto-generated constructor stub
 		
 		Array<AtlasRegion>[] animationRegions;
-		animationRegions = ResourceLoader.getLinkmonAnimFromId(object.getId());
+		animationRegions = ResourceLoader.getLinkmonAnimFromId(linkmonId);
 		
 		idleAnimationFrames = new TextureRegion[animationRegions[0].size];
 		int i = 0;
@@ -78,9 +78,6 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 		currentAnimation  = idle;
 		
 		state = new AnimationStateIdle(this);
-		
-		object.setWidth(getCurrentKeyFrame().getRegionWidth());
-		object.setHeight(getCurrentKeyFrame().getRegionHeight());
 	}
 	
 	public void angry() {

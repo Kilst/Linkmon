@@ -22,6 +22,7 @@ public class LinkmonController implements ScreenListener {
 	
 	private void train(int statType) {
 		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats().train(statType);
+		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addExhaustionLevel(-10);
 	}
 	
 	// Screen Updates

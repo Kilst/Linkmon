@@ -34,11 +34,42 @@ public class LinkmonStatusComponent implements IExtraComponents {
 		if(linkmon == null) {
 			linkmon = object;
 			timers = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getTimers();
+			
+			linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_EXHAUSTION_LEVEL, exhaustionLevel));
+			linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_HUNGER_LEVEL, hungerLevel));
 		}
 		
 		updateHunger(timers.getHungerTimer());
+		
+		updateExhaustion(timers.getExhaustionTimer());
 	}
 	
+	private void updateExhaustion(Timer exhaustionTimer) {
+		// TODO Auto-generated method stub
+		if(exhaustionTimer.checkTimer()) {
+			addExhaustionLevel(1);
+		}
+	}
+	
+	public void addExhaustionLevel(int amount) {
+		// TODO Auto-generated method stub
+		exhaustionLevel += amount;
+		
+		if(exhaustionLevel <= 11) {
+			
+			isExhausted = true;
+
+			if(exhaustionLevel < 0)
+				exhaustionLevel = 0;
+		}
+		else if(exhaustionLevel > 100)
+			exhaustionLevel = 100;
+		else
+			isExhausted = false;
+		
+		linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_EXHAUSTION_LEVEL, exhaustionLevel));
+	}
+
 	public boolean isHungry() {
 		return isHungry;
 	}
@@ -59,7 +90,6 @@ public class LinkmonStatusComponent implements IExtraComponents {
 		if(hungerTimer.checkTimer()) {
 			Gdx.app.log("LinkmonStatusComponent", "Hunger timer ended");
 			addHungerLevel(-1);
-			linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_HUNGER_LEVEL, hungerLevel));
 		}
 	}
 	
@@ -82,6 +112,8 @@ public class LinkmonStatusComponent implements IExtraComponents {
 			hungerLevel = 100;
 		else
 			isHungry = false;
+		
+		linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_HUNGER_LEVEL, hungerLevel));
 	}
 
 	public int getHungerLevel() {

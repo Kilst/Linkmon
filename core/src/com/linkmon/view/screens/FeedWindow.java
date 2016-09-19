@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -66,6 +68,13 @@ public class FeedWindow implements Screen, IPlayerItems {
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
+		
 		// Create Window Elements
 		
 		backgroundImage = new Image(skin2.getDrawable("feedBackground"));
@@ -73,22 +82,22 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		container = new Table();
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		container.setBackground(skin2.getDrawable("newContainer"));
 		
 		Image image = new Image(new TextureRegion(new Texture(Gdx.files.internal("feedButton.png"))));
 		
 		table = new Table();
 		
 		tableFeed = new Table(skin);
-		tableFeed.setBackground(skin2.getDrawable("statsTable"));
+		tableFeed.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		tableItems = new Table(skin);
-		tableItems.setBackground(skin2.getDrawable("statsTable"));
+		tableItems.setBackground(skin2.getDrawable("tableNoHeading"));
 		
-		TextureRegionDrawable back = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
-		backButton = new ImageButton(back);
 		
-		TextureRegionDrawable feed = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("feedButtonGreen.png"))));
-		feedButton = new ImageButton(feed);
+		backButton = new TextButton("Back", buttonStyle);
+		
+		feedButton = new TextButton("Feed", buttonStyle);
 		
 		itemBox = new ItemBox();
 		itemText = new Label("Item Name",skin);
@@ -195,7 +204,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this);			
+		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);			
 		buttonList.add(item);
 		tableFeed.add(item).expandX().fillX();
 		tableFeed.row();

@@ -16,6 +16,9 @@ public class ScreenEvents {
 	public static final int USE_ITEM = 10;
 	
 	public static final int LIGHT_SWAP = 99;
+	
+	
+	public static final int START_MINIGAME = 88;
 
 	
 	// Networking

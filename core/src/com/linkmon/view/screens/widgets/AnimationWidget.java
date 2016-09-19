@@ -13,7 +13,7 @@ import com.linkmon.helpers.ResourceLoader;
 
 public class AnimationWidget extends Actor {
 	
-	Animation loading;
+	Animation animation;
 	
 	TextureRegion currentFrame;
 	
@@ -32,7 +32,7 @@ public class AnimationWidget extends Actor {
 			loadingAnimationFrames[i] = region;
 			i++;
 		}
-		loading = new Animation(frameDuration,loadingAnimationFrames);
+		animation = new Animation(frameDuration,loadingAnimationFrames);
 		
 		this.setSize(loadingAnimationFrames[0].getRegionWidth(), loadingAnimationFrames[0].getRegionHeight());
 	}
@@ -50,14 +50,14 @@ public class AnimationWidget extends Actor {
 			loadingAnimationFrames[i] = region;
 			i++;
 		}
-		loading = new Animation(frameDuration,loadingAnimationFrames);
+		animation = new Animation(frameDuration,loadingAnimationFrames);
 		
 		this.setSize(loadingAnimationFrames[0].getRegionWidth(), loadingAnimationFrames[0].getRegionHeight());
 	}
 	
 	private void getCurrentFrame() {
 		elapsedTime+= Gdx.graphics.getDeltaTime();
-		currentFrame = loading.getKeyFrame(elapsedTime, true);
+		currentFrame = animation.getKeyFrame(elapsedTime, true);
 	}
 	
 	@Override

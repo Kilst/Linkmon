@@ -14,7 +14,7 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 	private LinkmonTimerComponent timers;
 	
 	public LinkmonPhysicsComponent() {
-		moveY = 40;
+		moveY = 65;
 	}
 	
 	@Override

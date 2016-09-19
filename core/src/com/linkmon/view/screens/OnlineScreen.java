@@ -117,9 +117,9 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 		table = new Table(skin);	
 		leftTable = new Table();
 		rightTable = new Table();
-		table.setBackground(skin2.getDrawable("container"));
-		leftTable.setBackground(skin2.getDrawable("table"));
-		rightTable.setBackground(skin2.getDrawable("table"));
+		table.setBackground(skin2.getDrawable("newContainer"));
+		leftTable.setBackground(skin2.getDrawable("tableNoHeading"));
+		rightTable.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		serverWelcome = new Label("", skin);
 		
@@ -151,7 +151,7 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 //		rightTable.debug();
 //		container.debug();
 		
-		container.add(table).size(Gdx.graphics.getWidth()/1.2f, Gdx.graphics.getHeight()/1.2f);
+		container.add(table).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);

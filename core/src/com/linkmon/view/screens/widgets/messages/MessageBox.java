@@ -117,7 +117,7 @@ public class MessageBox extends Table {
             public void clicked(InputEvent event, float x, float y){
             	messageBox.remove();
             	darken.remove();
-            	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE));
+            	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE, messageType));
             	worldRenderer.messageBox = null;
             }
 		});
