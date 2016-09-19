@@ -18,28 +18,38 @@ import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonInputComponent;
 import com.linkmon.componentmodel.linkmon.LinkmonPhysicsComponent;
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.helpers.Timer;
 
-public class MiniGameController {
+public class MiniGameController implements ScreenListener {
 	
 	private Player player;
 	
 	private World gameWorld;
 	
 	private Timer spawnTimer;
+	GameObject linkmon;
+	EventManager eManager;
 	
 	public MiniGameController(EventManager eManager) {
+		this.eManager = eManager;
 		gameWorld = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		GameObject linkmon = new GameObject(1, ObjectType.LINKMON, new LinkmonRenderingComponent(), new PlayableInputComponent(eManager),
+		linkmon = new GameObject(33, ObjectType.ITEM, new LibgdxRenderingComponent(), new PlayableInputComponent(eManager),
 				new PlayablePhysicsComponent(new CollisionComponent()), null);
-		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon.getId()));
-		linkmon.setX(150);
+//		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon.getId()));
+		((LibgdxRenderingComponent)linkmon.getRenderer()).setSprite(linkmon);
+		linkmon.setX(0);
+		linkmon.setY(80);
 		
 		gameWorld.addObjectToWorld(linkmon);
 		
 		spawnTimer = new Timer(1, true);
 		spawnTimer.start();
+		
+		eManager.addScreenListener(this);
 	}
 	
 	public World getWorld() {
@@ -58,6 +68,18 @@ public class MiniGameController {
 		object.setX(rnd.nextInt((int)(gameWorld.getWidth())));
 		object.setY(Gdx.graphics.getHeight());
 		gameWorld.addObjectToWorld(object);
+	}
+
+	@Override
+	public boolean onNotify(ScreenEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ScreenEvents.MOVE_PLAYER) : {
+				((PlayablePhysicsComponent)linkmon.getPhysicsComponent()).addVeloX(event.value);
+				Gdx.app.log("MOVE", "MMMisPressed()");
+			}
+		}
+		return false;
 	}
 
 }

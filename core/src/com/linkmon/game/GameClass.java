@@ -19,6 +19,7 @@ import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.messagesystem.MessageManager;
 import com.linkmon.view.LibgdxWorldRenderer;
 import com.linkmon.view.UIRenderer;
+import com.linkmon.view.screens.minigames.MiniGameUI;
 
 public class GameClass extends Game implements ApplicationListener, ScreenListener {
 	SpriteBatch batch;
@@ -45,6 +46,8 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 	
 	private LibgdxWorldRenderer worldRenderer;
 	private LibgdxWorldRenderer miniGameRenderer;
+	
+	MiniGameController game;
 	
 	private ControllerService service;
 	
@@ -128,7 +131,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		System.gc();
 		saveLoaded = true;
 		
-		
+		game = new MiniGameController(eManager);
 		service = new ControllerService(this, uiRenderer.ui, eManager);
 //		MiniGameController miniGame = new MiniGameController(eManager);
 		worldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
@@ -150,7 +153,13 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		service.update();
 		
 		batch.begin();
-			worldRenderer.render(batch);
+			if(miniGameRenderer != null) {
+				miniGameRenderer.render(batch);
+				game.update();
+			}
+			else
+				worldRenderer.render(batch);
+			
 		batch.end();
 
 		uiRenderer.render();
@@ -162,8 +171,8 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
 			case(ScreenEvents.START_MINIGAME): {
-				MiniGameController game = new MiniGameController(eManager);
 				miniGameRenderer = new LibgdxWorldRenderer(game.getWorld());
+				this.setScreen(new MiniGameUI(eManager, uiRenderer.ui));
 				return false;
 			}
 		}

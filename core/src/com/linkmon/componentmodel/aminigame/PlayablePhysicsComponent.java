@@ -21,6 +21,8 @@ public class PlayablePhysicsComponent extends PhysicsComponent {
 	private float delta = 0;
 	private long lastFrame = System.currentTimeMillis();
 	
+	private boolean isGrounded = false;
+	
 	private CollisionComponent collisionComponent;
 	
 	public PlayablePhysicsComponent(CollisionComponent collisionComponent) {
@@ -37,10 +39,11 @@ public class PlayablePhysicsComponent extends PhysicsComponent {
 		if(object.getY() > 50) {
 			applyGravity();
 			object.setY(object.getY()+(veloY*delta));
+			isGrounded = false;
 		}
-		else {
-			veloY= veloY*-1;
-			object.setY(object.getY()+(veloY*delta));
+		else if(object.getY() < 50) {
+			object.setY(50);
+			isGrounded = true;
 		}
 		
 		applyVelocity(object);
@@ -62,7 +65,7 @@ public class PlayablePhysicsComponent extends PhysicsComponent {
 	}
 	
 	private void applyFriction() {
-		veloX/=2;
+		veloX/=1.1;
 	}
 	
 	private void applyGravity() {
@@ -72,7 +75,7 @@ public class PlayablePhysicsComponent extends PhysicsComponent {
 
 	public void addVeloX(float veloX2) {
 		// TODO Auto-generated method stub
-		veloX = veloX2;
+		veloX += veloX2;
 	}
 
 }

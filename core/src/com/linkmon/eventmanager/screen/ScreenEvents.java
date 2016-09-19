@@ -33,6 +33,9 @@ public class ScreenEvents {
 	public static final int UPDATE_ONLINE_BALLTE = 108;
 	public static final int GET_ONLINE_STATS = 109;
 	
+	// MiniGames
+	public static final int MOVE_PLAYER = 200;
+	
 	
 	// Debugging
 	public static final int DEBUGGING = 1001;

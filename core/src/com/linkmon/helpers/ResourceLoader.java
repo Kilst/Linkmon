@@ -40,6 +40,11 @@ public class ResourceLoader {
 		TextureRegion region = null;
 		switch(id)
 		{
+			case 33: {
+				tex = ResourceLoader.assetManager.get("spottedEgg.png", Texture.class);
+				region = new TextureRegion(tex);
+		        break;
+			}
 			case 0: {
 				tex = ResourceLoader.assetManager.get("fire-boy.png", Texture.class);
 				region = new TextureRegion(tex);
@@ -154,6 +159,8 @@ public class ResourceLoader {
 			param.magFilter = TextureFilter.Linear;
 			
 			assetManager.load("trainingBag.png", Texture.class);
+			
+			assetManager.load("spottedEgg.png", Texture.class);
 			
 			assetManager.load("baby-robot.png", Texture.class);
 			assetManager.load("my-robot.png", Texture.class);
