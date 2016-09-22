@@ -102,6 +102,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		buttonStyle.font = skin.getFont("default-font");
 		
 		
+		
 		// Create Elements
 		container = new Image(skin2.getDrawable("statsBackground"));
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -144,6 +145,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		linkmonTable = new Table();
 		
+		
+		
 		// Build Layout
 		playerTable.add(playerHeading).expandX().center().colspan(2).padTop(-60).padLeft(-130).align(Align.topLeft);
 		playerTable.row();
@@ -163,6 +166,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		table.row();
 		
 		addListeners();
+		
+		
 		
 		// Update LinkmonTable
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_STATS, this));

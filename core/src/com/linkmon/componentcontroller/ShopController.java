@@ -1,6 +1,7 @@
 package com.linkmon.componentcontroller;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.componentmodel.Player;
 import com.linkmon.componentmodel.Shop;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.items.ItemComponent;
@@ -16,22 +17,34 @@ import com.linkmon.view.screens.interfaces.IShop;
 public class ShopController implements ScreenListener {
 	
 	private Shop shop;
+	private Player player;
 	
-	public ShopController(Shop shop) {
+	public ShopController(Shop shop, Player player) {
 		this.shop = shop;
+		this.player = player;
 	}
 	
 	// View updates
 	
-	public void getShopItems(IShop window, int type) {
+	private void getShopItems(IShop window, int type) {
+		
+		int quantity = 0;
 		
 		for(GameObject itemObject : shop.getItems()) {
 			ItemComponent item = ((ItemComponent)itemObject.getExtraComponents());
 			
-			Gdx.app.log("PC", "Test Item!  TypeId: " + type + "   ItemTypeId: " + item.getType());
+			for(GameObject playerItem : player.getItems()) {
+				Gdx.app.log("PC", "Test Item!  TypeId: " + type + "   ItemTypeId: " + item.getType());
+				if(playerItem.getId() == itemObject.getId()) {
+					quantity = ((ItemComponent)playerItem.getExtraComponents()).getQuantity();
+					break;
+				}
+				else
+					quantity = 0;
+			}
 			
 			if(type == ItemType.ALL) {
-				window.addShopItem(itemObject.getId(), itemObject.getName(), item.getQuantity(), item.getPrice(), item.getItemText());
+				window.addShopItem(itemObject.getId(), itemObject.getName(), quantity, item.getPrice(), item.getItemText());
 				Gdx.app.log("PC", "Adding Item!");
 			}
 		}

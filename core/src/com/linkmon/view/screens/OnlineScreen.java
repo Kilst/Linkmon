@@ -41,7 +41,6 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 	
 	private String welcomeString;
 	
-	private Image darken;
 	private Table container;
 	private Group uiGroup;
 	private Button connectButton;
@@ -106,10 +105,6 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 	public void show() {
 		// TODO Auto-generated method stub
 		
-		darken = new Image(skin2.getDrawable("darkenWorld"));
-		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		darken.setColor(1f, 1f, 1f, 0.7f);
-		
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		container.setBackground(skin.getDrawable("default-rect"));
@@ -153,7 +148,6 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 		
 		container.add(table).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
 		uiGroup.toFront();
 		
@@ -222,7 +216,6 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 		// TODO Auto-generated method stub
 		if(searchingTable != null)
 			searchingTable.remove();
-		darken.remove();
 		container.remove();
 	}
 

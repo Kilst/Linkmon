@@ -30,7 +30,7 @@ public class ControllerService {
 		mService = new MService(eManager);
 		playerController = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
-		shopController = new ShopController(mService.getShop());
+		shopController = new ShopController(mService.getShop(), mService.getPlayer());
 		worldController = new WorldController(mService.getWorld());
 		inputController = new LibgdxInputController(eManager);
 		networkController = new NetworkController(eManager, mService.getPlayer());
