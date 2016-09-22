@@ -8,9 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Array;
-import com.linkmon.componentmodel.gameobject.ObjectId;
-import com.linkmon.model.gameobject.items.ItemIds;
-import com.linkmon.model.gameobject.linkmon.LinkmonIds;
+import com.linkmon.model.gameobject.ObjectId;
+import com.linkmon.model.linkmon.LinkmonIds;
 
 public class ResourceLoader {
 	private static ResourceLoader instance;

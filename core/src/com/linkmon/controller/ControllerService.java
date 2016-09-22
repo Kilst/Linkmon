@@ -1,120 +1,75 @@
 package com.linkmon.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.game.GameClass;
-import com.linkmon.model.ModelService;
-import com.linkmon.model.Player;
+import com.linkmon.model.MService;
+import com.linkmon.model.World;
+import com.linkmon.model.gameobject.LibgdxObjectFactory;
+import com.linkmon.model.gameobject.ObjectFactory;
 
 public class ControllerService {
 	
-	private ModelService modelService;
+	private MService mService;
+	private LibgdxScreenController screenController;
+	
 	private PlayerController playerController;
 	private LinkmonController linkmonController;
-	private WorldController worldController;
 	private ShopController shopController;
+	
 	private NetworkController networkController;
-	private OnlineBattleController onlineBattleController;
-	private ScreenController screenController;
 	
-	private EventManager eManager;
-
-	public ControllerService(GameClass game, Group gameUi, float screenWidth, float screenHeight, EventManager eManager) {
-		
-		this.eManager = eManager;
-		
-		modelService = new ModelService(screenWidth, screenHeight, this.eManager);
-		
-		playerController = new PlayerController(modelService.getPlayer(), eManager);
-		
-		linkmonController = new LinkmonController(modelService.getPlayer().getLinkmon(), eManager);
-		
-		worldController = new WorldController(eManager, modelService.getWorld());
-		
-		shopController = new ShopController(eManager);
-		
-		onlineBattleController = new OnlineBattleController(modelService, eManager);
-		
-		networkController = new NetworkController(eManager, modelService.getPlayer());
-		
-		screenController = new ScreenController(game, linkmonController, playerController, shopController, onlineBattleController, gameUi, eManager);
-	}
+	private WorldController worldController;
 	
-	public ControllerService(String playerName, int eggChoice, GameClass game, Group gameUi, float screenWidth, float screenHeight, EventManager eManager) {
-		// TODO Auto-generated constructor stub
-		
-		this.eManager = eManager;
-		
-		modelService = new ModelService(playerName, eggChoice, screenWidth, screenHeight, this.eManager);
-		
-		playerController = new PlayerController(modelService.getPlayer(), eManager);
-		
-		linkmonController = new LinkmonController(modelService.getPlayer().getLinkmon(), eManager);
-		
-		worldController = new WorldController(eManager, modelService.getWorld());
-		
-		shopController = new ShopController(eManager);
-		
-		onlineBattleController = new OnlineBattleController(modelService, eManager);
-		
-		networkController = new NetworkController(eManager, modelService.getPlayer());
-		
-		screenController = new ScreenController(game, linkmonController, playerController, shopController, onlineBattleController, gameUi, eManager);
-	}
-
-	public ControllerService(Player player, GameClass game, Group gameUi, float screenWidth, float screenHeight, EventManager eManager) {
-		// TODO Auto-generated constructor stub
-		this.eManager = eManager;
-		
-		modelService = new ModelService(player, screenWidth, screenHeight, this.eManager);
-		
-		playerController = new PlayerController(modelService.getPlayer(), eManager);
-		
-		linkmonController = new LinkmonController(modelService.getPlayer().getLinkmon(), eManager);
-		
-		worldController = new WorldController(eManager, modelService.getWorld());
-		
-		shopController = new ShopController(eManager);
-		
-		onlineBattleController = new OnlineBattleController(modelService, eManager);
-		
-		networkController = new NetworkController(eManager, modelService.getPlayer());
-		
-		screenController = new ScreenController(game, linkmonController, playerController, shopController, onlineBattleController, gameUi, eManager);
-	}
-
-	public void newGame(GameClass game, Group gameUi, float screenWidth, float screenHeight, EventManager eManager) {
-		
-	}
+	private LibgdxInputController inputController;
 	
-	public void loadGame() {
+	public ControllerService(GameClass game, Group ui, EventManager eManager) {
 		
+		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
+		
+		mService = new MService(eManager);
+		playerController = new PlayerController(mService.getPlayer());
+		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
+		shopController = new ShopController(mService.getShop(), mService.getPlayer());
+		worldController = new WorldController(mService.getWorld());
+		inputController = new LibgdxInputController(eManager);
+		networkController = new NetworkController(eManager, mService.getPlayer());
+		
+		eManager.addScreenListener(playerController);
+		eManager.addScreenListener(linkmonController);
+		eManager.addScreenListener(shopController);
+		eManager.addScreenListener(worldController);
+		
+		eManager.addScreenListener(networkController);
+		
+		screenController = new LibgdxScreenController(game, ui, eManager);
+		
+		eManager.addScreenListener(screenController);
 	}
 	
 	public void update() {
-		modelService.update();
 		screenController.update();
-		linkmonController.update();
+		worldController.update();
+		playerController.update();
+	}
+	
+	public LibgdxInputController getInputController() {
+		return inputController;
 	}
 
-	public PlayerController getPlayerController() {
-		return playerController;
+	public WorldController getWorldController() {
+		// TODO Auto-generated method stub
+		return worldController;
 	}
 
-	public LinkmonController getLinkmonController() {
-		return linkmonController;
+	public void saveGame() {
+		// TODO Auto-generated method stub
+		mService.saveGame();
 	}
 
-	public NetworkController getNetworkController() {
-		return networkController;
+	public void close() {
+		// TODO Auto-generated method stub
+		networkController.close();
 	}
 
-	public OnlineBattleController getOnlineBattleController() {
-		return onlineBattleController;
-	}
-
-	public ScreenController getScreenController() {
-		return screenController;
-	}
 }

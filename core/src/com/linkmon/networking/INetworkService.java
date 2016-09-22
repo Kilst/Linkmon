@@ -1,6 +1,6 @@
 package com.linkmon.networking;
 
-import com.linkmon.componentmodel.battles.BattleLinkmon;
+import com.linkmon.model.battles.BattleLinkmon;
 
 public interface INetworkService {
 	

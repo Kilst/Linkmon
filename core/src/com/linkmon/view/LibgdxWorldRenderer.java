@@ -1,10 +1,10 @@
 package com.linkmon.view;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.linkmon.componentmodel.World;
-import com.linkmon.componentmodel.WorldRenderingComponent;
-import com.linkmon.componentmodel.gameobject.GameObject;
-import com.linkmon.componentmodel.libgdx.LibgdxRenderingComponent;
+import com.linkmon.model.World;
+import com.linkmon.model.WorldRenderingComponent;
+import com.linkmon.model.gameobject.GameObject;
+import com.linkmon.model.libgdx.LibgdxRenderingComponent;
 
 public class LibgdxWorldRenderer {
 	

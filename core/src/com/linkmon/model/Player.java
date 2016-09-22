@@ -3,70 +3,145 @@ package com.linkmon.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.messages.MessageEvent;
+import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.model.gameobject.items.ItemFactory;
-import com.linkmon.model.gameobject.items.ItemIds;
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
-import com.linkmon.model.gameobject.linkmon.Linkmon;
-import com.linkmon.model.gameobject.linkmon.LinkmonIds;
+import com.linkmon.model.gameobject.GameObject;
+import com.linkmon.model.gameobject.ObjectFactory;
+import com.linkmon.model.gameobject.ObjectId;
+import com.linkmon.model.items.ItemComponent;
+import com.linkmon.model.items.UsableItemComponent;
+import com.linkmon.model.linkmon.LinkmonExtraComponents;
+import com.linkmon.model.linkmon.LinkmonStatsComponent;
+import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class Player {
 	
-	private Linkmon linkmon;
-	private BattleLinkmon battleLinkmon;
-	
-	private BattleLinkmon savedLinkmon;
-	private BattleLinkmon extraSavedLinkmon;
-	
-	private String name;
+	private GameObject linkmon;
 	
 	private int gold;
+	private String name;
 	
-	private int trainerRank;
-	
-	private List<Item> itemsList;
+	private List<GameObject> items;
+	private List<GameObject> itemsRemoveQueue;
 	
 	private EventManager eManager;
 	
 	private World world;
 	
-	private long giftTime = 0;
+	private long lastGiftTime;
+	
+	private int giftId = -1; // no opengl context from network. since objects get created with textures
 	
 	public Player() {
+		gold = 15000;
 		
-	}
-	
-	public Player(EventManager eManager, World world) {
-		this.world = world;
-		this.eManager = eManager;
-		linkmon = new Linkmon(LinkmonIds.FIRE_BABY, 0, 45, eManager);
-		world.addLinkmonToWorld(linkmon);
-		gold = 15000;
 		name = "Kilst";
-		itemsList = new ArrayList<Item>();
+		
+		items = new ArrayList<GameObject>();
+		itemsRemoveQueue = new ArrayList<GameObject>();
 	}
 	
-	public Player(String playerName, int eggChoice, EventManager eManager, World world) {
-		this.world = world;
+	public void update() {
+		if(giftId != -1) {
+			GameObject item = ObjectFactory.getInstance().getObjectFromId(giftId);
+			addItem(item);
+			giftId = -1;
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE,  "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
+		}
+	}
+	
+	public void addeManager(EventManager eManager) {
 		this.eManager = eManager;
-		linkmon = new Linkmon(eggChoice, 0, 45, eManager);
-		world.addLinkmonToWorld(linkmon);
+	}
+	
+	public Player(EventManager eManager, int eggChoice, World world) {
+		linkmon = ObjectFactory.getInstance().createLinkmon(eggChoice);
+		
+		this.world = world;
+		
 		gold = 15000;
-		name = playerName;
-		itemsList = new ArrayList<Item>();
+		
+		name = "Kilst";
+		
+		items = new ArrayList<GameObject>();
+		itemsRemoveQueue = new ArrayList<GameObject>();
+		
+		this.eManager = eManager;
+		
+		GameObject item = ObjectFactory.getInstance().getObjectFromId(ObjectId.MEAT);
+		((ItemComponent)item.getExtraComponents()).setQuantity(1);
+		
+		addItem(item);
 	}
 
-	public Linkmon getLinkmon() {
+	public GameObject getLinkmon() {
+		// TODO Auto-generated method stub
 		return linkmon;
 	}
-
-	public String getName() {
+	
+	public void buyItem(GameObject item) {
 		// TODO Auto-generated method stub
-		return name;
+		int price = ((ItemComponent)item.getExtraComponents()).getPrice()*((ItemComponent)item.getExtraComponents()).getQuantity();
+		if(gold >= price) {
+			addItem(item);
+			removeGold(price);
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE, "Bought item: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
+		}
+	}
+	
+	private void removeItemsFromQueue() {
+		for(GameObject item : itemsRemoveQueue) {
+			((ItemComponent)item.getExtraComponents()).setQuantity(((ItemComponent)item.getExtraComponents()).getQuantity()-1);
+			if(((ItemComponent)item.getExtraComponents()).getQuantity() < 1)
+				items.remove(item);
+		}
+		
+		itemsRemoveQueue.clear();
+	}
+	
+	private void removeItem(GameObject item) {
+		for(GameObject itemObject : items) {
+			if(itemObject.getId() == item.getId()) {
+				itemsRemoveQueue.add(itemObject);
+			}
+		}
+		removeItemsFromQueue();
+	}
+	
+	public void addItem(GameObject newItem) {
+		int amount = ((ItemComponent)newItem.getExtraComponents()).getQuantity();
+		boolean match = false;
+			for(GameObject item : items) {
+				if(item.getId() == newItem.getId()) {
+					((ItemComponent)item.getExtraComponents()).add(amount);
+					match = true;
+				}
+			}
+			
+		if(!match)
+			items.add(newItem);
+	}
+	
+	public void useItem(GameObject item) {
+		if(((ItemComponent)item.getExtraComponents()).use(item,getLinkmon(), getWorld()))
+			removeItem(item);
+	}
+
+	private void addGold(int amount) {
+		// TODO Auto-generated method stub
+		gold += amount;
+		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_GOLD, gold));
+	}
+	
+	private void removeGold(int amount) {
+		// TODO Auto-generated method stub
+		gold -= amount;
+		linkmon.getWorld().geteManager().notify(new ModelEvent(ModelEvents.UPDATE_GOLD, gold));
 	}
 
 	public int getGold() {
@@ -74,69 +149,76 @@ public class Player {
 		return gold;
 	}
 
-	public void setLinkmon(Linkmon loadLinkmonSave) {
+	public String getName() {
 		// TODO Auto-generated method stub
-		linkmon = loadLinkmonSave;
+		return name;
 	}
 
-	public BattleLinkmon getBattleLinkmon() {
-		return battleLinkmon;
-	}
-
-	public void createBattleLinkmon() {
-		this.battleLinkmon = new BattleLinkmon(linkmon);
-	}
-
-	public List<Item> getItems() {
+	public List<GameObject> getItems() {
 		// TODO Auto-generated method stub
-		return itemsList;
+		return items;
 	}
-	
+
+	public void setName(String playerName) {
+		// TODO Auto-generated method stub
+		name = playerName;
+	}
+
+	public void setGold(int playerGold) {
+		// TODO Auto-generated method stub
+		gold = playerGold;
+	}
+
+	public void setLinkmon(GameObject savedLinkmon) {
+		// TODO Auto-generated method stub
+		this.linkmon = savedLinkmon;
+	}
 
 	public World getWorld() {
 		return world;
 	}
 
-	public void removeGold(int amount) {
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
+	public void setSavedItems(int[][] savedItems) {
 		// TODO Auto-generated method stub
-		this.gold -= amount;
+		for(int i = 0; i < savedItems.length; i++) {
+			GameObject item = ObjectFactory.getInstance().getObjectFromId(savedItems[i][0]);
+			((ItemComponent)item.getExtraComponents()).setQuantity(savedItems[i][1]);
+			items.add(item);
+		}
 	}
 	
-	public void addGold(int amount) {
-		// TODO Auto-generated method stub
-		this.gold += amount;
+	public boolean checkGiftTime() {
+		if(System.currentTimeMillis() - lastGiftTime > 50000) {
+			lastGiftTime = System.currentTimeMillis();
+			return true;
+		}
+		else {
+			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE,MessageType.GAME_MESSAGE,  "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left"));
+			return false;
+		}
 	}
 
-	public BattleLinkmon getSavedLinkmon() {
-		return savedLinkmon;
+	public long getLastGiftTime() {
+		return lastGiftTime;
 	}
 
-	public void setSavedLinkmon(BattleLinkmon savedLinkmon) {
-		this.savedLinkmon = savedLinkmon;
+	public void receiveGift(int itemId) {
+		// TODO Auto-generated method stub
+		giftId = itemId;
+		
 	}
 
-	public void setGiftTime(long nanoTime) {
+	public void receiveRewards(int[] rewards) {
 		// TODO Auto-generated method stub
-		giftTime = nanoTime;
-	}
-	
-	public long getGiftTime() {
-		// TODO Auto-generated method stub
-		return giftTime;
-	}
-
-	public void setItems(ArrayList<Item> savedItems) {
-		// TODO Auto-generated method stub
-		this.itemsList = savedItems;
-	}
-
-	public void seteManager(EventManager eManager) {
-		// TODO Auto-generated method stub
-		this.eManager = eManager;
-	}
-
-	public void updateLoad() {
-		// TODO Auto-generated method stub
-		eManager.notify(new ViewEvent(ViewEvents.UPDATE_GOLD, getGold()));
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		stats.setHealth(stats.getHealth()+rewards[0]);
+		stats.setAttack(stats.getAttack()+rewards[1]);
+		stats.setDefense(stats.getDefense()+rewards[2]);
+		stats.setSpeed(stats.getSpeed()+rewards[3]);
+		addGold(rewards[4]);
 	}
 }

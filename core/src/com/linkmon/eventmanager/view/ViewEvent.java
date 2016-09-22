@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.linkmon.eventmanager.GameEvent;
-import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.model.gameobject.poop.Poop;
 
 public class ViewEvent extends GameEvent {
 	
@@ -14,10 +12,7 @@ public class ViewEvent extends GameEvent {
 	
 	public boolean status;
 	public List<Object> objects;
-	public List<Poop> poopList;
-	public Poop poop;
 	
-	public Item item;
 	public int value;
 	public String str;
 	public int value2;
@@ -48,22 +43,6 @@ public class ViewEvent extends GameEvent {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 		this.objects = objects;
-	}
-	public ViewEvent(int eventId, List<Poop> poopList) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		this.poopList = poopList;
-	}
-	public ViewEvent(int eventId, Item item) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		
-		this.item = item;
-	}
-	public ViewEvent(int eventId, Poop poop) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		this.poop = poop;
 	}
 	
 	public ViewEvent(int eventId, int value) {

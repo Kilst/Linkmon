@@ -1,7 +1,7 @@
 package com.linkmon.eventmanager.input;
 
-import com.linkmon.componentmodel.MyVector2;
 import com.linkmon.eventmanager.GameEvent;
+import com.linkmon.model.MyVector2;
 
 public class InputEvent extends GameEvent {
 	

@@ -1,7 +1,5 @@
 package com.linkmon.view.screens;
 
-import com.linkmon.view.screens.interfaces.MyScreen;
-
 public class ScreenType {
 	public static final int MAIN_UI = 0;
 	public static final int CONNECT_SCREEN = 1;

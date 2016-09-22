@@ -1,48 +1,65 @@
 package com.linkmon.controller;
 
-import java.util.List;
-
-import com.linkmon.eventmanager.EventManager;
+import com.badlogic.gdx.Gdx;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.model.Player;
 import com.linkmon.model.Shop;
-import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.model.gameobject.items.ItemFactory;
-import com.linkmon.model.gameobject.items.ItemIds;
+import com.linkmon.model.gameobject.GameObject;
+import com.linkmon.model.items.ItemComponent;
+import com.linkmon.model.items.ItemType;
+import com.linkmon.view.screens.interfaces.ILinkmonStats;
+import com.linkmon.view.screens.interfaces.IPlayerItems;
+import com.linkmon.view.screens.interfaces.IPlayerStats;
+import com.linkmon.view.screens.interfaces.IShop;
 
-public class ShopController {
-
+public class ShopController implements ScreenListener {
+	
 	private Shop shop;
+	private Player player;
 	
-	private EventManager eManager;
+	public ShopController(Shop shop, Player player) {
+		this.shop = shop;
+		this.player = player;
+	}
 	
-	public ShopController(EventManager eManager) {
-		shop = new Shop(eManager);
-		this.eManager = eManager;
+	// View updates
+	
+	private void getShopItems(IShop window, int type) {
 		
-		addItem(ItemFactory.getItemFromId(ItemIds.REVIVE_POTION));
-		addItem(ItemFactory.getItemFromId(ItemIds.LARGE_MEAT));
-		addItem(ItemFactory.getItemFromId(ItemIds.SUPER_MEAT));
-	}
-	public List<Item> getItems() {
-		// TODO Auto-generated method stub
-		return shop.getItems();
-	}
-	
-	private void addItem(Item newItem) {
-		boolean match = false;
-		for(Item item : shop.getItems()) {
-			if(item.getId() == newItem.getId()) {
-				item.add(newItem.getQuantity());
-				match = true;
-				break;
+		int quantity = 0;
+		
+		for(GameObject itemObject : shop.getItems()) {
+			ItemComponent item = ((ItemComponent)itemObject.getExtraComponents());
+			
+			for(GameObject playerItem : player.getItems()) {
+				Gdx.app.log("PC", "Test Item!  TypeId: " + type + "   ItemTypeId: " + item.getType());
+				if(playerItem.getId() == itemObject.getId()) {
+					quantity = ((ItemComponent)playerItem.getExtraComponents()).getQuantity();
+					break;
+				}
+				else
+					quantity = 0;
+			}
+			
+			if(type == ItemType.ALL) {
+				window.addShopItem(itemObject.getId(), itemObject.getName(), quantity, item.getPrice(), item.getItemText());
+				Gdx.app.log("PC", "Adding Item!");
 			}
 		}
-		if(!match)
-			shop.getItems().add(newItem);
 	}
-	
-	private void removeItem(Item item) {
-		item.remove();
-		if(item.getQuantity() < 1)
-			shop.getItems().remove(item);
+
+	@Override
+	public boolean onNotify(ScreenEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ScreenEvents.GET_SHOP_ITEMS): {
+				getShopItems((IShop)event.screen, event.value);
+				return false;
+			}
+		}
+	return false;
 	}
+
 }

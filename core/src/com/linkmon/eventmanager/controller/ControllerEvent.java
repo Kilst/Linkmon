@@ -1,10 +1,8 @@
 package com.linkmon.eventmanager.controller;
 
 import com.linkmon.eventmanager.GameEvent;
-import com.linkmon.model.gameobject.items.Item;
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
-import com.linkmon.model.gameobject.linkmon.Move;
-import com.linkmon.model.gameobject.poop.Poop;
+import com.linkmon.model.battles.BattleLinkmon;
+import com.linkmon.model.linkmon.Move;
 
 public class ControllerEvent extends GameEvent {
 	public String serverWelcome;
@@ -19,10 +17,6 @@ public class ControllerEvent extends GameEvent {
 	public boolean status;
 
 	public int screen;
-	
-	public Item item;
-
-	public Poop poop;
 	
 	public int[] values;
 	
@@ -60,18 +54,6 @@ public class ControllerEvent extends GameEvent {
 		// TODO Auto-generated constructor stub
 		this.myHealth = myHealth;
 		this.oppHealth = oppHealth;
-	}
-	
-	public ControllerEvent(int eventId, Item item) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		this.item = item;
-	}
-
-	public ControllerEvent(int eventId, Poop poop) {
-		super(eventId);
-		// TODO Auto-generated constructor stub
-		this.poop = poop;
 	}
 
 	public ControllerEvent(int eventId, Move move) {

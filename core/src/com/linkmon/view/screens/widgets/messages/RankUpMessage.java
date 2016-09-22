@@ -2,7 +2,7 @@ package com.linkmon.view.screens.widgets.messages;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.model.gameobject.linkmon.RankIds;
+import com.linkmon.model.linkmon.RankIds;
 import com.linkmon.view.UIRenderer;
 
 public class RankUpMessage extends MessageBox {

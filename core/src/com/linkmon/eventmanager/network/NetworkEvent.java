@@ -1,8 +1,8 @@
 package com.linkmon.eventmanager.network;
 
-import com.linkmon.componentmodel.battles.BattleLinkmon;
 import com.linkmon.eventmanager.GameEvent;
-import com.linkmon.model.gameobject.linkmon.Move;
+import com.linkmon.model.battles.BattleLinkmon;
+import com.linkmon.model.linkmon.Move;
 
 public class NetworkEvent extends GameEvent {
 	

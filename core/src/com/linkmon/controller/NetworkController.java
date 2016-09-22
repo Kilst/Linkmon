@@ -4,31 +4,42 @@ import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
-import com.linkmon.eventmanager.controller.ControllerListener;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkEvents;
 import com.linkmon.eventmanager.network.NetworkListener;
-import com.linkmon.eventmanager.view.ViewEvent;
-import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.eventmanager.view.ViewListener;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.model.Player;
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
+import com.linkmon.model.battles.BattleLinkmon;
+import com.linkmon.model.battles.OnlineBattle;
+import com.linkmon.model.linkmon.Move;
+import com.linkmon.model.linkmon.MoveFactory;
+import com.linkmon.networking.INetworkService;
 import com.linkmon.networking.TcpService;
-import com.linkmon.networking.Packet;
-import com.linkmon.networking.PacketType;
 import com.linkmon.view.screens.ScreenType;
+import com.linkmon.view.screens.interfaces.IBattleView;
+import com.linkmon.view.screens.interfaces.INetworkScreen;
 
-public class NetworkController implements ControllerListener {
+public class NetworkController implements ScreenListener, NetworkListener {
 	
-	TcpService service;
+	private INetworkService service;
 	private EventManager eManager;
-	Player player;
+	private Player player;
+	
+	private BattleLinkmon bLinkmon;
+	
+	private OnlineBattle battle;
 	
 	public NetworkController(EventManager eManager, Player player) {
 //		this.service = new NetworkService();
 		this.eManager = eManager;
-		eManager.addControllerListener(this);
 		this.player = player;
+		eManager.addScreenListener(this);
+		eManager.addNetworkListener(this);
+	}
+	
+	public void update() {
 		
 	}
 	
@@ -41,17 +52,19 @@ public class NetworkController implements ControllerListener {
 	
 	private void searchOpponents() {
 		Gdx.app.log("NetworkController", "Searching!");
-		player.createBattleLinkmon();
-		//service.searchOpponent(player.getBattleLinkmon());
+		bLinkmon = new BattleLinkmon(player.getLinkmon());
+		service.searchOpponent(bLinkmon);
 	}
 	
 	private void cancelSearch() {
-		Gdx.app.log("NetworkController", "Searching!");
+		Gdx.app.log("NetworkController", "Cancelling Searching!");
 		service.cancelSearch();
 	}
 	
 	private void sendMove(int moveId) {
-		service.sendMove(moveId);
+		Move move = MoveFactory.getMoveFromId(moveId);
+		if(bLinkmon.checkEnergy(move.getEnergy()))
+			service.sendMove(moveId);
 	}
 	
 	private void closeConnection() {
@@ -66,36 +79,102 @@ public class NetworkController implements ControllerListener {
 		// TODO Auto-generated method stub
 		service.getMysteryGift();
 	}
+	
+	private void getServerWelcome(INetworkScreen screen) {
+		screen.setServerWelcome(service.getClient().getData().getServerWelcomeMessage());
+	}
 
 	@Override
-	public boolean onNotify(ControllerEvent event) {
+	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
-			case(ControllerEvents.CONNECT_TO_SERVER): {
+			case(ScreenEvents.CONNECT_TO_SERVER): {
 				connect();
 				break;
 			}
-			case(ControllerEvents.SEARCH_FOR_OPPONENT): {
+			case(ScreenEvents.SEARCH_FOR_OPPONENT): {
 				searchOpponents();
 				break;
 			}
-			case(ControllerEvents.SEND_MOVE): {
-				sendMove(event.move.getId());
+			case(ScreenEvents.SEND_MOVE): {
+				sendMove(event.value);
 				break;
 			}
-			case(ControllerEvents.CLOSE_CONNECTION): {
+			case(ScreenEvents.CLOSE_CONNECTION): {
 				closeConnection();
 				break;
 			}
-			case(ControllerEvents.GET_MYSTERY_GIFT): {
-				getMysteryGift();
+			case(ScreenEvents.GET_MYSTERY_GIFT): {
+				if(player.checkGiftTime())
+					getMysteryGift();
 				break;
 			}
-			case(ControllerEvents.CANCEL_SEARCH): {
+			case(ScreenEvents.CANCEL_SEARCH): {
 				cancelSearch();
+				break;
+			}
+			case(ScreenEvents.GET_SERVER_WELCOME): {
+				getServerWelcome((INetworkScreen)event.screen);
+				break;
+			}
+			case(ScreenEvents.GET_ONLINE_SPRITES): {
+				((IBattleView)event.screen).getSprites(battle.getPlayer().getId(), battle.getOpponent().getId());
+				break;
+			}
+			case(ScreenEvents.GET_ONLINE_STATS): {
+				((IBattleView)event.screen).getMoves(battle.getPlayer().getMove1(), battle.getPlayer().getMove2());
+				((IBattleView)event.screen).getStats(battle.getPlayer().getHealth(), player.getName(), battle.getOpponent().getHealth(), battle.getOpponentName());
+				break;
+			}
+			case(ScreenEvents.UPDATE_ONLINE_BALLTE): {
+				if(battle.isUpdated()) {
+					((IBattleView)event.screen).updateHealths(battle.getPlayer().getHealth(), battle.getPlayer().getEnergy(), battle.getOpponent().getHealth(), battle.getOpponent().getEnergy(), battle.getBattleMessages());
+					battle.setUpdated(false);
+				}
+				if(battle.isEnded())
+					((IBattleView)event.screen).battleEnded();
 				break;
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean onNotify(NetworkEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(NetworkEvents.RECIEVE_GIFT): {
+				player.receiveGift(event.value);
+				break;
+			}
+			case(NetworkEvents.SET_OPPONENT): {
+				battle = new OnlineBattle(bLinkmon, event.battleLinkmon, eManager);
+				///////////////////////////////////////////////////////////////////////////////////////////////////
+				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_BATTLE_SCREEN)); // BAD
+				break;
+			}
+			case(NetworkEvents.UPDATE_HEALTH): {
+//				battle.getPlayer().setHealth(event.myHealth);
+//				battle.getOpponent().setHealth(event.oppHealth);
+//				battle.getPlayer().setEnergy(event.myEnergy);
+//				battle.getOpponent().setEnergy(event.oppEnergy);
+//				battle.setUpdated(true);
+				battle.updateBattle(event.values[0], event.values[1], event.values[2], event.values[3], event.values[4],
+						event.values[5], event.values[6], event.values[7], event.values[8], event.values[9], event.values[10]);
+				break;
+			}
+			case(NetworkEvents.WIN_LOSS): {
+				player.receiveRewards(event.values);
+				battle.setEnded(true);
+				break;
+			}
+		}
+		return false;
+	}
+
+	public void close() {
+		// TODO Auto-generated method stub
+		if(service != null)
+			service.disconnect();
 	}
 }

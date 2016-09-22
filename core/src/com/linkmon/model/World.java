@@ -1,79 +1,121 @@
 package com.linkmon.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.view.ViewEvent;
-import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.model.gameobject.linkmon.BattleLinkmon;
-import com.linkmon.model.gameobject.linkmon.Linkmon;
+import com.linkmon.model.components.IRenderingComponent;
+import com.linkmon.model.gameobject.GameObject;
+import com.linkmon.model.gameobject.ObjectFactory;
+import com.linkmon.model.gameobject.ObjectId;
+import com.linkmon.model.gamesave.AESEncryptor;
+import com.linkmon.model.gamesave.JsonSaver;
+import com.linkmon.model.libgdx.LibgdxRenderingComponent;
 
 public class World {
 	
+	private List<GameObject> objects;
+	
+	private List<GameObject> objectQueueAdd;
+	private List<GameObject> objectQueueRemove;
+	
+	IRenderingComponent renderer;
+	
+	EventManager eManager;
+	
+	private float width;
+	private float height;
+	
 	private boolean isLightOn = true;
 	
-	private final float width;
-	private final float height;
-	
-	public final float scaleX;
-	public final float scaleY;
-	
-	public OnlineBattle onlineBattle;
-	
-	private EventManager eManager;
-	
-	private Linkmon linkmon;
-	
-	public World(float screenWidth, float screenHeight, EventManager eManager) {
+	public World(EventManager eManager, float width, float height) {
+		
 		this.eManager = eManager;
 		
-		this.width = screenWidth;
-		this.height = screenHeight;
+		this.setWidth(width);
+		this.setHeight(height);
 		
-		scaleX = width/640;
-		scaleY = height/480;
+		objects = new ArrayList<GameObject>();
+		objectQueueAdd = new ArrayList<GameObject>();
+		objectQueueRemove = new ArrayList<GameObject>();
 	}
 	
-	public World(float screenWidth, float screenHeight, boolean loadSave) {
-		this.width = screenWidth;
-		this.height = screenHeight;
+	public void addRenderer(IRenderingComponent renderer) {
+		this.renderer = renderer;
+	}
+	
+	public void addObjectToWorld(GameObject object) {
+		if(!objects.contains(object)) {
+			objectQueueAdd.add(object);
+			object.addWorld(this);
+		}
+	}
+	
+	public void removeObjectFromWorld(GameObject object) {
+		if(objects.contains(object)) {
+			objectQueueRemove.add(object);
+			Gdx.app.log("World", "Removed!");
+		}
+	}
+	
+	private void updateObjects() {
+		for(GameObject object : objectQueueAdd) {
+			objects.add(object);
+		}
+		objectQueueAdd.clear();
 		
-		scaleX = width/640;
-		scaleY = height/480;
-		
-		// Get player and linkmon from json
+		for(GameObject object : objectQueueRemove) {
+			objects.remove(object);
+		}
+		objectQueueRemove.clear();
 	}
 	
 	public void update() {
-		linkmon.update();
+		
+		updateObjects();
+		
+		for(GameObject object : objects) {
+			object.update(objects);
+		}
 	}
-	
-//	public OnlineBattle createOnlineBattle(BattleLinkmon player, BattleLinkmon opponent) {
-//		onlineBattle = new OnlineBattle(player, opponent, this.eManager);
-//		return onlineBattle;
-//	}
+
+	public List<GameObject> getObjects() {
+		// TODO Auto-generated method stub
+		return objects;
+	}
+
+	public EventManager geteManager() {
+		// TODO Auto-generated method stub
+		return eManager;
+	}
 
 	public float getWidth() {
 		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
 	}
 
 	public float getHeight() {
 		return height;
 	}
 
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
 	public boolean isLightOn() {
 		return isLightOn;
 	}
 
-	public void setLight(boolean swap) {
-		isLightOn = swap;
-		eManager.notify(new ViewEvent(ViewEvents.UPDATE_LIGHT, isLightOn));
+	public void setLightOn(boolean isLightOn) {
+		this.isLightOn = isLightOn;
 	}
 
-	public Linkmon getLinkmon() {
-		return linkmon;
-	}
-
-	public void addLinkmonToWorld(Linkmon linkmon) {
-		this.linkmon = linkmon;
-		this.linkmon.addedToWorld(this);
+	public IRenderingComponent getRenderer() {
+		// TODO Auto-generated method stub
+		return renderer;
 	}
 }

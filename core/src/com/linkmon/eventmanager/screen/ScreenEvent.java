@@ -1,7 +1,7 @@
 package com.linkmon.eventmanager.screen;
 
-import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.eventmanager.GameEvent;
+import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.view.screens.interfaces.MyScreen;
 
 public class ScreenEvent extends GameEvent {

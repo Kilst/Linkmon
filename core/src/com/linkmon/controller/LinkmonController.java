@@ -1,145 +1,77 @@
 package com.linkmon.controller;
 
-import java.util.List;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.model.gameobject.GameObject;
+import com.linkmon.model.linkmon.LinkmonExtraComponents;
+import com.linkmon.model.linkmon.LinkmonStatsComponent;
+import com.linkmon.model.linkmon.LinkmonStatusComponent;
+import com.linkmon.view.screens.DebuggingScreen;
+import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
+import com.linkmon.view.screens.interfaces.ILinkmonStats;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.controller.ControllerEvent;
-import com.linkmon.eventmanager.controller.ControllerEvents;
-import com.linkmon.eventmanager.controller.ControllerListener;
-import com.linkmon.eventmanager.view.ViewEvent;
-import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.model.gameobject.linkmon.BirthDate;
-import com.linkmon.model.gameobject.linkmon.Linkmon;
-import com.linkmon.model.gameobject.linkmon.LinkmonStats;
-import com.linkmon.model.gameobject.poop.Poop;
-import com.linkmon.view.GameSprite;
-import com.linkmon.view.PoopSprite;
-
-public class LinkmonController implements ControllerListener {
+public class LinkmonController implements ScreenListener {
 	
-	private Linkmon linkmon;
-	private EventManager eManager;
+	private GameObject linkmon;
 	
-	private LinkmonTimersController timersController;
-	
-	public LinkmonController(Linkmon linkmon, EventManager eManager) {
-		this.eManager = eManager;
-		this.eManager.addControllerListener(this);
+	public LinkmonController(GameObject linkmon) {
 		this.linkmon = linkmon;
-		
-		//timersController = new LinkmonTimersController(linkmon, eManager);
 	}
 	
-	public void update() {
-		//timersController.update();
+	private void train(int statType) {
+		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats().train(statType);
+		((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().addExhaustionLevel(-10);
 	}
 	
-	public void updateStats(int health, int attack, int defense, int speed) {
-		
+	// Screen Updates
+	
+	public void getLinkmonAddedStats(ILinkmonAddedStats window) {
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		window.getAddedStats(
+				stats.getAddedHealth(),
+				stats.getAddedAttack(),
+				stats.getAddedDefense(),
+				stats.getAddedSpeed()
+				);
 	}
 	
-	public void feed(int foodId) {
-		
-	}
-	
-	public void train(int statId) {
-		switch(statId) {
-		
-		}
-	}
-
-	public int getHungerLevel() {
-		// TODO Auto-generated method stub
-		return linkmon.getHungerLevel();
-	}
-
-	public int getMove1() {
-		// TODO Auto-generated method stub
-		return linkmon.getMove1();
-	}
-	
-	public int getMove2() {
-		// TODO Auto-generated method stub
-		return linkmon.getMove2();
-	}
-
-	public void updateLinkmonStats() {
-		// TODO Auto-generated method stub
-		//linkmon.updateStats();
-	}
-
-	public int getCurrentAnimation() {
-		// TODO Auto-generated method stub
-		return linkmon.getCurrentAnimation();
-	}
-
-	public void setAnimiationType(int currentAnimation) {
-		// TODO Auto-generated method stub
-		linkmon.setCurrentAnimation(currentAnimation);
-	}
-
-	public int getDirection() {
-		// TODO Auto-generated method stub
-		return linkmon.getDirection();
-	}
-
-	public boolean getIsMoving() {
-		// TODO Auto-generated method stub
-		return linkmon.isMoving();
-	}
-
-	public List<Poop> getPoopList() {
-		// TODO Auto-generated method stub
-		return linkmon.getPoopList();
-	}
-
-	public LinkmonStats getStats() {
-		// TODO Auto-generated method stub
-		return linkmon.getStats();
+	public void getLinkmonStats(ILinkmonStats window) {
+		LinkmonStatsComponent stats = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStats();
+		LinkmonStatusComponent status = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus();
+		window.getLinkmonStats(
+				linkmon.getId(),
+				stats.getHealth(),
+				stats.getAttack(),
+				stats.getDefense(),
+				stats.getSpeed(),
+				status.getCareMistakes(),
+				status.getBirthDate(),
+				stats.getRank()
+				);
 	}
 
 	@Override
-	public boolean onNotify(ControllerEvent event) {
+	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
-			case(ControllerEvents.CLICKED_LINKMON): {
-				linkmon.setAngry(true);
-				break;
+			case(ScreenEvents.TRAIN_LINKMON): {
+				train(event.value);
+				return false;
+			}
+			case(ScreenEvents.GET_LINKMON_STATS): {
+				getLinkmonStats((ILinkmonStats) event.screen);
+				return false;
+			}
+			case(ScreenEvents.GET_LINKMON_ADDED_STATS): {
+				getLinkmonAddedStats((ILinkmonAddedStats) event.screen);
+				return false;
+			}
+			case(ScreenEvents.DEBUGGING): {
+				((DebuggingScreen)event.screen).updateLinkmonPosition(linkmon.getX(), linkmon.getY());
+				return false;
 			}
 		}
 		return false;
-	}
-
-	public int getId() {
-		// TODO Auto-generated method stub
-		return linkmon.getId();
-	}
-
-	public int getCareMistakes() {
-		// TODO Auto-generated method stub
-		return linkmon.getCareMistakes();
-	}
-
-	public BirthDate getBirthDate() {
-		// TODO Auto-generated method stub
-		return linkmon.getBirthDate();
-	}
-
-	public int getRank() {
-		// TODO Auto-generated method stub
-		return linkmon.getRank();
-	}
-
-	public void updateLoad() {
-		// TODO Auto-generated method stub
-		linkmon.updateLoad();
-	}
-
-	public long getElapsedPoop() {
-		// TODO Auto-generated method stub
-		return System.nanoTime()-linkmon.getLastPooped();
 	}
 }

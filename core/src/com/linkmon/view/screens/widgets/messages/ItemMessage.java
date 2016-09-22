@@ -14,7 +14,7 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.gameobject.items.ItemIds;
+import com.linkmon.model.items.ItemIds;
 import com.linkmon.view.UIRenderer;
 
 public class ItemMessage extends MessageBox {
