@@ -3,6 +3,9 @@ package com.linkmon.componentmodel.battles;
 import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.linkmon.LinkmonExtraComponents;
 import com.linkmon.componentmodel.linkmon.LinkmonStatsComponent;
+import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 
 public class BattleLinkmon {
 	
@@ -21,9 +24,14 @@ public class BattleLinkmon {
 	private int move2;
 	
 	private int usingMove;
-	private boolean crit;
 	private int effectiveness;
 	private boolean dodge;
+	
+	private int energy = 25;
+	
+	private final int maxEnergy = 50;
+	
+	private EventManager eManager;
 	
 	public BattleLinkmon(int linkmonId, int attack, int defense, int speed, int move1Id, int move2Id, int health, String playerName) {
 		this.id = linkmonId;
@@ -34,7 +42,6 @@ public class BattleLinkmon {
 		this.move2 = (move2Id);
 		this.health = health;
 		this.playerName = playerName;
-		
 	}
 	
 	public int getLinkmonId() {
@@ -51,6 +58,7 @@ public class BattleLinkmon {
 		this.move1 = 1;
 		this.move2 = 2;
 		this.playerName = "";
+		eManager = linkmon.getWorld().geteManager();
 	}
 	
 	public int getHealth() {
@@ -93,14 +101,6 @@ public class BattleLinkmon {
 		this.usingMove = usingMove;
 	}
 
-	public boolean isCrit() {
-		return crit;
-	}
-
-	public void setCrit(boolean crit) {
-		this.crit = crit;
-	}
-
 	public int getEffectiveness() {
 		return effectiveness;
 	}
@@ -120,5 +120,23 @@ public class BattleLinkmon {
 	@Override
 	public String toString() {
 		return "Fireboy " + id;
+	}
+
+	public int getEnergy() {
+		return energy;
+	}
+
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+
+	public boolean checkEnergy(int energy) {
+		// TODO Auto-generated method stub
+		if(this.energy + energy < 0) {
+			eManager.notify(new ModelEvent(ModelEvents.NOT_ENOUGH_ENERGY));
+			return false;
+		}
+		else
+			return true;
 	}
 }

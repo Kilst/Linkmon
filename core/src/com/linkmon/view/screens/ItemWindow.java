@@ -1,27 +1,19 @@
 package com.linkmon.view.screens;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.linkmon.componentmodel.gameobject.GameObject;
 import com.linkmon.componentmodel.items.ItemType;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
@@ -29,22 +21,21 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
+import com.linkmon.view.screens.widgets.ISelectable;
 import com.linkmon.view.screens.widgets.ItemBox;
-import com.linkmon.view.screens.widgets.ItemButton;
+import com.linkmon.view.screens.widgets.SelectableItemButton;
+import com.linkmon.view.screens.widgets.SelectionTable;
 
 public class ItemWindow implements Screen, IPlayerItems {
 	
 	private Image backgroundImage;
-	private Table container;
+	private Table rootTable;
 	private Table table;
 	private Table tableUse;
-	private Table tableItems;
+	private SelectionTable tableItems;
 	private Group uiGroup;
 
-	private ItemButton selectedButton;
-	
-	private ItemButton item;
-	private List<ItemButton> buttonList;
+	private ISelectable selectedItem;
 	
 	private Button backButton;
 	private Button useButton;
@@ -80,8 +71,8 @@ public class ItemWindow implements Screen, IPlayerItems {
 		backgroundImage = new Image(skin2.getDrawable("shopBackground"));
 		backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		container = new Table();
-		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		rootTable = new Table();
+		rootTable.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Table heading = new Table();
 		heading.setBackground(skin2.getDrawable("title"));
@@ -94,10 +85,10 @@ public class ItemWindow implements Screen, IPlayerItems {
 		table = new Table();
 		table.setBackground(skin2.getDrawable("newContainer"));
 		
-		tableUse = new Table(skin);
+		tableUse = new Table();
 		tableUse.setBackground(skin2.getDrawable("tableNoHeading"));
 		
-		tableItems = new Table(skin);
+		tableItems = new SelectionTable();
 		tableItems.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		backButton = new TextButton("Back", buttonStyle);
@@ -113,28 +104,24 @@ public class ItemWindow implements Screen, IPlayerItems {
 		table.add(heading).expandX().colspan(2).padTop(-100);
 		table.row();
 		
-		tableItems.add(itemBox).expand();
-		tableItems.row();
-		tableItems.add(itemText).expand();
-		tableItems.row();
-		tableItems.add(useButton).expand().align(Align.bottom).pad(5*UIRenderer.scaleXY);
+		tableUse.add(itemBox).expand();
+		tableUse.row();
+		tableUse.add(itemText).expand();
+		tableUse.row();
+		tableUse.add(useButton).expand().align(Align.bottom).pad(5*UIRenderer.scaleXY);
 		
-		table.add(tableItems).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		tableUse.align(Align.top);
-		table.add(tableUse).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(tableUse).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(tableItems).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		tableItems.align(Align.top);
 		table.row();
 		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
 		
-		container.add(table).expand().fill();
+		rootTable.add(table).expand().fill();
 		
 		addListeners();
 		
-		tableItems.setVisible(true);
-		
-		
-		buttonList = new ArrayList<ItemButton>();
-		
+		// Get all Player items and add to tableItems
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.ALL, this));
 	}
 	
@@ -150,26 +137,40 @@ public class ItemWindow implements Screen, IPlayerItems {
 		useButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	if(selectedButton != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.USE_ITEM, selectedButton.getItemId()));
-            		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
+            	if(selectedItem != null) {
+            		useItem();
             	}
             }
 		});
+	}
+	
+	private void useItem() {
+		// Use item
+		eManager.notify(new ScreenEvent(ScreenEvents.USE_ITEM, ((SelectableItemButton)selectedItem).getItemId()));
+		// Reset itemstable and usetable labels
+		selectedItem = null;
+		tableItems.reset(); // Overridden method
+		itemBox.addItemImage(null);
+		itemText.setText("");
+		// Rebuild ItemsTable
+		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.ALL, this));
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 		uiGroup.addActor(backgroundImage);
-		uiGroup.addActor(container);
-		uiGroup.toFront();
+		uiGroup.addActor(rootTable);
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
+		if(tableItems.isUpdated()) {
+			selectedItem = tableItems.getSelectedItem();
+			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()).getTexture());
+			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
+		}
 	}
 
 	@Override
@@ -193,7 +194,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		container.remove();
+		rootTable.remove();
 		backgroundImage.remove();
 	}
 
@@ -204,33 +205,10 @@ public class ItemWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void setPlayerItems(List<GameObject> items) {
-
-	}
-
-	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);
-		buttonList.add(item);
-		tableUse.add(item).expandX().fillX();
-		tableUse.row();
-	}
-
-	@Override
-	public void setSelectedItem(ItemButton selectedButton) {
-		// TODO Auto-generated method stub
-		
-		for(ItemButton button : buttonList) {
-			button.testSelected(selectedButton.getItemId());
-		}
-		
-		this.selectedButton = selectedButton;
-
-		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedButton.getItemId()).getTexture());
-//		itemText.setFontScale(0.5f);
-		itemText.setText(selectedButton.getItemName());
-		tableItems.setVisible(true);
+		SelectableItemButton item = new SelectableItemButton(id, name, quantity, price, itemText, tableItems, uiGroup);
+		tableItems.addItem(item);
 	}
 
 }

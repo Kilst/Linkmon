@@ -20,6 +20,9 @@ import com.linkmon.controller.ScreenController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.controller.ControllerEvent;
 import com.linkmon.eventmanager.controller.ControllerEvents;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
+import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.network.NetworkEvent;
 import com.linkmon.eventmanager.network.NetworkEvents;
 import com.linkmon.eventmanager.network.NetworkListener;
@@ -37,9 +40,10 @@ import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IBattleView;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.BattleStats;
+import com.linkmon.view.screens.widgets.LocalMessageBox;
 import com.linkmon.view.screens.widgets.messages.MessageTable;
 
-public class OnlineBattleScreen implements Screen, IBattleView {
+public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	
 	private Image background;
 	private Table container;
@@ -78,9 +82,11 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	private Move move2;
 	
 	private Skin skin2;
+	private boolean updateButtonTable;
 	
 	public OnlineBattleScreen(Group group, EventManager eManager) {
 		this.eManager = eManager;
+		eManager.addModelListener(this);
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
@@ -91,6 +97,10 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	
 	public void update() {
 		eManager.notify(new ScreenEvent(ScreenEvents.UPDATE_ONLINE_BALLTE, this));
+		if(updateButtonTable) {
+			buttonTable.setVisible(true);
+			updateButtonTable = false;
+		}
 	}
 	
 	@Override
@@ -122,7 +132,7 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		container.row();
 		
 		buttonTable = new Table();
-		buttonTable.setBackground(skin2.getDrawable("newContainer"));
+		buttonTable.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		battleMessage = new MessageTable(skin2);
 		battleMessage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/5f);
@@ -169,7 +179,7 @@ public class OnlineBattleScreen implements Screen, IBattleView {
             public void clicked(InputEvent event, float x, float y){
             	
             	
-            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, 12));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, 13));
             	playerMove = move2;
             	buttonTable.setVisible(false);
             }
@@ -203,6 +213,7 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 		oppLinkmonSprite.remove();
 		myLinkmonSprite.remove();
 		container.remove();
+		eManager.removeModelListener(this);
 	}
 	@Override
 	public void dispose() {
@@ -220,11 +231,22 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	}
 
 	@Override
-	public void updateHealths(int myNewHealth, int oppNewHealth) {
+	public void updateHealths(int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy, String[][] messages) {
 		// TODO Auto-generated method stub
 		
-		playerTable.update(myNewHealth);
-		oppTable.update(oppNewHealth);
+		if(messages[0] != null && messages[1] != null) {
+			MessageTable firstChat = new MessageTable(skin2);
+			firstChat.setText("ATTACK", messages[0]);
+			MessageTable secondChat = new MessageTable(skin2);
+			secondChat.setText("ATTACK", messages[1]);
+	
+			uiGroup.addActor(secondChat);
+			uiGroup.addActor(firstChat);
+		}
+		
+		
+		playerTable.update(myNewHealth, myEnergy);
+		oppTable.update(oppNewHealth,oppEnergy);
 		buttonTable.setVisible(true);
 	}
 
@@ -253,5 +275,17 @@ public class OnlineBattleScreen implements Screen, IBattleView {
 	public void showMessage() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void onNotify(ModelEvent event) {
+		// TODO Auto-generated method stub
+		switch(event.eventId) {
+			case(ModelEvents.NOT_ENOUGH_ENERGY): {
+				updateButtonTable = true;
+				uiGroup.addActor(new LocalMessageBox("Failed", "Not enough energy to use that move", uiGroup));
+				break;
+			}
+		}
 	}
 }

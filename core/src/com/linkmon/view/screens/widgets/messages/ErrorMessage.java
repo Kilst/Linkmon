@@ -62,9 +62,11 @@ public class ErrorMessage extends MessageBox {
             	messageBox.remove();
             	darken.remove();
             	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE, messageType));
+            	worldRenderer.messageBox = null;
+            	
+            	
             	if(messageType == MessageType.NETWORK_MESSAGE)
             		geteManager().notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-            	worldRenderer.messageBox = null;
             }
 		});
 	}

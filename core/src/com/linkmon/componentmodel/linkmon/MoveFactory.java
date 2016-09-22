@@ -13,6 +13,9 @@ public class MoveFactory {
 			case(MoveIds.KICK): {
 				return new Move(MoveIds.KICK, MoveIds.ATTACK, 20, "Kick");
 			}
+			case(MoveIds.FIREBALL): {
+				return new Move(MoveIds.FIREBALL, MoveIds.ATTACK, 20, "Fireball");
+			}
 		}
 		return null;
 	}

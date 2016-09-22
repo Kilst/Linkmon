@@ -39,20 +39,22 @@ import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.items.Item;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IShop;
+import com.linkmon.view.screens.widgets.ISelectable;
 import com.linkmon.view.screens.widgets.ItemBox;
-import com.linkmon.view.screens.widgets.ItemButton;
+import com.linkmon.view.screens.widgets.SelectableItemButton;
+import com.linkmon.view.screens.widgets.SelectionTable;
 
 public class ShopWindow implements Screen, IShop, ModelListener {
 	
 	private Image img;
 	private Table innerContainer;
 	private Table table;
-	private Table tableLeft;
+	private SelectionTable tableItems;
 	private Table tableRight;
 	private Group uiGroup;
-	private ItemButton item;
+	private SelectableItemButton item;
 
-	private ItemButton selectedButton;
+	private ISelectable selectedItem;
 	
 	private Button backButton;
 	private Button buyButton;
@@ -76,7 +78,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	private boolean subtractPress;
 	private int direction = 1;
 	
-	private List<ItemButton> buttonList;
+	private List<SelectableItemButton> buttonList;
 	
 	private long touchTime;
 	
@@ -126,9 +128,9 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		table = new Table();
 		
-		tableLeft = new Table();
-		tableLeft.setBackground(skin2.getDrawable("tableNoHeading"));
-		tableLeft.align(Align.topLeft);
+		tableItems = new SelectionTable();
+		tableItems.setBackground(skin2.getDrawable("tableNoHeading"));
+		tableItems.align(Align.topLeft);
 		
 		tableRight = new Table();
 		tableRight.setBackground(skin2.getDrawable("tableNoHeading"));
@@ -166,7 +168,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		tableRight.add(buyButton).expand().align(Align.bottom).colspan(2).padTop(5*UIRenderer.scaleXY);
 		
 		table.add(tableRight).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		table.add(tableLeft).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(tableItems).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		
 //		table.debug();
 //		tableLeft.debug();
@@ -175,7 +177,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		innerContainer.add(heading).colspan(3);
 		innerContainer.row();
 		innerContainer.add(tableRight).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		innerContainer.add(tableLeft).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY).colspan(2);
+		innerContainer.add(tableItems).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY).colspan(2);
 		innerContainer.row();
 		Table bottomTable = new Table();
 		bottomTable.add(playerGold).padLeft(15*UIRenderer.scaleXY);
@@ -187,7 +189,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		tableRight.setVisible(true);
 		
 		
-		buttonList = new ArrayList<ItemButton>();
+		buttonList = new ArrayList<SelectableItemButton>();
 		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_SHOP_ITEMS, ItemType.ALL, this));
 	}
@@ -204,11 +206,11 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		buyButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	if(selectedButton != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, selectedButton.getItemId(), amount));
+            	if(selectedItem != null) {
+            		eManager.notify(new ScreenEvent(ScreenEvents.BUY_ITEM, ((SelectableItemButton)selectedItem).getItemId(), amount));
             		amount = 1;
             		itemAmount.setText("Amount: " + amount);
-            		itemPrice.setText("Price: " + selectedButton.getPrice());
+            		itemPrice.setText("Price: " + ((SelectableItemButton)selectedItem).getPrice());
             	}
             }
 		});
@@ -221,12 +223,12 @@ public class ShopWindow implements Screen, IShop, ModelListener {
             
             @Override 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-            	if(selectedButton!= null) {
+            	if(((SelectableItemButton)selectedItem)!= null) {
 	            	addPress = true;
 	            	touchTime = System.nanoTime();
 	            	amount+=1;
 	            	itemAmount.setText(itemAmountString + amount);
-	            	itemPrice.setText(itemPriceString + amount*selectedButton.getPrice());
+	            	itemPrice.setText(itemPriceString + amount*((SelectableItemButton)selectedItem).getPrice());
             	}
 				return true;
             }
@@ -244,13 +246,13 @@ public class ShopWindow implements Screen, IShop, ModelListener {
             
             @Override 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-            	if(selectedButton!= null) {
+            	if(((SelectableItemButton)selectedItem)!= null) {
 	            	subtractPress = true;
 	            	amount-=1;
 	            	if(amount < 1)
 	            		amount = 1;
 	            	itemAmount.setText(itemAmountString + amount);
-	            	itemPrice.setText(itemPriceString + amount*selectedButton.getPrice());
+	            	itemPrice.setText(itemPriceString + amount*((SelectableItemButton)selectedItem).getPrice());
 	            	touchTime = System.nanoTime();
             	}
 				return true;
@@ -276,18 +278,29 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		
+		if(tableItems.isUpdated()) {
+			selectedItem = tableItems.getSelectedItem();
+			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()).getTexture());
+//			itemText.setFontScale(0.5f);
+			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
+			itemAmount.setText("Amount: 1");
+			
+			itemPrice.setText("Price: " + ((SelectableItemButton)selectedItem).getPrice());
+			tableItems.setUpdated(false);
+		}
+		
 //		Gdx.app.log("SHOPWINDOW", "Render");
-		if((subtractPress || addPress) && System.nanoTime() - touchTime > 1000000000 && selectedButton != null) {
+		if((subtractPress || addPress) && System.nanoTime() - touchTime > 1000000000 && selectedItem != null) {
 			if(addPress)
 				direction = 1;
 			else if(subtractPress)
 				direction = -1;
-			if(selectedButton != null) {
+			if(selectedItem != null) {
         		amount += direction;
         		if(amount < 1)
             		amount = 1;
         		itemAmount.setText(itemAmountString + amount);
-            	itemPrice.setText(itemPriceString + amount*selectedButton.getPrice());
+            	itemPrice.setText(itemPriceString + amount*((SelectableItemButton)selectedItem).getPrice());
         	}
 		}
 	}
@@ -328,36 +341,14 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	@Override
 	public void addShopItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);			
-		buttonList.add(item);
-		tableLeft.add(item).expandX().fillX();
-		tableLeft.row();
+		item = new SelectableItemButton(id, name, quantity, price, itemText, tableItems, uiGroup);
+		tableItems.addItem(item);
 	}
 
 	@Override
 	public void getPlayerGold(int gold) {
 		// TODO Auto-generated method stub
 		playerGold.setText(goldString+gold);
-	}
-
-	@Override
-	public void setSelectedItem(ItemButton selectedButton) {
-		// TODO Auto-generated method stub
-		
-		amount = 1;
-		
-		for(ItemButton button : buttonList) {
-			button.testSelected(selectedButton.getItemId());
-		}
-		
-		this.selectedButton = selectedButton;
-
-		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedButton.getItemId()).getTexture());
-//		itemText.setFontScale(0.5f);
-		itemText.setText(selectedButton.getItemName());
-		
-		itemAmount.setText(itemAmountString + amount);
-    	itemPrice.setText(itemPriceString + selectedButton.getPrice());
 	}
 
 	@Override

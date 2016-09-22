@@ -29,22 +29,24 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
+import com.linkmon.view.screens.widgets.ISelectable;
 import com.linkmon.view.screens.widgets.ItemBox;
-import com.linkmon.view.screens.widgets.ItemButton;
+import com.linkmon.view.screens.widgets.SelectableItemButton;
+import com.linkmon.view.screens.widgets.SelectionTable;
 
 public class FeedWindow implements Screen, IPlayerItems {
 	
 	private Image backgroundImage;
 	private Table container;
 	private Table table;
-	private Table tableFeed;
+	private SelectionTable tableFeed;
 	private Table tableItems;
 	private Group uiGroup;
 
-	private ItemButton selectedButton;
+	private ISelectable selectedItem;
 	
-	private ItemButton item;
-	private List<ItemButton> buttonList;
+	private SelectableItemButton item;
+	private List<SelectableItemButton> buttonList;
 	
 	private Button backButton;
 	private Button feedButton;
@@ -88,7 +90,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		table = new Table();
 		
-		tableFeed = new Table(skin);
+		tableFeed = new SelectionTable();
 		tableFeed.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		tableItems = new Table(skin);
@@ -126,7 +128,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		tableItems.setVisible(true);
 		
 		
-		buttonList = new ArrayList<ItemButton>();
+		buttonList = new ArrayList<SelectableItemButton>();
 		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.FOOD, this));
 	}
@@ -143,8 +145,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 		feedButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	if(selectedButton != null) {
-            		eManager.notify(new ScreenEvent(ScreenEvents.USE_ITEM, selectedButton.getItemId()));
+            	if(selectedItem != null) {
+            		eManager.notify(new ScreenEvent(ScreenEvents.USE_ITEM, ((SelectableItemButton)selectedItem).getItemId()));
             		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
             	}
             }
@@ -162,7 +164,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
+		if(tableFeed.isUpdated())
+			selectedItem = tableFeed.getSelectedItem();
 	}
 
 	@Override
@@ -197,33 +200,12 @@ public class FeedWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void setPlayerItems(List<GameObject> items) {
-
-	}
-
-	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new ItemButton(id, name, quantity, price, itemText, this, uiGroup);			
+		item = new SelectableItemButton(id, name, quantity, price, itemText, tableFeed, uiGroup);			
 		buttonList.add(item);
 		tableFeed.add(item).expandX().fillX();
 		tableFeed.row();
-	}
-
-	@Override
-	public void setSelectedItem(ItemButton selectedButton) {
-		// TODO Auto-generated method stub
-		
-		for(ItemButton button : buttonList) {
-			button.testSelected(selectedButton.getItemId());
-		}
-		
-		this.selectedButton = selectedButton;
-
-		itemBox.addItemImage(ResourceLoader.getItemRegionFromId(selectedButton.getItemId()).getTexture());
-//		itemText.setFontScale(0.5f);
-		itemText.setText(selectedButton.getItemName());
-		tableItems.setVisible(true);
 	}
 
 }

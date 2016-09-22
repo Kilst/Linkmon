@@ -11,8 +11,12 @@ import com.linkmon.helpers.ResourceLoader;
 public class BattleStats extends Table {
 	
 	private Label nameLabel;
+	
 	private Label healthLabel;
 	private MyProgressBar pBar;
+	
+	private Label energyLabel;
+	private MyProgressBar energyBar;
 	
 	private int maxHealth = 0;
 	
@@ -30,7 +34,12 @@ public class BattleStats extends Table {
 		this.nameLabel = new Label("",skin);
 		this.healthLabel = new Label("",skin);
 		
+		energyLabel = new Label("Energy",skin);
+		
 		pBar = new MyProgressBar(skin2, 100, 100);
+		
+		energyBar = new MyProgressBar(skin2, 25, 50);
+		energyBar.setColor(0, 0, 1, 1);
 		
 		this.background(skin2.getDrawable("tableNoHeading"));
 		
@@ -39,21 +48,28 @@ public class BattleStats extends Table {
 		this.add(healthLabel).align(Align.left);
 		this.row();
 		this.add(pBar).width(200).height(10).align(Align.left);
+		this.row();
+		this.add(energyLabel).align(Align.center);
+		this.row();
+		this.add(energyBar).width(200).height(10).align(Align.left);
 	}
 	
 	public void setStats(String name, int health) {
-		if(maxHealth == 0)
+		if(maxHealth == 0) {
 			maxHealth = health;
+			pBar.setTarget(maxHealth);
+		}
 		
 		this.nameLabel.setText("Name: " + name);
 		this.healthLabel.setText("Health: " + health + " / " + maxHealth);
-		pBar.setTarget(maxHealth);
 		pBar.update(health);
+		energyBar.update(25);
 	}
 	
-	public void update(int health) {
+	public void update(int health, int energy) {
 		pBar.update(health);
 		this.healthLabel.setText("Health: " + health + " / " + maxHealth);
+		energyBar.update(energy);
 	}
 
 }

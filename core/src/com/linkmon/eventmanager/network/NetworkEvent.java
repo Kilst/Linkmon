@@ -10,6 +10,8 @@ public class NetworkEvent extends GameEvent {
 	public Move move;
 	public int myHealth;
 	public int oppHealth;
+	public int myEnergy;
+	public int oppEnergy;
 	public String serverWelcome;
 	
 	public int value;
@@ -28,11 +30,13 @@ public class NetworkEvent extends GameEvent {
 		this.move = move;
 	}
 	
-	public NetworkEvent(int eventId, int myHealth, int oppHealth) {
+	public NetworkEvent(int eventId, int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
-		this.myHealth = myHealth;
-		this.oppHealth = oppHealth;
+		this.myHealth = myNewHealth;
+		this.oppHealth = oppNewHealth;
+		this.myEnergy = myEnergy;
+		this.oppEnergy = oppEnergy;
 	}
 
 	public NetworkEvent(int eventId) {

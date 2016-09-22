@@ -22,13 +22,13 @@ public class ItemMessage extends MessageBox {
 	private Image item;
 	
 	private Button backbutton;
-	private UIRenderer worldRenderer;
+	private UIRenderer uiRenderer;
 
-	public ItemMessage(int messageType, String messageString, UIRenderer worldRenderer1, EventManager eManager) {
-		super(messageType, messageString, worldRenderer1, eManager);
+	public ItemMessage(int messageType, String messageString, UIRenderer uiRenderer, EventManager eManager) {
+		super(messageType, messageString, uiRenderer, eManager);
 		// TODO Auto-generated constructor stub
 		
-		this.worldRenderer = worldRenderer1;
+		this.uiRenderer = uiRenderer;
 		
 		this.setHeading("errorHeading");
 		this.setText("Use a revive potion?");

@@ -18,11 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
-import com.linkmon.view.screens.interfaces.IItems;
 import com.linkmon.view.screens.widgets.messages.ErrorMessage;
 import com.linkmon.view.screens.widgets.messages.MessageType;
 
-public class ItemButton extends Table {
+public class SelectableItemButton extends Table implements ISelectable {
 	
 	private Label amount;
 	private TextButton infoButton;
@@ -35,17 +34,18 @@ public class ItemButton extends Table {
 	private int price;
 	
 	private Group gameUi;
-	private ItemButton itemButton = this;
-	private IItems screen;
+	private SelectableItemButton itemButton = this;
+	private SelectionTable screen;
 	
-	public ItemButton(int id, String name, int quantity, int price, String text, IItems view, Group ui) {
+	public SelectableItemButton(int id, String name, int quantity, int price, String text, SelectionTable view, Group ui) {
 		// TODO Auto-generated constructor stub
 		super();
-		this.gameUi = ui;
 		this.itemId = id;
 		this.itemName = name;
 		this.itemText = text;
 		this.price = price;
+		
+		this.gameUi = ui;
 		
 		Skin skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -86,18 +86,18 @@ public class ItemButton extends Table {
 		this.add(itemNameLabel).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
 		itemNameLabel.setTouchable(Touchable.disabled);
 		
-		this.add(img).width(3).align(Align.left).padLeft(15).padRight(15);
+		this.add(img).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(infoButton).padLeft(2*UIRenderer.scaleXY).padRight(2*UIRenderer.scaleXY).fill();
+		this.add(infoButton).width(100).padLeft(2*UIRenderer.scaleXY).padRight(2*UIRenderer.scaleXY).fill();
 		
-		this.add(img2).width(3).align(Align.left).padLeft(15).padRight(15);
+		this.add(img2).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
 		this.add(priceLabel).width(50).pad(5*UIRenderer.scaleXY).align(Align.center);
 		priceLabel.setTouchable(Touchable.disabled);
 		
-		this.add(img3).width(3).align(Align.left).padLeft(15).padRight(15);
+		this.add(img3).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img3.setTouchable(Touchable.disabled);
 		
 		this.add(amount).align(Align.left).padRight(15).width(50);
@@ -110,22 +110,21 @@ public class ItemButton extends Table {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	screen.setSelectedItem(itemButton);
-            	selected = true;
             }
 		});
 		
 		infoButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	gameUi.addActor(new ItemInfo(itemName+"\n\n"+itemText, gameUi));
+            	gameUi.addActor(new LocalMessageBox("Item Info", itemName+"\n\n"+itemText, gameUi));
             }
 		});
 	}
-
-	public void testSelected(int id) {
-		if(id != itemId) {
-			selected = false;
-		}
+	
+	@Override
+	public void setSelected(boolean selected) {
+		// TODO Auto-generated method stub
+		this.selected = selected;
 	}
 	
 	public int getItemId() {

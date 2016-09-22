@@ -64,8 +64,29 @@ public class PacketHandler implements Runnable {
 				break;
 			}
 			case(PacketType.UPDATE_HEALTH): {
+				int[] battleData = new int[11];
 				int[] healths = Packet.healthFromPacket(packet);
-				eManager.notify(new NetworkEvent(NetworkEvents.UPDATE_HEALTH, healths[0], healths[1]));
+				int[] energies = Packet.energiesFromPacket(packet);
+				int[] damages = Packet.damageFromPacket(packet);
+				int[] dodges = Packet.dodgeFromPacket(packet);
+				byte[] moves = Packet.movesFromPacket(packet);
+				byte first = packet[34];
+				
+				battleData[0] = healths[0];
+				battleData[1] = damages[0];
+				battleData[2] = moves[0];
+				battleData[3] = dodges[0];
+				battleData[4] = energies[0];
+				
+				battleData[5] = first;
+				
+				battleData[6] = healths[1];
+				battleData[7] = damages[1];
+				battleData[8] = moves[1];
+				battleData[9] = dodges[1];
+				battleData[10] = energies[1];
+				
+				eManager.notify(new NetworkEvent(NetworkEvents.UPDATE_HEALTH, battleData));
 				Gdx.app.log("PacketHandler","My Health: " + healths[0] + "  Opponent Health: " + healths[1]);
 				break;
 			}

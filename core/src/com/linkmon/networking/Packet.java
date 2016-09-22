@@ -16,9 +16,8 @@ public class Packet {
 		packet = new BattleSetupPacket(linkmon.getId(), linkmon.getAttack(), linkmon.getDefense(), linkmon.getSpeed(), linkmon.getMove1(), linkmon.getMove2(), linkmon.getHealth(), "Kilst").packet;
 	}
 	
-	public Packet(int moveId, boolean crit) {
-		
-		packet = new AttackPacket(moveId, crit).packet;
+	public Packet(int moveId, boolean b) {
+		packet = new AttackPacket(moveId).packet;
 	}
 	
 	public Packet(int id) {
@@ -36,6 +35,7 @@ public class Packet {
 				break;
 			}
 			case PacketType.SEND_MOVE : {
+				packet = new AttackPacket(id).packet;
 				break;
 			}
 			case PacketType.SEARCH_OPPONENTS : {
@@ -230,17 +230,15 @@ public class Packet {
 		public byte[] packet;
 		
 		private byte packetId = 3; // 0
-		public byte size = 10;     // 1
+		public byte size = 6;     // 1
 		private int moveId;		  // 2
-		private int crit; 		  // 6					0/1 no crit/crit
 		
-		public AttackPacket(int moveId, boolean crit) {
+		public AttackPacket(int moveId) {
 
 			byte[] bytes;
 			this.moveId = moveId;
-			this.crit = crit ? 1 : 0; // true = 1 and false = 0
 			
-			packet = new byte[10];
+			packet = new byte[6];
 			packet[0] = packetId;
 			packet[1] = size;
 			
@@ -248,14 +246,7 @@ public class Packet {
 			packet[2] = bytes[3];
 			packet[3] = bytes[2];
 			packet[4] = bytes[1];
-			packet[5] = bytes[0];
-			
-			bytes = intToByteArray(this.crit);
-			packet[6] = bytes[3];
-			packet[7] = bytes[2];
-			packet[8] = bytes[1];
-			packet[9] = bytes[0];
-			
+			packet[5] = bytes[0];			
 		}
 	}
 	
@@ -328,6 +319,80 @@ public class Packet {
 		bytes[0] = packet[9];
 		health[1] = byteArrayToInt(bytes);
 		return health;
+	}
+	
+	public static int[] damageFromPacket(byte[] packet) {
+		
+		int[] damages = new int[2];
+		
+		byte[] bytes = new byte[4];
+		
+		bytes[3] = packet[10];
+		bytes[2] = packet[11]; 
+		bytes[1] = packet[12];
+		bytes[0] = packet[13];
+		damages[0] = byteArrayToInt(bytes);
+		
+		bytes[3] = packet[14];
+		bytes[2] = packet[15];
+		bytes[1] = packet[16];
+		bytes[0] = packet[17];
+		damages[1] = byteArrayToInt(bytes);
+		return damages;
+	}
+	
+	public static int[] dodgeFromPacket(byte[] packet) {
+		
+		int[] dodges = new int[2];
+		
+		byte[] bytes = new byte[4];
+		
+		bytes[3] = packet[18];
+		bytes[2] = packet[19]; 
+		bytes[1] = packet[20];
+		bytes[0] = packet[21];
+		dodges[0] = byteArrayToInt(bytes);
+		
+		bytes[3] = packet[22];
+		bytes[2] = packet[23];
+		bytes[1] = packet[24];
+		bytes[0] = packet[25];
+		dodges[1] = byteArrayToInt(bytes);
+		return dodges;
+	}
+	
+	public static byte firstFromPacket(byte[] packet) {
+		
+		byte first = packet[34];
+		return first;
+	}
+	
+	public static byte[] movesFromPacket(byte[] packet) {
+		
+		byte[] moves = new byte[2];
+		moves[0] = packet[35];
+		moves[1] = packet[36];
+		return moves;
+	}
+	
+	public static int[] energiesFromPacket(byte[] packet) {
+		
+		int[] energies = new int[2];
+		
+		byte[] bytes = new byte[4];
+		
+		bytes[3] = packet[26];
+		bytes[2] = packet[27]; 
+		bytes[1] = packet[28];
+		bytes[0] = packet[29];
+		energies[0] = byteArrayToInt(bytes);
+		
+		bytes[3] = packet[30];
+		bytes[2] = packet[31];
+		bytes[1] = packet[32];
+		bytes[0] = packet[33];
+		energies[1] = byteArrayToInt(bytes);
+		return energies;
 	}
 	
 	public static BattleLinkmon linkmonFromPacket(byte[] packet) {

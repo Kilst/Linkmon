@@ -13,8 +13,6 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.gameobject.Direction;
-import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.interfaces.MyScreen;
 
 public class MiniGameUI implements Screen, MyScreen {

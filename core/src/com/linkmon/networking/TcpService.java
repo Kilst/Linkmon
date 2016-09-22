@@ -38,7 +38,7 @@ public class TcpService implements INetworkService, Runnable {
 		
 		try {
 			if(!client.sending)
-				client.sendPacket(new Packet(moveId, false));
+				client.sendPacket(new Packet(moveId, true));
 		} catch(Exception e) {
 			
 		}

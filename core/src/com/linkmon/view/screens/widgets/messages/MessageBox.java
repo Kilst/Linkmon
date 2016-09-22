@@ -17,8 +17,11 @@ import com.badlogic.gdx.utils.Align;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
+import com.linkmon.view.screens.ScreenType;
 
 public class MessageBox extends Table {
 	
@@ -119,6 +122,10 @@ public class MessageBox extends Table {
             	darken.remove();
             	geteManager().notify(new MessageEvent(MessageEvents.CLEAR_CURRENT_MESSAGE, messageType));
             	worldRenderer.messageBox = null;
+            	
+            	
+            	if(messageType == MessageType.NETWORK_MESSAGE)
+            		geteManager().notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 	}

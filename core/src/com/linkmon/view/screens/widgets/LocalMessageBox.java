@@ -22,7 +22,7 @@ import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.UIRenderer;
 
-public class ItemInfo extends Table {
+public class LocalMessageBox extends Table {
 	
 	public Table messageBox;
 	
@@ -45,7 +45,7 @@ public class ItemInfo extends Table {
 	
 	private Group gameUi;
 	
-	public ItemInfo(String text, Group ui) {
+	public LocalMessageBox(String titleText, String text, Group ui) {
 		this.gameUi = ui;
 		messageString = text;
 		this.setTransform(true);
@@ -83,7 +83,7 @@ public class ItemInfo extends Table {
 		heading = new Table();
 		heading.setBackground(skin2.getDrawable("title"));
 		heading.setSize(290, 136);
-		Label title = new Label("Item Info", skin);
+		Label title = new Label(titleText, skin);
 		title.setFontScale(1.2f);
 		heading.add(title).padBottom(15);
 		
