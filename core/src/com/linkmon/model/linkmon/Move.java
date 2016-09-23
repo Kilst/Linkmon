@@ -3,14 +3,16 @@ package com.linkmon.model.linkmon;
 public class Move {
 	private int id;
 	private int type;
+	private int slot;
 	private int damage;
 	private int ignoreDamage;
 	private int energy;
 	private String name;
 	
-	public Move(int id, int type, int damage, int ignoreDamage, int energy, String name) {
+	public Move(int id, int type, int slot, int damage, int ignoreDamage, int energy, String name) {
 		this.id = id;
 		this.type = type;
+		this.slot = slot;
 		this.damage = damage;
 		this.ignoreDamage = ignoreDamage;
 		this.energy = energy;
@@ -44,4 +46,10 @@ public class Move {
 	public int getIgnoreDamage() {
 		return ignoreDamage;
 }
+
+
+	public int getSlot() {
+		// TODO Auto-generated method stub
+		return slot;
+	}
 }

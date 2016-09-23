@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.model.linkmon.MoveType;
 import com.linkmon.view.UIRenderer;
 
 public class SelectableMoveButton extends Table implements ISelectable {
@@ -28,18 +29,19 @@ public class SelectableMoveButton extends Table implements ISelectable {
 
 	private String moveName;
 	private int moveId;
-	private int power;
-	private int ignoreDefence;
-	private int energy;
+	private int type;
+	private int slot;
 	
 	private SelectableMoveButton itemButton = this;
 	private SelectionTable parent;
 	
-	public SelectableMoveButton(int id, String name, SelectionTable view) {
+	public SelectableMoveButton(int id, String name, int type, int slot, int damage, int ignoreDamage, int energy, SelectionTable view) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.moveId = id;
 		this.moveName = name;
+		this.type = type;
+		this.slot = slot;
 		
 		Skin skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -62,6 +64,14 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		
 		Label itemNameLabel = new Label(name, skin);
 		
+		Label moveType = new Label(getTypeString(), skin);
+		
+		Label moveDamage = new Label(""+damage, skin);
+		
+		Label moveIgnoreDamage = new Label(""+ignoreDamage, skin);
+		
+		Label moveEnergy = new Label(""+energy, skin);
+		
 		Image img = new Image(new NinePatch(skin2.getPatch("spacer")));
 		img.getColor().a = 0.5f;
 		
@@ -70,6 +80,9 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		
 		Image img3 = new Image(new NinePatch(skin2.getPatch("spacer")));
 		img3.getColor().a = 0.5f;
+		
+		Image img4 = new Image(new NinePatch(skin2.getPatch("spacer")));
+		img4.getColor().a = 0.5f;
 		
 		
 		
@@ -80,14 +93,22 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		this.add(img).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(infoButton).width(100).padLeft(2*UIRenderer.scaleXY).padRight(2*UIRenderer.scaleXY).fill();
+		this.add(moveType).width(80).fill();
 		
 		this.add(img2).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
+		this.add(moveDamage).width(20).fill();
 		
 		this.add(img3).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img3.setTouchable(Touchable.disabled);
+		
+		this.add(moveIgnoreDamage).width(20).fill();
+		
+		this.add(img4).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
+		img4.setTouchable(Touchable.disabled);
+		
+		this.add(moveEnergy).width(20).padRight(15).fill();
 		
 		green = new TextureRegion(skin2.getRegion("green"));
 		
@@ -100,6 +121,22 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		});
 	}
 	
+	private String getTypeString() {
+		// TODO Auto-generated method stub
+		String typeString = "";
+		if(type == MoveType.NOTYPE)
+			typeString = "No Type";
+		else if(type == MoveType.FIRE)
+			typeString = "Fire";
+		else if(type == MoveType.WATER)
+			typeString = "Water";
+		else if(type == MoveType.ELECTRIC)
+			typeString = "Electric";
+		else if(type == MoveType.EARTH)
+			typeString = "Earth";
+		return typeString;
+	}
+
 	@Override
 	public void setSelected(boolean selected) {
 		// TODO Auto-generated method stub
@@ -119,5 +156,13 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		batch.setColor(1, 1, 1, 1);
 		super.draw(batch, alpha);
 //		amount.draw(batch, alpha);
+	}
+	public int getType() {
+		return type;
+	}
+
+	public int getSlot() {
+		// TODO Auto-generated method stub
+		return slot;
 	}
 }

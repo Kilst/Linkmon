@@ -1,6 +1,5 @@
 package com.linkmon.model.linkmon;
 
-import com.badlogic.gdx.Gdx;
 import com.linkmon.model.components.IExtraComponents;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.linkmon.poop.PoopComponent;
@@ -12,6 +11,7 @@ public class LinkmonExtraComponents implements IExtraComponents {
 	private LinkmonStatusComponent statusComponent;
 	private EvolutionComponent evolutionComponent;
 	private PoopComponent poopComponent;
+	private LinkmonMoveComponent moveComponent;
 	
 	public LinkmonExtraComponents() {
 		timerComponent = new LinkmonTimerComponent();
@@ -19,6 +19,7 @@ public class LinkmonExtraComponents implements IExtraComponents {
 		statusComponent = new LinkmonStatusComponent();
 		evolutionComponent = new EvolutionComponent();
 		poopComponent = new PoopComponent();
+		moveComponent = new LinkmonMoveComponent();
 	}
 	
 	@Override
@@ -48,4 +49,8 @@ public class LinkmonExtraComponents implements IExtraComponents {
 		return poopComponent;
 	}
 
+	public LinkmonMoveComponent getMoves() {
+		// TODO Auto-generated method stub
+		return moveComponent;
+	}
 }

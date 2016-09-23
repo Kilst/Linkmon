@@ -1,35 +1,24 @@
 package com.linkmon.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.controller.ControllerEvent;
-import com.linkmon.eventmanager.controller.ControllerEvents;
-import com.linkmon.eventmanager.controller.ControllerListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.game.GameClass;
+import com.linkmon.view.screens.ConnectScreen;
 import com.linkmon.view.screens.CryoScreen;
 import com.linkmon.view.screens.DebuggingScreen;
 import com.linkmon.view.screens.EvolveScreen;
 import com.linkmon.view.screens.FeedWindow;
 import com.linkmon.view.screens.GameUi;
 import com.linkmon.view.screens.ItemWindow;
+import com.linkmon.view.screens.MovesScreen;
 import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.ShopWindow;
 import com.linkmon.view.screens.StatsWindow;
 import com.linkmon.view.screens.TrainWindow;
-import com.linkmon.view.screens.interfaces.IBattleView;
-import com.linkmon.view.screens.interfaces.ILinkmonAddedStats;
-import com.linkmon.view.screens.interfaces.ILinkmonStats;
-import com.linkmon.view.screens.interfaces.IPlayableLinkmons;
-import com.linkmon.view.screens.interfaces.IPlayerItems;
-import com.linkmon.view.screens.interfaces.IPlayerStats;
-import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.networking.BattleIntroScreen;
-import com.linkmon.view.screens.networking.ConnectScreen;
 import com.linkmon.view.screens.networking.OnlineBattleScreen;
 import com.linkmon.view.screens.networking.OnlineScreen;
 import com.linkmon.view.screens.newgame.IntroScreen;
@@ -140,6 +129,10 @@ public class LibgdxScreenController implements ScreenListener {
 			}
 			case (ScreenType.CRYO_SCREEN) : {
 				game.setScreen(new CryoScreen(uiGroup, eManager));
+				break;
+			}
+			case (ScreenType.MOVES_SCREEN) : {
+				game.setScreen(new MovesScreen(uiGroup, eManager));
 				break;
 			}
 		}

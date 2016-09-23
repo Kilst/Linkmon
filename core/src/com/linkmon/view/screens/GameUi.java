@@ -196,7 +196,8 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		feed.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.START_MINIGAME));
+            	//eManager.notify(new ScreenEvent(ScreenEvents.START_MINIGAME));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MOVES_SCREEN));
             }
 		});
 		

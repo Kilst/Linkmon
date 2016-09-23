@@ -14,11 +14,9 @@ public class ScreenEvents {
 	public static final int GET_LINKMON_ADDED_STATS = 8;
 	public static final int SWAP_SCREEN_PREVIOUS = 9;
 	public static final int USE_ITEM = 10;
-	
+	public static final int GET_LINKMON_MOVES = 11;
+	public static final int GET_CHOOSABLE_MOVES = 12;
 	public static final int LIGHT_SWAP = 99;
-	
-	
-	public static final int START_MINIGAME = 88;
 
 	
 	// Networking
@@ -35,6 +33,7 @@ public class ScreenEvents {
 	
 	// MiniGames
 	public static final int MOVE_PLAYER = 200;
+	public static final int START_MINIGAME = 201;
 	
 	
 	// Debugging

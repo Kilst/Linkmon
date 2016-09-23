@@ -17,7 +17,7 @@ public class GameSave {
 	public String playerName;
 	public int playerGold;
 	
-//	// Player Items
+	// Player Items
 	public int[][] items;
 	
 	// Linkmon

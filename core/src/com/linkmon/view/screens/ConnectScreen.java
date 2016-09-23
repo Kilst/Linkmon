@@ -1,4 +1,4 @@
-package com.linkmon.view.screens.networking;
+package com.linkmon.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +20,6 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
-import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 
 public class ConnectScreen implements Screen, NetworkListener {

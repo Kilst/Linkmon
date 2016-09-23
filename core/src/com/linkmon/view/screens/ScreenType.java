@@ -23,4 +23,5 @@ public class ScreenType {
 	public static final int DEBUGGING_SCREEN = 19;
 	public static final int ITEM_WINDOW = 20;
 	public static final int CRYO_SCREEN = 21;
+	public static final int MOVES_SCREEN = 22;
 }
