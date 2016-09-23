@@ -6,6 +6,11 @@ public class MoveFactory {
 	public static Move getMoveFromId(int id) {
 		switch(id) {
 		
+			// Defend
+			case(MoveIds.DEFEND): {
+				return new Move(MoveIds.DEFEND, MoveType.NOTYPE, 0, 0, 0, -5, "Defend");
+			}
+		
 			// Basic
 			case(MoveIds.HEADBUTT): {
 				return new Move(MoveIds.HEADBUTT, MoveType.NOTYPE, MoveSlot.BASIC, 6, 3, -5, "Headbutt");

@@ -23,6 +23,7 @@ import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.linkmon.Move;
 import com.linkmon.model.linkmon.MoveFactory;
+import com.linkmon.model.linkmon.MoveIds;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.interfaces.IBattleView;
@@ -36,12 +37,15 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	private Image background;
 	private Table container;
 	private Group uiGroup;
-	volatile private Button attack1;
-	volatile private Button attack2;
+	volatile private TextButton attack1;
+	volatile private TextButton attack2;
+	volatile private TextButton attack3;
+	volatile private TextButton attack4;
+	volatile private TextButton defend;
 	private Skin skin;
 	
-	public Move playerMove;
-	public Move opponentMove;
+	public int playerMoveId;
+	public int opponentMoveId;
 	
 	
 	private BattleStats oppTable;
@@ -66,8 +70,10 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	private MessageTable battleMessage;
 	
 	
-	private Move move1;
-	private Move move2;
+	private int move1;
+	private int move2;
+	private int move3;
+	private int move4;
 	
 	private Skin skin2;
 	private boolean updateButtonTable;
@@ -130,6 +136,13 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		buttonTable.add(attack1).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
 		attack2 = new TextButton("Attack2", buttonStyle);
 		buttonTable.add(attack2).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
+		attack3 = new TextButton("Attack3", buttonStyle);
+		buttonTable.add(attack3).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
+		attack4 = new TextButton("Attack4", buttonStyle);
+		buttonTable.add(attack4).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
+		
+		defend = new TextButton("Defend", buttonStyle);
+		buttonTable.add(defend).size(128*UIRenderer.scaleX, 64*UIRenderer.scaleY).bottom();
 		
 		container.add(buttonTable).height(Gdx.graphics.getHeight()/5f).expandX().fillX();
 		
@@ -152,8 +165,8 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
 	            	try {
-		            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, 11));
-		            	playerMove = move1;
+		            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move1));
+		            	playerMoveId = move1;
 		            	buttonTable.setVisible(false);
 	            	}
 	            	catch (Exception e){
@@ -167,8 +180,41 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
             public void clicked(InputEvent event, float x, float y){
             	
             	
-            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, 13));
-            	playerMove = move2;
+            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move2));
+            	playerMoveId = move2;
+            	buttonTable.setVisible(false);
+            }
+		});
+		
+		attack3.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	
+            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move3));
+            	playerMoveId = move3;
+            	buttonTable.setVisible(false);
+            }
+		});
+		
+		attack4.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	
+            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move4));
+            	playerMoveId = move4;
+            	buttonTable.setVisible(false);
+            }
+		});
+		
+		defend.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	
+            	
+            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, MoveIds.DEFEND));
+            	playerMoveId = MoveIds.DEFEND;
             	buttonTable.setVisible(false);
             }
 		});
@@ -239,10 +285,17 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	}
 
 	@Override
-	public void getMoves(int move1, int move2) {
+	public void getMoves(int move1Id, String move1Name, int move2Id, String move2Name,
+			int move3Id, String move3Name, int move4Id, String move4Name) {
 		// TODO Auto-generated method stub
-		this.move1 = MoveFactory.getMoveFromId(move1);
-		this.move2 = MoveFactory.getMoveFromId(move2);
+		this.move1 = move1Id;
+		attack1.setText(move1Name);
+		this.move2 = move2Id;
+		attack2.setText(move2Name);
+		this.move3 = move3Id;
+		attack3.setText(move3Name);
+		this.move4 = move4Id;
+		attack4.setText(move4Name);
 	}
 
 	@Override

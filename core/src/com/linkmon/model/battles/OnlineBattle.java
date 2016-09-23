@@ -98,6 +98,7 @@ public class OnlineBattle {
 		
 		if(playerMove.getId() == MoveIds.DEFEND) {
 			playerMessages[0] = "You are defending!";
+			playerMessages[1] = "Damaged reduced by 50% for 1 turn!";
 		}
 		else {
 			playerMessages[0] = "You are using " + playerMove.getName();
@@ -109,6 +110,7 @@ public class OnlineBattle {
 			
 		if(opponentMove.getId() == MoveIds.DEFEND) {
 			opponentMessages[0] = "Opponent is defending!";
+			opponentMessages[1] = "Damaged reduced by 50% for 1 turn!";
 		}
 		else {
 			opponentMessages[0] = "Opponent is using " + opponentMove.getName();
