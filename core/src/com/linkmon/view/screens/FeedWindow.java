@@ -107,7 +107,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		// Build Window Layout
 		
-		tableItems.add(itemBox).expand();
+		tableItems.add(itemBox).expand().size(150, 150);
 		tableItems.row();
 		tableItems.add(itemText).expand();
 		tableItems.row();

@@ -1,12 +1,7 @@
 package com.linkmon.model.battles;
 
+import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
-import com.linkmon.eventmanager.model.ModelEvent;
-import com.linkmon.eventmanager.model.ModelEvents;
-import com.linkmon.eventmanager.network.NetworkEvent;
-import com.linkmon.eventmanager.network.NetworkEvents;
-import com.linkmon.eventmanager.network.NetworkListener;
-import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.model.linkmon.Move;
 import com.linkmon.model.linkmon.MoveFactory;
 import com.linkmon.model.linkmon.MoveIds;
@@ -22,9 +17,6 @@ public class OnlineBattle {
 	
 	private Move playerMove;
 	private Move opponentMove;
-	
-	private int playerHealth;
-	private int opponentHealth;
 	
 	private int playerDamage;
 	private int opponentDamage;
@@ -60,6 +52,8 @@ public class OnlineBattle {
 			this.first = false;
 		else
 			this.first = true;
+		
+//		Gdx.app.log("OnlineBattle", "First: " + first + "   Boolean: " + this.first);
 		
 		player.setHealth(playerHealth);
 		opponent.setHealth(opponentHealth);
@@ -169,5 +163,9 @@ public class OnlineBattle {
 	
 	public String[][] getBattleMessages() {
 		return battleMessages;
+	}
+	
+	public boolean getFirst() {
+		return first;
 	}
 }

@@ -8,6 +8,7 @@ import com.linkmon.model.items.AddToWorldItemAction;
 import com.linkmon.model.items.FeedItemAction;
 import com.linkmon.model.items.ItemComponent;
 import com.linkmon.model.items.ItemType;
+import com.linkmon.model.items.MedicineItemAction;
 import com.linkmon.model.items.ReviveItemAction;
 import com.linkmon.model.items.components.PoopaScoopaPhysicsComponent;
 import com.linkmon.model.libgdx.LibgdxAnimationComponent;
@@ -69,6 +70,12 @@ public class LibgdxObjectFactory implements IGameObjectFactory {
 				//((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setSprite(poopaScoopa2001);
 				((LibgdxRenderingComponent)poopaScoopa2001.getRenderer()).setAnimation(new PoopaScoopaAnimationComponent(poopaScoopa2001));
 				return poopaScoopa2001;
+			}
+			case (ObjectId.MEDICINE) : {
+				ItemComponent itemComp = new ItemComponent(new MedicineItemAction(), 1, 250, ItemType.POTION, "Use this if your Linkmon is sick.");
+				GameObject medicine = new GameObject(id, ObjectType.ITEM, null, null, null, itemComp);
+				medicine.setName("Medicine");
+				return medicine;
 			}
 			case (77) : {
 				GameObject poopaScoopa2001 = new GameObject(2, ObjectType.ITEM, new LibgdxRenderingComponent(), null, new EggPhysicsComponent(new CollisionComponent()), null);

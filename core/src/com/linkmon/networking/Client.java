@@ -45,8 +45,8 @@ public class Client {
 	
 	public void connect() {
 		hints = new SocketHints();
-//		hints.connectTimeout = 2000;
-//		hints.socketTimeout = 40000;
+		hints.connectTimeout = 2000;
+		hints.socketTimeout = 40000;
 		client = Gdx.net.newClientSocket(Protocol.TCP, "60.242.191.232", 5566, hints);
 		this.connected = true;
 		listener = new ClientListener(this, eManager);
@@ -80,7 +80,7 @@ public class Client {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, MessageType.NETWORK_MESSAGE,  message));
+		eManager.notify(new MessageEvent(MessageEvents.DISCONNECTED_SERVER, MessageType.NETWORK_MESSAGE, "Disconnect",  message));
 		listener = null;
 		Gdx.app.log("Client", "Bad Practice: calling swap screen from client disconnect()!!");
 		

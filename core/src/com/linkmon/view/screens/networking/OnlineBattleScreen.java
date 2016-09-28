@@ -75,8 +75,24 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	private int move3;
 	private int move4;
 	
+	private int playerUpdatedHealth;
+	private int playerUpdatedEnergy;
+	
+	private int opponentUpdatedHealth;
+	private int opponentUpdatedEnergy;
+	
+	private MessageTable firstChat;
+	private MessageTable secondChat;
+	
+	private boolean first = false;
+	
+	private boolean playerUpdated = false;
+	private boolean opponentUpdated = false;
+	
 	private Skin skin2;
 	private boolean updateButtonTable;
+	
+	private boolean updated = false;
 	
 	public OnlineBattleScreen(Group group, EventManager eManager) {
 		this.eManager = eManager;
@@ -94,6 +110,41 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		if(updateButtonTable) {
 			buttonTable.setVisible(true);
 			updateButtonTable = false;
+		}
+		if(updated) {
+			
+			if(firstChat.isFinished()) {
+
+				if(!first && !playerUpdated) {
+					playerTable.updateHealth(playerUpdatedHealth);
+					oppTable.updateEnergy(opponentUpdatedEnergy);
+					playerUpdated = true;
+					uiGroup.addActor(secondChat);
+				}
+				else if(first && !opponentUpdated) {
+					oppTable.updateHealth(opponentUpdatedHealth);
+					playerTable.updateEnergy(playerUpdatedEnergy);
+					opponentUpdated = true;
+					uiGroup.addActor(secondChat);
+				}
+				
+				if(secondChat.isFinished()) {
+					if(!playerUpdated) {
+						playerTable.updateHealth(playerUpdatedHealth);
+						oppTable.updateEnergy(opponentUpdatedEnergy);
+						playerUpdated = true;
+						updated = false;
+						buttonTable.setVisible(true);
+					}
+					else if(!opponentUpdated) {
+						oppTable.updateHealth(opponentUpdatedHealth);
+						playerTable.updateEnergy(playerUpdatedEnergy);
+						opponentUpdated = true;
+						updated = false;
+						buttonTable.setVisible(true);
+					}
+				}
+			}
 		}
 	}
 	
@@ -248,6 +299,8 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		myLinkmonSprite.remove();
 		container.remove();
 		eManager.removeModelListener(this);
+		firstChat.remove();
+		secondChat.remove();
 	}
 	@Override
 	public void dispose() {
@@ -265,23 +318,32 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	}
 
 	@Override
-	public void updateHealths(int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy, String[][] messages) {
+	public void updateHealths(boolean first, int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy, String[][] messages) {
 		// TODO Auto-generated method stub
 		
+		playerUpdatedHealth = myNewHealth;
+		playerUpdatedEnergy = myEnergy;
+		
+		opponentUpdatedHealth = oppNewHealth;
+		opponentUpdatedEnergy = oppEnergy;
+		
 		if(messages[0] != null && messages[1] != null) {
-			MessageTable firstChat = new MessageTable(skin2);
+			firstChat = new MessageTable(skin2);
 			firstChat.setText("ATTACK", messages[0]);
-			MessageTable secondChat = new MessageTable(skin2);
+			firstChat.setHeight(buttonTable.getHeight());
+			secondChat = new MessageTable(skin2);
 			secondChat.setText("ATTACK", messages[1]);
-	
-			uiGroup.addActor(secondChat);
+			secondChat.setHeight(buttonTable.getHeight());
+			
 			uiGroup.addActor(firstChat);
+			
+			updated = true;
+			
+			playerUpdated = false;
+			opponentUpdated = false;
+			
+			this.first = first;
 		}
-		
-		
-		playerTable.update(myNewHealth, myEnergy);
-		oppTable.update(oppNewHealth,oppEnergy);
-		buttonTable.setVisible(true);
 	}
 
 	@Override
@@ -309,13 +371,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	@Override
 	public void battleEnded() {
 		// TODO Auto-generated method stub
-		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
-	}
-
-	@Override
-	public void showMessage() {
-		// TODO Auto-generated method stub
-		
+//		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
 	}
 
 	@Override

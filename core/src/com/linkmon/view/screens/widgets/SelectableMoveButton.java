@@ -35,10 +35,10 @@ public class SelectableMoveButton extends Table implements ISelectable {
 	private SelectableMoveButton itemButton = this;
 	private SelectionTable parent;
 	
-	public SelectableMoveButton(int id, String name, int type, int slot, int damage, int ignoreDamage, int energy, SelectionTable view) {
+	public SelectableMoveButton(int moveId, String name, int type, int slot, int damage, int ignoreDamage, int energy, SelectionTable view) {
 		// TODO Auto-generated constructor stub
 		super();
-		this.moveId = id;
+		this.moveId = moveId;
 		this.moveName = name;
 		this.type = type;
 		this.slot = slot;

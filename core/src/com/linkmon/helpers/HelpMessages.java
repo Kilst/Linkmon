@@ -38,7 +38,7 @@ public class HelpMessages implements ViewListener {
     		strings[2] = "I want you to make sure it is feed, its poops are cleaned, put to bed, and that you also train it.";
     		strings[3] = "As you train, your Linkmon will evolve. You should aim to train if you want to compete online. The rewards are worth it!";
     		strings[4] = "Good luck, and have fun!";
-        	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, strings));
+        	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", strings));
 		}
 		introMessage = true;
 	}
@@ -47,7 +47,7 @@ public class HelpMessages implements ViewListener {
 		if(poopMessage == false) {
 			String[] messages = new String[1];
 			messages[0] = "Hey!\nYour Linkmon has pooped. To clean the poop you have to tap on it. If you leave it too long, you will receive a care mistake. So get to it!";
-			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, messages));
+			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", messages));
 		}
 		poopMessage = true;
 	}
@@ -57,7 +57,7 @@ public class HelpMessages implements ViewListener {
 			String[] messages = new String[2];
 			messages[0] = "Your Linkmon has evolved! Congratulations!";
 			messages[1] = "Since you Linkmon has evolved, it's stats have increased, it will take longer to get hungry, and it will poop less often.";
-			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, messages));
+			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", messages));
 		}
 		evolveMessage = true;
 	}
@@ -66,7 +66,7 @@ public class HelpMessages implements ViewListener {
 		if(hungryMessage == false) {
 			String[] messages = new String[1];
 			messages[0] = "Your Linkmon is hungry. You will need to open the \"Feed\" menu and choose something to feed them.";
-			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, messages));
+			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", messages));
 		}
 		hungryMessage = true;
 	}
@@ -76,7 +76,7 @@ public class HelpMessages implements ViewListener {
 		if(sleepyMessage == false) {
 			String[] messages = new String[1];
 			messages[0] = "Your Linkmon is sleepy. If you don't put it to bed quick enough, or if you turn the light back on after putting it to bed, you will recieve a care mistake. The light switch is in the top left corner of your screen.";
-			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, messages));
+			eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", messages));
 		}
 		sleepyMessage = true;
 	}

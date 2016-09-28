@@ -229,7 +229,7 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
             	String[] strings = new String[2];
         		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
         		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
-            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, strings));
+            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", strings));
             	}
 		});
 		settings.addListener(new ClickListener(){

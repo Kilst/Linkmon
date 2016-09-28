@@ -20,10 +20,10 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	public boolean updated = true;
 	
 	public LinkmonStatsComponent() {
-		health = 2000;
-		attack = 35;
-		defense = 35;
-		speed = 10;
+		health = 100;
+		attack = 999;
+		defense = 1;
+		speed = 1;
 	}
 
 	@Override

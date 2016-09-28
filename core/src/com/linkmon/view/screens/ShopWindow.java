@@ -140,7 +140,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		heading.add(title).padBottom(15);
 		heading.setPosition((Gdx.graphics.getWidth()/2)-heading.getWidth()/2, Gdx.graphics.getHeight()-heading.getHeight());
-		buyTable.add(itemBox).expand().align(Align.top).colspan(2);
+		buyTable.add(itemBox).expand().align(Align.top).colspan(2).size(150, 150);
 		buyTable.row();
 		buyTable.add(itemText).expand().colspan(2);
 		buyTable.row();

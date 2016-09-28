@@ -138,7 +138,7 @@ public class NetworkController implements ScreenListener, NetworkListener {
 			}
 			case(ScreenEvents.UPDATE_ONLINE_BALLTE): {
 				if(battle.isUpdated()) {
-					((IBattleView)event.screen).updateHealths(battle.getPlayer().getHealth(), battle.getPlayer().getEnergy(), battle.getOpponent().getHealth(), battle.getOpponent().getEnergy(), battle.getBattleMessages());
+					((IBattleView)event.screen).updateHealths(battle.getFirst(), battle.getPlayer().getHealth(), battle.getPlayer().getEnergy(), battle.getOpponent().getHealth(), battle.getOpponent().getEnergy(), battle.getBattleMessages());
 					battle.setUpdated(false);
 				}
 				if(battle.isEnded())
@@ -164,13 +164,9 @@ public class NetworkController implements ScreenListener, NetworkListener {
 				break;
 			}
 			case(NetworkEvents.UPDATE_HEALTH): {
-//				battle.getPlayer().setHealth(event.myHealth);
-//				battle.getOpponent().setHealth(event.oppHealth);
-//				battle.getPlayer().setEnergy(event.myEnergy);
-//				battle.getOpponent().setEnergy(event.oppEnergy);
-//				battle.setUpdated(true);
 				battle.updateBattle(event.values[0], event.values[1], event.values[2], event.values[3], event.values[4],
 						event.values[5], event.values[6], event.values[7], event.values[8], event.values[9], event.values[10]);
+				battle.setUpdated(true);
 				break;
 			}
 			case(NetworkEvents.WIN_LOSS): {

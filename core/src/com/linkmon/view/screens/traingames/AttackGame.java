@@ -101,7 +101,7 @@ public class AttackGame implements Screen {
 		
 		if(30 - timer.getTotalElapsedTime() < 1) {
 			eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, "You failed!", true));
+			eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, "FAILED", "You failed!", true));
 		}
 		if(trainingBag.getHealth() < 1) {
 			eManager.notify(new ScreenEvent(ScreenEvents.TRAIN_LINKMON, StatType.ATTACK));

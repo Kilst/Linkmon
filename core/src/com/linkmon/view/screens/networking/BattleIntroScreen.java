@@ -85,11 +85,4 @@ public class BattleIntroScreen implements Screen, IOnlineScreen {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void showMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

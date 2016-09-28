@@ -95,9 +95,9 @@ public class PacketHandler implements Runnable {
 				Gdx.app.log("PacketHandler","Got winLoss packet: " + packet[1]);
 				
 				if(packet[22] == 0)
-					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.NETWORK_MESSAGE, "You win!!!"));
+					eManager.notify(new MessageEvent(MessageEvents.BATTLE_ENDED, MessageType.NETWORK_MESSAGE, "WIN", "You win!!!"));
 				else
-					eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.NETWORK_MESSAGE, "You lost :("));
+					eManager.notify(new MessageEvent(MessageEvents.BATTLE_ENDED, MessageType.NETWORK_MESSAGE, "LOSS", "You lost :("));
 				
 				eManager.notify(new NetworkEvent(NetworkEvents.WIN_LOSS, rewards));
 				break;

@@ -248,12 +248,6 @@ public class OnlineScreen implements Screen, IPlayableLinkmons, INetworkScreen, 
 	}
 
 	@Override
-	public void showMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public boolean onNotify(NetworkEvent event) {
 		// TODO Auto-generated method stub
 		

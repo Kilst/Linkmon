@@ -65,10 +65,15 @@ public class BattleStats extends Table {
 		pBar.update(health);
 		energyBar.update(25);
 	}
-	
-	public void update(int health, int energy) {
+
+	public void updateHealth(int health) {
+		// TODO Auto-generated method stub
 		pBar.update(health);
 		this.healthLabel.setText("Health: " + health + " / " + maxHealth);
+	}
+	
+	public void updateEnergy(int energy) {
+		// TODO Auto-generated method stub
 		energyBar.update(energy);
 	}
 

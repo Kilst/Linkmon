@@ -167,6 +167,8 @@ public class ResourceLoader {
 			assetManager.load("meat.png", Texture.class);
 			assetManager.load("starBall.png", Texture.class);
 			assetManager.load("poopaScoopa.png", Texture.class);
+			assetManager.load("syringe.png", Texture.class);
+			
 			assetManager.load("poop.png", Texture.class);
 			assetManager.load("thoughtBubble(food).png", Texture.class);
 			assetManager.load("thoughtBubble(poop).png", Texture.class);
@@ -253,6 +255,11 @@ public class ResourceLoader {
 			}
 			case ObjectId.POOPA_SCOOPA: {
 				tex = ResourceLoader.assetManager.get("poopaScoopa.png", Texture.class);
+				region = new TextureRegion(tex);
+		        break;
+			}
+			case ObjectId.MEDICINE: {
+				tex = ResourceLoader.assetManager.get("syringe.png", Texture.class);
 				region = new TextureRegion(tex);
 		        break;
 			}

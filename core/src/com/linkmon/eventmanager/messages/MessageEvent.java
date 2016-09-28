@@ -15,21 +15,25 @@ public class MessageEvent extends GameEvent {
 	public String[] messages;
 	
 	public int value;
+
+	public String heading;
 	
 	public MessageEvent(int eventId) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public MessageEvent(int eventId, String message) {
+	public MessageEvent(int eventId, String heading, String message) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
+		this.heading = heading;
 		this.message = message;
 	}
 	
-	public MessageEvent(int eventId, String message, boolean returnToMain) {
+	public MessageEvent(int eventId, String heading, String message, boolean returnToMain) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
+		this.heading = heading;
 		this.message = message;
 		this.returnToMain = returnToMain;
 	}
@@ -37,23 +41,24 @@ public class MessageEvent extends GameEvent {
 	public MessageEvent(int eventId, String message, int rank) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
+		this.heading = heading;
 		this.message = message;
 		this.rank = rank;
 	}
 
-	public MessageEvent(int eventId, int messageType, int value, String[] messages) {
+	public MessageEvent(int eventId, int messageType, int value, String heading, String[] messages) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
-		
+		this.heading = heading;
 		this.messageType = messageType;
 		this.value = value;
 		this.messages = messages;
 	}
 
-	public MessageEvent(int eventId, int messageType, String message) {
+	public MessageEvent(int eventId, int messageType, String heading, String message) {
 		super(eventId);
 		// TODO Auto-generated constructor stub
-		
+		this.heading = heading;
 		this.messageType = messageType;
 		this.message = message;
 	}

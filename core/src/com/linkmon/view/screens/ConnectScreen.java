@@ -20,9 +20,10 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
+import com.linkmon.view.screens.interfaces.IOnlineScreen;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 
-public class ConnectScreen implements Screen, NetworkListener {
+public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 	
 	private Label label;
 	private Button cancelButton;
@@ -147,5 +148,4 @@ public class ConnectScreen implements Screen, NetworkListener {
 		}
 		return false;
 	}
-
 }

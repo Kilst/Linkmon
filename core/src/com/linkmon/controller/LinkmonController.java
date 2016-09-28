@@ -62,13 +62,17 @@ public class LinkmonController implements ScreenListener {
 	public void getChoosableMoves(IMovesScreen window, int slot) {
 
 		Gdx.app.log("LINKMONCONTROLLER", "Getting Moves");
+		
+		LinkmonMoveComponent moves = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getMoves();
 
 		if(slot == MoveSlot.BASIC) {
 			for(int i = 10; i < 17; i++) {
 				Gdx.app.log("LINKMONCONTROLLER", "Getting Basic Moves");
 				Move move = MoveFactory.getMoveFromId(i);
-			window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
-					move.getIgnoreDamage(), move.getEnergy());
+				if(move.getId() != moves.getBasicAttack().getId()) {
+					window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
+							move.getIgnoreDamage(), move.getEnergy());
+				}
 			}
 		}
 		
@@ -76,8 +80,10 @@ public class LinkmonController implements ScreenListener {
 			for(int i = 101; i < 111; i++) {
 				Gdx.app.log("LINKMONCONTROLLER", "Getting Medium Moves");
 				Move move = MoveFactory.getMoveFromId(i);
-			window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
-					move.getIgnoreDamage(), move.getEnergy());
+				if(move.getId() != moves.getMediumAttack1().getId() && move.getId() != moves.getMediumAttack2().getId()) {
+					window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
+							move.getIgnoreDamage(), move.getEnergy());
+				}
 			}
 		}
 		
@@ -85,10 +91,17 @@ public class LinkmonController implements ScreenListener {
 			for(int i = 201; i < 206; i++) {
 				Gdx.app.log("LINKMONCONTROLLER", "Getting Special Moves");
 				Move move = MoveFactory.getMoveFromId(i);
-			window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
-					move.getIgnoreDamage(), move.getEnergy());
+				if(move.getId() != moves.getSpecialAttack().getId()) {
+					window.setChoosableMoves(move.getId(), move.getName(), move.getType(), move.getSlot(), move.getDamage(),
+							move.getIgnoreDamage(), move.getEnergy());
+				}
 			}
 		}
+	}
+	
+	public void swapMove(int oldMove, int newMove) {
+		LinkmonMoveComponent moves = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getMoves();
+		moves.swapMove(oldMove, newMove);
 	}
 	
 	public void getLinkmonStats(ILinkmonStats window) {
@@ -120,6 +133,10 @@ public class LinkmonController implements ScreenListener {
 			}
 			case(ScreenEvents.GET_LINKMON_MOVES): {
 				getLinkmonMoves((IMovesScreen) event.screen);
+				return false;
+			}
+			case(ScreenEvents.SWAP_MOVE): {
+				swapMove(event.value, event.value2);
 				return false;
 			}
 			case(ScreenEvents.GET_CHOOSABLE_MOVES): {

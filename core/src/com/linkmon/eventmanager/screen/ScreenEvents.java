@@ -16,6 +16,7 @@ public class ScreenEvents {
 	public static final int USE_ITEM = 10;
 	public static final int GET_LINKMON_MOVES = 11;
 	public static final int GET_CHOOSABLE_MOVES = 12;
+	public static final int SWAP_MOVE = 13;
 	public static final int LIGHT_SWAP = 99;
 
 	

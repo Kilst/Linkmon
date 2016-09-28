@@ -104,7 +104,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 		table.add(heading).expandX().colspan(2).padTop(-100);
 		table.row();
 		
-		tableUse.add(itemBox).expand();
+		tableUse.add(itemBox).expand().size(150, 150);
 		tableUse.row();
 		tableUse.add(itemText).expand();
 		tableUse.row();

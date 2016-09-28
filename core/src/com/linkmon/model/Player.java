@@ -51,7 +51,7 @@ public class Player {
 			GameObject item = ObjectFactory.getInstance().getObjectFromId(giftId);
 			addItem(item);
 			giftId = -1;
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE,  "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
+			eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "GIFT",  "Got gift: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class Player {
 		if(gold >= price) {
 			addItem(item);
 			removeGold(price);
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE, MessageType.GAME_MESSAGE, "Bought item: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
+			eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "BUY", "Bought item: " + item.getName() + " x" + ((ItemComponent)item.getExtraComponents()).getQuantity()));
 		}
 	}
 	
@@ -197,7 +197,7 @@ public class Player {
 			return true;
 		}
 		else {
-			eManager.notify(new MessageEvent(MessageEvents.POOP_MISTAKE,MessageType.GAME_MESSAGE,  "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left"));
+			eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE,MessageType.GAME_MESSAGE, "ERROR", "Can't do that yet!\n" + (50000-(System.currentTimeMillis() - lastGiftTime))/1000 + " seconds left"));
 			return false;
 		}
 	}

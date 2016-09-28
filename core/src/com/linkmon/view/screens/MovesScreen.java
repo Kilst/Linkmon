@@ -40,12 +40,15 @@ public class MovesScreen implements Screen, IMovesScreen {
 	private ISelectable selectedItem;
 	
 	private Button backButton;
+	private Button swapButton;
 	
 	private EventManager eManager;
 	
 	private Skin skin2;
 	
 	private Skin skin;
+	
+	MovesScreen screen = this;
 	
 	public MovesScreen(Group group, EventManager eManager) {
 		
@@ -94,8 +97,14 @@ public class MovesScreen implements Screen, IMovesScreen {
 		
 		backButton = new TextButton("Back", buttonStyle);
 		
-		scrollPane = new ScrollPane(tableSelectableMoves, scrollStyle);
+		swapButton = new TextButton("Swap", buttonStyle);
 		
+		
+		Table headingTable = new Table();
+		scrollPane = new ScrollPane(tableSelectableMoves, scrollStyle);
+		headingTable.add(new Image(skin2.getDrawable("tableNoHeading"))).width(200);
+		headingTable.row();
+		headingTable.add(scrollPane).expand().fill();
 		
 		// Build Window Layout
 		
@@ -104,8 +113,10 @@ public class MovesScreen implements Screen, IMovesScreen {
 		
 		
 		table.add(tableCurrentMoves).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		table.add(scrollPane).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(headingTable).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		tableSelectableMoves.align(Align.top);
+		table.row();
+		table.add(swapButton).expandX().colspan(2).padTop(20);
 		table.row();
 		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
@@ -126,6 +137,19 @@ public class MovesScreen implements Screen, IMovesScreen {
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
+		
+		swapButton.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	if(((SelectableMoveButton)tableCurrentMoves.getSelectedItem()) != null && 
+            			((SelectableMoveButton)tableSelectableMoves.getSelectedItem()) != null) {
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_MOVE, ((SelectableMoveButton)tableCurrentMoves.getSelectedItem()).getMoveId(), ((SelectableMoveButton)tableSelectableMoves.getSelectedItem()).getMoveId()));
+	            	tableCurrentMoves.reset();
+	            	tableSelectableMoves.reset();
+	            	eManager.notify(new ScreenEvent(ScreenEvents.GET_LINKMON_MOVES, screen));
+            	}
+            }
+		});
 	}
 
 	@Override
@@ -139,7 +163,7 @@ public class MovesScreen implements Screen, IMovesScreen {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		if(tableCurrentMoves.isUpdated()) {
-			tableSelectableMoves.clear();
+			tableSelectableMoves.reset();
 			eManager.notify(new ScreenEvent(ScreenEvents.GET_CHOOSABLE_MOVES, ((SelectableMoveButton)tableCurrentMoves.getSelectedItem()).getSlot(), this));
 			tableCurrentMoves.setUpdated(false);
 		}
