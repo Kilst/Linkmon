@@ -69,7 +69,7 @@ public class PacketHandler implements Runnable {
 				int[] energies = Packet.energiesFromPacket(packet);
 				int[] damages = Packet.damageFromPacket(packet);
 				int[] dodges = Packet.dodgeFromPacket(packet);
-				byte[] moves = Packet.movesFromPacket(packet);
+				int[] moves = Packet.movesFromPacket(packet);
 				byte first = packet[34];
 				
 				battleData[0] = healths[0];

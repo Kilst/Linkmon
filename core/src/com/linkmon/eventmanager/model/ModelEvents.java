@@ -9,4 +9,7 @@ public class ModelEvents {
 	public static final int NOT_ENOUGH_ENERGY = 5;
 	public static final int UPDATE_ONLINE_BATTLE = 6;
 	
+	
+	public static final int ADD_PARTICLE_EFFECT = 100;
+	
 }

@@ -23,7 +23,6 @@ import com.linkmon.view.screens.minigames.MiniGameUI;
 
 public class GameClass extends Game implements ApplicationListener, ScreenListener {
 	SpriteBatch batch;
-	Texture img;
 	
 	UIRenderer uiRenderer;
 	
@@ -116,12 +115,6 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		eManager.addScreenListener(this);
 		
 		batch = new SpriteBatch();
-		img = new Texture("background.png");
-		
-		messages = new MessageManager(eManager);
-		
-		uiRenderer = new UIRenderer(messages, this, eManager);
-		
 		
 		ResourceLoader.getInstance();
 		while (!ResourceLoader.assetManager.update())
@@ -131,16 +124,23 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		System.gc();
 		saveLoaded = true;
 		
+		messages = new MessageManager(eManager);
+		
+		uiRenderer = new UIRenderer(messages, this, eManager);
+		
 		game = new MiniGameController(eManager);
 		service = new ControllerService(this, uiRenderer.ui, eManager);
 //		MiniGameController miniGame = new MiniGameController(eManager);
 		worldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
 		
+		uiRenderer.addParticleLoader(service.getParticleController().getWorldLoader());
+		worldRenderer.addParticleLoader(service.getParticleController().getUILoader());
+		
 		im = new InputMultiplexer();
 		
-		im.addProcessor(service.getInputController().gd);
-		
 		im.addProcessor(uiRenderer.stage);
+		im.addProcessor(service.getInputController().gd); // Controller added 2nd so ui clicks block world clicks
+		
 		Gdx.input.setInputProcessor(im);
 	}
 
@@ -159,7 +159,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 			}
 			else
 				worldRenderer.render(batch);
-			
+			uiRenderer.getpLoader().render(batch);
 		batch.end();
 
 		uiRenderer.render();

@@ -23,6 +23,8 @@ public class ControllerService {
 	
 	private LibgdxInputController inputController;
 	
+	private LibgdxParticleController particleController;
+	
 	public ControllerService(GameClass game, Group ui, EventManager eManager) {
 		
 		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
@@ -33,12 +35,15 @@ public class ControllerService {
 		shopController = new ShopController(mService.getShop(), mService.getPlayer());
 		worldController = new WorldController(mService.getWorld());
 		inputController = new LibgdxInputController(eManager);
+		particleController = new LibgdxParticleController(eManager);
+		
 		networkController = new NetworkController(eManager, mService.getPlayer());
 		
 		eManager.addScreenListener(playerController);
 		eManager.addScreenListener(linkmonController);
 		eManager.addScreenListener(shopController);
 		eManager.addScreenListener(worldController);
+		eManager.addScreenListener(particleController);
 		
 		eManager.addScreenListener(networkController);
 		
@@ -51,6 +56,10 @@ public class ControllerService {
 		screenController.update();
 		worldController.update();
 		playerController.update();
+	}
+	
+	public LibgdxParticleController getParticleController() {
+		return particleController;
 	}
 	
 	public LibgdxInputController getInputController() {

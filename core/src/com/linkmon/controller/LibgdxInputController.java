@@ -53,6 +53,7 @@ public class LibgdxInputController implements GestureListener {
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		// TODO Auto-generated method stub
+		eManager.notify(new InputEvent(InputType.DRAGGED, new MyVector2(x,Gdx.graphics.getHeight()-y))); // minus height, inverted y-axis
 		return false;
 	}
 

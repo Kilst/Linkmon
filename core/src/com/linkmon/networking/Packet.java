@@ -2,6 +2,7 @@ package com.linkmon.networking;
 
 import java.nio.ByteBuffer;
 
+import com.badlogic.gdx.Gdx;
 import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.linkmon.Move;
 import com.linkmon.model.linkmon.MoveFactory;
@@ -250,18 +251,6 @@ public class Packet {
 		}
 	}
 	
-	public static Move moveFromPacket(byte[] packet) {
-		
-		byte[] bytes = new byte[4];
-		
-		bytes[3] = packet[2];
-		bytes[2] = packet[3]; 
-		bytes[1] = packet[4];
-		bytes[0] = packet[5];
-		int moveId = byteArrayToInt(bytes);
-		return MoveFactory.getMoveFromId(moveId);
-	}
-	
 	public static int[] getRewardsFromPacket(byte[] packet) {
 		
 		int[] rewards = new int[5]; 
@@ -367,11 +356,13 @@ public class Packet {
 		return first;
 	}
 	
-	public static byte[] movesFromPacket(byte[] packet) {
+	public static int[] movesFromPacket(byte[] packet) {
 		
-		byte[] moves = new byte[2];
-		moves[0] = packet[35];
-		moves[1] = packet[36];
+		int[] moves = new int[2];
+		moves[0] = packet[35] & 0xff; // Conversion to unsigned byte. Should've probably just send an int instead..
+		Gdx.app.log("Packet", "Move1 ID: " + moves[0]);
+		moves[1] = packet[36] & 0xff;
+		Gdx.app.log("Packet", "Move2 ID: " + moves[1]);
 		return moves;
 	}
 	

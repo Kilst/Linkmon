@@ -13,7 +13,7 @@ public class MoveFactory {
 		
 			// Basic
 			case(MoveIds.HEADBUTT): {
-				return new Move(MoveIds.HEADBUTT, MoveType.NOTYPE, MoveSlot.BASIC, 6, 3, -5, "Headbutt");
+				return new Move(MoveIds.HEADBUTT, MoveType.NOTYPE, MoveSlot.BASIC, 6, 3, 15, "Headbutt");
 			}
 			case(MoveIds.KICK): {
 				return new Move(MoveIds.KICK, MoveType.NOTYPE, MoveSlot.BASIC, 10, 0, 15, "Kick");
@@ -67,8 +67,22 @@ public class MoveFactory {
             }
 			
 			// Special
+			case (MoveIds.ETERNALFIRE): {
+                return new Move(MoveIds.ETERNALFIRE, MoveType.FIRE, MoveSlot.SPECIAL, 50, 30, -35, "Eternal Fire");
+            }
+			case (MoveIds.ETERNALWATER): {
+                return new Move(MoveIds.ETERNALWATER, MoveType.WATER, MoveSlot.SPECIAL, 50, 30, -35, "Eternal Water");
+            }
+			case (MoveIds.ETERNALTHUNDER): {
+                return new Move(MoveIds.ETERNALTHUNDER, MoveType.ELECTRIC, MoveSlot.SPECIAL, 50, 30, -35, "Eternal Thunder");
+            }
+			case (MoveIds.ETERNALQUAKE): {
+                return new Move(MoveIds.ETERNALQUAKE, MoveType.EARTH, MoveSlot.SPECIAL, 50, 30, -35, "Eternal Quake");
+            }
+			case (MoveIds.ETERNALPUNCH): {
+                return new Move(MoveIds.ETERNALPUNCH, MoveType.NOTYPE, MoveSlot.SPECIAL, 50, 30, -35, "Eternal Punch");
+            }
 		}
 		return null;
-}
-
+	}
 }

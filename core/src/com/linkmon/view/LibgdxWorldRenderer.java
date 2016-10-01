@@ -5,10 +5,12 @@ import com.linkmon.model.World;
 import com.linkmon.model.WorldRenderingComponent;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.libgdx.LibgdxRenderingComponent;
+import com.linkmon.view.particles.ParticleLoader;
 
 public class LibgdxWorldRenderer {
 	
 	private World world;
+	private ParticleLoader pLoader;
 	
 	public LibgdxWorldRenderer(World world) {
 		this.world = world;
@@ -25,6 +27,13 @@ public class LibgdxWorldRenderer {
 		}
 		
 		((WorldRenderingComponent)world.getRenderer()).drawLight(batch, null);
+		
+		pLoader.render(batch);
+	}
+
+	public void addParticleLoader(ParticleLoader pLoader) {
+		// TODO Auto-generated method stub
+		this.pLoader = pLoader;
 	}
 
 }

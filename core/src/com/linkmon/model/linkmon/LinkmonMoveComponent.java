@@ -11,7 +11,7 @@ public class LinkmonMoveComponent {
 		basicAttack = MoveFactory.getMoveFromId(MoveIds.KICK);
 		mediumAttack1 = MoveFactory.getMoveFromId(MoveIds.FIREWHIRL);
 		mediumAttack2 = MoveFactory.getMoveFromId(MoveIds.FIREBALL);
-		specialAttack = MoveFactory.getMoveFromId(MoveIds.HEADBUTT);
+		specialAttack = MoveFactory.getMoveFromId(MoveIds.ETERNALFIRE);
 	}
 	
 	public Move getBasicAttack() {

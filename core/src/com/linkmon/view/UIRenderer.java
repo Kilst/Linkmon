@@ -1,6 +1,7 @@
 package com.linkmon.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.linkmon.eventmanager.EventManager;
@@ -10,6 +11,7 @@ import com.linkmon.eventmanager.messages.MessageListener;
 import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.messagesystem.MessageManager;
+import com.linkmon.view.particles.ParticleLoader;
 import com.linkmon.view.screens.interfaces.IOnlineScreen;
 import com.linkmon.view.screens.widgets.messages.ChatMessage;
 import com.linkmon.view.screens.widgets.messages.MessageBox;
@@ -37,6 +39,8 @@ public class UIRenderer implements MessageListener {
 	
 	private MessageFactory messageFactory;
 	
+	private ParticleLoader pRenderer;
+	
 	public UIRenderer(MessageManager messages, GameClass game, EventManager eManager) {
 		this.messages = messages;
 		this.eManager = eManager;
@@ -53,7 +57,8 @@ public class UIRenderer implements MessageListener {
 	
 	private void displayMessageBox(MessageEvent event) {
 		messageBox = messageFactory.getMessage(event);
-		messageBox.addToUI(ui);
+		if(messageBox != null)
+			messageBox.addToUI(ui);
 	}
 	
 	private void displayChatWindow(MessageEvent event) {
@@ -91,9 +96,19 @@ public class UIRenderer implements MessageListener {
 		switch(event.eventId) {
 			case(MessageEvents.CLEAR_CURRENT_MESSAGE): {
 				messageBox = null;
+				pRenderer.createStarParticles(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 				break;
 			}
 		}
 		return false;
+	}
+
+	public ParticleLoader getpLoader() {
+		return pRenderer;
+	}
+
+	public void addParticleLoader(ParticleLoader pLoader) {
+		// TODO Auto-generated method stub
+		pRenderer = pLoader;
 	}
 }

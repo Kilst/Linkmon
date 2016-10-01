@@ -13,6 +13,9 @@ public class ScreenEvent extends GameEvent {
 	public float fValue;
 	
 	public boolean bool;
+	
+	public float x;
+	public float y;
 
 	public ScreenEvent(int eventId) {
 		super(eventId);
@@ -31,6 +34,15 @@ public class ScreenEvent extends GameEvent {
 		// TODO Auto-generated constructor stub
 		
 		this.value = value;
+	}
+	
+	public ScreenEvent(int eventId, int value, float x, float y) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		
+		this.value = value;
+		this.x = x;
+		this.y = y;
 	}
 
 	public ScreenEvent(int eventId, int value, MyScreen screen) {

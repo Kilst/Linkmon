@@ -5,8 +5,8 @@ import com.linkmon.model.MyVector2;
 
 public class InputEvent extends GameEvent {
 	
-	private MyVector2 position;
-	private int value;
+	public MyVector2 position;
+	public int value;
 
 	public InputEvent(int eventId) {
 		super(eventId);

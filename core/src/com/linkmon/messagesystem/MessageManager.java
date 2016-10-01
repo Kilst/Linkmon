@@ -20,6 +20,7 @@ public class MessageManager implements MessageListener {
 	private List<MessageEvent> networkMessageQueue;
 	private List<MessageEvent> networkMessageQueueRemove;
 	private MessageEvent currentNetworkMessage;
+	
 	private EventManager eManager;
 	
 	public MessageManager(EventManager eManager) {

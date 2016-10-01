@@ -94,32 +94,29 @@ public class MovesScreen implements Screen, IMovesScreen {
 		tableCurrentMoves.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		tableSelectableMoves = new SelectionTable();
+		tableSelectableMoves.align(Align.top);
 		
 		backButton = new TextButton("Back", buttonStyle);
 		
 		swapButton = new TextButton("Swap", buttonStyle);
 		
-		
-		Table headingTable = new Table();
 		scrollPane = new ScrollPane(tableSelectableMoves, scrollStyle);
-		headingTable.add(new Image(skin2.getDrawable("tableNoHeading"))).width(200);
-		headingTable.row();
-		headingTable.add(scrollPane).expand().fill();
+
 		
 		// Build Window Layout
 		
-		table.add(heading).expandX().colspan(2).padTop(-100);
+		table.add(heading).expandX().colspan(2).padTop(-100).size(250, 136);
 		table.row();
 		
 		
 		table.add(tableCurrentMoves).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		table.add(headingTable).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		tableSelectableMoves.align(Align.top);
+		table.add(scrollPane).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		table.row();
 		table.add(swapButton).expandX().colspan(2).padTop(20);
 		table.row();
 		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
+		table.debug();
 		
 		rootTable.add(table).expand().fill();
 		
@@ -206,6 +203,7 @@ public class MovesScreen implements Screen, IMovesScreen {
 		// TODO Auto-generated method stub
 		SelectableMoveButton item = new SelectableMoveButton(id, name, type, slot, damage, ignoreDamage, energy, tableCurrentMoves);
 		tableCurrentMoves.addItem(item);
+		tableCurrentMoves.validate();
 	}
 
 	@Override
@@ -213,6 +211,8 @@ public class MovesScreen implements Screen, IMovesScreen {
 		// TODO Auto-generated method stub
 		SelectableMoveButton item = new SelectableMoveButton(id, name, type, slot, damage, ignoreDamage, energy, tableSelectableMoves);
 		tableSelectableMoves.addItem(item);
+		tableSelectableMoves.validate();
+		tableCurrentMoves.validate();
 	}
 
 }

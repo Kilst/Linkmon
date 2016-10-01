@@ -41,4 +41,8 @@ public class ScreenEvents {
 	public static final int DEBUGGING = 1001;
 	public static final int DEBUGGING_SPAWNER = 1002;
 	
+	
+	// Particle Effects
+	public static final int ADD_PARTICLE_EFFECT = 2000;
+	
 }
