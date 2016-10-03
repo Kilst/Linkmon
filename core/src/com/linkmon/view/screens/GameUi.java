@@ -84,79 +84,8 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		this.game = game;
 
 		ui = uiGroup;
-	}
-	
-	public void update() {
 		
-		if(Calendar.getInstance().get(Calendar.MINUTE) < 10)
-			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":0"+Calendar.getInstance().get(Calendar.MINUTE));
-		else
-			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE));
-		
-//		fpsLabel.setText("FPS: "+Gdx.graphics.getFramesPerSecond());
-//		
-//		fpsLabel.toFront();
-	}
-	
-	private void addListeners() {
-		
-		train.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
-            }
-		});
-
-		feed.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	//eManager.notify(new ScreenEvent(ScreenEvents.START_MINIGAME));
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
-            }
-		});
-		
-		menu.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
-            }
-		});
-		
-		online.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
-            	}
-		});
-		
-		light.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP, !light.isChecked()));
-            }
-		});
-		help.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	String[] strings = new String[2];
-        		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
-        		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
-            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", strings));
-            	}
-		});
-		settings.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.DEBUGGING_SCREEN));
-            	}
-		});
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
@@ -249,7 +178,77 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		ui.addActor(containerBottom);
 		ui.addActor(containerTop);
 		ui.addActor(light);
+	}
+	
+	public void update() {
 		
+		if(Calendar.getInstance().get(Calendar.MINUTE) < 10)
+			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":0"+Calendar.getInstance().get(Calendar.MINUTE));
+		else
+			time.setText("Time:  "+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE));
+		
+//		fpsLabel.setText("FPS: "+Gdx.graphics.getFramesPerSecond());
+//		
+//		fpsLabel.toFront();
+	}
+	
+	private void addListeners() {
+		
+		train.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
+            }
+		});
+
+		feed.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	//eManager.notify(new ScreenEvent(ScreenEvents.START_MINIGAME));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
+            }
+		});
+		
+		menu.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
+            }
+		});
+		
+		online.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
+            	}
+		});
+		
+		light.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP, !light.isChecked()));
+            }
+		});
+		help.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	String[] strings = new String[2];
+        		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
+        		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
+            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", strings));
+            	}
+		});
+		settings.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.DEBUGGING_SCREEN));
+            	}
+		});
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 	}
 
