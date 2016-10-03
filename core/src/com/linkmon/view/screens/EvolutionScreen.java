@@ -2,14 +2,19 @@ package com.linkmon.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.view.particles.ParticleEffectActor;
+import com.linkmon.view.particles.ParticleIds;
 import com.linkmon.view.screens.widgets.AnimationWidget;
 import com.linkmon.view.screens.widgets.ReverseVignette;
 import com.linkmon.view.screens.widgets.messages.MessageTable;
@@ -35,6 +40,8 @@ public class EvolutionScreen implements Screen {
 	private int oldId;
 	private int newId;
 	
+	private ParticleEffectActor particle;
+	
 	public EvolutionScreen(Group group, EventManager eManager, int oldId, int newId) {
 		this.eManager = eManager;
 		uiGroup = group;
@@ -52,6 +59,17 @@ public class EvolutionScreen implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		ParticleEffect particleEffect = new ParticleEffect();
+		particleEffect.load(Gdx.files.internal("Particles/green-star.particles"), Gdx.files.internal("Particles/"));
+		
+		// Probably not the best way to get multiple effects, but it works.
+		ParticleEffect particleEffect2 = new ParticleEffect();
+		particleEffect2.load(Gdx.files.internal("Particles/orange-star.particles"), Gdx.files.internal("Particles/"));
+		particleEffect.getEmitters().add(particleEffect2.getEmitters().first());
+		particle = new ParticleEffectActor(particleEffect);
+		
+		
+		
 		background = new Image(skin2.getDrawable("evolutionBackground"));
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -76,17 +94,21 @@ public class EvolutionScreen implements Screen {
 		uiGroup.addActor(background);
 		uiGroup.addActor(animation);
 		uiGroup.addActor(vign);
-//		uiGroup.addActor(endChat);
+		uiGroup.addActor(particle);
 		uiGroup.addActor(beginChat);
+		
+		particle.setPosition(animation.getX()+(animation.getWidth()/2), animation.getY());
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		if(beginChat.isFinished()) {
-			if(!vign.isFinished())
+			if(!vign.isFinished()) {
 				vign.play();
+			}
 			else if(!endChat.isVisible()) {
+				particle.remove();
 				endChat.setVisible(true);
 				vign.remove();
 				animation.remove();
@@ -97,7 +119,7 @@ public class EvolutionScreen implements Screen {
 			}
 			
 			if(endChat.isFinished())
-				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
 		}
 	}
 

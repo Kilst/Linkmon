@@ -35,6 +35,8 @@ public class OnlineBattle {
 	
 	private boolean ended = false;
 	
+	private boolean playerWin;
+	
 	public OnlineBattle(BattleLinkmon player, BattleLinkmon opponent, EventManager eManager) {
 		
 		this.eManager = eManager;
@@ -167,5 +169,20 @@ public class OnlineBattle {
 	
 	public boolean getFirst() {
 		return first;
+	}
+	
+	public int getPlayerMoveType() {
+		if(playerMove != null)
+			return playerMove.getType();
+		else
+			return -1;
+	}
+
+	public int getOpponentMoveType() {
+		// TODO Auto-generated method stub
+		if(opponentMove != null)
+			return opponentMove.getType();
+		else
+			return -1;
 	}
 }

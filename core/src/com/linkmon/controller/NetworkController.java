@@ -138,7 +138,7 @@ public class NetworkController implements ScreenListener, NetworkListener {
 			}
 			case(ScreenEvents.UPDATE_ONLINE_BALLTE): {
 				if(battle.isUpdated()) {
-					((IBattleView)event.screen).updateHealths(battle.getFirst(), battle.getPlayer().getHealth(), battle.getPlayer().getEnergy(), battle.getOpponent().getHealth(), battle.getOpponent().getEnergy(), battle.getBattleMessages());
+					((IBattleView)event.screen).updateHealths(battle.getFirst(), battle.getPlayerMoveType(), battle.getPlayer().getHealth(), battle.getPlayer().getEnergy(), battle.getOpponentMoveType(), battle.getOpponent().getHealth(), battle.getOpponent().getEnergy(), battle.getBattleMessages());
 					battle.setUpdated(false);
 				}
 				if(battle.isEnded())

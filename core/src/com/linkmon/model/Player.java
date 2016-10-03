@@ -10,6 +10,7 @@ import com.linkmon.eventmanager.model.ModelEvent;
 import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
+import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
 import com.linkmon.model.gameobject.ObjectId;
@@ -17,6 +18,7 @@ import com.linkmon.model.items.ItemComponent;
 import com.linkmon.model.items.UsableItemComponent;
 import com.linkmon.model.linkmon.LinkmonExtraComponents;
 import com.linkmon.model.linkmon.LinkmonStatsComponent;
+import com.linkmon.model.linkmon.LinkmonStatusComponent;
 import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class Player {
@@ -36,6 +38,8 @@ public class Player {
 	private long lastGiftTime;
 	
 	private int giftId = -1; // no opengl context from network. since objects get created with textures
+	
+	private BattleLinkmon cryoLinkmon;
 	
 	public Player() {
 		gold = 15000;
@@ -220,5 +224,26 @@ public class Player {
 		stats.setDefense(stats.getDefense()+rewards[2]);
 		stats.setSpeed(stats.getSpeed()+rewards[3]);
 		addGold(rewards[4]);
+	}
+
+	public BattleLinkmon getCryoLinkmon() {
+		return cryoLinkmon;
+	}
+
+	public void setCryoLinkmon(BattleLinkmon cryoLinkmon) {
+		this.cryoLinkmon = cryoLinkmon;
+	}
+
+	public void cryoCurrentLinkmon() {
+		// TODO Auto-generated method stub
+		if(linkmon != null) {
+			LinkmonStatusComponent status = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus();
+			if(!status.isDead()) {
+				cryoLinkmon = new BattleLinkmon(linkmon);
+				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Saved current Linkmon"));
+			}
+			else
+				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Your current Linkmon is dead.\nYou'll have to revive it to store."));
+		}
 	}
 }

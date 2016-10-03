@@ -1,14 +1,15 @@
 package com.linkmon.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.eventmanager.messages.MessageListener;
-import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.game.GameClass;
 import com.linkmon.messagesystem.MessageManager;
 import com.linkmon.view.particles.ParticleLoader;
@@ -16,13 +17,11 @@ import com.linkmon.view.screens.interfaces.IOnlineScreen;
 import com.linkmon.view.screens.widgets.messages.ChatMessage;
 import com.linkmon.view.screens.widgets.messages.MessageBox;
 import com.linkmon.view.screens.widgets.messages.MessageFactory;
-import com.linkmon.view.screens.widgets.messages.MessageType;
-import com.linkmon.view.screens.widgets.messages.ReturnToMainMessageAction;
 
 public class UIRenderer implements MessageListener {
 	
-	public static final float scaleX = Gdx.graphics.getWidth()/1024;
-	public static final float scaleY = Gdx.graphics.getHeight()/600;
+	public static final float scaleX = Gdx.graphics.getWidth()/1280f;
+	public static final float scaleY = Gdx.graphics.getHeight()/720f;
 	
 	public static final float  scaleXY = scaleX * scaleY;
 	
@@ -88,6 +87,11 @@ public class UIRenderer implements MessageListener {
 		if(chatWindow != null)
 			chatWindow.toFront();
 		stage.draw();
+		
+		// Render Particles
+		stage.getBatch().begin();
+			pRenderer.render(stage.getBatch());
+		stage.getBatch().end();
 	}
 
 	@Override
@@ -96,7 +100,6 @@ public class UIRenderer implements MessageListener {
 		switch(event.eventId) {
 			case(MessageEvents.CLEAR_CURRENT_MESSAGE): {
 				messageBox = null;
-				pRenderer.createStarParticles(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 				break;
 			}
 		}
@@ -110,5 +113,9 @@ public class UIRenderer implements MessageListener {
 	public void addParticleLoader(ParticleLoader pLoader) {
 		// TODO Auto-generated method stub
 		pRenderer = pLoader;
+	}
+	
+	public void resize(int width, int height) {
+		//stage.getViewport().update(width, height, false);
 	}
 }

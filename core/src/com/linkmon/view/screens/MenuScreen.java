@@ -30,6 +30,7 @@ public class MenuScreen implements Screen, MyScreen {
 	private TextButton shopButton;
 	private TextButton itemButton;
 	private TextButton statsButton;
+	private TextButton movesButton;
 	private TextButton cryoGenicsButton;
 	private TextButton achievementsButton;
 	
@@ -39,7 +40,7 @@ public class MenuScreen implements Screen, MyScreen {
 	
 	private EventManager eManager;
 	
-	public MenuScreen(EventManager eManager, Group ui) {
+	public MenuScreen(Group ui, EventManager eManager) {
 		
 		this.eManager = eManager;
 		
@@ -67,6 +68,7 @@ public class MenuScreen implements Screen, MyScreen {
 		shopButton = new TextButton("Shop", buttonStyle);
 		itemButton = new TextButton("Items", buttonStyle);
 		statsButton = new TextButton("Stats", buttonStyle);
+		movesButton = new TextButton("Moves", buttonStyle);
 		cryoGenicsButton = new TextButton("CryoGenics", buttonStyle);
 		achievementsButton = new TextButton("Achievements", buttonStyle);
 		
@@ -84,9 +86,10 @@ public class MenuScreen implements Screen, MyScreen {
 		table.add(itemButton).pad(20);
 		table.row().pad(20);
 		table.add(statsButton).pad(20);
+		table.add(movesButton).pad(20);
+		table.row().pad(20);
 		table.add(cryoGenicsButton).pad(20);
-		table.row();
-		table.add(achievementsButton).pad(20).colspan(2);
+		table.add(achievementsButton).pad(20);
 		table.row();
 		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
@@ -125,6 +128,13 @@ public class MenuScreen implements Screen, MyScreen {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
+            }
+		});
+		
+		movesButton.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MOVES_SCREEN));
             }
 		});
 		

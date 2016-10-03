@@ -8,6 +8,7 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.model.Player;
+import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
 import com.linkmon.model.items.ItemComponent;
@@ -64,6 +65,22 @@ public class PlayerController implements ScreenListener {
 	public void getPlayerStats(IPlayerStats window) {
 		window.getPlayerStats(player.getName(), player.getGold());
 	}
+	
+	public void getLinkmonStats(ILinkmonStats window) {
+		BattleLinkmon linkmon = player.getCryoLinkmon();
+		if(linkmon != null) {
+			window.getLinkmonStats(
+					linkmon.getId(),
+					linkmon.getHealth(),
+					linkmon.getAttack(),
+					linkmon.getDefense(),
+					linkmon.getSpeed(),
+					0,
+					null,
+					linkmon.getRank()
+					);
+		}
+	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
@@ -72,6 +89,14 @@ public class PlayerController implements ScreenListener {
 			case(ScreenEvents.USE_ITEM): {
 				useItem(event.value);
 				return false;
+			}
+			case(ScreenEvents.GET_SAVED_LINKMON_STATS): {
+				getLinkmonStats((ILinkmonStats) event.screen);
+				return true;
+			}
+			case(ScreenEvents.SAVE_BATTLE_LINKMON): {
+				player.cryoCurrentLinkmon();
+				return true;
 			}
 			case(ScreenEvents.BUY_ITEM): {
 				buyItem(event.value, event.value2);

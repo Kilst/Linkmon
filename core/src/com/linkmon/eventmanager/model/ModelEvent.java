@@ -21,6 +21,14 @@ public class ModelEvent extends GameEvent {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public ModelEvent(int eventId, int value, float x, float y) {
+		super(eventId);
+		// TODO Auto-generated constructor stub
+		this.value = value;
+		this.x = x;
+		this.y = y;
+	}
 
 	public ModelEvent(int eventId, int value) {
 		super(eventId);

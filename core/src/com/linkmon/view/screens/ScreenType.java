@@ -1,5 +1,7 @@
 package com.linkmon.view.screens;
 
+import com.linkmon.view.screens.interfaces.MyScreen;
+
 public class ScreenType {
 	public static final int MAIN_UI = 0;
 	public static final int CONNECT_SCREEN = 1;
@@ -24,4 +26,5 @@ public class ScreenType {
 	public static final int ITEM_WINDOW = 20;
 	public static final int CRYO_SCREEN = 21;
 	public static final int MOVES_SCREEN = 22;
+	public static final int MENU_SCREEN = 23;
 }

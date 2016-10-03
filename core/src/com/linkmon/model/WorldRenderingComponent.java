@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.libgdx.LibgdxRenderingComponent;
+import com.linkmon.view.UIRenderer;
 
 public class WorldRenderingComponent extends LibgdxRenderingComponent {
 
@@ -26,7 +27,7 @@ public class WorldRenderingComponent extends LibgdxRenderingComponent {
 		darkenWorld.setColor(1f, 0f, 0f, 0.7f);
 		
 		this.sprite = new Sprite(skin2.getRegion("trainingBackground"));
-		sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		sprite.setSize(sprite.getWidth()*(Gdx.graphics.getHeight()/sprite.getHeight()), sprite.getHeight()*(Gdx.graphics.getHeight()/sprite.getHeight()));
 	}
 	
 	public void draw(Batch batch, GameObject object) {

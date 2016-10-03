@@ -130,7 +130,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
             }
 		});
 		
@@ -153,7 +153,10 @@ public class ItemWindow implements Screen, IPlayerItems {
 		itemBox.addItemImage(null);
 		itemText.setText("");
 		// Rebuild ItemsTable
-		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.ALL, this));
+		//eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.ALL, this));
+	
+		
+		eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 	}
 
 	@Override

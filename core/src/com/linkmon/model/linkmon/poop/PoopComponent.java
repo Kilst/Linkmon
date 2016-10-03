@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.eventmanager.model.ModelEvent;
+import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.helpers.Timer;
 import com.linkmon.model.World;
 import com.linkmon.model.components.IExtraComponents;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
 import com.linkmon.model.gameobject.ObjectId;
+import com.linkmon.view.particles.ParticleIds;
 
 public class PoopComponent implements IExtraComponents {
 	
@@ -46,6 +49,7 @@ public class PoopComponent implements IExtraComponents {
 	
 	public void removePoop(GameObject poop) {
 		poopListRemove.add(poop);
+		poop.getWorld().geteManager().notify(new ModelEvent(ModelEvents.ADD_PARTICLE_EFFECT, ParticleIds.ROCK, poop.getX()+(poop.getWidth()/2), poop.getY()));
 //		poop.getWorld().removeObjectFromWorld(poop);
 	}
 
@@ -66,7 +70,7 @@ public class PoopComponent implements IExtraComponents {
 	private void removePoops(GameObject object) {
 		for(GameObject poop : poopList) {
 			if(((PoopInputComponent)poop.getInputComponent()).isClicked()) {
-				poopListRemove.add(poop);
+				removePoop(poop);
 			}
 		}
 		

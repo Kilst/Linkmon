@@ -71,8 +71,8 @@ public class LibgdxParticleController implements ScreenListener, ModelListener, 
 	@Override
 	public boolean onNotify(InputEvent event) {
 		// TODO Auto-generated method stub
+		//addParticleToWorld(ParticleIds.GREEN_ORANGE_STAR, event.position.x, event.position.y);
 		addParticleToWorld(ParticleIds.STAR, event.position.x, event.position.y);
-		Gdx.app.log("Client2Listener", "Failed to read packet.");
 		return false;
 	}
 }

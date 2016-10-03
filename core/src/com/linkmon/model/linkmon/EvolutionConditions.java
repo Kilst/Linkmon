@@ -5,8 +5,7 @@ import com.linkmon.model.gameobject.GameObject;
 public class EvolutionConditions {
 	
 	public static int fireBoy(GameObject linkmon) {
-//		if(System.nanoTime() - linkmon.getBirthDate().getNano() > 1800000000000L/12) // 30 mins(2.5mins)
-		if(System.nanoTime() - ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().getBirthDate().getNano() > 1800000000000L) // 30 mins
+		if(System.nanoTime() - ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().getBirthDate().getNano() > 1800000000000L/180000000) // 30 mins
 			return LinkmonIds.FIRE_BOY;
 		else
 			return linkmon.getId();

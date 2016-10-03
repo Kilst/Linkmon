@@ -65,12 +65,13 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		Label itemNameLabel = new Label(name, skin);
 		
 		Label moveType = new Label(getTypeString(), skin);
-		
-		Label moveDamage = new Label(""+damage, skin);
-		
+		moveType.setAlignment(Align.center);
+		Label moveDamage = new Label("Damage: "+damage+"\nIgnore Def: "+ignoreDamage+"\nEnergy Dmg: "+0, skin);
+		moveDamage.setAlignment(Align.left);
 		Label moveIgnoreDamage = new Label(""+ignoreDamage, skin);
-		
+		moveIgnoreDamage.setAlignment(Align.center);
 		Label moveEnergy = new Label(""+energy, skin);
+		moveEnergy.setAlignment(Align.center);
 		
 		Image img = new Image(new NinePatch(skin2.getPatch("spacer")));
 		img.getColor().a = 0.5f;
@@ -87,28 +88,28 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		
 		
 		
-		this.add(itemNameLabel).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
+		this.add(itemNameLabel).width(100*UIRenderer.scaleXY).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
 		itemNameLabel.setTouchable(Touchable.disabled);
 		
-		this.add(img).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
+		this.add(img).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(moveType).width(80).fill();
+		this.add(moveType).width(70*UIRenderer.scaleXY).fill();
 		
-		this.add(img2).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
+		this.add(img2).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
-		this.add(moveDamage).width(20).fill();
+		this.add(moveDamage).width(110*UIRenderer.scaleXY).fill();
 		
-		this.add(img3).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
-		img3.setTouchable(Touchable.disabled);
+//		this.add(img3).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
+//		img3.setTouchable(Touchable.disabled);
+//		
+//		this.add(moveIgnoreDamage).width(50).fill();
 		
-		this.add(moveIgnoreDamage).width(20).fill();
-		
-		this.add(img4).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
+		this.add(img4).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
 		img4.setTouchable(Touchable.disabled);
 		
-		this.add(moveEnergy).width(20).padRight(15).fill();
+		this.add(moveEnergy).width(50*UIRenderer.scaleXY).padRight(15).fill();
 		
 		green = new TextureRegion(skin2.getRegion("green"));
 		
@@ -119,6 +120,67 @@ public class SelectableMoveButton extends Table implements ISelectable {
             	parent.setSelectedItem(itemButton);
             }
 		});
+	}
+	
+	public SelectableMoveButton() {
+		// TODO Auto-generated constructor stub
+		super();
+		
+		Skin skin2 = new Skin();
+		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
+		skin2.addRegions(uiAtlas);
+		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+
+		this.setBackground(skin2.getDrawable("tableButton"));
+		this.setColor(0.3f, 0.3f, 1f, 0.75f);
+		
+		Label itemNameLabel = new Label("Name", skin);
+		itemNameLabel.setAlignment(Align.center);
+		Label moveType = new Label("Type", skin);
+		moveType.setAlignment(Align.center);
+		Label moveDamage = new Label("Damage", skin);
+		moveDamage.setAlignment(Align.center);
+		Label moveEnergy = new Label("Energy", skin);
+		moveEnergy.setAlignment(Align.center);
+		
+		
+		Image img = new Image(new NinePatch(skin2.getPatch("spacer")));
+		img.getColor().a = 0.5f;
+		
+		Image img2 = new Image(new NinePatch(skin2.getPatch("spacer")));
+		img2.getColor().a = 0.5f;
+		
+		Image img3 = new Image(new NinePatch(skin2.getPatch("spacer")));
+		img3.getColor().a = 0.5f;
+		
+		Image img4 = new Image(new NinePatch(skin2.getPatch("spacer")));
+		img4.getColor().a = 0.5f;
+		
+		
+		
+		
+		this.add(itemNameLabel).width(100*UIRenderer.scaleXY).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
+		itemNameLabel.setTouchable(Touchable.disabled);
+		
+		this.add(img).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		img.setTouchable(Touchable.disabled);
+		
+		this.add(moveType).width(70*UIRenderer.scaleXY).fill();
+		
+		this.add(img2).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		img2.setTouchable(Touchable.disabled);
+		
+		this.add(moveDamage).width(110*UIRenderer.scaleXY).fill();
+		
+//		this.add(img3).width(3).height(30).align(Align.left).padLeft(15).padRight(15);
+//		img3.setTouchable(Touchable.disabled);
+		
+//		this.add(moveIgnoreDamage).width(50).fill();
+		
+		this.add(img4).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		img4.setTouchable(Touchable.disabled);
+		
+		this.add(moveEnergy).width(50*UIRenderer.scaleXY).padRight(15).fill();
 	}
 	
 	private String getTypeString() {

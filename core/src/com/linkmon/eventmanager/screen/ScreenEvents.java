@@ -17,6 +17,8 @@ public class ScreenEvents {
 	public static final int GET_LINKMON_MOVES = 11;
 	public static final int GET_CHOOSABLE_MOVES = 12;
 	public static final int SWAP_MOVE = 13;
+	public static final int GET_SAVED_LINKMON_STATS = 14;
+	public static final int SAVE_BATTLE_LINKMON = 15;
 	public static final int LIGHT_SWAP = 99;
 
 	
@@ -44,5 +46,6 @@ public class ScreenEvents {
 	
 	// Particle Effects
 	public static final int ADD_PARTICLE_EFFECT = 2000;
+	
 	
 }

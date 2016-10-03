@@ -13,6 +13,7 @@ import com.linkmon.view.screens.EvolveScreen;
 import com.linkmon.view.screens.FeedWindow;
 import com.linkmon.view.screens.GameUi;
 import com.linkmon.view.screens.ItemWindow;
+import com.linkmon.view.screens.MenuScreen;
 import com.linkmon.view.screens.MovesScreen;
 import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.ShopWindow;
@@ -133,6 +134,10 @@ public class LibgdxScreenController implements ScreenListener {
 			}
 			case (ScreenType.MOVES_SCREEN) : {
 				game.setScreen(new MovesScreen(uiGroup, eManager));
+				break;
+			}
+			case (ScreenType.MENU_SCREEN) : {
+				game.setScreen(new MenuScreen(uiGroup, eManager));
 				break;
 			}
 		}

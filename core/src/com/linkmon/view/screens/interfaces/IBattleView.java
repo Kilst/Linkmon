@@ -7,7 +7,8 @@ public interface IBattleView extends IOnlineScreen {
 	public void getSprites(int myLinkmonId, int opponentLinkmonId);
 	public void getStats(int myNewHealth, String name, int oppNewHealth, String opponentName);
 	public void battleEnded();
-	public void updateHealths(boolean first, int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy, String[][] messages);
+	public void updateHealths(boolean first, int myMoveId, int myNewHealth, int myEnergy, int oppMoveId, int oppNewHealth,
+			int oppEnergy, String[][] messages);
 	
 	
 }

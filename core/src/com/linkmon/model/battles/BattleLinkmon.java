@@ -30,6 +30,7 @@ public class BattleLinkmon {
 	private int energy = 25;
 	
 	private final int maxEnergy = 50;
+	private int rank;
 	
 	private EventManager eManager;
 	
@@ -57,6 +58,7 @@ public class BattleLinkmon {
 		this.speed = stats.getSpeed();
 		this.move1 = 1;
 		this.move2 = 2;
+		this.rank = stats.getRank();
 		this.playerName = "";
 		eManager = linkmon.getWorld().geteManager();
 	}
@@ -140,5 +142,13 @@ public class BattleLinkmon {
 		}
 		else
 			return true;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 }

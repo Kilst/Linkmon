@@ -25,6 +25,8 @@ import com.linkmon.model.linkmon.Move;
 import com.linkmon.model.linkmon.MoveFactory;
 import com.linkmon.model.linkmon.MoveIds;
 import com.linkmon.view.UIRenderer;
+import com.linkmon.view.particles.ParticleFactory;
+import com.linkmon.view.particles.ParticleIds;
 import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.interfaces.IBattleView;
 import com.linkmon.view.screens.widgets.AnimationWidget;
@@ -44,8 +46,8 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	volatile private TextButton defend;
 	private Skin skin;
 	
-	public int playerMoveId;
-	public int opponentMoveId;
+	public int playerMoveType;
+	public int opponentMoveType;
 	
 	
 	private BattleStats oppTable;
@@ -120,12 +122,14 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 					oppTable.updateEnergy(opponentUpdatedEnergy);
 					playerUpdated = true;
 					uiGroup.addActor(secondChat);
+					eManager.notify(new ScreenEvent(ScreenEvents.ADD_PARTICLE_EFFECT, ParticleFactory.getParticleFromMoveType(opponentMoveType), myLinkmonSprite.getX()+(myLinkmonSprite.getWidth()/2), myLinkmonSprite.getY()+(myLinkmonSprite.getHeight()/2)));
 				}
 				else if(first && !opponentUpdated) {
 					oppTable.updateHealth(opponentUpdatedHealth);
 					playerTable.updateEnergy(playerUpdatedEnergy);
 					opponentUpdated = true;
 					uiGroup.addActor(secondChat);
+					eManager.notify(new ScreenEvent(ScreenEvents.ADD_PARTICLE_EFFECT, ParticleFactory.getParticleFromMoveType(playerMoveType), oppLinkmonSprite.getX()+(oppLinkmonSprite.getWidth()/2), oppLinkmonSprite.getY()+(oppLinkmonSprite.getHeight()/2)));
 				}
 				
 				if(secondChat.isFinished()) {
@@ -135,6 +139,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 						playerUpdated = true;
 						updated = false;
 						buttonTable.setVisible(true);
+						eManager.notify(new ScreenEvent(ScreenEvents.ADD_PARTICLE_EFFECT, ParticleFactory.getParticleFromMoveType(opponentMoveType), myLinkmonSprite.getX()+(myLinkmonSprite.getWidth()/2), myLinkmonSprite.getY()+(myLinkmonSprite.getHeight()/2)));
 					}
 					else if(!opponentUpdated) {
 						oppTable.updateHealth(opponentUpdatedHealth);
@@ -142,6 +147,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 						opponentUpdated = true;
 						updated = false;
 						buttonTable.setVisible(true);
+						eManager.notify(new ScreenEvent(ScreenEvents.ADD_PARTICLE_EFFECT, ParticleFactory.getParticleFromMoveType(playerMoveType), oppLinkmonSprite.getX()+(oppLinkmonSprite.getWidth()/2), oppLinkmonSprite.getY()+(oppLinkmonSprite.getHeight()/2)));
 					}
 				}
 			}
@@ -217,7 +223,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	            public void clicked(InputEvent event, float x, float y){
 	            	try {
 		            	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move1));
-		            	playerMoveId = move1;
+		            	playerMoveType = move1;
 		            	buttonTable.setVisible(false);
 	            	}
 	            	catch (Exception e){
@@ -232,7 +238,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
             	
             	
             	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move2));
-            	playerMoveId = move2;
+            	playerMoveType = move2;
             	buttonTable.setVisible(false);
             }
 		});
@@ -243,7 +249,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
             	
             	
             	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move3));
-            	playerMoveId = move3;
+            	playerMoveType = move3;
             	buttonTable.setVisible(false);
             }
 		});
@@ -254,7 +260,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
             	
             	
             	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, move4));
-            	playerMoveId = move4;
+            	playerMoveType = move4;
             	buttonTable.setVisible(false);
             }
 		});
@@ -265,7 +271,6 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
             	
             	
             	eManager.notify(new ScreenEvent(ScreenEvents.SEND_MOVE, MoveIds.DEFEND));
-            	playerMoveId = MoveIds.DEFEND;
             	buttonTable.setVisible(false);
             }
 		});
@@ -318,8 +323,12 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 	}
 
 	@Override
-	public void updateHealths(boolean first, int myNewHealth, int myEnergy, int oppNewHealth, int oppEnergy, String[][] messages) {
+	public void updateHealths(boolean first, int myMoveType, int myNewHealth, int myEnergy, int oppMoveType, int oppNewHealth, int oppEnergy, String[][] messages) {
 		// TODO Auto-generated method stub
+		
+		playerMoveType = myMoveType;
+		
+		opponentMoveType = oppMoveType;
 		
 		playerUpdatedHealth = myNewHealth;
 		playerUpdatedEnergy = myEnergy;

@@ -45,9 +45,6 @@ public class FeedWindow implements Screen, IPlayerItems {
 
 	private ISelectable selectedItem;
 	
-	private SelectableItemButton item;
-	private List<SelectableItemButton> buttonList;
-	
 	private Button backButton;
 	private Button feedButton;
 	private ItemBox itemBox;
@@ -114,8 +111,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 		tableItems.add(feedButton).expand().align(Align.bottom).pad(5*UIRenderer.scaleXY);
 		
 		table.add(tableItems).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		tableFeed.align(Align.top);
 		table.add(tableFeed).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		tableFeed.align(Align.top);
 		
 		container.add(image);
 		container.row();
@@ -125,11 +122,6 @@ public class FeedWindow implements Screen, IPlayerItems {
 		
 		addListeners();
 		
-		tableItems.setVisible(true);
-		
-		
-		buttonList = new ArrayList<SelectableItemButton>();
-		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_ITEMS, ItemType.FOOD, this));
 	}
 	
@@ -138,7 +130,7 @@ public class FeedWindow implements Screen, IPlayerItems {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN_PREVIOUS));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
             }
 		});
 		
@@ -164,8 +156,11 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		if(tableFeed.isUpdated())
+		if(tableFeed.isUpdated()) {
 			selectedItem = tableFeed.getSelectedItem();
+			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()).getTexture());
+			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
+		}
 	}
 
 	@Override
@@ -202,10 +197,8 @@ public class FeedWindow implements Screen, IPlayerItems {
 	@Override
 	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
 		// TODO Auto-generated method stub
-		item = new SelectableItemButton(id, name, quantity, price, itemText, tableFeed, uiGroup);			
-		buttonList.add(item);
+		SelectableItemButton item = new SelectableItemButton(id, name, quantity, price, itemText, tableFeed, uiGroup);
 		tableFeed.add(item).expandX().fillX();
-		tableFeed.row();
 	}
 
 }

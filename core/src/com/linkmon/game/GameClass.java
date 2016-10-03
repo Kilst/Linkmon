@@ -5,9 +5,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.linkmon.controller.ControllerService;
 import com.linkmon.controller.MiniGameController;
 import com.linkmon.eventmanager.EventManager;
@@ -49,6 +52,9 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 	MiniGameController game;
 	
 	private ControllerService service;
+	
+	public OrthographicCamera camera;
+	ExtendViewport viewport;
 	
 	public GameClass() {
 		super();
@@ -116,6 +122,9 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		
 		batch = new SpriteBatch();
 		
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		viewport = new ExtendViewport(480, 320, camera);
+		
 		ResourceLoader.getInstance();
 		while (!ResourceLoader.assetManager.update())
         {
@@ -133,8 +142,8 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 //		MiniGameController miniGame = new MiniGameController(eManager);
 		worldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
 		
-		uiRenderer.addParticleLoader(service.getParticleController().getWorldLoader());
-		worldRenderer.addParticleLoader(service.getParticleController().getUILoader());
+		uiRenderer.addParticleLoader(service.getParticleController().getUILoader());
+		worldRenderer.addParticleLoader(service.getParticleController().getWorldLoader());
 		
 		im = new InputMultiplexer();
 		
@@ -147,6 +156,9 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 	@Override
 	public void render () {
 		
+		camera.update();
+		//batch.setProjectionMatrix(camera.projection);
+		uiRenderer.stage.getBatch().setProjectionMatrix(camera.projection);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -159,11 +171,16 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 			}
 			else
 				worldRenderer.render(batch);
-			uiRenderer.getpLoader().render(batch);
 		batch.end();
 
 		uiRenderer.render();
 		this.getScreen().render(0);
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		//uiRenderer.resize(width, height);
+		//viewport.update(480, 320, true);
 	}
 
 	@Override

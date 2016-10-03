@@ -26,9 +26,9 @@ public class LibgdxWorldRenderer {
 			((LibgdxRenderingComponent)object.getRenderer()).draw(batch, object);
 		}
 		
-		((WorldRenderingComponent)world.getRenderer()).drawLight(batch, null);
-		
 		pLoader.render(batch);
+		
+		((WorldRenderingComponent)world.getRenderer()).drawLight(batch, null);
 	}
 
 	public void addParticleLoader(ParticleLoader pLoader) {

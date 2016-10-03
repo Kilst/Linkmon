@@ -42,8 +42,8 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	
 	Button feed;
 	Button menu;
-	Button help;
-	Button settings;
+	ImageButton help;
+	ImageButton settings;
 	
 	private boolean evolve = false;
 	
@@ -84,92 +84,6 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		this.game = game;
 
 		ui = uiGroup;
-		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
-		
-		skin2 = new Skin();
-		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
-		skin2.addRegions(uiAtlas);
-		
-		TextButtonStyle buttonStyle = new TextButtonStyle();
-		
-		buttonStyle.checked = skin2.getDrawable("mainUIButton");
-		buttonStyle.down = skin2.getDrawable("mainUIButton");
-		buttonStyle.up = skin2.getDrawable("mainUIButton");
-		buttonStyle.font = skin.getFont("default-font");
-
-		train = new TextButton("Train",buttonStyle);
-		train.padTop(10).padRight(3);
-		feed = new TextButton("Feed", buttonStyle);
-		feed.padTop(10).padRight(3);
-		menu = new TextButton("Menu", buttonStyle);
-		menu.padTop(10).padRight(3);
-		online = new TextButton("Online", buttonStyle);
-		online.padTop(10).padRight(3);
-		
-		containerBottom = new Table();
-		containerBottom.setSize(Gdx.graphics.getWidth(), train.getHeight());
-		containerBottom.add(menu);
-		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
-		containerBottom.add(train);
-		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
-		containerBottom.add(feed);
-		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink"))).expandX().fillX();
-		containerBottom.add(online);
-		
-		font = new BitmapFont(Gdx.files.internal("fontSmall-export.fnt"),
-		         Gdx.files.internal("fontSmall-export.png"), false);
-		
-		
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = font;
-		
-		playerGold = new Label("Gold: ", labelStyle);
-		coinsImage = new Image(skin2.getDrawable("coins"));
-		
-		
-		hunger = new Label("Hunger: ", labelStyle);
-		hungerBar = new MyProgressBar(skin2, 0, 100);
-		
-		exhaustion = new Label("Energy: ", labelStyle);
-		exhaustionBar = new MyProgressBar(skin2, 0, 100);
-		
-		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
-		containerTop = new Table();
-		containerTop.setSize(Gdx.graphics.getWidth(), 30*UIRenderer.scaleXY);
-		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*UIRenderer.scaleXY);
-		containerTop.setBackground(skin.getDrawable("default-rect"));
-		
-		help = new ImageButton(skin2.getDrawable("helpButton"));
-		settings = new ImageButton(skin2.getDrawable("settingsButton"));
-		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
-		light.setPosition(0, (Gdx.graphics.getHeight() - 30*UIRenderer.scaleY)-light.getHeight());
-		
-		
-		containerTop.add(playerGold).height(30*UIRenderer.scaleXY).padRight(5);
-		containerTop.add(coinsImage).align(Align.left).expandX();
-		containerTop.add(hunger).height(30*UIRenderer.scaleXY);
-		containerTop.add(hungerBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
-		containerTop.add(exhaustion).height(30*UIRenderer.scaleXY);
-		containerTop.add(exhaustionBar).size(150*UIRenderer.scaleXY, 10*UIRenderer.scaleXY).expandX().align(Align.left);
-		containerTop.add(time).size(Gdx.graphics.getWidth()/4, 30*UIRenderer.scaleXY);
-		
-		containerTop.add(help).padTop(30*UIRenderer.scaleXY);
-		containerTop.add(settings).padTop(30*UIRenderer.scaleXY);
-		
-		addListeners();
-		
-//		fpsLabel = new Label("",skin);
-//		fpsLabel.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		
-//		ChatWindow chat = new ChatWindow(1, ui, eManager);
-		
-		ui.addActor(containerBottom);
-		ui.addActor(containerTop);
-		ui.addActor(light);
-		
-//		ui.addActor(fpsLabel);
-		
-//		ui.addActor(chat);
 	}
 	
 	public void update() {
@@ -197,23 +111,21 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	//eManager.notify(new ScreenEvent(ScreenEvents.START_MINIGAME));
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MOVES_SCREEN));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.FEED_WINDOW));
             }
 		});
 		
 		menu.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	game.setScreen(new MenuScreen(eManager, ui));
-            	}
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
+            }
 		});
 		
 		online.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
             	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.CONNECT_SCREEN));
-            	
-            	eManager.notify(new ScreenEvent(ScreenEvents.CONNECT_TO_SERVER));
             	}
 		});
 		
@@ -243,6 +155,101 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		
+		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
+		skin2 = new Skin();
+		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
+		skin2.addRegions(uiAtlas);
+		
+		font = new BitmapFont(Gdx.files.internal("fontSmall-export.fnt"),
+		         Gdx.files.internal("fontSmall-export.png"), false);
+		
+		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = font;
+		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("mainUIButton");
+		buttonStyle.down = skin2.getDrawable("mainUIButton");
+		buttonStyle.up = skin2.getDrawable("mainUIButton");
+		buttonStyle.font = font;
+
+		train = new TextButton("Train",buttonStyle);
+		train.setScale(UIRenderer.scaleXY);
+		train.padTop(10).padRight(3);
+		feed = new TextButton("Feed", buttonStyle);
+		feed.setScale(UIRenderer.scaleXY);
+		feed.padTop(10).padRight(3);
+		menu = new TextButton("Menu", buttonStyle);
+		menu.setScale(UIRenderer.scaleXY);
+		menu.padTop(10).padRight(3);
+		online = new TextButton("Online", buttonStyle);
+		online.setScale(UIRenderer.scaleXY);
+		online.padTop(10).padRight(3);
+		
+		containerBottom = new Table();
+		containerBottom.setSize(Gdx.graphics.getWidth(), train.getHeight());
+		containerBottom.add(menu);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
+		containerBottom.add(train);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink")));
+		containerBottom.add(feed);
+		containerBottom.add(new Image(skin2.getDrawable("mainUIButtonLink"))).expandX().fillX();
+		containerBottom.add(online);
+		
+		playerGold = new Label("Gold: ", labelStyle);
+		playerGold.setFontScale(UIRenderer.scaleXY);
+		coinsImage = new Image(skin2.getDrawable("coins"));
+		coinsImage.setScale(UIRenderer.scaleXY);
+		
+		
+		hunger = new Label("Hunger: ", labelStyle);
+		hunger.setFontScale(UIRenderer.scaleXY);
+		hungerBar = new MyProgressBar(skin2, 0, 100);
+		
+		exhaustion = new Label("Energy: ", labelStyle);
+		exhaustion.setFontScale(UIRenderer.scaleXY);
+		exhaustionBar = new MyProgressBar(skin2, 0, 100);
+		
+		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
+		time.setFontScale(UIRenderer.scaleXY);
+		containerTop = new Table();
+		containerTop.setSize(Gdx.graphics.getWidth(), 30*UIRenderer.scaleXY);
+		containerTop.setPosition(0, Gdx.graphics.getHeight() - 30*UIRenderer.scaleXY);
+		containerTop.setBackground(skin.getDrawable("default-rect"));
+		
+		help = new ImageButton(skin2.getDrawable("helpButton"));
+		help.setScale(UIRenderer.scaleXY);
+		help.getImage().setScale(UIRenderer.scaleXY);
+		settings = new ImageButton(skin2.getDrawable("settingsButton"));
+		settings.setScale(UIRenderer.scaleXY);
+		settings.getImage().setScale(UIRenderer.scaleXY);
+		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
+		light.setScale(UIRenderer.scaleXY);
+		light.getImage().setScale(UIRenderer.scaleXY);
+		light.setPosition(0, (Gdx.graphics.getHeight() - 30*UIRenderer.scaleXY)-light.getHeight()*UIRenderer.scaleXY);
+		
+		
+		containerTop.add(playerGold).height(30*UIRenderer.scaleXY).padRight(5);
+		containerTop.add(coinsImage).align(Align.left).expandX();
+		containerTop.add(hunger).height(30*UIRenderer.scaleY);
+		containerTop.add(hungerBar).size(150*UIRenderer.scaleXY, 10).expandX().align(Align.left);
+		containerTop.add(exhaustion).height(30*UIRenderer.scaleXY);
+		containerTop.add(exhaustionBar).size(150*UIRenderer.scaleXY, 10).expandX().align(Align.left);
+		containerTop.add(time).size(Gdx.graphics.getWidth()/4*UIRenderer.scaleXY, 30*UIRenderer.scaleXY);
+		
+		containerTop.add(help).padTop(30*UIRenderer.scaleXY);
+		containerTop.add(settings).padTop(30*UIRenderer.scaleXY);
+		
+		addListeners();
+		
+		
+		ui.addActor(containerBottom);
+		ui.addActor(containerTop);
+		ui.addActor(light);
+		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 	}
 

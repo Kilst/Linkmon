@@ -32,7 +32,7 @@ public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 
 	private Skin skin;
 	
-	private boolean connected;
+	private boolean connected = false;
 	
 	EventManager eManager;
 	
@@ -43,8 +43,9 @@ public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 		this.eManager = eManager;
 		uiGroup = group;
 		this.skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
-		
+		connected = false;
 		eManager.addNetworkListener(this);
+		eManager.notify(new ScreenEvent(ScreenEvents.CONNECT_TO_SERVER));
 	}
 	
 	public void updateLabel(String text) {
@@ -66,7 +67,7 @@ public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		connected = true;
+		
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		container.setBackground(skin.getDrawable("default-rect"));
@@ -93,6 +94,8 @@ public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		load.act(delta);
+		if(connected)
+			eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
 	}
 
 	@Override
@@ -140,9 +143,9 @@ public class ConnectScreen implements Screen, IOnlineScreen, NetworkListener {
 	@Override
 	public boolean onNotify(NetworkEvent event) {
 		// TODO Auto-generated method stub
-			switch(event.eventId) {
+		switch(event.eventId) {
 			case(NetworkEvents.CONNECTED): {
-				eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.ONLINE_SCREEN));
+				connected = true;
 				break;
 			}
 		}

@@ -39,30 +39,6 @@ public class ParticleLoader {
         activeParticles.add(particleEffect);
 	}
 	
-	public void createStarParticles(float x, float y) {
-		ParticleEffect particleEffect = particlePool.obtain();
-        particleEffect.load(Gdx.files.internal("Particles/star.particles"), Gdx.files.internal("Particles/"));
-        particleEffect.setPosition(x, y);
-        particleEffect.start();
-        activeParticles.add(particleEffect);
-	}
-	
-	public void createRockSmashParticles(float x, float y) {
-		ParticleEffect particleEffect = particlePool.obtain();
-        particleEffect.load(Gdx.files.internal("Particles/rock-smash.particles"), Gdx.files.internal("Particles/"));
-        particleEffect.setPosition(x, y);
-        particleEffect.start();
-        activeParticles.add(particleEffect);
-	}
-	
-	public void createFlameParticles(float x, float y) {
-		ParticleEffect particleEffect = particlePool.obtain();
-        particleEffect.load(Gdx.files.internal("Particles/flame.particles"), Gdx.files.internal("Particles/"));
-        particleEffect.setPosition(x, y);
-        particleEffect.start();
-        activeParticles.add(particleEffect);
-	}
-	
 	private void freeCompletedParticles() {
 		Iterator<ParticleEffect> iter = activeParticles.iterator();
 

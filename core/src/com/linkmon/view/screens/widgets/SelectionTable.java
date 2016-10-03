@@ -27,7 +27,6 @@ public class SelectionTable extends Table {
 	public void setSelectedItem(ISelectable selectedItem) {
 		for(ISelectable item : items) {
 			item.setSelected(false);
-			Gdx.app.log("SELECTIONTABLE", "FALSED");
 		}
 		
 		if(selectedItem != null)

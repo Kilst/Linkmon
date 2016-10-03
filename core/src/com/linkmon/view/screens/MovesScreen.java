@@ -50,6 +50,10 @@ public class MovesScreen implements Screen, IMovesScreen {
 	
 	MovesScreen screen = this;
 	
+	Table scrollTable;
+	Table scrollTableCurrent;
+	private ScrollPane scrollPaneCurrent;
+	
 	public MovesScreen(Group group, EventManager eManager) {
 		
 		this.eManager = eManager;
@@ -69,7 +73,7 @@ public class MovesScreen implements Screen, IMovesScreen {
 		buttonStyle.font = skin.getFont("default-font");
 		
 		ScrollPaneStyle scrollStyle = new ScrollPaneStyle();
-		scrollStyle.background = skin2.getDrawable("tableNoHeading");
+		//scrollStyle.background = skin2.getDrawable("tableNoHeading");
 		
 		// Create Window Elements
 		
@@ -91,7 +95,6 @@ public class MovesScreen implements Screen, IMovesScreen {
 		table.setBackground(skin2.getDrawable("newContainer"));
 		
 		tableCurrentMoves = new SelectionTable();
-		tableCurrentMoves.setBackground(skin2.getDrawable("tableNoHeading"));
 		
 		tableSelectableMoves = new SelectionTable();
 		tableSelectableMoves.align(Align.top);
@@ -99,6 +102,16 @@ public class MovesScreen implements Screen, IMovesScreen {
 		backButton = new TextButton("Back", buttonStyle);
 		
 		swapButton = new TextButton("Swap", buttonStyle);
+		
+		scrollTableCurrent = new Table();
+		scrollTableCurrent.setBackground(skin2.getDrawable("tableNoHeading"));
+		SelectableMoveButton heading1 = new SelectableMoveButton();
+		
+		scrollPaneCurrent = new ScrollPane(tableCurrentMoves, scrollStyle);
+		
+		scrollTable = new Table();
+		scrollTable.setBackground(skin2.getDrawable("tableNoHeading"));
+		SelectableMoveButton heading2 = new SelectableMoveButton();
 		
 		scrollPane = new ScrollPane(tableSelectableMoves, scrollStyle);
 
@@ -109,14 +122,21 @@ public class MovesScreen implements Screen, IMovesScreen {
 		table.row();
 		
 		
-		table.add(tableCurrentMoves).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		table.add(scrollPane).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		//table.add(tableCurrentMoves).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		scrollTableCurrent.add(heading1).expandX();
+		scrollTableCurrent.row();
+		scrollTableCurrent.add(scrollPaneCurrent).expand();
+		table.add(scrollTableCurrent).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		scrollTable.add(heading2).expandX();
+		scrollTable.row();
+		scrollTable.add(scrollPane).expand();
+		table.add(scrollTable).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		table.row();
 		table.add(swapButton).expandX().colspan(2).padTop(20);
 		table.row();
 		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
 		
-		table.debug();
+		//table.debug();
 		
 		rootTable.add(table).expand().fill();
 		
@@ -131,7 +151,7 @@ public class MovesScreen implements Screen, IMovesScreen {
 		backButton.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
-            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
+            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
             }
 		});
 		
@@ -213,6 +233,7 @@ public class MovesScreen implements Screen, IMovesScreen {
 		tableSelectableMoves.addItem(item);
 		tableSelectableMoves.validate();
 		tableCurrentMoves.validate();
+		scrollTable.layout();
 	}
 
 }
