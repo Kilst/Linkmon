@@ -40,7 +40,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	public Label defense;
 	public Label speed;
 	
-	private Button backButton;
+	private TextButton backButton;
 	
 	private Image linkmonRank;
 	
@@ -110,10 +110,10 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		image = new Table();
 		image.setBackground(skin2.getDrawable("title"));
-		image.setSize(250, 136);
+		image.setSize(250*UIRenderer.scaleXY, 136*UIRenderer.scaleXY);
 		Label heading = new Label("STATS", skin);
-		heading.setFontScale(1.1f);
-		image.add(heading).padBottom(15);
+		heading.setFontScale(1.1f*UIRenderer.scaleXY);
+		image.add(heading).padBottom(15*UIRenderer.scaleXY);
 		image.setPosition((Gdx.graphics.getWidth()/2)-image.getWidth()/2, Gdx.graphics.getHeight()-image.getHeight());
 		
 		table = new Table();
@@ -122,11 +122,15 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		table.setPosition(0, 0);
 		
 		backButton = new TextButton("Back", buttonStyle);
+		backButton.setTransform(true);
+		backButton.setScale(UIRenderer.scaleXY);
 		backButton.setPosition(Gdx.graphics.getWidth()-backButton.getWidth()-70, 55);
 		
 		statsTable = new Table();
-		statsTable.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/1.5f);
+		statsTable.setSize(Gdx.graphics.getWidth()/2*UIRenderer.scaleXY, Gdx.graphics.getHeight()/1.5f*UIRenderer.scaleXY);
 		statsTable.setPosition(Gdx.graphics.getWidth()/12, Gdx.graphics.getHeight()/4);
+		statsTable.setTransform(true);
+		statsTable.setScale(UIRenderer.scaleXY);
 		
 		linkmonLabel = new Label("Linkmon Stats", skin);
 		
@@ -136,6 +140,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		playerTable = new Table();
 		playerTable.setBackground(skin2.getDrawable("tableHeading"));
+		playerTable.setTransform(true);
+		playerTable.setScale(UIRenderer.scaleXY);
 		
 		playerHeading = new Label("Player Stats", skin);
 		playerNameLabel = new Label("Name:", skin);
@@ -144,6 +150,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		playerGoldText = new Label("", skin);
 		
 		linkmonTable = new Table();
+		linkmonTable.setTransform(true);
+		linkmonTable.setScale(UIRenderer.scaleXY);
 		
 		
 		
