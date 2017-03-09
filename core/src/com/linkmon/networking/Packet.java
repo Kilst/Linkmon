@@ -3,9 +3,9 @@ package com.linkmon.networking;
 import java.nio.ByteBuffer;
 
 import com.badlogic.gdx.Gdx;
+import com.linkmon.model.aonevonebattle.moves.MoveFactory;
 import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.linkmon.Move;
-import com.linkmon.model.linkmon.MoveFactory;
 
 public class Packet {
 	

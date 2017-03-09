@@ -25,7 +25,13 @@ public class ControllerService {
 	
 	private LibgdxParticleController particleController;
 	
-	public ControllerService(GameClass game, Group ui, EventManager eManager) {
+	private LocalBattleController localBattleController;
+	
+	private MiniGameController miniGameController;
+	
+	private SoundController soundController;
+	
+	public ControllerService(GameClass game, Group ui, EventManager eManager, SoundController sound) {
 		
 		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
 		
@@ -33,11 +39,17 @@ public class ControllerService {
 		playerController = new PlayerController(mService.getPlayer());
 		linkmonController = new LinkmonController(mService.getPlayer().getLinkmon());
 		shopController = new ShopController(mService.getShop(), mService.getPlayer());
-		worldController = new WorldController(mService.getWorld());
-		inputController = new LibgdxInputController(eManager);
+		worldController = new WorldController(mService.getWorld(), eManager);
+		inputController = new LibgdxInputController(eManager, game);
 		particleController = new LibgdxParticleController(eManager);
 		
 		networkController = new NetworkController(eManager, mService.getPlayer());
+		
+		localBattleController = new LocalBattleController(mService.getPlayer(), eManager, playerController, worldController);
+		
+		miniGameController = new MiniGameController(eManager, worldController);
+		
+		soundController = sound;
 		
 		eManager.addScreenListener(playerController);
 		eManager.addScreenListener(linkmonController);
@@ -47,7 +59,11 @@ public class ControllerService {
 		
 		eManager.addScreenListener(networkController);
 		
-		screenController = new LibgdxScreenController(game, ui, eManager);
+		eManager.addScreenListener(localBattleController);
+		
+		eManager.addScreenListener(soundController);
+		
+		screenController = new LibgdxScreenController(game, ui, eManager, this);
 		
 		eManager.addScreenListener(screenController);
 	}
@@ -56,6 +72,10 @@ public class ControllerService {
 		screenController.update();
 		worldController.update();
 		playerController.update();
+		localBattleController.update();
+		miniGameController.update();
+		
+		soundController.update();
 	}
 	
 	public LibgdxParticleController getParticleController() {
@@ -79,6 +99,26 @@ public class ControllerService {
 	public void close() {
 		// TODO Auto-generated method stub
 		networkController.close();
+	}
+
+	public LocalBattleController getLocalBattleController() {
+		// TODO Auto-generated method stub
+		return localBattleController;
+	}
+
+	public PlayerController getPlayerController() {
+		// TODO Auto-generated method stub
+		return playerController;
+	}
+
+	public LinkmonController getLinkmonController() {
+		// TODO Auto-generated method stub
+		return linkmonController;
+	}
+
+	public SoundController getSoundController() {
+		// TODO Auto-generated method stub
+		return soundController;
 	}
 
 }

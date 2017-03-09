@@ -1,5 +1,6 @@
 package com.linkmon.view.screens.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -44,7 +45,15 @@ public class MyProgressBar extends Table {
     	// update it in the screen without resorting to the same idea, except on every screen it is used)
     	if(updated) {
     		full.setWidth(((progress/targetProgress)*(this.getWidth()-patchNinePixelPad*2)));
+    		Gdx.app.log("MyProgressBar", "Total Width: " + (this.getWidth()-patchNinePixelPad*2));
+    		Gdx.app.log("MyProgressBar", "Width: " + ((progress/targetProgress)*(this.getWidth()-patchNinePixelPad*2)));
+    		Gdx.app.log("MyProgressBar", "Progress: " + progress + "  Target: " + targetProgress);
     		updated = false;
     	}
     }
+
+	public float getProgress() {
+		// TODO Auto-generated method stub
+		return progress;
+	}
 }

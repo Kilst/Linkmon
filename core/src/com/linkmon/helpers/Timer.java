@@ -30,6 +30,7 @@ public class Timer
 		elapsedTime = 0;
 		elapsedSeconds = 0;
 		this.loopForever = loopForever;
+		stopped = true;
 	}
 	
 	public Timer(long finish, int loopCount, String name)
@@ -39,6 +40,7 @@ public class Timer
 		elapsedTime = 0;
 		elapsedSeconds = 0;
 		this.loopCount = loopCount;
+		stopped = true;
 	}
 	
 	public Timer(long firstFinish, long finish, boolean loopForever)
@@ -49,6 +51,7 @@ public class Timer
 		elapsedTime = 0;
 		elapsedSeconds = 0;
 		this.loopForever = loopForever;
+		stopped = true;
 	}
 	
 	public void start() {

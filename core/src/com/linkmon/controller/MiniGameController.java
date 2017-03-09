@@ -1,82 +1,80 @@
 package com.linkmon.controller;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
-import com.linkmon.helpers.Timer;
-import com.linkmon.model.Player;
 import com.linkmon.model.World;
-import com.linkmon.model.aminigame.PlayableInputComponent;
-import com.linkmon.model.aminigame.PlayablePhysicsComponent;
-import com.linkmon.model.components.CollisionComponent;
-import com.linkmon.model.gameobject.GameObject;
-import com.linkmon.model.gameobject.ObjectFactory;
-import com.linkmon.model.gameobject.ObjectType;
-import com.linkmon.model.libgdx.LibgdxRenderingComponent;
-import com.linkmon.model.libgdx.LinkmonAnimationComponent;
-import com.linkmon.model.libgdx.LinkmonRenderingComponent;
-import com.linkmon.model.linkmon.LinkmonExtraComponents;
-import com.linkmon.model.linkmon.LinkmonInputComponent;
-import com.linkmon.model.linkmon.LinkmonPhysicsComponent;
+import com.linkmon.model.minigames.IMiniGame;
+import com.linkmon.model.minigames.MiniGameIds;
+import com.linkmon.model.minigames.coinroll.CoinRoll;
+import com.linkmon.model.minigames.duckracing.DuckRacing;
+import com.linkmon.view.screens.ScreenType;
 
 public class MiniGameController implements ScreenListener {
 	
-	private Player player;
-	
-	private World gameWorld;
-	
-	private Timer spawnTimer;
-	GameObject linkmon;
 	EventManager eManager;
+	IMiniGame miniGame;
 	
-	public MiniGameController(EventManager eManager) {
+	World world;
+	
+	WorldController worldController;
+	
+	public MiniGameController(EventManager eManager, WorldController worldController) {
 		this.eManager = eManager;
-		gameWorld = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		linkmon = new GameObject(33, ObjectType.ITEM, new LibgdxRenderingComponent(), new PlayableInputComponent(eManager),
-				new PlayablePhysicsComponent(new CollisionComponent()), null);
-//		((LibgdxRenderingComponent)linkmon.getRenderer()).setAnimation(new LinkmonAnimationComponent(linkmon.getId()));
-		((LibgdxRenderingComponent)linkmon.getRenderer()).setSprite(linkmon);
-		linkmon.setX(0);
-		linkmon.setY(80);
-		
-		gameWorld.addObjectToWorld(linkmon);
-		
-		spawnTimer = new Timer(1, true);
-		spawnTimer.start();
-		
+		this.worldController = worldController;
 		eManager.addScreenListener(this);
 	}
 	
+	public void setMiniGame(int type) {
+		switch(type) {
+			case(MiniGameIds.DUCK_RACING) : {
+				miniGame = new DuckRacing(eManager);
+				worldController.setWorld(miniGame.getWorld());
+				miniGame.getWorld().setUpdating(true);
+				break;
+			}
+			case(MiniGameIds.COIN_ROLL) : {
+				miniGame = new CoinRoll(eManager);
+				worldController.setWorld(miniGame.getWorld());
+				miniGame.getWorld().setUpdating(true);
+				break;
+			}
+		}
+	}
+	
 	public World getWorld() {
-		return gameWorld;
+		return miniGame.getWorld();
 	}
 	
 	public void update() {
-		gameWorld.update();
-		if(spawnTimer.checkTimer())
-			eggSpawner();
-	}
-	
-	private void eggSpawner() {
-		GameObject object = ObjectFactory.getInstance().getObjectFromId(77);
-		Random rnd = new Random();
-		object.setX(rnd.nextInt((int)(gameWorld.getWidth())));
-		object.setY(Gdx.graphics.getHeight());
-		gameWorld.addObjectToWorld(object);
+		if(miniGame != null)
+			miniGame.update();
 	}
 
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
 		switch(event.eventId) {
+		
+			case(ScreenEvents.OPEN_MINIGAME): {
+				setMiniGame(event.value);
+				return false;
+			}
+		
 			case(ScreenEvents.MOVE_PLAYER) : {
-				((PlayablePhysicsComponent)linkmon.getPhysicsComponent()).addVeloX(event.value);
-				Gdx.app.log("MOVE", "MMMisPressed()");
+				miniGame.movePlayer(event.value, 0);
+				
+				Gdx.app.log("MiniGameController", "Moving player");
+				return false;
+			}
+			
+			case(ScreenEvents.RESTART_MINI_GAME) : {
+				miniGame.restart();
+				
+				Gdx.app.log("MiniGameController", "Restart");
+				return false;
 			}
 		}
 		return false;

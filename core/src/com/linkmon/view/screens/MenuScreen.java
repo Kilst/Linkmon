@@ -77,11 +77,7 @@ public class MenuScreen implements Screen, MyScreen {
 		darken = new Image(skin2.getDrawable("darkenWorld"));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.getColor().a = 0.7f;
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
+		
 		table.add(shopButton).pad(20);
 		table.add(itemButton).pad(20);
 		table.row().pad(20);
@@ -91,12 +87,17 @@ public class MenuScreen implements Screen, MyScreen {
 		table.add(cryoGenicsButton).pad(20);
 		table.add(achievementsButton).pad(20);
 		table.row();
-		table.add(backButton).expandX().colspan(2).padTop(20).padBottom(-55).padRight(-45).align(Align.bottomRight);
+		table.pack();
+		table.add(backButton).expandX().colspan(2).padBottom(-table.getHeight()/12).padRight(-table.getWidth()/12).align(Align.bottomRight);
 		
 		rootTable.add(table);
 		
 		addListeners();
-		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 		ui.addActor(darken);
 		ui.addActor(rootTable);
 	}

@@ -3,6 +3,7 @@ package com.linkmon.controller;
 import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.input.InputEvent;
+import com.linkmon.eventmanager.input.InputEvents;
 import com.linkmon.eventmanager.input.InputListener;
 import com.linkmon.eventmanager.model.ModelEvent;
 import com.linkmon.eventmanager.model.ModelEvents;
@@ -10,6 +11,7 @@ import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
+import com.linkmon.model.components.InputType;
 import com.linkmon.view.particles.ParticleIds;
 import com.linkmon.view.particles.ParticleLoader;
 
@@ -72,7 +74,13 @@ public class LibgdxParticleController implements ScreenListener, ModelListener, 
 	public boolean onNotify(InputEvent event) {
 		// TODO Auto-generated method stub
 		//addParticleToWorld(ParticleIds.GREEN_ORANGE_STAR, event.position.x, event.position.y);
-		addParticleToWorld(ParticleIds.STAR, event.position.x, event.position.y);
+		switch(event.eventId) {
+			case(InputType.CLICKED) : {
+//				addParticleToWorld(ParticleIds.TAP, event.position.x, event.position.y);
+//				addParticleToUI(ParticleIds.TAP, event.position.x, event.position.y);
+				break;
+			}
+		}
 		return false;
 	}
 }

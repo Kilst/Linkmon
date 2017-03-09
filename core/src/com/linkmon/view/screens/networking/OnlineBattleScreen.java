@@ -21,16 +21,16 @@ import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.model.aonevonebattle.moves.MoveFactory;
 import com.linkmon.model.linkmon.Move;
-import com.linkmon.model.linkmon.MoveFactory;
 import com.linkmon.model.linkmon.MoveIds;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.particles.ParticleFactory;
 import com.linkmon.view.particles.ParticleIds;
 import com.linkmon.view.screens.ScreenType;
 import com.linkmon.view.screens.interfaces.IBattleView;
+import com.linkmon.view.screens.localbattle.BattleStats;
 import com.linkmon.view.screens.widgets.AnimationWidget;
-import com.linkmon.view.screens.widgets.BattleStats;
 import com.linkmon.view.screens.widgets.LocalMessageBox;
 import com.linkmon.view.screens.widgets.messages.MessageTable;
 
@@ -357,7 +357,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 
 	@Override
 	public void getMoves(int move1Id, String move1Name, int move2Id, String move2Name,
-			int move3Id, String move3Name, int move4Id, String move4Name) {
+			int move3Id, String move3Name) {
 		// TODO Auto-generated method stub
 		this.move1 = move1Id;
 		attack1.setText(move1Name);
@@ -365,8 +365,6 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		attack2.setText(move2Name);
 		this.move3 = move3Id;
 		attack3.setText(move3Name);
-		this.move4 = move4Id;
-		attack4.setText(move4Name);
 	}
 
 	@Override

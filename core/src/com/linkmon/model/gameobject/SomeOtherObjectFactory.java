@@ -1,6 +1,7 @@
 package com.linkmon.model.gameobject;
 
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.model.battles.LocalBattleLinkmon;
 
 public class SomeOtherObjectFactory implements IGameObjectFactory {
 
@@ -20,6 +21,12 @@ public class SomeOtherObjectFactory implements IGameObjectFactory {
 	public void setEventManager(EventManager eManager) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public LocalBattleLinkmon createLocalBattleLinkmon(int rank, int targetId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

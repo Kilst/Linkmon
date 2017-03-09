@@ -31,6 +31,8 @@ public abstract class PhysicsComponent implements IPhysicsComponent {
 		if(move)
 			move(object);
 	}
+	
+	protected abstract void collisionTest(GameObject object, List<GameObject> objects);
 
 	public void setMoveTo(float x, float y) {
 		moveX = x;

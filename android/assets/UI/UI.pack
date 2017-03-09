@@ -3,334 +3,995 @@ UI.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-statsBackground
+waves
   rotate: false
-  xy: 1, 478
-  size: 1015, 545
-  orig: 1015, 545
+  xy: 1, 1915
+  size: 1190, 132
+  orig: 1190, 132
+  offset: 0, 0
+  index: -1
+attackMenu
+  rotate: false
+  xy: 1, 1308
+  size: 516, 605
+  orig: 516, 605
+  offset: 0, 0
+  index: -1
+battleTowerMenu
+  rotate: false
+  xy: 1, 701
+  size: 516, 605
+  orig: 516, 605
+  offset: 0, 0
+  index: -1
+itemMenu
+  rotate: false
+  xy: 519, 1308
+  size: 516, 605
+  orig: 516, 605
+  offset: 0, 0
+  index: -1
+littleContainer
+  rotate: false
+  xy: 1, 199
+  size: 475, 500
+  orig: 475, 500
+  offset: 0, 0
+  index: -1
+selectionContainer
+  rotate: false
+  xy: 1193, 1960
+  size: 732, 87
+  orig: 732, 87
+  offset: 0, 0
+  index: -1
+battleMenu
+  rotate: false
+  xy: 1193, 1810
+  size: 664, 148
+  orig: 664, 148
+  offset: 0, 0
+  index: -1
+arrowButton
+  rotate: false
+  xy: 519, 806
+  size: 100, 500
+  orig: 100, 500
   offset: 0, 0
   index: -1
 TableUI
   rotate: false
-  xy: 1, 265
+  xy: 621, 1095
   size: 362, 211
   split: 167, 41, 170, 34
   orig: 362, 211
   offset: 0, 0
   index: -1
+attackMenuButton
+  rotate: false
+  xy: 1, 101
+  size: 490, 96
+  orig: 490, 96
+  offset: 0, 0
+  index: -1
+vsImage
+  rotate: false
+  xy: 621, 910
+  size: 331, 183
+  orig: 331, 183
+  offset: 0, 0
+  index: -1
+playerStatsContainer
+  rotate: false
+  xy: 621, 800
+  size: 375, 108
+  orig: 375, 108
+  offset: 0, 0
+  index: -1
+rewardsLabel
+  rotate: false
+  xy: 519, 698
+  size: 350, 100
+  orig: 350, 100
+  offset: 0, 0
+  index: -1
 namePlate
   rotate: false
-  xy: 1, 108
+  xy: 478, 541
   size: 327, 155
   orig: 327, 155
   offset: 0, 0
   index: -1
 newContainer
   rotate: false
-  xy: 365, 250
+  xy: 478, 313
   size: 220, 226
   split: 104, 110, 111, 109
   orig: 220, 226
   offset: 0, 0
   index: -1
+mainTitle
+  rotate: false
+  xy: 1, 26
+  size: 263, 73
+  orig: 263, 73
+  offset: 0, 0
+  index: -1
+battleTowerButton
+  rotate: false
+  xy: 700, 319
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+cryoLabButton
+  rotate: false
+  xy: 493, 91
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+duckRacingButton
+  rotate: false
+  xy: 715, 97
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+minusButton
+  rotate: false
+  xy: 1037, 1763
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+foodButton
+  rotate: false
+  xy: 1037, 1541
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+itemButton
+  rotate: false
+  xy: 1037, 1319
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+miniGamesButton
+  rotate: false
+  xy: 1259, 1588
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+movesButton
+  rotate: false
+  xy: 1259, 1366
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+newAchievementsButton
+  rotate: false
+  xy: 1481, 1588
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+newShopButton
+  rotate: false
+  xy: 1481, 1366
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+newStatsButton
+  rotate: false
+  xy: 1703, 1588
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+onlineBattleButton
+  rotate: false
+  xy: 1703, 1366
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+menuHeading
+  rotate: false
+  xy: 1259, 1244
+  size: 250, 120
+  orig: 250, 120
+  offset: 0, 0
+  index: -1
 tableHeading
   rotate: false
-  xy: 587, 347
+  xy: 1511, 1235
   size: 243, 129
   split: 201, 22, 104, 20
   orig: 243, 129
   offset: 0, 0
   index: -1
-mainTitle
+buyButton
   rotate: false
-  xy: 1, 33
-  size: 263, 73
-  orig: 263, 73
+  xy: 1037, 1197
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+duckRacingPreview
+  rotate: false
+  xy: 1756, 1164
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+backButtonGreen
+  rotate: false
+  xy: 266, 10
+  size: 197, 89
+  orig: 197, 89
+  offset: 0, 0
+  index: -1
+move1Button
+  rotate: false
+  xy: 985, 1075
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+move2Button
+  rotate: false
+  xy: 954, 953
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+ringGrabButton
+  rotate: false
+  xy: 998, 731
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+move3Button
+  rotate: false
+  xy: 1259, 1122
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+move4Button
+  rotate: false
+  xy: 1481, 1113
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+moveSelectImage
+  rotate: false
+  xy: 465, 39
+  size: 218, 50
+  orig: 218, 50
+  offset: 0, 0
+  index: -1
+loseImage
+  rotate: false
+  xy: 465, 1
+  size: 215, 36
+  orig: 215, 36
+  offset: 0, 0
+  index: -1
+trainButton
+  rotate: false
+  xy: 1220, 900
+  size: 220, 220
+  orig: 220, 220
+  offset: 0, 0
+  index: -1
+ringGrabPreview
+  rotate: false
+  xy: 1220, 698
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+newBackButton
+  rotate: false
+  xy: 1442, 991
+  size: 220, 120
+  orig: 220, 120
+  offset: 0, 0
+  index: -1
+useButton
+  rotate: false
+  xy: 1442, 869
+  size: 220, 120
+  orig: 220, 120
   offset: 0, 0
   index: -1
 title
   rotate: false
-  xy: 330, 114
+  xy: 1422, 733
   size: 198, 134
   split: 71, 105, 0, 134
   orig: 198, 134
   offset: 0, 0
   index: -1
+money
+  rotate: false
+  xy: 1422, 691
+  size: 200, 40
+  orig: 200, 40
+  offset: 0, 0
+  index: -1
+winImage
+  rotate: false
+  xy: 682, 1
+  size: 182, 36
+  orig: 182, 36
+  offset: 0, 0
+  index: -1
+healthBarContainer
+  rotate: false
+  xy: 1, 4
+  size: 200, 20
+  orig: 200, 20
+  offset: 0, 0
+  index: -1
+moveImage
+  rotate: false
+  xy: 715, 47
+  size: 209, 48
+  orig: 209, 48
+  offset: 0, 0
+  index: -1
+plusButton
+  rotate: false
+  xy: 807, 546
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
 attackStatWidget
   rotate: false
-  xy: 587, 250
+  xy: 959, 634
   size: 195, 95
   orig: 195, 95
   offset: 0, 0
   index: -1
+backButtonRed
+  rotate: false
+  xy: 959, 543
+  size: 197, 89
+  orig: 197, 89
+  offset: 0, 0
+  index: -1
 defenseStatWidget
   rotate: false
-  xy: 530, 153
+  xy: 922, 446
   size: 195, 95
   orig: 195, 95
   offset: 0, 0
   index: -1
 healthStatWidget
   rotate: false
-  xy: 530, 56
+  xy: 922, 349
   size: 195, 95
   orig: 195, 95
-  offset: 0, 0
-  index: -1
-winImage
-  rotate: false
-  xy: 832, 440
-  size: 182, 36
-  orig: 182, 36
-  offset: 0, 0
-  index: -1
-mainUIButton
-  rotate: false
-  xy: 832, 375
-  size: 154, 63
-  orig: 154, 63
-  offset: 0, 0
-  index: -1
-attackLabel
-  rotate: false
-  xy: 1, 1
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
-defenseLabel
-  rotate: false
-  xy: 88, 1
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
-healthLabel
-  rotate: false
-  xy: 175, 1
-  size: 85, 30
-  orig: 85, 30
   offset: 0, 0
   index: -1
 speedStatWidget
   rotate: false
-  xy: 330, 17
+  xy: 937, 252
   size: 195, 95
   orig: 195, 95
   offset: 0, 0
   index: -1
-loseImage
+blankButton
   rotate: false
-  xy: 527, 18
-  size: 215, 36
-  orig: 215, 36
+  xy: 937, 161
+  size: 197, 89
+  orig: 197, 89
   offset: 0, 0
   index: -1
-statWidgetBackground
+blankButtonGreen
   rotate: false
-  xy: 832, 323
-  size: 150, 50
-  orig: 150, 50
+  xy: 937, 70
+  size: 197, 89
+  orig: 197, 89
   offset: 0, 0
   index: -1
-achievementButton
+healthBarWhite
   rotate: false
-  xy: 784, 258
-  size: 141, 63
-  orig: 141, 63
+  xy: 926, 48
+  size: 200, 20
+  orig: 200, 20
+  offset: 0, 0
+  index: -1
+battleButtonAttack
+  rotate: false
+  xy: 1859, 1830
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+blankButtonRed
+  rotate: false
+  xy: 1703, 1073
+  size: 197, 89
+  orig: 197, 89
+  offset: 0, 0
+  index: -1
+saveButtonGreen
+  rotate: false
+  xy: 1664, 982
+  size: 197, 89
+  orig: 197, 89
+  offset: 0, 0
+  index: -1
+saveButtonRed
+  rotate: false
+  xy: 1664, 891
+  size: 197, 89
+  orig: 197, 89
+  offset: 0, 0
+  index: -1
+itemName
+  rotate: false
+  xy: 1664, 836
+  size: 184, 53
+  orig: 184, 53
+  offset: 0, 0
+  index: -1
+mainUIButton
+  rotate: false
+  xy: 1622, 771
+  size: 154, 63
+  orig: 154, 63
+  offset: 0, 0
+  index: -1
+battleButtonDefend
+  rotate: false
+  xy: 1624, 641
+  size: 139, 128
+  orig: 139, 128
   offset: 0, 0
   index: -1
 lightBulbOff
   rotate: false
-  xy: 727, 154
+  xy: 871, 704
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
-lightBulbOn
+lightButton
   rotate: false
-  xy: 727, 58
-  size: 80, 94
-  orig: 80, 94
+  xy: 1927, 1971
+  size: 92, 76
+  orig: 92, 76
   offset: 0, 0
   index: -1
-statLabelATK
+battleButtonItem
   rotate: false
-  xy: 809, 192
-  size: 128, 64
-  orig: 128, 64
+  xy: 1119, 413
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+itemOwn
+  rotate: false
+  xy: 1119, 358
+  size: 154, 53
+  orig: 154, 53
+  offset: 0, 0
+  index: -1
+achievementButton
+  rotate: false
+  xy: 1134, 293
+  size: 141, 63
+  orig: 141, 63
   offset: 0, 0
   index: -1
 attackButton
   rotate: false
-  xy: 809, 127
+  xy: 1136, 228
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
 backButton
   rotate: false
-  xy: 809, 62
+  xy: 1136, 163
   size: 141, 63
   orig: 141, 63
   offset: 0, 0
   index: -1
-container
+battleButton
   rotate: false
-  xy: 927, 258
-  size: 63, 63
-  split: 11, 10, 12, 10
-  orig: 63, 63
+  xy: 1136, 98
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+cryoGenicsButton
+  rotate: false
+  xy: 1136, 33
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+sliderBackground
+  rotate: false
+  xy: 985, 1256
+  size: 50, 50
+  split: 19, 19, 19, 19
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+sliderKnob
+  rotate: false
+  xy: 1207, 1145
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+menuContainerInnerPatch
+  rotate: false
+  xy: 985, 1206
+  size: 50, 48
+  split: 20, 20, 21, 20
+  orig: 50, 48
+  offset: 0, 0
+  index: -1
+lightBulbOn
+  rotate: false
+  xy: 1925, 1734
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+battleTextBackground
+  rotate: false
+  xy: 1925, 1652
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+battleTextWindow
+  rotate: false
+  xy: 1925, 1570
+  size: 80, 80
+  split: 12, 12, 11, 11
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bluePotion
+  rotate: false
+  xy: 1925, 1488
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+completeStamp
+  rotate: false
+  xy: 1925, 1406
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+defenseButton
+  rotate: false
+  xy: 1279, 633
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+errorHeading
+  rotate: false
+  xy: 1422, 626
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+feedButton
+  rotate: false
+  xy: 1279, 568
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+feedButtonGreen
+  rotate: false
+  xy: 1422, 561
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+healthButton
+  rotate: false
+  xy: 1260, 503
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+itemsButton
+  rotate: false
+  xy: 1260, 438
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+medicButton
+  rotate: false
+  xy: 1403, 496
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+menuButton
+  rotate: false
+  xy: 1403, 431
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+mistakeHeading
+  rotate: false
+  xy: 1565, 576
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+okayButton
+  rotate: false
+  xy: 1565, 511
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+onlineButton
+  rotate: false
+  xy: 1546, 446
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+rankUpHeading
+  rotate: false
+  xy: 1546, 381
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+menuContainerPatch
+  rotate: false
+  xy: 1565, 641
+  size: 50, 48
+  split: 20, 22, 21, 20
+  orig: 50, 48
+  offset: 0, 0
+  index: -1
+greenPotion
+  rotate: false
+  xy: 1708, 559
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+itemBox
+  rotate: false
+  xy: 1902, 1082
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+lighten
+  rotate: false
+  xy: 1778, 754
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+lock
+  rotate: false
+  xy: 1765, 672
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+ringCount
+  rotate: false
+  xy: 1275, 372
+  size: 94, 64
+  orig: 94, 64
+  offset: 0, 0
+  index: -1
+shopButton
+  rotate: false
+  xy: 1371, 366
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+newAddButton
+  rotate: false
+  xy: 1277, 295
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
+speedButton
+  rotate: false
+  xy: 1359, 301
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+rainbowPotion
+  rotate: false
+  xy: 1279, 213
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+statsButton
+  rotate: false
+  xy: 1361, 236
+  size: 141, 63
+  orig: 141, 63
+  offset: 0, 0
+  index: -1
+redPotion
+  rotate: false
+  xy: 1279, 131
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 809, 2
+  xy: 1361, 176
   size: 127, 58
   orig: 127, 58
   offset: 0, 0
   index: -1
+whitePotion
+  rotate: false
+  xy: 1279, 49
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+whiteReverseVignette
+  rotate: false
+  xy: 1361, 94
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+newSubtractButton
+  rotate: false
+  xy: 1708, 482
+  size: 80, 75
+  orig: 80, 75
+  offset: 0, 0
+  index: -1
+starBall
+  rotate: false
+  xy: 1156, 668
+  size: 61, 61
+  orig: 61, 61
+  offset: 0, 0
+  index: -1
+attackLabel
+  rotate: false
+  xy: 866, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+defenseLabel
+  rotate: false
+  xy: 953, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+healthLabel
+  rotate: false
+  xy: 1040, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+rankLabel
+  rotate: false
+  xy: 1127, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+speedLabel
+  rotate: false
+  xy: 1214, 1
+  size: 85, 30
+  orig: 85, 30
+  offset: 0, 0
+  index: -1
+leafBall
+  rotate: false
+  xy: 1443, 110
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 table
   rotate: false
-  xy: 939, 192
+  xy: 1689, 416
   size: 64, 64
   split: 11, 12, 14, 15
   orig: 64, 64
   offset: 0, 0
   index: -1
-starBall
+container
   rotate: false
-  xy: 266, 45
-  size: 61, 61
-  orig: 61, 61
+  xy: 1361, 29
+  size: 63, 63
+  split: 11, 10, 12, 10
+  orig: 63, 63
   offset: 0, 0
   index: -1
 helpButton
   rotate: false
-  xy: 952, 129
+  xy: 1863, 1010
   size: 56, 61
   orig: 56, 61
   offset: 0, 0
   index: -1
 settingsButton
   rotate: false
-  xy: 952, 66
+  xy: 1863, 947
   size: 56, 61
   orig: 56, 61
   offset: 0, 0
   index: -1
-infoButton
+coins
   rotate: false
-  xy: 744, 31
-  size: 54, 25
-  orig: 54, 25
+  xy: 1765, 641
+  size: 39, 29
+  orig: 39, 29
   offset: 0, 0
   index: -1
-rankLabel
+rank-a
   rotate: false
-  xy: 938, 30
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
-pointer
-  rotate: false
-  xy: 938, 1
-  size: 29, 27
-  orig: 29, 27
+  xy: 1514, 399
+  size: 30, 30
+  orig: 30, 30
   offset: 0, 0
   index: -1
 tableButton
   rotate: false
-  xy: 744, 1
+  xy: 685, 61
   size: 28, 28
   split: 7, 7, 7, 7
   orig: 28, 28
   offset: 0, 0
   index: -1
+type-logo-fire
+  rotate: false
+  xy: 1703, 1193
+  size: 46, 40
+  orig: 46, 40
+  offset: 0, 0
+  index: -1
 mainUIButtonLink
   rotate: false
-  xy: 988, 375
+  xy: 1751, 1170
   size: 3, 63
   orig: 3, 63
   offset: 0, 0
   index: -1
-rank-a
+pointer
   rotate: false
-  xy: 993, 408
-  size: 30, 30
-  orig: 30, 30
+  xy: 1703, 1164
+  size: 29, 27
+  orig: 29, 27
+  offset: 0, 0
+  index: -1
+type-logo-grass
+  rotate: false
+  xy: 1863, 905
+  size: 46, 40
+  orig: 46, 40
+  offset: 0, 0
+  index: -1
+type-logo-no-type
+  rotate: false
+  xy: 1189, 1768
+  size: 46, 40
+  orig: 46, 40
+  offset: 0, 0
+  index: -1
+infoButton
+  rotate: false
+  xy: 1925, 1379
+  size: 54, 25
+  orig: 54, 25
+  offset: 0, 0
+  index: -1
+type-logo-water
+  rotate: false
+  xy: 1689, 374
+  size: 46, 40
+  orig: 46, 40
   offset: 0, 0
   index: -1
 rank-b
   rotate: false
-  xy: 993, 376
+  xy: 1514, 367
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
-coins
+tableNoHeading
   rotate: false
-  xy: 984, 344
-  size: 39, 29
-  orig: 39, 29
-  offset: 0, 0
-  index: -1
-rank-c
-  rotate: false
-  xy: 262, 1
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-statsTable
-  rotate: false
-  xy: 992, 316
-  size: 31, 26
-  split: 8, 10, 13, 5
-  orig: 31, 26
-  offset: 0, 0
-  index: -1
-rank-d
-  rotate: false
-  xy: 992, 284
-  size: 30, 30
-  orig: 30, 30
+  xy: 954, 914
+  size: 38, 37
+  split: 11, 11, 10, 10
+  orig: 38, 37
   offset: 0, 0
   index: -1
 spacer
   rotate: false
-  xy: 294, 11
+  xy: 1156, 634
   size: 32, 32
   split: 0, 0, 0, 1
   orig: 32, 32
   offset: 0, 0
   index: -1
-progressBarFill
+rank-c
   rotate: false
-  xy: 527, 96
-  size: 1, 16
-  orig: 1, 16
+  xy: 1664, 1081
+  size: 30, 30
+  orig: 30, 30
   offset: 0, 0
   index: -1
-cellBackground
+rank-d
   rotate: false
-  xy: 784, 329
-  size: 16, 16
-  split: 4, 4, 4, 4
-  orig: 16, 16
+  xy: 1622, 837
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+rank-e
+  rotate: false
+  xy: 953, 768
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+rank-s
+  rotate: false
+  xy: 1755, 450
+  size: 30, 30
+  orig: 30, 30
   offset: 0, 0
   index: -1
 green
   rotate: false
-  xy: 969, 12
+  xy: 954, 1077
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 progressBarBorder
   rotate: false
-  xy: 774, 13
+  xy: 1176, 1057
   size: 16, 16
   split: 3, 3, 3, 3
   orig: 16, 16
@@ -338,293 +999,22 @@ progressBarBorder
   index: -1
 darkenWorld
   rotate: false
-  xy: 294, 1
+  xy: 465, 91
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
-
-UI2.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-shopBackground
+healthBarSmall
   rotate: false
-  xy: 1, 507
-  size: 1010, 514
-  orig: 1010, 514
+  xy: 685, 39
+  size: 1, 20
+  orig: 1, 20
   offset: 0, 0
   index: -1
-battleButton
+progressBarFill
   rotate: false
-  xy: 1, 442
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-cryoGenicsButton
-  rotate: false
-  xy: 1, 377
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-defenseButton
-  rotate: false
-  xy: 144, 442
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-errorHeading
-  rotate: false
-  xy: 1, 312
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-feedButton
-  rotate: false
-  xy: 144, 377
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-feedButtonGreen
-  rotate: false
-  xy: 287, 442
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-healthButton
-  rotate: false
-  xy: 1, 247
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-itemsButton
-  rotate: false
-  xy: 144, 312
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-medicButton
-  rotate: false
-  xy: 287, 377
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-menuButton
-  rotate: false
-  xy: 430, 442
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-mistakeHeading
-  rotate: false
-  xy: 1, 182
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-okayButton
-  rotate: false
-  xy: 144, 247
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-onlineButton
-  rotate: false
-  xy: 287, 312
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-rankUpHeading
-  rotate: false
-  xy: 430, 377
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-shopButton
-  rotate: false
-  xy: 573, 442
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-speedButton
-  rotate: false
-  xy: 1, 117
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-statsButton
-  rotate: false
-  xy: 144, 182
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-trainButton
-  rotate: false
-  xy: 287, 247
-  size: 141, 63
-  orig: 141, 63
-  offset: 0, 0
-  index: -1
-lightButton
-  rotate: false
-  xy: 430, 299
-  size: 92, 76
-  orig: 92, 76
-  offset: 0, 0
-  index: -1
-addButton
-  rotate: false
-  xy: 1, 35
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-battleTextBackground
-  rotate: false
-  xy: 573, 360
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-battleTextWindow
-  rotate: false
-  xy: 716, 425
-  size: 80, 80
-  split: 12, 12, 11, 11
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-itemBox
-  rotate: false
-  xy: 798, 425
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-lighten
-  rotate: false
-  xy: 880, 425
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-newAddButton
-  rotate: false
-  xy: 144, 105
-  size: 80, 75
-  orig: 80, 75
-  offset: 0, 0
-  index: -1
-newSubtractButton
-  rotate: false
-  xy: 287, 170
-  size: 80, 75
-  orig: 80, 75
-  offset: 0, 0
-  index: -1
-subtractButton
-  rotate: false
-  xy: 369, 165
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-speedLabel
-  rotate: false
-  xy: 430, 267
-  size: 85, 30
-  orig: 85, 30
-  offset: 0, 0
-  index: -1
-whiteReverseVignette
-  rotate: false
-  xy: 451, 185
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-tableNoHeading
-  rotate: false
-  xy: 655, 403
-  size: 38, 37
-  split: 11, 11, 10, 10
-  orig: 38, 37
-  offset: 0, 0
-  index: -1
-spacerHor
-  rotate: false
-  xy: 1, 1
-  size: 32, 32
-  split: 0, 0, 0, 0
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-statBackground
-  rotate: false
-  xy: 962, 473
-  size: 32, 32
-  split: 0, 9, 9, 0
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-rank-e
-  rotate: false
-  xy: 83, 85
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-rank-s
-  rotate: false
-  xy: 226, 150
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-
-UI3.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-trainingBackground
-  rotate: false
-  xy: 1, 511
-  size: 1008, 512
-  orig: 1008, 512
-  offset: 0, 0
-  index: -1
-feedBackground
-  rotate: false
-  xy: 1, 1
-  size: 959, 508
-  orig: 959, 508
-  offset: 0, 0
-  index: -1
-
-UI4.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-evolutionBackground
-  rotate: false
-  xy: 1, 1
-  size: 997, 517
-  orig: 997, 517
+  xy: 478, 295
+  size: 1, 16
+  orig: 1, 16
   offset: 0, 0
   index: -1

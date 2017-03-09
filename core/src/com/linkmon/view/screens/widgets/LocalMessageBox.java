@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -33,6 +34,9 @@ public class LocalMessageBox extends Table {
 	public Label message;
 	
 	public Button okayButton;
+	public Button cancelButton;
+	
+	public boolean choice;
 	
 	public String messageString;
 	
@@ -79,6 +83,7 @@ public class LocalMessageBox extends Table {
 		darken = new Image(skin2.getDrawable("darkenWorld"));
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.setColor(1f, 1f, 1f, 0.85f);
+		darken.setTouchable(Touchable.enabled);
 		
 		heading = new Table();
 		heading.setBackground(skin2.getDrawable("title"));
@@ -111,6 +116,106 @@ public class LocalMessageBox extends Table {
             }
 		});
 		
+		darken.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	
+            }
+		});
+		
+		gameUi.addActor(darken);
+		gameUi.addActor(this);
+	}
+	
+	public LocalMessageBox(boolean yesNoBox, String titleText, String text, Group ui) {
+		this.gameUi = ui;
+		messageString = text;
+		this.setTransform(true);
+		messageBox = this;
+		
+		skin2 = new Skin();
+		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
+		skin2.addRegions(uiAtlas);
+		
+		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
+		
+		TextButtonStyle buttonStyle = new TextButtonStyle();
+		
+		buttonStyle.checked = skin2.getDrawable("button");
+		buttonStyle.down = skin2.getDrawable("button");
+		buttonStyle.up = skin2.getDrawable("button");
+		buttonStyle.font = skin.getFont("default-font");
+		
+		this.setBackground(skin2.getDrawable("tableNoHeading"));
+		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.setPosition(0, 0);
+		this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		this.setSize((640/1.4f)*UIRenderer.scaleXY, (480/1.4f)*UIRenderer.scaleXY);
+		
+		
+		this.setPosition((Gdx.graphics.getWidth()/2f) - (this.getWidth()/2), (Gdx.graphics.getHeight()/2f) - (this.getHeight()/2));
+		this.setOrigin((Gdx.graphics.getWidth()/2f) - (this.getWidth()/2), (Gdx.graphics.getHeight()/2f) - (this.getHeight()/2));
+		
+		
+		darken = new Image(skin2.getDrawable("darkenWorld"));
+		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		darken.setColor(1f, 1f, 1f, 0.85f);
+		darken.setTouchable(Touchable.enabled);
+		
+		heading = new Table();
+		heading.setBackground(skin2.getDrawable("title"));
+		heading.setSize(290, 136);
+		Label title = new Label(titleText, skin);
+		title.setFontScale(1.2f);
+		heading.add(title).padBottom(15);
+		
+		messageTable = new Table();
+		messageTable.setBackground(skin2.getDrawable("tableNoHeading"));
+		message = new Label(messageString , skin);
+		message.setFontScale(1.2f);
+		messageTable.add(message).fill();
+		
+		
+		this.add(heading).padTop(-50).colspan(2);
+		this.row();
+		this.add(messageTable).expand().fill().colspan(2);
+		this.row();
+		
+		okayButton = new TextButton("Okay", buttonStyle);
+		this.add(okayButton).align(Align.left).size(okayButton.getWidth()*UIRenderer.scaleXY, okayButton.getHeight()*UIRenderer.scaleXY);
+		
+		okayButton.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	messageBox.remove();
+            	darken.remove();
+            	
+            	onOkay();
+            }
+		});
+		
+		cancelButton = new TextButton("Cancel", buttonStyle);
+		this.add(cancelButton).align(Align.right).size(cancelButton.getWidth()*UIRenderer.scaleXY, cancelButton.getHeight()*UIRenderer.scaleXY);
+		this.row();
+		
+		cancelButton.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	messageBox.remove();
+            	darken.remove();
+            	
+            	choice = false;
+            }
+		});
+		
+		darken.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+            	
+            }
+		});
+		
 		gameUi.addActor(darken);
 		gameUi.addActor(this);
 	}
@@ -124,6 +229,10 @@ public class LocalMessageBox extends Table {
 			scale = 1;
 		
 		this.setScale(scale);
+	}
+	
+	public void onOkay() {
+		
 	}
 
 }

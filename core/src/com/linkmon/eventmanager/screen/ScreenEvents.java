@@ -19,7 +19,19 @@ public class ScreenEvents {
 	public static final int SWAP_MOVE = 13;
 	public static final int GET_SAVED_LINKMON_STATS = 14;
 	public static final int SAVE_BATTLE_LINKMON = 15;
+	public static final int ADD_PLAYER_GOLD = 16;
+	
+	
 	public static final int LIGHT_SWAP = 99;
+	
+	public static final int LOCAL_PLAYER_MOVE = 41;
+	public static final int LOCAL_PLAYER_TARGET = 42;
+	public static final int LOCAL_PLAY_TURN = 43;
+	public static final int LOCAL_BATTLE_CREATE = 44;
+	public static final int LOCAL_BATTLE_UPDATE_HEALTHS = 45;
+	public static final int START_LOCAL_BATTLE = 46;
+	public static final int RETURN_TO_MAIN_GAME = 47;
+	public static final int LOCAL_BATTLE_GET_MOVES = 48;
 
 	
 	// Networking
@@ -37,6 +49,8 @@ public class ScreenEvents {
 	// MiniGames
 	public static final int MOVE_PLAYER = 200;
 	public static final int START_MINIGAME = 201;
+	public static final int RESTART_MINI_GAME = 202;
+	public static final int OPEN_MINIGAME = 203;
 	
 	
 	// Debugging
@@ -48,4 +62,17 @@ public class ScreenEvents {
 	public static final int ADD_PARTICLE_EFFECT = 2000;
 	
 	
+	// Sound
+	public static final int PLAY_MAIN_GAME_MUSIC = 3000;
+	public static final int PLAY_MENU_MUSIC = 3001;
+	public static final int PLAY_BATTLE_MUSIC = 3002;
+	public static final int PLAY_SHOP_MUSIC = 3003;
+	
+	
+	
+	public static final int PLAY_BUTTON_DECLINE = 3004;
+	public static final int PLAY_BUTTON_ACCEPT = 3005;
+	public static final int PLAY_THEME_MUSIC = 3006;
+	public static final int PLAY_BATTLE_TOWER_MUSIC = 3007;
+
 }

@@ -2,6 +2,8 @@ package com.linkmon.model.libgdx;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.model.components.IRenderingComponent;
 import com.linkmon.model.gameobject.Direction;
@@ -28,8 +30,16 @@ public class LibgdxRenderingComponent implements IRenderingComponent {
 		this.id = object.getId();
 	}
 	
+	public void removeSprite() {
+		sprite = null;
+	}
+	
 	public void setAnimation(LibgdxAnimationComponent animation) {
 		this.animation = animation;
+	}
+	
+	public LibgdxAnimationComponent getAnimationComponent() {
+		return animation;
 	}
 
 	@Override
@@ -77,14 +87,29 @@ public class LibgdxRenderingComponent implements IRenderingComponent {
 	public void draw(Batch batch, GameObject object) {
 		// TODO Auto-generated method stub
 		if(sprite != null)
-			batch.draw(sprite, object.getX(), object.getY());
-		else if(animation != null)
+			sprite.draw(batch);
+//			batch.draw(sprite, sprite.getX(), sprite.getY(), sprite.getX()+(sprite.getWidth()/2),
+//					sprite.getY()+(sprite.getHeight()/2), sprite.getWidth(), sprite.getHeight(), 1, 1, sprite.getRotation());
+		else if(animation != null) {
 			if(animation.getCurrentAnimation() != null) {
 				if(flipped)
 					batch.draw(animation.getCurrentKeyFrame(), object.getX(), object.getY(), animation.getCurrentKeyFrame().getRegionWidth(), animation.getCurrentKeyFrame().getRegionHeight());
 				else
 					batch.draw(animation.getCurrentKeyFrame(), object.getX()+animation.getCurrentKeyFrame().getRegionWidth(), object.getY(), -animation.getCurrentKeyFrame().getRegionWidth(), animation.getCurrentKeyFrame().getRegionHeight());	
 			}
+		}
+	}
+
+	public Sprite getSprite() {
+		// TODO Auto-generated method stub
+		return sprite;
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+//		if(sprite != null)
+//			sprite.getTexture().dispose();
 	}
 
 }

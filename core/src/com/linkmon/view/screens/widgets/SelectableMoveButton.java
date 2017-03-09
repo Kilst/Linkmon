@@ -1,7 +1,9 @@
 package com.linkmon.view.screens.widgets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,10 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.linkmon.MoveType;
+import com.linkmon.helpers.SmartFontGenerator;
+import com.linkmon.model.linkmon.MoveElementalType;
 import com.linkmon.view.UIRenderer;
 
 public class SelectableMoveButton extends Table implements ISelectable {
@@ -48,12 +53,25 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		skin2.addRegions(uiAtlas);
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
+		
+		SmartFontGenerator fontGen = new SmartFontGenerator();
+		FileHandle exoFile = Gdx.files.internal("UI/lut.ttf");
+		BitmapFont fontSmall = fontGen.createFont(exoFile, "move-small", 14);
+		BitmapFont fontMedium = fontGen.createFont(exoFile, "move-medium", 18);
+//		BitmapFont fontLarge = fontGen.createFont(exoFile, "move-large", 48);
+		
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		
 		buttonStyle.checked = skin2.getDrawable("infoButton");
 		buttonStyle.down = skin2.getDrawable("infoButton");
 		buttonStyle.up = skin2.getDrawable("infoButton");
-		buttonStyle.font = skin.getFont("default-font");
+		buttonStyle.font = fontSmall;
+		
+		LabelStyle labelStyle = new LabelStyle();
+		if(Gdx.graphics.getWidth() < 900)
+			labelStyle.font = fontSmall;
+		else
+			labelStyle.font = fontMedium;
 		
 		infoButton = new TextButton("Info", buttonStyle);
 
@@ -62,15 +80,15 @@ public class SelectableMoveButton extends Table implements ISelectable {
 
 		parent = view;
 		
-		Label itemNameLabel = new Label(name, skin);
+		Label itemNameLabel = new Label(name, labelStyle);
 		
-		Label moveType = new Label(getTypeString(), skin);
+		Label moveType = new Label(getTypeString(), labelStyle);
 		moveType.setAlignment(Align.center);
-		Label moveDamage = new Label("Damage: "+damage+"\nIgnore Def: "+ignoreDamage+"\nEnergy Dmg: "+0, skin);
+		Label moveDamage = new Label("Damage: "+damage+"\nIgnore Def: "+ignoreDamage+"\nEnergy Dmg: "+0, labelStyle);
 		moveDamage.setAlignment(Align.left);
-		Label moveIgnoreDamage = new Label(""+ignoreDamage, skin);
+		Label moveIgnoreDamage = new Label(""+ignoreDamage, labelStyle);
 		moveIgnoreDamage.setAlignment(Align.center);
-		Label moveEnergy = new Label(""+energy, skin);
+		Label moveEnergy = new Label(""+energy, labelStyle);
 		moveEnergy.setAlignment(Align.center);
 		
 		Image img = new Image(new NinePatch(skin2.getPatch("spacer")));
@@ -88,28 +106,28 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		
 		
 		
-		this.add(itemNameLabel).width(100*UIRenderer.scaleXY).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
+		this.add(itemNameLabel).width(100*UIRenderer.scaleX).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
 		itemNameLabel.setTouchable(Touchable.disabled);
 		
-		this.add(img).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(moveType).width(70*UIRenderer.scaleXY).fill();
+		this.add(moveType).width(70*UIRenderer.scaleX).fill();
 		
-		this.add(img2).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img2).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
-		this.add(moveDamage).width(110*UIRenderer.scaleXY).fill();
+		this.add(moveDamage).width(110*UIRenderer.scaleX).fill();
 		
 //		this.add(img3).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 //		img3.setTouchable(Touchable.disabled);
 //		
 //		this.add(moveIgnoreDamage).width(50).fill();
 		
-		this.add(img4).width(3).height(60*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img4).width(3).height(60).align(Align.left).padLeft(15).padRight(15);
 		img4.setTouchable(Touchable.disabled);
 		
-		this.add(moveEnergy).width(50*UIRenderer.scaleXY).padRight(15).fill();
+		this.add(moveEnergy).width(50*UIRenderer.scaleX).padRight(15).fill();
 		
 		green = new TextureRegion(skin2.getRegion("green"));
 		
@@ -131,16 +149,28 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		skin2.addRegions(uiAtlas);
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 
+		SmartFontGenerator fontGen = new SmartFontGenerator();
+		FileHandle exoFile = Gdx.files.internal("UI/samplefont.ttf");
+		BitmapFont fontSmall = fontGen.createFont(exoFile, "exo-small", 14);
+		BitmapFont fontMedium = fontGen.createFont(exoFile, "exo-medium", 18);
+//		BitmapFont fontLarge = fontGen.createFont(exoFile, "exo-large", 48);
+		
+		LabelStyle labelStyle = new LabelStyle();
+		if(Gdx.graphics.getWidth() < 900)
+			labelStyle.font = fontSmall;
+		else
+			labelStyle.font = fontMedium;
+		
 		this.setBackground(skin2.getDrawable("tableButton"));
 		this.setColor(0.3f, 0.3f, 1f, 0.75f);
 		
-		Label itemNameLabel = new Label("Name", skin);
+		Label itemNameLabel = new Label("Name", labelStyle);
 		itemNameLabel.setAlignment(Align.center);
-		Label moveType = new Label("Type", skin);
+		Label moveType = new Label("Type", labelStyle);
 		moveType.setAlignment(Align.center);
-		Label moveDamage = new Label("Damage", skin);
+		Label moveDamage = new Label("Damage", labelStyle);
 		moveDamage.setAlignment(Align.center);
-		Label moveEnergy = new Label("Energy", skin);
+		Label moveEnergy = new Label("Energy", labelStyle);
 		moveEnergy.setAlignment(Align.center);
 		
 		
@@ -159,42 +189,42 @@ public class SelectableMoveButton extends Table implements ISelectable {
 		
 		
 		
-		this.add(itemNameLabel).width(100*UIRenderer.scaleXY).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
+		this.add(itemNameLabel).width(100*UIRenderer.scaleX).pad(5*UIRenderer.scaleXY).align(Align.left).expandX();
 		itemNameLabel.setTouchable(Touchable.disabled);
 		
-		this.add(img).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img).width(3).height(30).align(Align.left).padLeft(15).padRight(15);
 		img.setTouchable(Touchable.disabled);
 		
-		this.add(moveType).width(70*UIRenderer.scaleXY).fill();
+		this.add(moveType).width(70*UIRenderer.scaleX).fill();
 		
-		this.add(img2).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img2).width(3).height(30).align(Align.left).padLeft(15).padRight(15);
 		img2.setTouchable(Touchable.disabled);
 		
-		this.add(moveDamage).width(110*UIRenderer.scaleXY).fill();
+		this.add(moveDamage).width(110*UIRenderer.scaleX).fill();
 		
 //		this.add(img3).width(3).height(30).align(Align.left).padLeft(15).padRight(15);
 //		img3.setTouchable(Touchable.disabled);
 		
 //		this.add(moveIgnoreDamage).width(50).fill();
 		
-		this.add(img4).width(3).height(30*UIRenderer.scaleXY).align(Align.left).padLeft(15).padRight(15);
+		this.add(img4).width(3).height(30).align(Align.left).padLeft(15).padRight(15);
 		img4.setTouchable(Touchable.disabled);
 		
-		this.add(moveEnergy).width(50*UIRenderer.scaleXY).padRight(15).fill();
+		this.add(moveEnergy).width(50*UIRenderer.scaleX).padRight(15).fill();
 	}
 	
 	private String getTypeString() {
 		// TODO Auto-generated method stub
 		String typeString = "";
-		if(type == MoveType.NOTYPE)
+		if(type == MoveElementalType.NOTYPE)
 			typeString = "No Type";
-		else if(type == MoveType.FIRE)
+		else if(type == MoveElementalType.FIRE)
 			typeString = "Fire";
-		else if(type == MoveType.WATER)
+		else if(type == MoveElementalType.WATER)
 			typeString = "Water";
-		else if(type == MoveType.ELECTRIC)
+		else if(type == MoveElementalType.ELECTRIC)
 			typeString = "Electric";
-		else if(type == MoveType.EARTH)
+		else if(type == MoveElementalType.EARTH)
 			typeString = "Earth";
 		return typeString;
 	}

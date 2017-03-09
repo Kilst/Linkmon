@@ -2,6 +2,9 @@ package com.linkmon.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -20,6 +25,7 @@ import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.helpers.SmartFontGenerator;
 import com.linkmon.model.linkmon.BirthDate;
 import com.linkmon.model.linkmon.RankIds;
 import com.linkmon.model.linkmon.StatType;
@@ -27,12 +33,11 @@ import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.widgets.AnimationWidget;
+import com.linkmon.view.screens.widgets.MyProgressBar;
 import com.linkmon.view.screens.widgets.StatWidget;
 
-public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
+public class StatsWindow extends BaseMenuScreen implements Screen, ILinkmonStats, IPlayerStats {
 	
-	private Image container;
-	private Table table;
 	private Group uiGroup;
 	
 	public Label health;
@@ -40,7 +45,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	public Label defense;
 	public Label speed;
 	
-	private TextButton backButton;
+	private ImageButton backButton;
 	
 	private Image linkmonRank;
 	
@@ -74,6 +79,8 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	private Label playerNameLabel;
 	private Label playerNameText;
 	
+	Label linkmonDOBText;
+	
 	private Label playerGoldLabel;
 	
 	private Label playerGoldText;
@@ -94,6 +101,12 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
 		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = ResourceLoader.getSampleFont("medium");
+		
+		LabelStyle labelStyleLut = new LabelStyle();
+		labelStyleLut.font = ResourceLoader.getLutFont("medium");
+		
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		
 		buttonStyle.checked = skin2.getDrawable("button");
@@ -104,33 +117,30 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		
 		// Create Elements
-		container = new Image(skin2.getDrawable("statsBackground"));
-		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		container.setPosition(0, 0);
+
 		
-		image = new Table();
-		image.setBackground(skin2.getDrawable("title"));
-		image.setSize(250*UIRenderer.scaleXY, 136*UIRenderer.scaleXY);
-		Label heading = new Label("STATS", skin);
-		heading.setFontScale(1.1f*UIRenderer.scaleXY);
-		image.add(heading).padBottom(15*UIRenderer.scaleXY);
-		image.setPosition((Gdx.graphics.getWidth()/2)-image.getWidth()/2, Gdx.graphics.getHeight()-image.getHeight());
+		container = new Table();
+		container.setBackground(new Image(ResourceLoader.assetManager.get("statsBackground.png", Texture.class)).getDrawable());
+		container.setSize(1280, 720);
 		
-		table = new Table();
-		table.setBackground(skin2.getDrawable("newContainer"));
-		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		table.setPosition(0, 0);
+		topTable = new Table();
+		topTable.setSize(1280, 135);
 		
-		backButton = new TextButton("Back", buttonStyle);
-		backButton.setTransform(true);
-		backButton.setScale(UIRenderer.scaleXY);
-		backButton.setPosition(Gdx.graphics.getWidth()-backButton.getWidth()-70, 55);
+		middleTable = new Table();
+		middleTable.setSize(1280, 500);
+		
+		bottomTable = new Table();
+		bottomTable.setSize(1280, 135);
+		
+		ImageButtonStyle backButtonStyle = new ImageButtonStyle();
+		backButtonStyle.down = skin2.getDrawable("backButtonGreen");
+		backButtonStyle.up = skin2.getDrawable("backButtonRed");
+		
+		backButton = new ImageButton(backButtonStyle);
 		
 		statsTable = new Table();
-		statsTable.setSize(Gdx.graphics.getWidth()/2*UIRenderer.scaleXY, Gdx.graphics.getHeight()/1.5f*UIRenderer.scaleXY);
-		statsTable.setPosition(Gdx.graphics.getWidth()/12, Gdx.graphics.getHeight()/4);
-		statsTable.setTransform(true);
-		statsTable.setScale(UIRenderer.scaleXY);
+		statsTable.setSize(UIRenderer.WIDTH/2, UIRenderer.HEIGHT/1.5f);
+		statsTable.setPosition(UIRenderer.WIDTH/12, UIRenderer.HEIGHT/4);
 		
 		linkmonLabel = new Label("Linkmon Stats", skin);
 		
@@ -138,43 +148,104 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		linkmonRank = new Image(skin2.getDrawable("rank-s"));
 		
-		playerTable = new Table();
-		playerTable.setBackground(skin2.getDrawable("tableHeading"));
-		playerTable.setTransform(true);
-		playerTable.setScale(UIRenderer.scaleXY);
+		Table infoTable = new Table();
 		
-		playerHeading = new Label("Player Stats", skin);
-		playerNameLabel = new Label("Name:", skin);
+		playerTable = new Table();
+		playerTable.setBackground(new Image(ResourceLoader.assetManager.get("bigContainerBlue.png", Texture.class)).getDrawable());
+		
+		Table playerTitle = new Table();
+		playerTitle.setBackground(skin2.getDrawable("title"));
+		playerTitle.pack(); // Calculate current size early
+		Label headingPlayer = new Label("Player", labelStyle);
+		playerTitle.add(headingPlayer).align(Align.center).padBottom(playerTitle.getHeight()/6);
+		
+//		playerHeading = new Label("Player Stats", skin);
+		playerNameLabel = new Label("Name:", labelStyleLut);
 		playerNameText = new Label("", skin);	
-		playerGoldLabel = new Label("Gold:", skin);
+		playerGoldLabel = new Label("Gold:", labelStyleLut);
 		playerGoldText = new Label("", skin);
 		
+		Table linkmonInfoTable = new Table();
+		linkmonInfoTable.setBackground(new Image(ResourceLoader.assetManager.get("bigContainerBlue.png", Texture.class)).getDrawable());
+		
+		Table linkmonInfoTitle = new Table();
+		linkmonInfoTitle.setBackground(skin2.getDrawable("title"));
+		linkmonInfoTitle.pack(); // Calculate current size early
+		Label headingLinkmonInfo = new Label("Linkmon", labelStyle);
+		linkmonInfoTitle.add(headingLinkmonInfo).align(Align.center).padBottom(linkmonInfoTitle.getHeight()/6);
+		
+		
+		MyProgressBar pBarHunger = new MyProgressBar(skin2, 25, 100);
+		pBarHunger.update(25);
+		MyProgressBar pBarHappy = new MyProgressBar(skin2, 75, 100);
+		pBarHappy.update(75);
+//		Label linkmonHeading = new Label("Player Stats", skin);
+		Label linkmonDOBLabel = new Label("DOB:", labelStyleLut);
+		linkmonDOBText = new Label("", labelStyleLut);	
+		Label linkmonHungerLabel = new Label("Hungry:", labelStyleLut);
+		Label linkmonHappyLabel = new Label("Happiness:", labelStyleLut);
+		
+		linkmonInfoTable.add(linkmonInfoTitle).expandX().center().colspan(2).padTop(linkmonInfoTitle.getHeight()/2*-1);
+		linkmonInfoTable.row();
+//		playerTable.add(playerHeading).expandX().center().colspan(2).padTop(-60).padLeft(-130).align(Align.topLeft);
+//		playerTable.row();
+		
+		linkmonInfoTable.add(linkmonDOBLabel).align(Align.left).expandX().padLeft(10);
+		linkmonInfoTable.add(linkmonDOBText).align(Align.center).expandX();
+		linkmonInfoTable.row();
+		linkmonInfoTable.add(linkmonHungerLabel).align(Align.left).expandX().padLeft(10).padTop(20);
+		linkmonInfoTable.add(pBarHunger).align(Align.center).expandX().width(200).padTop(20);
+		linkmonInfoTable.row();
+		linkmonInfoTable.add(linkmonHappyLabel).align(Align.left).expand().padLeft(10).padTop(-60);
+		linkmonInfoTable.add(pBarHappy).align(Align.center).expand().width(200).padTop(-60);
+		linkmonInfoTable.row();
+		
+		Table linkmonStatsTable = new Table();
+		linkmonStatsTable.setBackground(new Image(ResourceLoader.assetManager.get("bigContainerBlue.png", Texture.class)).getDrawable());
+		
 		linkmonTable = new Table();
-		linkmonTable.setTransform(true);
-		linkmonTable.setScale(UIRenderer.scaleXY);
 		
-		
+		Image heading = new Image(skin2.getDrawable("menuHeading"));
 		
 		// Build Layout
-		playerTable.add(playerHeading).expandX().center().colspan(2).padTop(-60).padLeft(-130).align(Align.topLeft);
+		
+		topTable.add(heading).expand().align(Align.left);
+		
+		
+		playerTable.add(playerTitle).expandX().center().colspan(2).padTop(playerTitle.getHeight()/2*-1);
+		playerTable.row();
+//		playerTable.add(playerHeading).expandX().center().colspan(2).padTop(-60).padLeft(-130).align(Align.topLeft);
+//		playerTable.row();
+		
+		playerTable.add(playerNameLabel).align(Align.left);
+		playerTable.add(playerNameText).align(Align.center);
+		playerTable.row();
+		playerTable.add(playerGoldLabel).align(Align.topLeft).expand();
+		playerTable.add(playerGoldText).align(Align.top);
 		playerTable.row();
 		
-		playerTable.add(playerNameLabel).align(Align.topLeft).padLeft(-160);
-		playerTable.add(playerNameText).padLeft(-160);
-		playerTable.row();
-		playerTable.add(playerGoldLabel).align(Align.topLeft).padLeft(-160).expand();
-		playerTable.add(playerGoldText).padLeft(-160).align(Align.top);
-		playerTable.row();
+		middleTable.row();
+		infoTable.add(playerTable).expand().pad(10);
+		infoTable.row();
+		infoTable.add(linkmonInfoTable).expand().pad(10);
+		middleTable.add(infoTable).expand().align(Align.left).pad(20);
 		
+		linkmonStatsTable.add(statsTable).align(Align.left).expand();
 		
-		table.add(playerTable).expand().fillY().padTop(20*UIRenderer.scaleXY).align(Align.left);
-		table.add(statsTable).padTop(20*UIRenderer.scaleXY);
+		linkmonStatsTable.add(linkmonTable).expand();
+		linkmonStatsTable.row();
 		
-		table.add(linkmonTable).expandY();
-		table.row();
+		middleTable.add(linkmonStatsTable).expandY().pad(20);
+		
+		bottomTable.add(backButton).align(Align.left).expandX();
+		
+		container.add(topTable).size(1280, 110);
+		container.row();
+		container.add(middleTable).size(1280, 500);
+		container.row();
+		container.add(bottomTable).size(1280, 110);
 		
 		addListeners();
-		
 		
 		
 		// Update LinkmonTable
@@ -188,7 +259,7 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		backButton.addListener(new ClickListener(){
 	            @Override 
 	            public void clicked(InputEvent event, float x, float y){
-	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.MENU_SCREEN));
+	            	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.PREVIOUS));
 	            }
 			});
 	}
@@ -198,10 +269,6 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		
 		// TODO Auto-generated method stub
 		uiGroup.addActor(container);
-		uiGroup.addActor(table);
-		uiGroup.addActor(image);
-		uiGroup.addActor(backButton);
-		uiGroup.toFront();
 	}
 	
 	@Override
@@ -210,19 +277,19 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 		linkmonTable.clear();
 		statsTable.clear();
 		
-		StatWidget widget = new StatWidget(skin, skin2, health, 9999, StatType.HEALTH);
+		StatWidget widget = new StatWidget(skin, skin2, health, 999, StatType.HEALTH);
 		statsTable.add(widget);
 		statsTable.row();
 		
-		StatWidget widget2 = new StatWidget(skin, skin2, attack, 999,  StatType.ATTACK);
+		StatWidget widget2 = new StatWidget(skin, skin2, attack, 99,  StatType.ATTACK);
 		statsTable.add(widget2);
 		statsTable.row();
 		
-		StatWidget widget3 = new StatWidget(skin, skin2, defense, 999, StatType.DEFENSE);
+		StatWidget widget3 = new StatWidget(skin, skin2, defense, 99, StatType.DEFENSE);
 		statsTable.add(widget3);
 		statsTable.row();
 		
-		StatWidget widget4 = new StatWidget(skin, skin2, speed, 999, StatType.SPEED);
+		StatWidget widget4 = new StatWidget(skin, skin2, speed, 99, StatType.SPEED);
 		statsTable.add(widget4);
 		statsTable.row();
 		
@@ -255,22 +322,22 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 			}
 		}
 		
-//		String minutes;
-//		String hours;
-//		
-//		if(dob.getMinute() < 10)
-//			minutes = "0"+dob.getMinute();
-//		else
-//			minutes = ""+dob.getMinute();
-//		
-//		if(dob.getHour() == 0)
-//			hours = "12";
-//		else if(dob.getHour() < 10)
-//			hours = "0"+dob.getHour();
-//		else
-//			hours = ""+dob.getHour();
-//		
-//		this.dob.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
+		String minutes;
+		String hours;
+		
+		if(dob.getMinute() < 10)
+			minutes = "0"+dob.getMinute();
+		else
+			minutes = ""+dob.getMinute();
+		
+		if(dob.getHour() == 0)
+			hours = "12";
+		else if(dob.getHour() < 10)
+			hours = "0"+dob.getHour();
+		else
+			hours = ""+dob.getHour();
+		
+		linkmonDOBText.setText(dob.getDay()+"/"+dob.getMonth()+"/"+dob.getYear()+"  "+hours+":"+minutes);
 		
 		
 		linkmonTable.add(anim).colspan(2).pad(5);
@@ -314,9 +381,6 @@ public class StatsWindow implements Screen, ILinkmonStats, IPlayerStats {
 	public void hide() {
 		// TODO Auto-generated method stub
 		container.remove();
-		table.remove();
-		image.remove();
-		backButton.remove();
 	}
 
 	@Override

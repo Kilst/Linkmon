@@ -1,12 +1,11 @@
 package com.linkmon.view.screens.widgets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.linkmon.helpers.ResourceLoader;
 
 public class ItemBox extends Image {
 
@@ -14,7 +13,11 @@ public class ItemBox extends Image {
 	
 	public ItemBox() {
 		
-		this.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("itemBox.png")))));
+		Skin skin2 = new Skin();
+		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
+		skin2.addRegions(uiAtlas);
+		
+		this.setDrawable(skin2.getDrawable("itemBox"));
 	}
 	
 	public void addItemImage(Texture itemImage) {

@@ -16,7 +16,7 @@ public class AnimationStateWave extends BaseAnimationState {
 	public void update(IAnimationComponent animationComp, GameObject object) {
 		// TODO Auto-generated method stub
 		
-		if(animationComp.getCurrentAnimationEnded() == true || object.isMoving) {
+		if(animationComp.isCurrentAnimationEnded() || object.isMoving) {
 			animationComp.setState(new AnimationStateIdle(animationComp));
 		}
 	}

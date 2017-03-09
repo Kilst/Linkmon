@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,7 +24,7 @@ import com.linkmon.eventmanager.messages.MessageEvents;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
-import com.linkmon.model.items.IItemAction;
+import com.linkmon.model.items.actions.IItemAction;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.ScreenType;
 
@@ -67,19 +68,26 @@ public Table messageBox;
 		
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
+		
+		
+		LabelStyle labelStyle1 = new LabelStyle();
+		labelStyle1.font = ResourceLoader.getLutFont("small");
+		LabelStyle labelStyle2 = new LabelStyle();
+		labelStyle2.font = ResourceLoader.getSampleFont("medium");
+		
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		
 		buttonStyle.checked = skin2.getDrawable("button");
 		buttonStyle.down = skin2.getDrawable("button");
 		buttonStyle.up = skin2.getDrawable("button");
-		buttonStyle.font = skin.getFont("default-font");
+		buttonStyle.font = ResourceLoader.getSampleFont("medium");
 		
 		this.setBackground(skin2.getDrawable("tableNoHeading"));
 		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.setPosition(0, 0);
 		this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		this.setSize((640/1.4f)*UIRenderer.scaleXY, (480/1.4f)*UIRenderer.scaleXY);
+		this.setSize((640/1.4f)*UIRenderer.scaleX, (480/1.4f)*UIRenderer.scaleX);
 		
 		
 		this.setPosition((Gdx.graphics.getWidth()/2f) - (this.getWidth()/2), (Gdx.graphics.getHeight()/2f) - (this.getHeight()/2));
@@ -92,25 +100,24 @@ public Table messageBox;
 		
 		heading = new Table();
 		heading.setBackground(skin2.getDrawable("title"));
-		heading.setSize(290, 136);
-		Label title = new Label(titleText, skin);
-		title.setFontScale(1.2f);
+		//heading.setSize(290*UIRenderer.scaleX, 136*UIRenderer.scaleX);
+		Label title = new Label(titleText, labelStyle2);
 		heading.add(title).padBottom(15);
+		heading.pack();
 		
 		messageTable = new Table();
 		messageTable.setBackground(skin2.getDrawable("tableNoHeading"));
-		message = new Label(messageString , skin);
-		message.setFontScale(1.2f);
+		message = new Label(messageString , labelStyle1);
 		messageTable.add(message).fill();
 		
 		
-		this.add(heading).padTop(-50);
+		this.add(heading).padTop((heading.getHeight()/2)*-1);
 		this.row();
 		this.add(messageTable).expand().fill();
 		this.row();
 		
 		okayButton = new TextButton("Okay", buttonStyle);
-		this.add(okayButton).align(Align.right).size(okayButton.getWidth()*UIRenderer.scaleXY, okayButton.getHeight()*UIRenderer.scaleXY);
+		this.add(okayButton).align(Align.right);
 		this.row();
 		
 		okayButton.addListener(new ClickListener(){

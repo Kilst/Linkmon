@@ -7,8 +7,8 @@ import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.model.Player;
 import com.linkmon.model.Shop;
 import com.linkmon.model.gameobject.GameObject;
-import com.linkmon.model.items.ItemComponent;
 import com.linkmon.model.items.ItemType;
+import com.linkmon.model.items.components.ItemComponent;
 import com.linkmon.view.screens.interfaces.ILinkmonStats;
 import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
@@ -44,7 +44,7 @@ public class ShopController implements ScreenListener {
 			}
 			
 			if(type == ItemType.ALL) {
-				window.addShopItem(itemObject.getId(), itemObject.getName(), quantity, item.getPrice(), item.getItemText());
+				window.addShopItem(itemObject.getId(), itemObject.getName(), quantity, item.getPrice(), item.getType(), item.getItemText());
 				Gdx.app.log("PC", "Adding Item!");
 			}
 		}

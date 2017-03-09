@@ -7,17 +7,20 @@ import com.linkmon.model.libgdx.LinkmonAnimationComponent;
 import com.linkmon.model.linkmon.LinkmonExtraComponents;
 
 public class AnimationStateIdle extends BaseAnimationState {
+	
+	float time = 0;
 
 	public AnimationStateIdle(IAnimationComponent animComp) {
 		super(animComp);
 		// TODO Auto-generated constructor stub
+		time = System.currentTimeMillis();
 	}
 
 	@Override
 	public void update(IAnimationComponent animationComp, GameObject object) {
 		// TODO Auto-generated method stub
 		animationComp.setState(this);
-		if(((LinkmonExtraComponents)object.getExtraComponents()).getTimers().getWaveTimer().checkTimer() && object.isMoving) {
+		if(System.currentTimeMillis()- time > 45 && object.isMoving) {
 			animationComp.setState(new AnimationStateWave(animationComp));
 			return;
 		}

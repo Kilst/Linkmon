@@ -9,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -71,6 +73,8 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	Image coinsImage;
 	String goldString = "Gold: ";
 	
+	ScrollPane scroll;
+	
 	public ShopWindow(Group group, EventManager eManager) {
 		
 		uiGroup = group;
@@ -81,6 +85,8 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
+		
+		ScrollPaneStyle scrollStyle = new ScrollPaneStyle();
 		
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		
@@ -103,9 +109,9 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		heading = new Table();
 		heading.setBackground(skin2.getDrawable("title"));
-		heading.setSize(250, 136);
+		//heading.setSize(250, 136);
 		Label title = new Label("SHOP", skin);
-		title.setFontScale(1.1f);
+		//title.setFontScale(1.1f);
 		
 		tableItems = new SelectionTable();
 		tableItems.setBackground(skin2.getDrawable("tableNoHeading"));
@@ -114,8 +120,11 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		buyTable = new Table();
 		buyTable.setBackground(skin2.getDrawable("tableNoHeading"));
 		
+		scroll = new ScrollPane(tableItems, scrollStyle);
+		scroll.setScrollingDisabled(true, false);
+		
 		backButton = new TextButton("Back", buttonStyle);
-		backButton.setPosition(Gdx.graphics.getWidth()-backButton.getWidth()-70, 55);
+		backButton.setPosition(Gdx.graphics.getWidth()-backButton.getWidth()-Gdx.graphics.getWidth()/20, Gdx.graphics.getHeight()/15);
 		
 		buyButton = new TextButton("Buy", buttonStyle);
 		
@@ -138,9 +147,10 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		// Build Window Layout
 		
-		heading.add(title).padBottom(15);
-		heading.setPosition((Gdx.graphics.getWidth()/2)-heading.getWidth()/2, Gdx.graphics.getHeight()-heading.getHeight());
-		buyTable.add(itemBox).expand().align(Align.top).colspan(2).size(150, 150);
+		heading.add(title).padBottom(15).align(Align.center);
+		heading.pack();
+		heading.setPosition((Gdx.graphics.getWidth()/2)-heading.getWidth()/2, Gdx.graphics.getHeight()-heading.getHeight()+(heading.getHeight()/8));
+		buyTable.add(itemBox).expand().align(Align.top).colspan(2).size(150*UIRenderer.scaleX, 150*UIRenderer.scaleX);
 		buyTable.row();
 		buyTable.add(itemText).expand().colspan(2);
 		buyTable.row();
@@ -156,13 +166,13 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		container.add(heading).colspan(3);
 		container.row();
-		container.add(buyTable).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
-		container.add(tableItems).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY).colspan(2);
+		container.add(buyTable).width(250*UIRenderer.scaleX).expandY().fill().padLeft(20*UIRenderer.scaleX).padRight(20*UIRenderer.scaleXY);
+		container.add(scroll).expand().fill().padLeft(20*UIRenderer.scaleX).padRight(20*UIRenderer.scaleX).colspan(2);
 		container.row();
 		
-		bottomTable.add(playerGold).padLeft(15*UIRenderer.scaleXY);
-		bottomTable.add(coinsImage).align(Align.left).padLeft(15*UIRenderer.scaleXY);
-		bottomTable.add(backButton).align(Align.right).pad(5*UIRenderer.scaleXY).expandX();
+		bottomTable.add(playerGold).padLeft(15*UIRenderer.scaleX);
+		bottomTable.add(coinsImage).align(Align.left).padLeft(15*UIRenderer.scaleX);
+		bottomTable.add(backButton).align(Align.right).pad(5*UIRenderer.scaleX).expandX();
 		container.add(bottomTable).colspan(3).expandX().fillX();
 		
 		
@@ -263,7 +273,7 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 		
 		if(tableItems.isUpdated()) {
 			selectedItem = tableItems.getSelectedItem();
-			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()).getTexture());
+			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()));
 			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
 			itemAmount.setText("Amount: 1");
 			amount = 1;
@@ -327,10 +337,14 @@ public class ShopWindow implements Screen, IShop, ModelListener {
 	}
 	
 	@Override
-	public void addShopItem(int id, String name, int quantity, int price, String itemText) {
+	public void addShopItem(int id, String name, int quantity, int price, int type, String itemText) {
 		// TODO Auto-generated method stub
-		item = new SelectableItemButton(id, name, quantity, price, itemText, tableItems, uiGroup);
+		item = new SelectableItemButton(id, name, quantity, price, type, itemText, tableItems, uiGroup);
 		tableItems.addItem(item);
+		tableItems.invalidate();
+		scroll.invalidate();
+		tableItems.layout();
+		scroll.layout();
 	}
 
 	@Override

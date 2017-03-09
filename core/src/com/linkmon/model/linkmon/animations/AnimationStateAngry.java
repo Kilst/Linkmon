@@ -16,7 +16,7 @@ public class AnimationStateAngry extends BaseAnimationState {
 	public void update(IAnimationComponent animationComp, GameObject object) {
 		// TODO Auto-generated method stub
 		
-		if(animationComp.getCurrentAnimationEnded() == true) {
+		if(animationComp.isCurrentAnimationEnded()) {
 			animationComp.setState(new AnimationStateIdle(animationComp));
 		}
 	}

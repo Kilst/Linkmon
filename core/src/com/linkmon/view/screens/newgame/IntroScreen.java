@@ -53,11 +53,6 @@ public class IntroScreen implements Screen {
 		
 		loading = new AnimationWidget(Gdx.files.internal("Animations/Loading/loading.pack"), 0.5f);
 		loading.setPosition(Gdx.graphics.getWidth()-loading.getWidth(), 0);
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
 		
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -96,6 +91,11 @@ public class IntroScreen implements Screen {
 			}
 		};
 		titleImage.getColor().a = 0;
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 		
 		container.add(titleImage);
 		container.row();

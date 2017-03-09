@@ -7,6 +7,7 @@ import com.linkmon.model.gameobject.ObjectFactory;
 import com.linkmon.model.gameobject.ObjectId;
 import com.linkmon.model.gamesave.AESEncryptor;
 import com.linkmon.model.gamesave.JsonSaver;
+import com.linkmon.view.UIRenderer;
 
 public class MService {
 	
@@ -27,7 +28,8 @@ public class MService {
 		
 		try {
 		
-			world = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			world = new World(eManager, 1280, 720);
+			world.addRenderer(new WorldRenderingComponent(world, "trainingBackground"));
 			
 			shop = new Shop();
 			
@@ -52,7 +54,8 @@ public class MService {
 	
 	private void newGame(int eggChoice) {
 		
-		world = new World(eManager, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		world = new World(eManager, UIRenderer.WIDTH, UIRenderer.HEIGHT);
+		world.addRenderer(new WorldRenderingComponent(world, "trainingBackground"));
 		
 		player = new Player(eManager, eggChoice, world);
 //		jsonSaver = new JsonSaver(new AESEncryptor());

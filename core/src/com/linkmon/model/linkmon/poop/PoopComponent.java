@@ -36,7 +36,7 @@ public class PoopComponent implements IExtraComponents {
 	private void poopCheck(GameObject object) {
 		if(timer.checkTimer() && poopList.size() < 3) {
 			GameObject poop = ObjectFactory.getInstance().getObjectFromId(ObjectId.POOP);
-			poop.addInputComponent(new PoopInputComponent(object.getWorld().geteManager(), poop));
+			poop.addInputComponent(new PoopInputComponent(object.getWorld().geteManager(), poop, this));
 			poop.setPosition(object.getX()+(object.getWidth()/2)-(poop.getWidth()/2), object.getY());
 			poopList.add(poop);
 			object.getWorld().addObjectToWorld(poop);
@@ -49,7 +49,8 @@ public class PoopComponent implements IExtraComponents {
 	
 	public void removePoop(GameObject poop) {
 		poopListRemove.add(poop);
-		poop.getWorld().geteManager().notify(new ModelEvent(ModelEvents.ADD_PARTICLE_EFFECT, ParticleIds.ROCK, poop.getX()+(poop.getWidth()/2), poop.getY()));
+		if(poop.getWorld().getActive()) // Don't display particle effect if another world is active
+			poop.getWorld().geteManager().notify(new ModelEvent(ModelEvents.ADD_PARTICLE_EFFECT, ParticleIds.ROCK, poop.getX()+(poop.getWidth()/2), poop.getY()));
 //		poop.getWorld().removeObjectFromWorld(poop);
 	}
 

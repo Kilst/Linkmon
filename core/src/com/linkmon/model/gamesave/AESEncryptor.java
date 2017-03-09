@@ -18,7 +18,8 @@ import com.badlogic.gdx.Gdx;
 
 public class AESEncryptor implements ISaveEncryption {
 	
-	private final String key = "0000000000000000";
+//	private final String key = "0000000000000000";
+	private final String key = "ab12cd36h97ytv22";
 									 
 	// Need to work out how to store keys. Maybe just build one off of device specific data?
 	// MAC address, game files hash, something to make it unique.

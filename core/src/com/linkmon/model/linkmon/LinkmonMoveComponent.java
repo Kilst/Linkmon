@@ -1,56 +1,49 @@
 package com.linkmon.model.linkmon;
 
+import com.linkmon.model.aonevonebattle.moves.OneVMove;
+
 public class LinkmonMoveComponent {
 	
-	private Move basicAttack;
-	private Move mediumAttack1;
-	private Move mediumAttack2;
-	private Move specialAttack;
+	private int basicAttack;
+	private int mediumAttack1;
+	private int mediumAttack2;
 	
 	public LinkmonMoveComponent() {
-		basicAttack = MoveFactory.getMoveFromId(MoveIds.KICK);
-		mediumAttack1 = MoveFactory.getMoveFromId(MoveIds.FIREWHIRL);
-		mediumAttack2 = MoveFactory.getMoveFromId(MoveIds.FIREBALL);
-		specialAttack = MoveFactory.getMoveFromId(MoveIds.ETERNALFIRE);
+//		basicAttack = MoveFactory.getMoveFromId(MoveIds.FIREBALL);
+//		mediumAttack1 = MoveFactory.getMoveFromId(MoveIds.LEAF_BOMB);
+//		mediumAttack2 = MoveFactory.getMoveFromId(MoveIds.WATER_JET);
+		basicAttack = MoveIds.FIREBALL;
+		mediumAttack1 = MoveIds.LEAF_BOMB;
+		mediumAttack2 = MoveIds.WATER_JET;
 	}
 	
-	public Move getBasicAttack() {
+	public int getMove1() {
 		return basicAttack;
 	}
-	public void setBasicAttack(Move basicAttack) {
+	public void setMove1(int basicAttack) {
 		this.basicAttack = basicAttack;
 	}
-	public Move getMediumAttack1() {
+	public int getMove2() {
 		return mediumAttack1;
 	}
-	public void setMediumAttack1(Move mediumAttack1) {
+	public void setMove2(int mediumAttack1) {
 		this.mediumAttack1 = mediumAttack1;
 	}
-	public Move getMediumAttack2() {
+	public int getMove3() {
 		return mediumAttack2;
 	}
-	public void setMediumAttack2(Move mediumAttack2) {
+	public void setMove3(int mediumAttack2) {
 		this.mediumAttack2 = mediumAttack2;
 	}
-	public Move getSpecialAttack() {
-		return specialAttack;
-	}
-	public void setSpecialAttack(Move specialAttack) {
-		this.specialAttack = specialAttack;
-	}
-
 	public void swapMove(int oldMove, int newMove) {
 		// TODO Auto-generated method stub
-		if(basicAttack.getId() == oldMove)
-			basicAttack = MoveFactory.getMoveFromId(newMove);
+		if(basicAttack == oldMove)
+			basicAttack = newMove;
 		
-		if(mediumAttack1.getId() == oldMove)
-			mediumAttack1 = MoveFactory.getMoveFromId(newMove);
+		if(mediumAttack1 == oldMove)
+			mediumAttack1 = newMove;
 		
-		if(mediumAttack2.getId() == oldMove)
-			mediumAttack2 = MoveFactory.getMoveFromId(newMove);
-		
-		if(specialAttack.getId() == oldMove)
-			specialAttack = MoveFactory.getMoveFromId(newMove);
+		if(mediumAttack2 == oldMove)
+			mediumAttack2 = newMove;
 	}
 }

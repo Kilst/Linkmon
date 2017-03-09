@@ -55,7 +55,7 @@ public abstract class LibgdxAnimationComponent implements IAnimationComponent {
 		return currentAnimation.getKeyFrame(elapsedTime);
 	}
 	
-	public boolean getCurrentAnimationEnded() {
+	public boolean isCurrentAnimationEnded() {
 		return currentAnimation.isAnimationFinished(elapsedTime);
 	}
 }

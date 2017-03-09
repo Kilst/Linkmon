@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.linkmon.eventmanager.input.InputListener;
 import com.linkmon.model.World;
+import com.linkmon.model.battles.MovePhysicsComponent;
 import com.linkmon.model.components.IExtraComponents;
 import com.linkmon.model.components.IInputComponent;
 import com.linkmon.model.components.IPhysicsComponent;
@@ -29,6 +30,9 @@ public class GameObject {
 	
 	private float width = 0;
 	private float height = 0;
+	
+	private float halfWidth = 0;
+	private float halfHeight = 0;
 	
 	private AABB aabb;
 	
@@ -159,6 +163,7 @@ public class GameObject {
 
 	public void setWidth(float width) {
 		this.width = width;
+		halfWidth = width/2;
 	}
 
 	public float getHeight() {
@@ -167,6 +172,7 @@ public class GameObject {
 
 	public void setHeight(float height) {
 		this.height = height;
+		halfHeight = height/2;
 	}
 
 	public AABB getAabb() {
@@ -198,5 +204,20 @@ public class GameObject {
 	public int getType() {
 		// TODO Auto-generated method stub
 		return type;
+	}
+
+	public void setPhysicsComponent(IPhysicsComponent physicsComponent) {
+		// TODO Auto-generated method stub
+		this.physicsComponent = physicsComponent;
+	}
+
+	public float getHalfWidth() {
+		// TODO Auto-generated method stub
+		return halfWidth;
+	}
+	
+	public float getHalfHeight() {
+		// TODO Auto-generated method stub
+		return halfHeight;
 	}
 }

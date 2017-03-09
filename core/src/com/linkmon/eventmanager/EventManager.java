@@ -23,6 +23,7 @@ public class EventManager {
 	
 	private List<ViewListener> viewListeners;
 	private List<ScreenListener> screenListeners;
+	private List<ScreenListener> screenListenersQueue;
 	private List<MessageListener> messageListeners;
 	private List<ControllerListener> controllerListeners;
 	private List<NetworkListener> networkListeners;
@@ -33,6 +34,7 @@ public class EventManager {
 	public EventManager() {
 		viewListeners = new ArrayList<ViewListener>();
 		screenListeners = new ArrayList<ScreenListener>();
+		screenListenersQueue = new ArrayList<ScreenListener>();
 		messageListeners = new ArrayList<MessageListener>();
 		controllerListeners = new ArrayList<ControllerListener>();
 		networkListeners = new ArrayList<NetworkListener>();
@@ -48,7 +50,7 @@ public class EventManager {
 	
 	public synchronized void addScreenListener(ScreenListener listener) {
 		if (!screenListeners.contains(listener))
-			screenListeners.add(listener);
+			screenListenersQueue.add(listener);
 	}
 	
 	public synchronized void addControllerListener(ControllerListener listener) {
@@ -107,6 +109,11 @@ public class EventManager {
 		}
 		
 		else if (event.getClass() == ScreenEvent.class) {
+			for (ScreenListener listener : screenListenersQueue) {
+				screenListeners.add(listener);
+			}
+			
+			screenListenersQueue.clear();
 			for (ScreenListener listener : screenListeners) {
 				
 				listener.onNotify((ScreenEvent)event);

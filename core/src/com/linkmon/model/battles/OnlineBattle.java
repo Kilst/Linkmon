@@ -2,8 +2,9 @@ package com.linkmon.model.battles;
 
 import com.badlogic.gdx.Gdx;
 import com.linkmon.eventmanager.EventManager;
+import com.linkmon.model.aonevonebattle.moves.MoveFactory;
+import com.linkmon.model.aonevonebattle.moves.OneVMove;
 import com.linkmon.model.linkmon.Move;
-import com.linkmon.model.linkmon.MoveFactory;
 import com.linkmon.model.linkmon.MoveIds;
 
 public class OnlineBattle {
@@ -15,8 +16,8 @@ public class OnlineBattle {
 	
 	private String[][] battleMessages;
 	
-	private Move playerMove;
-	private Move opponentMove;
+	private OneVMove playerMove;
+	private OneVMove opponentMove;
 	
 	private int playerDamage;
 	private int opponentDamage;

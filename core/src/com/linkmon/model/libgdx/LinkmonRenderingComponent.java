@@ -44,26 +44,31 @@ public class LinkmonRenderingComponent extends LibgdxRenderingComponent {
 	}
 	
 	private void checkThoughts(GameObject linkmon) {
-		if(((LinkmonExtraComponents)linkmon.getExtraComponents()) == null)
-			return;
-		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isHungry()) {
-			if(thoughtBubble[0] == null)
-				thoughtBubble[0] = new Sprite(ResourceLoader.getRegionFromId(4));
+		try {
+			if(((LinkmonExtraComponents)linkmon.getExtraComponents()) == null)
+				return;
+			if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isHungry()) {
+				if(thoughtBubble[0] == null)
+					thoughtBubble[0] = new Sprite(ResourceLoader.getRegionFromId(4));
+			}
+			else
+				thoughtBubble[0] = null;
+			if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getPoopComponent().getPoopList().size() > 0) {
+				if(thoughtBubble[1] == null)
+					thoughtBubble[1] = new Sprite(ResourceLoader.getRegionFromId(5));
+			}
+			else
+				thoughtBubble[1] = null;
+			if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isSleepy()) {
+				if(thoughtBubble[2] == null)
+					thoughtBubble[2] = new Sprite(ResourceLoader.getRegionFromId(6)); // Sleepy
+			}
+			else
+				thoughtBubble[2] = null;
 		}
-		else
-			thoughtBubble[0] = null;
-		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getPoopComponent().getPoopList().size() > 0) {
-			if(thoughtBubble[1] == null)
-				thoughtBubble[1] = new Sprite(ResourceLoader.getRegionFromId(5));
+		catch(Exception e) {
+			
 		}
-		else
-			thoughtBubble[1] = null;
-		if(((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus().isSleepy()) {
-			if(thoughtBubble[2] == null)
-				thoughtBubble[2] = new Sprite(ResourceLoader.getRegionFromId(6)); // Sleepy
-		}
-		else
-			thoughtBubble[2] = null;
 	}
 	
 	@Override

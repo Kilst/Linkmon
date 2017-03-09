@@ -17,6 +17,7 @@ public class World {
 	
 	private List<GameObject> objects;
 	
+	// These queues are needed incase 2+ objects are removed/added on the same frame
 	private List<GameObject> objectQueueAdd;
 	private List<GameObject> objectQueueRemove;
 	
@@ -24,10 +25,14 @@ public class World {
 	
 	EventManager eManager;
 	
+	private boolean isActive = true;
+	
 	private float width;
 	private float height;
 	
 	private boolean isLightOn = true;
+	
+	private boolean isUpdating = true;
 	
 	public World(EventManager eManager, float width, float height) {
 		
@@ -55,26 +60,28 @@ public class World {
 	public void removeObjectFromWorld(GameObject object) {
 		if(objects.contains(object)) {
 			objectQueueRemove.add(object);
+			if(object.getInputComponent() != null)
+				eManager.removeInputListener(object.getInputComponent());
 			Gdx.app.log("World", "Removed!");
+
 		}
 	}
 	
-	private void updateObjects() {
-		for(GameObject object : objectQueueAdd) {
-			objects.add(object);
-		}
-		objectQueueAdd.clear();
-		
+	protected void updateQueues() {
 		for(GameObject object : objectQueueRemove) {
 			objects.remove(object);
 		}
 		objectQueueRemove.clear();
+		
+		for(GameObject object : objectQueueAdd) {
+			objects.add(object);
+		}
+		objectQueueAdd.clear();
 	}
 	
 	public void update() {
 		
-		updateObjects();
-		
+		updateQueues();
 		for(GameObject object : objects) {
 			object.update(objects);
 		}
@@ -117,5 +124,23 @@ public class World {
 	public IRenderingComponent getRenderer() {
 		// TODO Auto-generated method stub
 		return renderer;
+	}
+
+	public void setActive(boolean active) {
+		// TODO Auto-generated method stub
+		isActive = active;
+	}
+	
+	public boolean getActive() {
+		// TODO Auto-generated method stub
+		return isActive;
+	}
+	
+	public void setUpdating(boolean updating) {
+		isUpdating = updating;
+	}
+	
+	public boolean isUpdating() {
+		return isUpdating;
 	}
 }

@@ -20,10 +20,13 @@ import com.linkmon.view.screens.widgets.messages.MessageFactory;
 
 public class UIRenderer implements MessageListener {
 	
-	public static final float scaleX = Gdx.graphics.getWidth()/1280f;
-	public static final float scaleY = Gdx.graphics.getHeight()/720f;
+	public static final float scaleX = 1;
+	public static final float scaleY = 1;
 	
-	public static final float  scaleXY = scaleX * scaleY;
+	public static final float  scaleXY = 1;
+	
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 	
 	public Stage stage;
 	public Group ui;
@@ -47,7 +50,8 @@ public class UIRenderer implements MessageListener {
 		
 		messageFactory = new MessageFactory(eManager);
 		
-		stage = new Stage();
+		stage = new Stage(new FitViewport(1280, 720));
+		stage.getViewport().apply();
 		ui = new Group();
 		stage.addActor(ui);
 		
@@ -90,6 +94,7 @@ public class UIRenderer implements MessageListener {
 		
 		// Render Particles
 		stage.getBatch().begin();
+		if(pRenderer != null)
 			pRenderer.render(stage.getBatch());
 		stage.getBatch().end();
 	}
@@ -116,6 +121,6 @@ public class UIRenderer implements MessageListener {
 	}
 	
 	public void resize(int width, int height) {
-		//stage.getViewport().update(width, height, false);
+		stage.getViewport().update(width, height);
 	}
 }

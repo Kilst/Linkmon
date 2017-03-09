@@ -9,9 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.view.screens.widgets.ScrollingLabel;
 
 public class MessageTable extends Table {
@@ -80,19 +82,26 @@ public class MessageTable extends Table {
 	}
 	
 	public void setText(String message) {
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = ResourceLoader.getLutFont("medium");
 		this.message = message;
-		label = new ScrollingLabel(message, skin, 0.09f);
+		label = new ScrollingLabel(message, labelStyle, 0.09f);
 		this.add(label).width(getWidth()-30).align(Align.topLeft).pad(15).expandY();
 		label.setWrap(true);
 	}
 	
 	public void setText(String heading, String[] messages) {
 		
-		this.heading = new Label(heading, skin);
-		this.heading.setFontScale(1.5f);
+		LabelStyle labelStyle1 = new LabelStyle();
+		labelStyle1.font = ResourceLoader.getLutFont("medium");
+		
+		LabelStyle labelStyle = new LabelStyle();
+		labelStyle.font = ResourceLoader.getLutFont("large");
+		
+		this.heading = new Label(heading, labelStyle);
 		this.add(this.heading).align(Align.left).padTop(15).padLeft(15);
 		this.row();
-		label = new ScrollingLabel(messages, skin, 0.05f);
+		label = new ScrollingLabel(messages, labelStyle1, 0.05f);
 		this.add(label).width(getWidth()-30).align(Align.topLeft).pad(15).expandY();
 		label.setWrap(true);
 	}

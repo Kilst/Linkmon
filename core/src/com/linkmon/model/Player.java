@@ -10,12 +10,14 @@ import com.linkmon.eventmanager.model.ModelEvent;
 import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.view.ViewEvent;
 import com.linkmon.eventmanager.view.ViewEvents;
+import com.linkmon.helpers.CompleteMessage;
+import com.linkmon.model.aonevonebattle.OpponentId;
 import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
 import com.linkmon.model.gameobject.ObjectId;
-import com.linkmon.model.items.ItemComponent;
-import com.linkmon.model.items.UsableItemComponent;
+import com.linkmon.model.items.components.ItemComponent;
+import com.linkmon.model.items.components.UsableItemComponent;
 import com.linkmon.model.linkmon.LinkmonExtraComponents;
 import com.linkmon.model.linkmon.LinkmonStatsComponent;
 import com.linkmon.model.linkmon.LinkmonStatusComponent;
@@ -39,7 +41,15 @@ public class Player {
 	
 	private int giftId = -1; // no opengl context from network. since objects get created with textures
 	
-	private BattleLinkmon cryoLinkmon;
+	private CryoLinkmon[] cryoLinkmons;
+	
+	private int[] battleTowerFlags;
+	
+	private int[] helpFlags;
+	
+	private int linkmonStatPoints = 10;
+	
+	private int linkmonStatPointsSpent = 0;
 	
 	public Player() {
 		gold = 15000;
@@ -48,6 +58,26 @@ public class Player {
 		
 		items = new ArrayList<GameObject>();
 		itemsRemoveQueue = new ArrayList<GameObject>();
+		
+		battleTowerFlags = new int[OpponentId.levelThreeFour+1];
+		
+		for(int i = 0; i < OpponentId.levelThreeFour+1; i++) {
+			battleTowerFlags[i] = 0;
+		}
+		
+		helpFlags = new int[10];
+		helpFlags[0] = 0;
+		helpFlags[1] = 0;
+		helpFlags[2] = 0;
+		helpFlags[3] = 0;
+		helpFlags[4] = 0;
+		helpFlags[5] = 0;
+		helpFlags[6] = 0;
+		helpFlags[7] = 0;
+		helpFlags[8] = 0;
+		helpFlags[9] = 0;
+		
+		cryoLinkmons = new CryoLinkmon[3];
 	}
 	
 	public void update() {
@@ -81,6 +111,26 @@ public class Player {
 		((ItemComponent)item.getExtraComponents()).setQuantity(1);
 		
 		addItem(item);
+		
+		battleTowerFlags = new int[OpponentId.levelThreeFour+1];
+		
+		for(int i = 0; i < OpponentId.levelThreeFour+1; i++) {
+			battleTowerFlags[i] = 0;
+		}
+		
+		helpFlags = new int[10];
+		helpFlags[0] = 0;
+		helpFlags[1] = 0;
+		helpFlags[2] = 0;
+		helpFlags[3] = 0;
+		helpFlags[4] = 0;
+		helpFlags[5] = 0;
+		helpFlags[6] = 0;
+		helpFlags[7] = 0;
+		helpFlags[8] = 0;
+		helpFlags[9] = 0;
+		
+		cryoLinkmons = new CryoLinkmon[3];
 	}
 
 	public GameObject getLinkmon() {
@@ -108,7 +158,7 @@ public class Player {
 		itemsRemoveQueue.clear();
 	}
 	
-	private void removeItem(GameObject item) {
+	public void removeItem(GameObject item) {
 		for(GameObject itemObject : items) {
 			if(itemObject.getId() == item.getId()) {
 				itemsRemoveQueue.add(itemObject);
@@ -131,12 +181,19 @@ public class Player {
 			items.add(newItem);
 	}
 	
-	public void useItem(GameObject item) {
-		if(((ItemComponent)item.getExtraComponents()).use(item,getLinkmon(), getWorld()))
+	public CompleteMessage useItem(GameObject item) {
+		
+		CompleteMessage message = ((ItemComponent)item.getExtraComponents()).use(item,getLinkmon(), getWorld());
+		
+		if(message.completed) {
 			removeItem(item);
+			return message;
+		}
+		else
+			return message;
 	}
 
-	private void addGold(int amount) {
+	public void addGold(int amount) {
 		// TODO Auto-generated method stub
 		gold += amount;
 		linkmon.getWorld().geteManager().notify(new ViewEvent(ViewEvents.UPDATE_GOLD, gold));
@@ -188,6 +245,8 @@ public class Player {
 
 	public void setSavedItems(int[][] savedItems) {
 		// TODO Auto-generated method stub
+		
+		// Create items from saved int array
 		for(int i = 0; i < savedItems.length; i++) {
 			GameObject item = ObjectFactory.getInstance().getObjectFromId(savedItems[i][0]);
 			((ItemComponent)item.getExtraComponents()).setQuantity(savedItems[i][1]);
@@ -226,24 +285,92 @@ public class Player {
 		addGold(rewards[4]);
 	}
 
-	public BattleLinkmon getCryoLinkmon() {
-		return cryoLinkmon;
+	public CryoLinkmon getCryoLinkmon(int slot) {
+		return cryoLinkmons[slot];
 	}
 
-	public void setCryoLinkmon(BattleLinkmon cryoLinkmon) {
-		this.cryoLinkmon = cryoLinkmon;
-	}
+//	public void setCryoLinkmon(BattleLinkmon cryoLinkmon, int slot) {
+//		this.cryoLinkmon = cryoLinkmon;
+//	}
 
-	public void cryoCurrentLinkmon() {
+	public void cryoCurrentLinkmon(int slot) {
 		// TODO Auto-generated method stub
 		if(linkmon != null) {
 			LinkmonStatusComponent status = ((LinkmonExtraComponents)linkmon.getExtraComponents()).getStatus();
 			if(!status.isDead()) {
-				cryoLinkmon = new BattleLinkmon(linkmon);
-				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Saved current Linkmon"));
+				cryoLinkmons[slot] = new CryoLinkmon(linkmon);
+//				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Saved current Linkmon"));
 			}
-			else
-				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Your current Linkmon is dead.\nYou'll have to revive it to store."));
+//			else
+//				eManager.notify(new MessageEvent(MessageEvents.GENERIC_MESSAGE, MessageType.GAME_MESSAGE, "Cryogenics", "Your current Linkmon is dead.\nYou'll have to revive it to store."));
 		}
+	}
+
+	public boolean checkBattleTowerFlag(int opponentId) {
+		// TODO Auto-generated method stub
+		if(battleTowerFlags[opponentId-1] == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void addBattleTowerFlag(int opponentId) {
+		battleTowerFlags[opponentId] = 1;
+	}
+
+	public int[] getBattleTowerFlags() {
+		// TODO Auto-generated method stub
+		return battleTowerFlags;
+	}
+
+	public void setBattleTowerFlags(int[] battleTowerFlags) {
+		// TODO Auto-generated method stub
+		this.battleTowerFlags = battleTowerFlags;
+	}
+	
+	public int[] getHelpFlags() {
+		// TODO Auto-generated method stub
+		return helpFlags;
+	}
+	
+	public void addHelpFlag(int helpId) {
+		helpFlags[helpId] = 1;
+	}
+	
+	public void setHelpFlags(int[] helpFlags) {
+		// TODO Auto-generated method stub
+		this.helpFlags = helpFlags;
+	}	
+	
+	public boolean checkHelpFlag(int helpId) {
+		// TODO Auto-generated method stub
+		if(helpFlags[helpId] == 0) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public int getLinkmonStatPoints() {
+		return linkmonStatPoints;
+	}
+
+	public void addLinkmonStatPoints(int linkmonStatPoints) {
+		this.linkmonStatPoints += linkmonStatPoints;
+	}
+	
+	public void removeLinkmonStatPoints(int linkmonStatPoints) {
+		this.linkmonStatPoints -= linkmonStatPoints;
+		if(this.linkmonStatPoints < 0)
+			this.linkmonStatPoints = 0;
+	}
+
+	public int getLinkmonStatPointsSpent() {
+		return linkmonStatPointsSpent;
+	}
+
+	public void addLinkmonStatPointsSpent(int linkmonStatPointsSpent) {
+		this.linkmonStatPointsSpent += linkmonStatPointsSpent;
 	}
 }

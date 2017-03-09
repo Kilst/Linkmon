@@ -30,6 +30,7 @@ import com.linkmon.helpers.Timer;
 import com.linkmon.model.linkmon.StatType;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.ScreenType;
+import com.linkmon.view.screens.widgets.ExpandingTextWidget;
 
 public class DefenseTrainWindow implements Screen {
 	

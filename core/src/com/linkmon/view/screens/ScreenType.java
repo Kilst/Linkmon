@@ -27,4 +27,20 @@ public class ScreenType {
 	public static final int CRYO_SCREEN = 21;
 	public static final int MOVES_SCREEN = 22;
 	public static final int MENU_SCREEN = 23;
+	public static final int PREVIOUS = 24;
+	public static final int REWARD_SCREEN = 25;
+	public static final int DUCK_RACING_UI = 26;
+	public static final int COIN_ROLL_UI = 27;
+	
+	
+	public static final int MENU = 71;
+	public static final int MOVE = 72;
+	public static final int SHOP = 73;
+	public static final int MOVE_SWAP = 74;
+	public static final int ITEM = 75;
+	public static final int LOCAL_BATTLE = 76;
+	public static final int BATTLE_TOWER = 77;
+	public static final int MINIGAME_SELECT_SCREEN = 78;
+	public static final int SETTINGS = 79;
+	
 }

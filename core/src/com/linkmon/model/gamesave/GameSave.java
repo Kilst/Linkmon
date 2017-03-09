@@ -3,7 +3,7 @@ package com.linkmon.model.gamesave;
 import com.linkmon.model.Player;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
-import com.linkmon.model.items.ItemComponent;
+import com.linkmon.model.items.components.ItemComponent;
 import com.linkmon.model.linkmon.BirthDate;
 import com.linkmon.model.linkmon.LinkmonExtraComponents;
 import com.linkmon.model.linkmon.LinkmonStatsComponent;
@@ -57,6 +57,9 @@ public class GameSave {
 	public long nano;
 	
 	public long savedTime;
+	
+	public int[] battleTowerFlags;
+	public int[] helpFlags;
 	
 	public GameSave() {
 		
@@ -120,6 +123,10 @@ public class GameSave {
 		this.nano = status.getBirthDate().getNano();
 		
 		this.savedTime = System.nanoTime();
+		
+		
+		this.battleTowerFlags = player.getBattleTowerFlags();
+		this.helpFlags = player.getHelpFlags();
 	}
 	
 	public Player getSavedPlayer() {
@@ -130,6 +137,9 @@ public class GameSave {
 		player.setSavedItems(items);
 		
 		player.setLinkmon(getSavedLinkmon());
+		
+		player.setBattleTowerFlags(battleTowerFlags);
+		player.setHelpFlags(helpFlags);
 		
 		return player;
 	}

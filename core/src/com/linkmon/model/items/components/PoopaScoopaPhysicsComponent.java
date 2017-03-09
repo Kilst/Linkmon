@@ -27,13 +27,7 @@ public class PoopaScoopaPhysicsComponent extends PhysicsComponent {
 	public void update(GameObject object, List<GameObject> objects) {
 		super.update(object, objects);
 		
-		if(collisionComponent != null)
-			for(GameObject collideObject : collisionComponent.getCollisionList()) {
-				if(collideObject.getType() == ObjectType.POOP) {
-					// Setting clicked removes the poop completely next frame when PoopComonent updates.
-					((PoopInputComponent)collideObject.getInputComponent()).setClicked(true);
-				}
-			}
+		collisionTest(object, objects);
 	}
 	
 	@Override
@@ -51,5 +45,17 @@ public class PoopaScoopaPhysicsComponent extends PhysicsComponent {
 		}
 		
 		object.setX(object.getX() + veloX);
+	}
+
+	@Override
+	protected void collisionTest(GameObject object, List<GameObject> objects) {
+		// TODO Auto-generated method stub
+		if(collisionComponent != null)
+			for(GameObject collideObject : collisionComponent.getCollisionList()) {
+				if(collideObject.getType() == ObjectType.POOP) {
+					// Setting clicked removes the poop completely next frame when PoopComonent updates.
+					((PoopInputComponent)collideObject.getInputComponent()).setClicked(true);
+				}
+			}
 	}
 }

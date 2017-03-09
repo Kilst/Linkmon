@@ -35,7 +35,7 @@ public class AttackTrainWindow implements Screen {
 		container = new Table(skin);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		container.setBackground(skin.getDrawable("default-rect"));
-		TextureRegion region = ResourceLoader.getRegionFromId(0);
+		TextureRegion region = null;
 		
 		trainingBag = new ImageButton(new TextureRegionDrawable(region));
 		container.add(trainingBag).size(64*UIRenderer.scaleX, 64*UIRenderer.scaleY);

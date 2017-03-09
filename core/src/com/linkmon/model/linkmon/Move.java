@@ -2,21 +2,24 @@ package com.linkmon.model.linkmon;
 
 public class Move {
 	private int id;
-	private int type;
+	private int elementalType;
 	private int slot;
 	private int damage;
 	private int ignoreDamage;
 	private int energy;
 	private String name;
 	
-	public Move(int id, int type, int slot, int damage, int ignoreDamage, int energy, String name) {
+	private int type;
+	
+	public Move(int id, int elementalType, int slot, int damage, int ignoreDamage, int energy, String name, int type) {
 		this.id = id;
-		this.type = type;
+		this.elementalType = elementalType;
 		this.slot = slot;
 		this.damage = damage;
 		this.ignoreDamage = ignoreDamage;
 		this.energy = energy;
 		this.name = name;
+		this.type = type;
 	}
 
 
@@ -24,8 +27,8 @@ public class Move {
 		return id;
 	}
 
-	public int getType() {
-		return type;
+	public int getElementalType() {
+		return elementalType;
 	}
 
 	public int getDamage() {
@@ -51,5 +54,10 @@ public class Move {
 	public int getSlot() {
 		// TODO Auto-generated method stub
 		return slot;
+	}
+
+
+	public int getType() {
+		return type;
 	}
 }

@@ -28,7 +28,7 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 		
 		if(timers.getWalkTimer().checkTimer()){
 			Random rnd = new Random();
-			moveX = rnd.nextInt((int)(linkmon.getWorld().getWidth()-(linkmon.getWidth()*2)));
+			moveX = rnd.nextInt((int)(linkmon.getWorld().getWidth()-(linkmon.getWidth())));
 			Gdx.app.log("LinkmonPhyicsComponent", "getWalkTimer timer ended");
 			move = true;
 		}
@@ -61,5 +61,11 @@ public class LinkmonPhysicsComponent extends PhysicsComponent {
 			move = false;
 			object.isMoving = false;
 		}
+	}
+
+	@Override
+	protected void collisionTest(GameObject object, List<GameObject> objects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

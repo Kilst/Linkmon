@@ -3,6 +3,7 @@ package com.linkmon.view.screens.widgets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class ScrollingLabel extends Label {
@@ -32,6 +33,26 @@ public class ScrollingLabel extends Label {
 	
 	public ScrollingLabel(String[] messages, Skin skin, float textSpeed) {
 		super("", skin);
+		// TODO Auto-generated constructor stub
+		this.messages = messages;
+		this.textSpeed = textSpeed;
+		
+		scrollText = messages[i];
+		i++;
+	}
+
+	public ScrollingLabel(String message, LabelStyle labelStyle, float textSpeed) {
+		// TODO Auto-generated constructor stub
+		super("", labelStyle);
+		// TODO Auto-generated constructor stub
+		scrollText = message;
+		this.textSpeed = textSpeed;
+		i++;
+	}
+
+	public ScrollingLabel(String[] messages, LabelStyle labelStyle, float textSpeed) {
+		// TODO Auto-generated constructor stub
+		super("", labelStyle);
 		// TODO Auto-generated constructor stub
 		this.messages = messages;
 		this.textSpeed = textSpeed;

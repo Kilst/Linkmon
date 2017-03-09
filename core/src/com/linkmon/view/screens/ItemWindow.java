@@ -101,16 +101,16 @@ public class ItemWindow implements Screen, IPlayerItems {
 		
 		// Build Window Layout
 		
-		table.add(heading).expandX().colspan(2).padTop(-100);
+		table.add(heading).expandX().colspan(2).padTop(-100*UIRenderer.scaleY);
 		table.row();
 		
-		tableUse.add(itemBox).expand().size(150, 150);
+		tableUse.add(itemBox).expand().size(150*UIRenderer.scaleX, 150*UIRenderer.scaleX);
 		tableUse.row();
 		tableUse.add(itemText).expand();
 		tableUse.row();
 		tableUse.add(useButton).expand().align(Align.bottom).pad(5*UIRenderer.scaleXY);
 		
-		table.add(tableUse).width(200f*UIRenderer.scaleXY).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
+		table.add(tableUse).width(200f*UIRenderer.scaleX).expandY().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		table.add(tableItems).expand().fill().padLeft(20*UIRenderer.scaleXY).padRight(20*UIRenderer.scaleXY);
 		tableItems.align(Align.top);
 		table.row();
@@ -171,7 +171,7 @@ public class ItemWindow implements Screen, IPlayerItems {
 		// TODO Auto-generated method stub
 		if(tableItems.isUpdated()) {
 			selectedItem = tableItems.getSelectedItem();
-			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()).getTexture());
+			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()));
 			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
 		}
 	}
@@ -208,9 +208,9 @@ public class ItemWindow implements Screen, IPlayerItems {
 	}
 
 	@Override
-	public void addPlayerItem(int id, String name, int quantity, int price, String itemText) {
+	public void addPlayerItem(int id, String name, int quantity, int price, int type, String itemText) {
 		// TODO Auto-generated method stub
-		SelectableItemButton item = new SelectableItemButton(id, name, quantity, price, itemText, tableItems, uiGroup);
+		SelectableItemButton item = new SelectableItemButton(id, name, quantity, price, type, itemText, tableItems, uiGroup);
 		tableItems.addItem(item);
 	}
 

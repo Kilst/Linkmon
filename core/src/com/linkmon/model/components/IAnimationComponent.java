@@ -11,5 +11,5 @@ public interface IAnimationComponent {
 	public void setState(IAnimationState state);
 	public IAnimationState getState();
 	
-	public boolean getCurrentAnimationEnded();
+	public boolean isCurrentAnimationEnded();
 }

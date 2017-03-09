@@ -18,4 +18,24 @@ public class ObjectId {
 	public static final int REVIVE_POTION = 6;
 
 	public static final int MEDICINE = 7;
+	
+	public static final int DUCK = 88;
+
+	public static final int ATTACK_BEAM = 100;
+
+	public static final int ATTACK_BEAM_TAIL = 101;
+
+	public static final int WAVE = 87;
+
+	public static final int FINISH_LINE = 86;
+
+	public static final int RING = 11;
+
+	public static final int HEALTH_POTION = 55;
+
+	public static final int FIREBALL = 56;
+
+	public static final int ENERGY_POTION = 57;
+
+	public static final int LEAF_BALL = 58;
 }

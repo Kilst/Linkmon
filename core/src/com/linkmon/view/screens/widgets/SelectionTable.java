@@ -25,6 +25,7 @@ public class SelectionTable extends Table {
 	}
 
 	public void setSelectedItem(ISelectable selectedItem) {
+		Gdx.app.log("tableItems - Table", "UPDATED");
 		for(ISelectable item : items) {
 			item.setSelected(false);
 		}
@@ -37,7 +38,14 @@ public class SelectionTable extends Table {
 	}
 	
 	public void addItem(ISelectable item) {
-		this.add((Table)item).height(80).expandX().fillX();
+		this.add((Table)item).expandX();
+		this.row();
+		
+		items.add((ISelectable)item);
+	}
+	
+	public void addItem(ISelectable item, float pad) {
+		this.add((Table)item).expandX().padBottom(pad);
 		this.row();
 		
 		items.add((ISelectable)item);

@@ -5,6 +5,7 @@ import com.linkmon.model.gameobject.GameObject;
 
 public class LinkmonStatsComponent implements IStatsComponent {
 	
+	private int maxHealth = 0;
 	private int health;
 	private int attack;
 	private int defense;
@@ -21,9 +22,20 @@ public class LinkmonStatsComponent implements IStatsComponent {
 	
 	public LinkmonStatsComponent() {
 		health = 100;
-		attack = 999;
-		defense = 1;
-		speed = 1;
+		attack = 10;
+		defense = 10;
+		speed = 10;
+		
+		maxHealth = health;
+	}
+	
+	public LinkmonStatsComponent(int health, int attack, int defense, int speed) {
+		health = 500;
+		attack = 22;
+		defense = 16;
+		speed = 33;
+		
+		maxHealth = health;
 	}
 
 	@Override
@@ -41,7 +53,7 @@ public class LinkmonStatsComponent implements IStatsComponent {
 			this.addedSpeed = 0;
 			
 			//object.rankCheck();
-			
+			maxHealth = health;
 			updated = false;
 		}
 	}
@@ -82,32 +94,32 @@ public class LinkmonStatsComponent implements IStatsComponent {
 		return addedHealth;
 	}
 
-	public void setAddedHealth(int addedHealth) {
-		this.addedHealth = addedHealth;
+	public void addHealth(int addedHealth) {
+		this.health += addedHealth;
 	}
 
 	public int getAddedAttack() {
 		return addedAttack;
 	}
 
-	public void setAddedAttack(int addedAttack) {
-		this.addedAttack = addedAttack;
+	public void addAttack(int addedAttack) {
+		this.attack += addedAttack;
 	}
 
 	public int getAddedDefense() {
 		return addedDefense;
 	}
 
-	public void setAddedDefense(int addedDefense) {
-		this.addedDefense = addedDefense;
+	public void addDefense(int addedDefense) {
+		this.defense += addedDefense;
 	}
 
 	public int getAddedSpeed() {
 		return addedSpeed;
 	}
 
-	public void setAddedSpeed(int addedSpeed) {
-		this.addedSpeed = addedSpeed;
+	public void addSpeed(int addedSpeed) {
+		this.speed += addedSpeed;
 	}
 
 	public int rankCheck() {
@@ -132,27 +144,11 @@ public class LinkmonStatsComponent implements IStatsComponent {
 		return rank;
 	}
 
-	public void train(int statType) {
-		// TODO Auto-generated method stub
-		updated = true;
-		
-		switch(statType) {
-			case StatType.HEALTH : {
-				setAddedHealth(5);
-				break;
-			}
-			case StatType.ATTACK : {
-				setAddedAttack(5);
-				break;
-			}
-			case StatType.DEFENSE : {
-				setAddedDefense(5);
-				break;
-			}
-			case StatType.SPEED : {
-				setAddedSpeed(5);
-				break;
-			}
-		}	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 }

@@ -13,6 +13,12 @@ import com.linkmon.model.linkmon.animations.AnimationStateSleeping;
 import com.linkmon.model.linkmon.animations.AnimationStateWalk;
 import com.linkmon.model.linkmon.animations.AnimationStateWave;
 import com.linkmon.model.linkmon.animations.IAnimationState;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateAttack;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateCast;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateDamaged;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateDefend;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateHealed;
+import com.linkmon.model.linkmon.animations.battle.AnimationStateWalkTo;
 
 public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 	
@@ -40,7 +46,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			idleAnimationFrames[i] = region;
 			i++;
 		}
-		idle = new Animation(2f/76f,idleAnimationFrames);
+		idle = new Animation(2f/idleAnimationFrames.length,idleAnimationFrames);
 		
 		walkAnimationFrames = new TextureRegion[animationRegions[1].size];
 		i = 0;
@@ -48,7 +54,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			walkAnimationFrames[i] = region;
 			i++;
 		}
-		walk = new Animation(2f/76f,walkAnimationFrames);
+		walk = new Animation(2f/walkAnimationFrames.length, walkAnimationFrames);
 		
 		waveAnimationFrames = new TextureRegion[animationRegions[2].size];
 		i = 0;
@@ -56,7 +62,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			waveAnimationFrames[i] = region;
 			i++;
 		}
-		wave = new Animation(2f/76f,waveAnimationFrames);
+		wave = new Animation(2f/waveAnimationFrames.length,waveAnimationFrames);
 		
 		sleepAnimationFrames = new TextureRegion[animationRegions[3].size];
 		i = 0;
@@ -64,7 +70,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			sleepAnimationFrames[i] = region;
 			i++;
 		}
-		sleep = new Animation(2f/76f,sleepAnimationFrames);
+		sleep = new Animation(2f/sleepAnimationFrames.length,sleepAnimationFrames);
 		
 		angryAnimationFrames = new TextureRegion[animationRegions[4].size];
 		i = 0;
@@ -72,7 +78,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			angryAnimationFrames[i] = region;
 			i++;
 		}
-		angry = new Animation(2f/76f,angryAnimationFrames);
+		angry = new Animation(2f/angryAnimationFrames.length,angryAnimationFrames);
 		
 		
 		currentAnimation  = idle;
@@ -142,6 +148,30 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			idle();
 			return;
 		}
+		else if (state instanceof AnimationStateAttack) {
+			wave();
+			return;
+		}
+		else if(state instanceof AnimationStateCast) {
+			wave();
+			return;
+		}
+		else if(state instanceof AnimationStateDefend) {
+			angry();
+			return;
+		}
+		else if(state instanceof AnimationStateDamaged) {
+			wave();
+			return;
+		}
+		else if(state instanceof AnimationStateHealed) {
+			wave();
+			return;
+		}
+		else if(state instanceof AnimationStateWalkTo) {
+			walk();
+			return;
+		}
 	}
 
 	@Override
@@ -162,7 +192,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			idleAnimationFrames[i] = region;
 			i++;
 		}
-		idle = new Animation(2f/76f,idleAnimationFrames);
+		idle = new Animation(2f/idleAnimationFrames.length,idleAnimationFrames);
 		
 		walkAnimationFrames = new TextureRegion[animationRegions[1].size];
 		i = 0;
@@ -170,7 +200,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			walkAnimationFrames[i] = region;
 			i++;
 		}
-		walk = new Animation(2f/76f,walkAnimationFrames);
+		walk = new Animation(2f/walkAnimationFrames.length,walkAnimationFrames);
 		
 		waveAnimationFrames = new TextureRegion[animationRegions[2].size];
 		i = 0;
@@ -178,7 +208,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			waveAnimationFrames[i] = region;
 			i++;
 		}
-		wave = new Animation(2f/76f,waveAnimationFrames);
+		wave = new Animation(2f/waveAnimationFrames.length,waveAnimationFrames);
 		
 		sleepAnimationFrames = new TextureRegion[animationRegions[3].size];
 		i = 0;
@@ -186,7 +216,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			sleepAnimationFrames[i] = region;
 			i++;
 		}
-		sleep = new Animation(2f/76f,sleepAnimationFrames);
+		sleep = new Animation(2f/sleepAnimationFrames.length,sleepAnimationFrames);
 		
 		angryAnimationFrames = new TextureRegion[animationRegions[4].size];
 		i = 0;
@@ -194,7 +224,7 @@ public class LinkmonAnimationComponent extends LibgdxAnimationComponent {
 			angryAnimationFrames[i] = region;
 			i++;
 		}
-		angry = new Animation(2f/76f,angryAnimationFrames);
+		angry = new Animation(2f/angryAnimationFrames.length,angryAnimationFrames);
 		
 		
 		currentAnimation  = idle;

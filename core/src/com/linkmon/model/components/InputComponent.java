@@ -32,9 +32,9 @@ public class InputComponent implements IInputComponent {
 		switch(event.eventId) {
 			case(InputType.CLICKED) : {
 				if(object.getAabb().contains(event.getPosition())) {
-					Gdx.app.log("InputComponent", "clicked!");
-					clicked = true;
-					updated = true;
+//					Gdx.app.log("InputComponent", "clicked!");
+//					clicked = true;
+//					updated = true;
 					return true;
 				}
 			}

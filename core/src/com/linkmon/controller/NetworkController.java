@@ -11,12 +11,13 @@ import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.eventmanager.screen.ScreenListener;
 import com.linkmon.model.Player;
+import com.linkmon.model.aonevonebattle.moves.MoveFactory;
+import com.linkmon.model.aonevonebattle.moves.OneVMove;
 import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.battles.OnlineBattle;
 import com.linkmon.model.linkmon.LinkmonExtraComponents;
 import com.linkmon.model.linkmon.LinkmonMoveComponent;
 import com.linkmon.model.linkmon.Move;
-import com.linkmon.model.linkmon.MoveFactory;
 import com.linkmon.networking.INetworkService;
 import com.linkmon.networking.TcpService;
 import com.linkmon.view.screens.ScreenType;
@@ -64,7 +65,7 @@ public class NetworkController implements ScreenListener, NetworkListener {
 	}
 	
 	private void sendMove(int moveId) {
-		Move move = MoveFactory.getMoveFromId(moveId);
+		OneVMove move = MoveFactory.getMoveFromId(moveId);
 		if(bLinkmon.checkEnergy(move.getEnergy()))
 			service.sendMove(moveId);
 	}
@@ -88,10 +89,14 @@ public class NetworkController implements ScreenListener, NetworkListener {
 	
 	private void setMoves(IBattleView screen) {
 		LinkmonMoveComponent moves = ((LinkmonExtraComponents)player.getLinkmon().getExtraComponents()).getMoves();
-		screen.getMoves(moves.getBasicAttack().getId(), moves.getBasicAttack().getName(),
-						moves.getMediumAttack1().getId(), moves.getMediumAttack1().getName(),
-						moves.getMediumAttack2().getId(), moves.getMediumAttack2().getName(),
-						moves.getSpecialAttack().getId(), moves.getSpecialAttack().getName());
+		
+		OneVMove move1 = MoveFactory.getMoveFromId(moves.getMove1());
+		OneVMove move2 = MoveFactory.getMoveFromId(moves.getMove2());
+		OneVMove move3 = MoveFactory.getMoveFromId(moves.getMove3());
+		
+		screen.getMoves(move1.getId(), move1.getName(),
+				move2.getId(), move2.getName(),
+				move3.getId(), move3.getName());
 	}
 
 	@Override

@@ -6,4 +6,5 @@ public class ItemType {
 	public static final int FOOD = 1;
 	public static final int PLACEABLE = 2;
 	public static final int POTION = 3;
+	public static final int RECOVERY = 4;
 }
