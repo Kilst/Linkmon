@@ -29,6 +29,7 @@ public class ParticleLoader {
 	private ParticlePool bouncePool;
 	private ParticlePool sleepPool;
 	private ParticlePool darknessPool;
+	private ParticlePool chatTapPool;
 	
 	public ParticleLoader() {
 		starPool = new ParticlePool(ParticleIds.STAR);
@@ -55,12 +56,16 @@ public class ParticleLoader {
 		bouncePool = new ParticlePool(ParticleIds.BOUNCE);
 		sleepPool = new ParticlePool(ParticleIds.SLEEP);
 		darknessPool = new ParticlePool(ParticleIds.DARKNESS);
+		chatTapPool = new ParticlePool(ParticleIds.CHAT_TAP);
 	}
 	
 	private ParticlePool getPoolFromId(int id) {
 		switch(id) {
 			case(ParticleIds.TAP) : {
 				return tapPool;
+			}
+			case(ParticleIds.CHAT_TAP) : {
+				return chatTapPool;
 			}
 			case(ParticleIds.SLEEP) : {
 				return sleepPool;
@@ -170,5 +175,6 @@ public class ParticleLoader {
 		bouncePool.render(batch);
 		sleepPool.render(batch);
 		darknessPool.render(batch);
+		chatTapPool.render(batch);
 	}
 }

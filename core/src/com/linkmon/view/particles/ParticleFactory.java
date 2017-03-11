@@ -45,6 +45,10 @@ public class ParticleFactory {
 				particleEffect.load(Gdx.files.internal("Particles/tap.particles"), Gdx.files.internal("Particles/"));
 				break;
 			}
+			case(ParticleIds.CHAT_TAP) : {
+				particleEffect.load(Gdx.files.internal("Particles/chatTap.particles"), Gdx.files.internal("Particles/"));
+				break;
+			}
 			case(ParticleIds.DARKNESS) : {
 				particleEffect.load(Gdx.files.internal("Particles/darkness.particles"), Gdx.files.internal("Particles/"));
 				break;

@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -40,7 +42,7 @@ public class LocalMessageBox extends Table {
 	
 	public String messageString;
 	
-	public float scale = 0;
+	public float scale = 0.01f;
 	
 	public Image darken;
 	
@@ -61,19 +63,13 @@ public class LocalMessageBox extends Table {
 		
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
-		TextButtonStyle buttonStyle = new TextButtonStyle();
+		ImageButtonStyle okayButtonStyle = new ImageButtonStyle();
 		
-		buttonStyle.checked = skin2.getDrawable("button");
-		buttonStyle.down = skin2.getDrawable("button");
-		buttonStyle.up = skin2.getDrawable("button");
-		buttonStyle.font = skin.getFont("default-font");
+		okayButtonStyle.down = skin2.getDrawable("okayButtonRed");
+		okayButtonStyle.up = skin2.getDrawable("okayButtonGreen");
 		
-		this.setBackground(skin2.getDrawable("tableNoHeading"));
-		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.setPosition(0, 0);
-		this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		this.setSize((640/1.4f)*UIRenderer.scaleXY, (480/1.4f)*UIRenderer.scaleXY);
+		this.setBackground(skin2.getDrawable("menuContainerPatch"));		
+		this.setSize(640, 480);
 		
 		
 		this.setPosition((Gdx.graphics.getWidth()/2f) - (this.getWidth()/2), (Gdx.graphics.getHeight()/2f) - (this.getHeight()/2));
@@ -85,26 +81,33 @@ public class LocalMessageBox extends Table {
 		darken.setColor(1f, 1f, 1f, 0.85f);
 		darken.setTouchable(Touchable.enabled);
 		
+		LabelStyle labelStyleLarge = new LabelStyle();
+		labelStyleLarge.font = ResourceLoader.getLutFont("large");
+		
+		LabelStyle labelStyleMedium = new LabelStyle();
+		labelStyleMedium.font = ResourceLoader.getLutFont("medium");
+		
 		heading = new Table();
-		heading.setBackground(skin2.getDrawable("title"));
+		heading.setBackground(skin2.getDrawable("menuContainerPatch"));
 		heading.setSize(290, 136);
-		Label title = new Label(titleText, skin);
-		title.setFontScale(1.2f);
-		heading.add(title).padBottom(15);
+		heading.setColor(0.5f, 0.5f, 0.7f, 1f);
+		Label title = new Label(titleText, labelStyleLarge);
+		heading.add(title).padRight(25).padLeft(25);
 		
 		messageTable = new Table();
-		messageTable.setBackground(skin2.getDrawable("tableNoHeading"));
-		message = new Label(messageString , skin);
-		message.setFontScale(1.2f);
-		messageTable.add(message).fill();
+		messageTable.setBackground(skin2.getDrawable("menuContainerInnerPatch"));
+		message = new Label(messageString, labelStyleMedium);
+		message.setWrap(true);
+		message.setAlignment(Align.center);
+		messageTable.add(message).fill().width(640-80);
 		
 		
-		this.add(heading).padTop(-50);
+		this.add(heading).padTop(-50).padBottom(20);
 		this.row();
-		this.add(messageTable).expand().fill();
+		this.add(messageTable).expand().fill().padBottom(20);
 		this.row();
 		
-		okayButton = new TextButton("Okay", buttonStyle);
+		okayButton = new ImageButton(okayButtonStyle);
 		this.add(okayButton).align(Align.right).size(okayButton.getWidth()*UIRenderer.scaleXY, okayButton.getHeight()*UIRenderer.scaleXY);
 		this.row();
 		
@@ -139,19 +142,18 @@ public class LocalMessageBox extends Table {
 		
 		skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
-		TextButtonStyle buttonStyle = new TextButtonStyle();
+		ImageButtonStyle okayButtonStyle = new ImageButtonStyle();
 		
-		buttonStyle.checked = skin2.getDrawable("button");
-		buttonStyle.down = skin2.getDrawable("button");
-		buttonStyle.up = skin2.getDrawable("button");
-		buttonStyle.font = skin.getFont("default-font");
+		okayButtonStyle.down = skin2.getDrawable("okayButtonRed");
+		okayButtonStyle.up = skin2.getDrawable("okayButtonGreen");
 		
-		this.setBackground(skin2.getDrawable("tableNoHeading"));
-		this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.setPosition(0, 0);
-		this.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		ImageButtonStyle backButtonStyle = new ImageButtonStyle();
 		
-		this.setSize((640/1.4f)*UIRenderer.scaleXY, (480/1.4f)*UIRenderer.scaleXY);
+		backButtonStyle.up = skin2.getDrawable("backButtonRed");
+		backButtonStyle.down = skin2.getDrawable("backButtonGreen");
+		
+		this.setBackground(skin2.getDrawable("menuContainerPatch"));		
+		this.setSize(640, 480);
 		
 		
 		this.setPosition((Gdx.graphics.getWidth()/2f) - (this.getWidth()/2), (Gdx.graphics.getHeight()/2f) - (this.getHeight()/2));
@@ -163,26 +165,33 @@ public class LocalMessageBox extends Table {
 		darken.setColor(1f, 1f, 1f, 0.85f);
 		darken.setTouchable(Touchable.enabled);
 		
+		LabelStyle labelStyleLarge = new LabelStyle();
+		labelStyleLarge.font = ResourceLoader.getLutFont("large");
+		
+		LabelStyle labelStyleMedium = new LabelStyle();
+		labelStyleMedium.font = ResourceLoader.getLutFont("medium");
+		
 		heading = new Table();
-		heading.setBackground(skin2.getDrawable("title"));
+		heading.setBackground(skin2.getDrawable("menuContainerPatch"));
 		heading.setSize(290, 136);
-		Label title = new Label(titleText, skin);
-		title.setFontScale(1.2f);
-		heading.add(title).padBottom(15);
+		heading.setColor(0.5f, 0.5f, 0.7f, 1f);
+		Label title = new Label(titleText, labelStyleLarge);
+		heading.add(title).padRight(25).padLeft(25);
 		
 		messageTable = new Table();
-		messageTable.setBackground(skin2.getDrawable("tableNoHeading"));
-		message = new Label(messageString , skin);
-		message.setFontScale(1.2f);
-		messageTable.add(message).fill();
+		messageTable.setBackground(skin2.getDrawable("menuContainerInnerPatch"));
+		message = new Label(messageString, labelStyleMedium);
+		message.setWrap(true);
+		message.setAlignment(Align.center);
+		messageTable.add(message).fill().width(640-80);
 		
 		
-		this.add(heading).padTop(-50).colspan(2);
+		this.add(heading).padTop(-50).padBottom(20).colspan(2);
 		this.row();
-		this.add(messageTable).expand().fill().colspan(2);
+		this.add(messageTable).expand().fill().padBottom(20).colspan(2);
 		this.row();
 		
-		okayButton = new TextButton("Okay", buttonStyle);
+		okayButton = new ImageButton(okayButtonStyle);
 		this.add(okayButton).align(Align.left).size(okayButton.getWidth()*UIRenderer.scaleXY, okayButton.getHeight()*UIRenderer.scaleXY);
 		
 		okayButton.addListener(new ClickListener(){
@@ -190,12 +199,11 @@ public class LocalMessageBox extends Table {
             public void clicked(InputEvent event, float x, float y){
             	messageBox.remove();
             	darken.remove();
-            	
             	onOkay();
             }
 		});
 		
-		cancelButton = new TextButton("Cancel", buttonStyle);
+		cancelButton = new ImageButton(backButtonStyle);
 		this.add(cancelButton).align(Align.right).size(cancelButton.getWidth()*UIRenderer.scaleXY, cancelButton.getHeight()*UIRenderer.scaleXY);
 		this.row();
 		
@@ -224,8 +232,11 @@ public class LocalMessageBox extends Table {
 	public void act(float delta) {
 		// Scale messageBox on show
 		if(scale < 1)
-			scale+=0.15;
+			scale+=0.01+(0.5*scale);
 		else
+			scale = 1;
+		
+		if(scale > 1)
 			scale = 1;
 		
 		this.setScale(scale);
@@ -233,6 +244,11 @@ public class LocalMessageBox extends Table {
 	
 	public void onOkay() {
 		
+	}
+
+	public Table getMessageTable() {
+		// TODO Auto-generated method stub
+		return messageTable;
 	}
 
 }

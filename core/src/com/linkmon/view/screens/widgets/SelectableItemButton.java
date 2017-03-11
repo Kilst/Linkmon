@@ -177,12 +177,19 @@ public class SelectableItemButton extends Table implements ISelectable {
             	Gdx.app.log("tableItems - SelctableItemButton", "UPDATED");
             }
 		});
+		
+		this.setColor(0.5f ,0.6f ,0.5f ,1f);
 	}
 	
 	@Override
 	public void setSelected(boolean selected) {
 		// TODO Auto-generated method stub
 		this.selected = selected;
+		
+		if(selected)
+			this.setColor(1f, 1f, 1f, 1f);
+		else
+			this.setColor(0.5f ,0.6f ,0.5f ,1f);
 	}
 	
 	public int getItemId() {
@@ -191,11 +198,6 @@ public class SelectableItemButton extends Table implements ISelectable {
 	
 	@Override
 	public void draw(Batch batch, float alpha){
-		batch.setColor(1, 1, 1, 0.7f);
-		if(selected)
-			batch.draw(green, this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		
-		batch.setColor(1, 1, 1, 1);
 		super.draw(batch, alpha);
 //		amount.draw(batch, alpha);
 	}

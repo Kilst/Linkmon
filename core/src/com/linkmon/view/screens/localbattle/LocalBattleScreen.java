@@ -37,6 +37,7 @@ import com.linkmon.view.screens.interfaces.IPlayerItems;
 import com.linkmon.view.screens.interfaces.MyScreen;
 import com.linkmon.view.screens.widgets.ExpandingTextWidget;
 import com.linkmon.view.screens.widgets.LocalMessageBox;
+import com.linkmon.view.screens.widgets.MoveTable;
 import com.linkmon.view.screens.widgets.MyProgressBar;
 
 public class LocalBattleScreen implements Screen, MyScreen, ILocalBattle, IPlayerItems, ModelListener {
@@ -312,94 +313,94 @@ public class LocalBattleScreen implements Screen, MyScreen, ILocalBattle, IPlaye
 	}
 	
 	@Override
-	public void getMoves(String move1Name, String move1Power, String move1Energy, int move1Id, String effect1, String move2Name,
-			String move2Power, String move2Energy, int move2Id, String effect2, String move3Name, String move3Power, String move3Energy,
-			int move3Id, String effect3) {
+	public void getMoves(String move1Name, int move1Power, int move1Energy, int move1Id, int type1, String effect1,
+			String move2Name, int move2Power, int move2Energy, int move2Id, int type2, String effect2, String move3Name,
+			int move3Power, int move3Energy, int move3Id, int type3, String effect3) {
 		// TODO Auto-generated method stub
 		
-		move1Container = new Table();
-		move1Container.setBackground(skin2.getDrawable("attackMenuButton"));
-		move1Container.setSize(skin2.getDrawable("attackMenuButton").getMinWidth(), skin2.getDrawable("attackMenuButton").getMinHeight());
+//		move1Container = new Table();
+		move1Container = new MoveTable(skin2, move1Id, move1Name, move1Power, move1Energy, type1, effect1, null, null, false);
+//		move1Container.setBackground(skin2.getDrawable("attackMenuButton"));
+//		move1Container.setSize(492, 120);
 		move1Container.setTouchable(Touchable.enabled);
-		move2Container = new Table();
-		move2Container.setBackground(skin2.getDrawable("attackMenuButton"));
-		move2Container.setSize(skin2.getDrawable("attackMenuButton").getMinWidth(), skin2.getDrawable("attackMenuButton").getMinHeight());
+//		move2Container = new Table();
+		move2Container = new MoveTable(skin2, move2Id, move2Name, move2Power, move2Energy, type2, effect2, null, null, false);
+//		move2Container.setBackground(skin2.getDrawable("attackMenuButton"));
+//		move2Container.setSize(492, 120);
 		move2Container.setTouchable(Touchable.enabled);
-		move3Container = new Table();
-		move3Container.setBackground(skin2.getDrawable("attackMenuButton"));
-		move3Container.setSize(skin2.getDrawable("attackMenuButton").getMinWidth(), skin2.getDrawable("attackMenuButton").getMinHeight());
+//		move3Container = new Table();
+		move3Container = new MoveTable(skin2, move3Id, move3Name, move3Power, move3Energy, type3, effect3, null, null, false);
+//		move3Container.setBackground(skin2.getDrawable("attackMenuButton"));
+//		move3Container.setSize(492, 120);
 		move3Container.setTouchable(Touchable.enabled);
 		
-		LabelStyle labelStyle = new LabelStyle();
-		labelStyle.font = ResourceLoader.getSampleFont("medium");
-		
-		Label name1 = new Label(move1Name, labelStyle);
-		Label name2 = new Label(move2Name, labelStyle);
-		Label name3 = new Label(move3Name, labelStyle);
-		
-		Label pow1 = new Label("Power: " + move1Power, labelStyle);
-		Label pow2 = new Label("Power: " + move2Power, labelStyle);
-		Label pow3 = new Label("Power: " + move3Power, labelStyle);
-		
-		Label energy1 = new Label("Energy: " + move1Energy, labelStyle);
-		Label energy2 = new Label("Energy: " + move2Energy, labelStyle);
-		Label energy3 = new Label("Energy: " + move3Energy, labelStyle);
-		
-		Label type1 = new Label("Type: ", labelStyle);
-		Label type2 = new Label("Type: ", labelStyle);
-		Label type3 = new Label("Type: ", labelStyle);
-		
-		Label status1 = new Label("Effect: " + effect1, labelStyle);
-		Label status2 = new Label("Effect: " + effect2, labelStyle);
-		Label status3 = new Label("Effect: " + effect3, labelStyle);
-		
-		Image type1Image = new Image();
-		type1Image.setDrawable(skin2.getDrawable("type-logo-fire"));
-		type1Image.setSize(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
-		
-		Image type2Image = new Image();
-		type2Image.setDrawable(skin2.getDrawable("type-logo-water"));
-		
-		Image type3Image = new Image();
-		type3Image.setDrawable(skin2.getDrawable("type-logo-grass"));
-		
-		move1Container.add(name1).align(Align.left).expand().padLeft(20);
-		move1Container.add(type1).align(Align.right).padRight(20);
-		move1Container.add(type1Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
-		move1Container.row();
-		move1Container.add(pow1).align(Align.left).padLeft(20).padTop(-20);
-		move1Container.add(energy1).align(Align.right).padRight(20).padTop(-20).colspan(2);
-		move1Container.row();
-		move1Container.add(status1).expandX().padTop(-20).colspan(3);
-		
-		
-		
-		move2Container.add(name2).align(Align.left).expand().padLeft(20);
-		move2Container.add(type2).align(Align.right).padRight(20);
-		move2Container.add(type2Image).padRight(20).size(skin2.getDrawable("type-logo-water").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
-		move2Container.row();
-		move2Container.add(pow2).align(Align.left).padLeft(20).padTop(-20);
-		move2Container.add(energy2).align(Align.right).padRight(20).padTop(-20).colspan(2);
-		move2Container.row();
-		move2Container.add(status2).expandX().padTop(-20).colspan(3);
-		
-		
-		
-		move3Container.add(name3).align(Align.left).expand().padLeft(20);
-		move3Container.add(type3).align(Align.right).padRight(20);
-		move3Container.add(type3Image).padRight(20).size(skin2.getDrawable("type-logo-grass").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
-		move3Container.row();
-		move3Container.add(pow3).align(Align.left).padLeft(20).padTop(-20);
-		move3Container.add(energy3).align(Align.right).padRight(20).padTop(-20).colspan(2);
-		move3Container.row();
-		move3Container.add(status3).expandX().padTop(-20).colspan(3);
+//		LabelStyle labelStyle = new LabelStyle();
+//		labelStyle.font = ResourceLoader.getSampleFont("medium");
+//		
+//		Label name1 = new Label(move1Name, labelStyle);
+//		Label name2 = new Label(move2Name, labelStyle);
+//		Label name3 = new Label(move3Name, labelStyle);
+//		
+//		Label pow1 = new Label("Power: " + move1Power, labelStyle);
+//		Label pow2 = new Label("Power: " + move2Power, labelStyle);
+//		Label pow3 = new Label("Power: " + move3Power, labelStyle);
+//		
+//		Label energy1 = new Label("Energy: " + move1Energy, labelStyle);
+//		Label energy2 = new Label("Energy: " + move2Energy, labelStyle);
+//		Label energy3 = new Label("Energy: " + move3Energy, labelStyle);
+//		
+//		Label type1 = new Label("Type: ", labelStyle);
+//		Label type2 = new Label("Type: ", labelStyle);
+//		Label type3 = new Label("Type: ", labelStyle);
+//		
+//		Label status1 = new Label("Effect: " + effect1, labelStyle);
+//		Label status2 = new Label("Effect: " + effect2, labelStyle);
+//		Label status3 = new Label("Effect: " + effect3, labelStyle);
+//		
+//		Image type1Image = new Image();
+//		type1Image.setDrawable(skin2.getDrawable("type-logo-fire"));
+//		type1Image.setSize(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
+//		
+//		Image type2Image = new Image();
+//		type2Image.setDrawable(skin2.getDrawable("type-logo-water"));
+//		
+//		Image type3Image = new Image();
+//		type3Image.setDrawable(skin2.getDrawable("type-logo-grass"));
+//		
+//		
+//		move1Container.add(name1).align(Align.left).expand().padLeft(20).padTop(-15);
+//		move1Container.add(type1).align(Align.right).padRight(20).padTop(-15);
+//		move1Container.add(type1Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight()).padTop(-15);
+//		move1Container.row();
+//		move1Container.add(pow1).align(Align.left).padLeft(20).padTop(-20);
+//		move1Container.add(energy1).align(Align.right).padRight(20).padTop(-20).colspan(2);
+//		move1Container.row();
+//		move1Container.add(status1).expandX().padTop(-20).colspan(3).padBottom(-15);
+//		
+//		move2Container.add(name2).align(Align.left).expand().padLeft(20).padTop(-15);
+//		move2Container.add(type2).align(Align.right).padRight(20).padTop(-15);
+//		move2Container.add(type2Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight()).padTop(-15);
+//		move2Container.row();
+//		move2Container.add(pow2).align(Align.left).padLeft(20).padTop(-20);
+//		move2Container.add(energy2).align(Align.right).padRight(20).padTop(-20).colspan(2);
+//		move2Container.row();
+//		move2Container.add(status2).expandX().padTop(-20).colspan(3).padBottom(-15);
+//		
+//		move3Container.add(name3).align(Align.left).expand().padLeft(20).padTop(-15);
+//		move3Container.add(type3).align(Align.right).padRight(20).padTop(-15);
+//		move3Container.add(type3Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight()).padTop(-15);
+//		move3Container.row();
+//		move3Container.add(pow3).align(Align.left).padLeft(20).padTop(-20);
+//		move3Container.add(energy3).align(Align.right).padRight(20).padTop(-20).colspan(2);
+//		move3Container.row();
+//		move3Container.add(status3).expandX().padTop(-20).colspan(3).padBottom(-15);
 		
 		
-		attackContainer.add(move1Container).expand().padTop(40);
+		attackContainer.add(move1Container).expand().padTop(40).width(492).height(120);
 		attackContainer.row();
-		attackContainer.add(move2Container).expand();
+		attackContainer.add(move2Container).expand().width(492).height(120);
 		attackContainer.row();
-		attackContainer.add(move3Container).expand();
+		attackContainer.add(move3Container).expand().width(492).height(120);
 		attackContainer.row();
 		attackContainer.add(attackBack).expand().align(Align.bottomLeft);
 		

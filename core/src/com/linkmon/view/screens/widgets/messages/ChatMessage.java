@@ -54,7 +54,7 @@ public class ChatMessage extends Actor {
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.getColor().a = 0.7f;
 		
-		chatTable = new MessageTable(skin, this);
+		chatTable = new MessageTable(skin, this, eManager);
 		chatTable.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		
 		chatTable.setText("Tinmon", messages);

@@ -76,13 +76,13 @@ public class EvolutionScreen implements Screen {
 		animation = new AnimationWidget(oldId, 2f/76f);
 		animation.setPosition((Gdx.graphics.getWidth()/2)-(animation.getWidth()/2), Gdx.graphics.getHeight()/3);
 		
-		beginChat = new MessageTable(skin2);
+		beginChat = new MessageTable(skin2, eManager);
 		String[] messages = new String[2];
 		messages[0] = "Your Linkmon is evolving!" + "  " + oldId;
 		messages[1] = "I wonder what it will be?";
 		beginChat.setText("EVOLUTION", messages);
 		
-		endChat = new MessageTable(skin2);
+		endChat = new MessageTable(skin2, eManager);
 		String[] message = new String[1];
 		message[0] = "Your Linkmon evolved into: " + newId + " <get name from id>";
 		endChat.setText("EVOLUTION", message);

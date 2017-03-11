@@ -16,6 +16,8 @@ public class GameSave {
 	
 	public String playerName;
 	public int playerGold;
+	public long lastRewardTime;
+	public int trainingPoints;
 	
 	// Player Items
 	public int[][] items;
@@ -71,6 +73,8 @@ public class GameSave {
 		
 		this.playerName = player.getName();
 		this.playerGold = player.getGold();
+		this.lastRewardTime= player.getLastRewardTime();
+		this.trainingPoints = player.getTrainingPoints();
 		
 		// Player Items
 		
@@ -133,6 +137,8 @@ public class GameSave {
 		Player player = new Player();
 		player.setName(this.playerName);
 		player.setGold(this.playerGold);
+		player.setLastRewardTime(this.lastRewardTime);
+		player.setTrainingPoints(trainingPoints);
 		
 		player.setSavedItems(items);
 		

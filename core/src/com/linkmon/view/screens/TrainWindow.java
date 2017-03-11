@@ -115,6 +115,9 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = ResourceLoader.getSampleFont("medium");
 		
+		LabelStyle labelStyle1 = new LabelStyle();
+		labelStyle1.font = ResourceLoader.getSampleFont("large");
+		
 		TextButtonStyle buttonStyle = new TextButtonStyle();
 		
 		buttonStyle.checked = skin2.getDrawable("button");
@@ -149,7 +152,12 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
 		
 		backButton = new ImageButton(backButtonStyle);
 		
-		applyButton = new ImageButton(skin2.getDrawable("newBackButton"));
+		ImageButtonStyle applyButtonStyle = new ImageButtonStyle();
+		applyButtonStyle.up = skin2.getDrawable("applyButtonGreen");
+		applyButtonStyle.down = skin2.getDrawable("applyButtonRed");
+		
+		applyButton = new ImageButton(applyButtonStyle);
+		applyButton.setVisible(false);
 		
 		statsTable = new Table();
 		statsTable.setSize(UIRenderer.WIDTH/2, UIRenderer.HEIGHT/1.5f);
@@ -164,15 +172,18 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
 		
 		linkmonTable = new Table();
 		
-		statPoints = playerController.getLinkmonStatPoints();
+		statPoints = playerController.getTrainingPoints();
 		
-		statPointsLabel = new Label("Points Left: " + statPoints, labelStyle);
+		Label statsLeft = new Label("Points Left:", labelStyle);
+		statPointsLabel = new Label(""+statPoints, labelStyle1);
 		
 		pointsLeftTable = new Table();
 		pointsLeftTable.setBackground(new Image(ResourceLoader.assetManager.get("bigContainerBlue.png", Texture.class)).getDrawable());
+		pointsLeftTable.add(statsLeft);
+		pointsLeftTable.row();
 		pointsLeftTable.add(statPointsLabel);
 		
-		Image heading = new Image(skin2.getDrawable("menuHeading"));
+		Image heading = new Image(skin2.getDrawable("trainTitle"));
 		
 		addButtonHealth = new ImageButton(skin2.getDrawable("plusButton"));
 		addButtonAttack = new ImageButton(skin2.getDrawable("plusButton"));
@@ -199,7 +210,7 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
 		linkmonStatsTable.add(linkmonTable).expand();
 		linkmonStatsTable.row();
 		
-		middleTable.add(linkmonStatsTable).expandY().pad(20);
+		middleTable.add(linkmonStatsTable).expand().pad(20);
 		
 		middleTable.add(pointsLeftTable).expandY().pad(20);
 		
@@ -234,9 +245,9 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
             @Override 
             public void clicked(InputEvent event, float x, float y){
 //            	playerController.addLinkmonStatPoints(statPoints-(statPoints-addedHealth+addedAttack+addedDefense+addedSpeed));
-            	playerController.removeLinkmonStatPoints(addedHealth+addedAttack+addedDefense+addedSpeed);
+            	playerController.removeTrainingPoints(addedHealth+addedAttack+addedDefense+addedSpeed);
             	playerController.updateLinkmonStats(addedHealth*10, addedAttack, addedDefense, addedSpeed);
-            	statPoints = playerController.getLinkmonStatPoints();
+            	statPoints = playerController.getTrainingPoints();
             	addedHealth = 0;
             	addedAttack = 0;
             	addedDefense = 0;
@@ -350,7 +361,12 @@ public class TrainWindow  extends BaseMenuScreen implements Screen, ILinkmonStat
 			addButtonSpeed.setVisible(true);
 		}
 		
-		statPointsLabel.setText("Points Left: " + (statPoints-total));
+		if(total > 0)
+			applyButton.setVisible(true);
+		else
+			applyButton.setVisible(false);
+		
+		statPointsLabel.setText("" + (statPoints-total));
 			
 	}
 

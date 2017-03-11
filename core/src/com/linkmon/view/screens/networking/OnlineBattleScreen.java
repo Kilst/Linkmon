@@ -185,7 +185,7 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		buttonTable = new Table();
 		buttonTable.setBackground(skin2.getDrawable("tableNoHeading"));
 		
-		battleMessage = new MessageTable(skin2);
+		battleMessage = new MessageTable(skin2, eManager);
 		battleMessage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/5f);
 		battleMessage.setVisible(false);
 		
@@ -337,10 +337,10 @@ public class OnlineBattleScreen implements Screen, IBattleView, ModelListener {
 		opponentUpdatedEnergy = oppEnergy;
 		
 		if(messages[0] != null && messages[1] != null) {
-			firstChat = new MessageTable(skin2);
+			firstChat = new MessageTable(skin2,eManager);
 			firstChat.setText("ATTACK", messages[0]);
 			firstChat.setHeight(buttonTable.getHeight());
-			secondChat = new MessageTable(skin2);
+			secondChat = new MessageTable(skin2, eManager);
 			secondChat.setText("ATTACK", messages[1]);
 			secondChat.setHeight(buttonTable.getHeight());
 			

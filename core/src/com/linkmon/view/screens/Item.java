@@ -35,6 +35,7 @@ import com.linkmon.view.screens.interfaces.IShop;
 import com.linkmon.view.screens.widgets.ISelectable;
 import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.LocalMessageBox;
+import com.linkmon.view.screens.widgets.ScrollingBackground;
 import com.linkmon.view.screens.widgets.SelectableItemButton;
 import com.linkmon.view.screens.widgets.SelectionTable;
 
@@ -76,6 +77,8 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 	
 	ScrollPane scroll;
 	
+	private ScrollingBackground scrolling;
+	
 	private PlayerController playerController;
 	
 	public Item(Group group, EventManager eManager, PlayerController playerController) {
@@ -88,6 +91,10 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 		skin2 = new Skin();
 		TextureAtlas uiAtlas = ResourceLoader.assetManager.get(ResourceLoader.UIAtlas, TextureAtlas.class);
 		skin2.addRegions(uiAtlas);
+		
+		Texture texture = ResourceLoader.assetManager.get("feedBackground.png", Texture.class);
+		texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+		scrolling = new ScrollingBackground(texture);
 		
 		ScrollPaneStyle scrollStyle = new ScrollPaneStyle();
 		
@@ -111,7 +118,7 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 		// Create Window Elements
 		
 		container = new Table();
-		container.setBackground(new Image(ResourceLoader.assetManager.get("feedBackground.png", Texture.class)).getDrawable());
+//		container.setBackground(new Image(ResourceLoader.assetManager.get("feedBackground.png", Texture.class)).getDrawable());
 		container.setSize(1280, 720);
 		
 		itemTable = new Table();
@@ -127,7 +134,7 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 		bottomTable = new Table();
 		bottomTable.setSize(1280, 135);
 		
-		Image heading = new Image(skin2.getDrawable("menuHeading"));
+		Image heading = new Image(skin2.getDrawable("itemsTitle"));
 		Table moneyTable = new Table();
 		
 		moneyTitle = new Image(skin2.getDrawable("money"));
@@ -148,13 +155,18 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 		
 		backButton = new ImageButton(backButtonStyle);
 		
-		buyButton = new ImageButton(skin2.getDrawable("useButton"));
+		ImageButtonStyle useButtonStyle = new ImageButtonStyle();
+		useButtonStyle.up = skin2.getDrawable("useButtonGreen");
+		useButtonStyle.down = skin2.getDrawable("useButtonRed");
+		
+		buyButton = new ImageButton(useButtonStyle);
 		
 		itemBox = new ItemBox();
 		
-		itemText = new Label("Placeholder",labelStyle);
-		itemName = new Label("",labelStyle3);
+		itemText = new Label("Name",labelStyle);
+		itemName = new Label("Info",labelStyle3);
 		itemName.setWrap(true);
+		itemName.setColor(0.8f, 0f, 0.8f, 1f);
 		itemName.setAlignment(Align.center);
 		
 		
@@ -169,9 +181,9 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 		topTable.add(heading).expand().align(Align.left);
 		topTable.add(moneyTable).expand().align(Align.right);
 		
-		buyTable.add(itemBox).expand().align(Align.top).colspan(2).size(150, 150);
+		buyTable.add(itemBox).align(Align.top).colspan(2).size(150, 150);
 		buyTable.row();
-		buyTable.add(itemText).expand().colspan(2);
+		buyTable.add(itemText).colspan(2);
 		buyTable.row();
 		buyTable.add(itemName).expand().colspan(2).width(300);
 		
@@ -261,6 +273,7 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		uiGroup.addActor(scrolling);
 		uiGroup.addActor(container);
 	}
 
@@ -292,6 +305,7 @@ public class Item implements Screen, IPlayerItems, IPlayerStats, ModelListener {
 	public void hide() {
 		// TODO Auto-generated method stub
 		container.remove();
+		scrolling.remove();
 	}
 
 	@Override

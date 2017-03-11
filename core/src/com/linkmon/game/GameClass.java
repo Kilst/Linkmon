@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.linkmon.controller.ControllerService;
 import com.linkmon.controller.MiniGameController;
+import com.linkmon.controller.SettingsController;
 import com.linkmon.controller.SoundController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
@@ -68,6 +69,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 	private boolean gameLoaded = false;
 	
 	SoundController sound;
+	SettingsController settings;
 	
 	public GameClass() {
 		super();
@@ -82,7 +84,10 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 
 	@Override
 	public void pause() {
-		service.saveGame();
+		if(gameLoaded) {
+			service.saveGame();
+			settings.save();
+		}
 //		ResourceLoader.dispose();
 		
 //		service.close();
@@ -116,8 +121,8 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 //        }
 //		eManager.notify(new ControllerEvent(ControllerEvents.SWAP_SCREEN, ScreenType.MAIN_UI));
 		
-		System.gc();
-		ResourceLoader.getInstance();
+//		System.gc();
+//		ResourceLoader.getInstance();
 //		while (!ResourceLoader.assetManager.update())
 //        {
 //			
@@ -149,6 +154,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 //		ResourceLoader.assetManager.load(ResourceLoader.UIAtlas, TextureAtlas.class);
 //		ResourceLoader.assetManager.finishLoading();
 		sound = new SoundController();
+		settings = new SettingsController(sound);
 		sound.onNotify(new ScreenEvent(ScreenEvents.PLAY_THEME_MUSIC));
 		this.setScreen(new LoadingScreen(this, uiRenderer.ui, eManager, sound));
 		ResourceLoader.load();
@@ -166,7 +172,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		System.gc();
 		saveLoaded = true;
 		
-		service = new ControllerService(this, uiRenderer.ui, eManager, sound);
+		service = new ControllerService(this, uiRenderer.ui, eManager, sound, settings);
 		worldRenderer = new LibgdxWorldRenderer(service.getWorldController().getWorld());
 		
 		uiRenderer.addParticleLoader(service.getParticleController().getUILoader());
@@ -182,7 +188,7 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 		
 		Gdx.input.setInputProcessor(im);
 		
-		this.setScreen(new GameUi(uiRenderer.ui, this, eManager));
+		this.setScreen(new GameUi(uiRenderer.ui, this, eManager, service.getPlayerController()));
 		
 		gameLoaded = true;
 	}
@@ -208,11 +214,11 @@ public class GameClass extends Game implements ApplicationListener, ScreenListen
 					worldRenderer.render(batch);
 			batch.end();
 			
-			Gdx.app.log("Game", "Render calls: " + batch.renderCalls);
+//			Gdx.app.log("Game", "Render calls: " + batch.renderCalls);
 			
 			GLProfiler.enable(); //Enable Profiling
 			int binds = GLProfiler.textureBindings; // The amount of times a texture binding has happened since the last reset.
-			Gdx.app.log("Game", "Texture Binds: " + binds);
+//			Gdx.app.log("Game", "Texture Binds: " + binds);
 			GLProfiler.reset(); // You must reset every frame in order to get frame-wise values
 			
 		}

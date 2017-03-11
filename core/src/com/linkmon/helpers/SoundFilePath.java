@@ -10,4 +10,6 @@ public class SoundFilePath {
 	
 	public static final String BUTTON_ACCEPT = "Sounds/UI/Blip_Select.wav";
 	public static final String BUTTON_DECLINE = "Sounds/UI/Blip_Deselect.wav";
+	
+	public static final String DING = "Sounds/UI/ding.mp3";
 }

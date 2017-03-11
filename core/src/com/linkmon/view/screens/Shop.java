@@ -22,12 +22,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.controller.PlayerController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.model.ModelEvent;
 import com.linkmon.eventmanager.model.ModelEvents;
 import com.linkmon.eventmanager.model.ModelListener;
 import com.linkmon.eventmanager.screen.ScreenEvent;
 import com.linkmon.eventmanager.screen.ScreenEvents;
+import com.linkmon.helpers.HelpFlags;
 import com.linkmon.helpers.ResourceLoader;
 import com.linkmon.helpers.SmartFontGenerator;
 import com.linkmon.model.items.ItemType;
@@ -39,6 +41,7 @@ import com.linkmon.view.screens.widgets.ItemBox;
 import com.linkmon.view.screens.widgets.ScrollingBackground;
 import com.linkmon.view.screens.widgets.SelectableItemButton;
 import com.linkmon.view.screens.widgets.SelectionTable;
+import com.linkmon.view.screens.widgets.messages.LocalChatMessage;
 
 public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 	
@@ -54,6 +57,7 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 	private Button buyButton;
 	private ItemBox itemBox;
 	private Label itemText;
+	private Label itemInfo;
 	private Label itemPrice;
 	private String itemPriceString = "Price: ";
 	private Label itemAmount;
@@ -91,8 +95,11 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 	
 	private Image darken;
 	
-	public Shop(Group group, EventManager eManager) {
+	private PlayerController playerController;
+	
+	public Shop(Group group, EventManager eManager, PlayerController playerController) {
 		
+		this.playerController = playerController;
 		uiGroup = group;
 		this.eManager = eManager;
 		eManager.addModelListener(this);
@@ -116,6 +123,9 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		
 		LabelStyle labelStyle2 = new LabelStyle();
 		labelStyle2.font = ResourceLoader.getLutFont("smallLarge");
+		
+		LabelStyle labelStyle3 = new LabelStyle();
+		labelStyle3.font = ResourceLoader.getLutFont("medium");
 		
 		
 		// Create Window Elements
@@ -146,7 +156,7 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		bottomTable = new Table();
 		bottomTable.setSize(1280, 135);
 		
-		Image heading = new Image(skin2.getDrawable("menuHeading"));
+		Image heading = new Image(skin2.getDrawable("shopTitle"));
 		Table moneyTable = new Table();
 		
 		moneyTitle = new Image(skin2.getDrawable("money"));
@@ -167,7 +177,11 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		
 		backButton = new ImageButton(backButtonStyle);
 		
-		buyButton = new ImageButton(skin2.getDrawable("buyButton"));
+		ImageButtonStyle buyButtonStyle = new ImageButtonStyle();
+		buyButtonStyle.up = skin2.getDrawable("buyButtonGreen");
+		buyButtonStyle.down = skin2.getDrawable("buyButtonRed");
+		
+		buyButton = new ImageButton(buyButtonStyle);
 		
 		addButton = new ImageButton(skin2.getDrawable("plusButton"));
 		subtractButton = new ImageButton(skin2.getDrawable("minusButton"));
@@ -175,6 +189,10 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		itemBox = new ItemBox();
 		
 		itemText = new Label("Name",labelStyle);
+		itemInfo = new Label("Info",labelStyle3);
+		itemInfo.setWrap(true);
+		itemInfo.setColor(0.8f, 0f, 0.8f, 1f);
+		itemInfo.setAlignment(Align.center);
 		itemAmount = new Label("Amount: ",labelStyle);	
 		itemPrice  = new Label("Price: ",labelStyle);
 		
@@ -190,15 +208,15 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		topTable.add(heading).expand().align(Align.left);
 		topTable.add(moneyTable).expand().align(Align.right);
 		
-		buyTable.add(itemBox).expand().align(Align.top).colspan(2).size(150, 150);
+		buyTable.add(itemBox).align(Align.top).colspan(2).size(150, 150);
 		buyTable.row();
-		buyTable.add(itemText).expand().colspan(2);
+		buyTable.add(itemText).colspan(2);
 		buyTable.row();
-		
+		buyTable.add(itemInfo).expand().colspan(2).width(400);
 		buyTable.row();
-		buyTable.add(itemAmount).expand().colspan(2);
+		buyTable.add(itemAmount).colspan(2);
 		buyTable.row();
-		buyTable.add(itemPrice).expand().colspan(2);
+		buyTable.add(itemPrice).colspan(2);
 		
 		Image name = new Image(skin2.getDrawable("itemName"));
 		Image own = new Image(skin2.getDrawable("itemOwn"));
@@ -336,6 +354,7 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 			selectedItem = tableItems.getSelectedItem();
 			itemBox.addItemImage(ResourceLoader.getItemRegionFromId(((SelectableItemButton)selectedItem).getItemId()));
 			itemText.setText(((SelectableItemButton)selectedItem).getItemName());
+			itemInfo.setText(((SelectableItemButton)selectedItem).getItemText());
 			itemAmount.setText("Amount: 1");
 			amount = 1;
 			itemPrice.setText("Price: " + ((SelectableItemButton)selectedItem).getPrice());
@@ -348,6 +367,9 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		
 		tableItems.reset();
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_SHOP_ITEMS, ItemType.ALL, this));
+//		selectedItem.setSelected(true);
+//		tableItems.setSelectedItem(selectedItem);
+//		tableItems.setUpdated(true);
 	}
 
 	@Override
@@ -357,6 +379,10 @@ public class Shop implements Screen, IShop, IPlayerStats, ModelListener {
 		uiGroup.addActor(scrolling);
 		uiGroup.addActor(darken);
 		uiGroup.addActor(container);
+		String[] strings = new String[2];
+		strings[0] = "Welcome to the Shop!";
+		strings[1] = "What would you like to buy?";
+		new LocalChatMessage(1, 0, strings, uiGroup, eManager).show();
 	}
 
 	@Override

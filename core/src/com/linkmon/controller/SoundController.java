@@ -18,29 +18,31 @@ public class SoundController implements ModelListener, ScreenListener {
 
 	private Audio audioLoader;
 	
-	private float musicMaxVolume = 0.1f;
-	private float soundMaxVolume = 0.1f;
+	private float musicMaxVolume = 0.1f; // Current music volume
+	private float soundMaxVolume = 0.1f; // Current sound volume
 	
-	private float fadeSpeed = 0.001f;
+	private float fadeSpeed = 0.001f; // Fade speed
 	
-	private Music playingCurrently;
-	private Music loadedCurrently;
+	private Music playingCurrently; // Current music
+	private Music loadedCurrently; // Next track to play
 	
-	private Sound playingCurrentlySound;
-	private Sound loadedCurrentlySound;
+	private Sound playingCurrentlySound; // Current sound
+	private Sound loadedCurrentlySound; // Next sound to play
 	
-	private List<Music> musicList;
-	private Music remove = null;
+	private List<Music> musicList; // List to make sure everything gets disposed of
+	private Music remove = null; // (basically a remove queue for musicList)
 	
 	public SoundController() {
-		audioLoader =  Gdx.audio;
 		
-		musicList = new ArrayList<Music>();
+		audioLoader =  Gdx.audio; // Create audioLoader
+		
+		musicList = new ArrayList<Music>(); // Create musicList
 	}
 	
 	private void playSound(String filePath) {
-		Sound sound = audioLoader.newSound(Gdx.files.internal(filePath));
-		sound.play(soundMaxVolume);
+		// Play a sound
+		Sound sound = audioLoader.newSound(Gdx.files.internal(filePath)); // Load sound
+		sound.play(soundMaxVolume); // Play sound at current volume
 	}
 	
 	private void playMusic(String filePath) {
@@ -57,7 +59,9 @@ public class SoundController implements ModelListener, ScreenListener {
 	private void updateMusic() {
 		// Check if new music has been loaded
 		if(loadedCurrently != null) {
+			// Fade-out current music
 			try {
+				// Check if volume not 0
 				if(playingCurrently.getVolume() > 0f) {
 					float volume = playingCurrently.getVolume() - fadeSpeed; // Get new faded volume
 					if(volume < 0)
@@ -65,39 +69,39 @@ public class SoundController implements ModelListener, ScreenListener {
 					playingCurrently.setVolume(volume);  // Apply new faded volume
 					return; // Break from the method until volume = 0
 				}
-				else {
+				else { // Volume == 0
 					// Stop track once it has faded
-					musicList.remove(playingCurrently);
+					musicList.remove(playingCurrently); // Remove from non-disposed list
 					if(playingCurrently.isPlaying())
 						playingCurrently.stop(); // Need to stop before disposing
 					playingCurrently.dispose(); // Dispose of the track
 					playingCurrently = loadedCurrently; // Set the current track
-					loadedCurrently = null; // Null loaded track
+					loadedCurrently = null; // Null the loaded track variable
 					return;
 				}
 			} catch (Exception e) {
-				// Exception thrown if no track was playing (only happens the first time, should use a flag)
+				// Exception thrown if no track was playing (should only happen the first time, could use a flag)
 				playingCurrently = loadedCurrently;
 				loadedCurrently = null;
 				return;
 			}
 			
 		}
-		// Fade in the new track
+		// Fade-in the current track (Volume can be updated on the fly, so we need both checks
 		if(playingCurrently != null ) {
-			
 			if(!playingCurrently.isPlaying()) // If the track isn't playing, play it
 				playingCurrently.play();
-			if(playingCurrently.getVolume() < musicMaxVolume){
-				float volume = playingCurrently.getVolume() + fadeSpeed;
-				if(volume > 1)
-					volume = 1;
-				playingCurrently.setVolume(volume);
+			if(playingCurrently.getVolume() < musicMaxVolume){ // Check if volume != current maxVolume
+				float volume = playingCurrently.getVolume() + fadeSpeed; // Add fade-in volume to volume
+				if(volume > musicMaxVolume) // Check new volume isn't > musicMaxVolume
+					volume = musicMaxVolume;
+				playingCurrently.setVolume(volume); // Set new fade-in volume
 			}
+			// Fade-out the current track
 			else if(playingCurrently.getVolume() > musicMaxVolume) {
 				float volume = playingCurrently.getVolume() - fadeSpeed*10;
-				if(volume < 0)
-					volume = 0;
+				if(volume < musicMaxVolume)
+					volume = musicMaxVolume;
 				playingCurrently.setVolume(volume);
 			}
 		}
@@ -107,7 +111,7 @@ public class SoundController implements ModelListener, ScreenListener {
 		// Check if a new sound has been loaded
 		if(loadedCurrentlySound != null) {
 			try {
-				// Stop and dispose of the current sound
+				// Stop and dispose of the current sound (could probably fade, but no need at the moment)
 				playingCurrentlySound.stop();
 				playingCurrentlySound.dispose();
 				playingCurrentlySound = loadedCurrentlySound;
@@ -125,17 +129,24 @@ public class SoundController implements ModelListener, ScreenListener {
 	
 	private void checkForNonDisposedMusic() {
 		
+		// Since we don't keep track of everything, I made a list to add music to, so I can check if it needs disposing.
+		// Generally, this won't need calling, but in rare cases where the music fade doesn't keep up with the amount of loads,
+		// we use this to dispose of anything that was set, but did not actually play.
+		
+		// Loop through list, checking for anything not playingCurrently or loadedCurrently. If it's neither, and still
+		// in this list, it means it needs to be disposed of.
 		for(Music music : musicList) {
 			if(music != playingCurrently && music != loadedCurrently) {
 				if(music.isPlaying())
-					music.stop();
-				music.dispose();
-				remove = music;
+					music.stop(); // Shouldn't need stopping, but just in case.
+				music.dispose(); // Dispose of the track
+				remove = music; // Add track to be removed from list
+				break; // Break from the loop so we don't overwrite remove (It'll be called as many times as needed anyway)
 			}
 		}
-		if(remove != null) {
+		if(remove != null) { // If we disposed of a track, remove it from the list.
 			musicList.remove(remove);
-			remove = null;
+			remove = null; // Reset remove
 		}
 	}
 	
@@ -161,6 +172,7 @@ public class SoundController implements ModelListener, ScreenListener {
 		return musicMaxVolume;
 	}
 	
+	// Sound/Music is called via events
 	@Override
 	public boolean onNotify(ScreenEvent event) {
 		// TODO Auto-generated method stub
@@ -195,6 +207,10 @@ public class SoundController implements ModelListener, ScreenListener {
 			}
 			case(ScreenEvents.PLAY_BATTLE_TOWER_MUSIC): {
 				playMusic(SoundFilePath.BATTLE_TOWER_MUSIC);
+				return false;
+			}
+			case(ScreenEvents.PLAY_DING): {
+				playSound(SoundFilePath.DING);
 				return false;
 			}
 		}

@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.controller.PlayerController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
@@ -36,6 +37,7 @@ import com.linkmon.model.items.ItemIds;
 import com.linkmon.view.UIRenderer;
 import com.linkmon.view.screens.interfaces.IPlayerStats;
 import com.linkmon.view.screens.widgets.MyProgressBar;
+import com.linkmon.view.screens.widgets.RewardsWidget;
 import com.linkmon.view.screens.widgets.messages.MessageType;
 
 public class GameUi implements Screen, IPlayerStats, ModelListener {
@@ -46,7 +48,6 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	
 	Button feed;
 	Button menu;
-	ImageButton help;
 	ImageButton settings;
 	
 	private boolean evolve = false;
@@ -63,8 +64,8 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	MyProgressBar hungerBar;
 	public Label hunger;
 	
-	MyProgressBar exhaustionBar;
-	public Label exhaustion;
+	MyProgressBar happyBar;
+	public Label happy;
 	
 	public Group ui;
 	
@@ -80,10 +81,14 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	
 	private EvolutionScreen evolutionScreen;
 	
-	public GameUi(Group uiGroup, GameClass game, EventManager eManager) {
+	private PlayerController playerController;
+	
+	public GameUi(Group uiGroup, GameClass game, EventManager eManager, PlayerController playerController) {
 		
 		this.eManager = eManager;
 		this.eManager.addModelListener(this);
+		
+		this.playerController = playerController;
 
 		this.game = game;
 
@@ -143,9 +148,11 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		hungerImage.setScale(0.5f);
 		hungerBar = new MyProgressBar(skin2, 0, 100);
 		
-		exhaustion = new Label("Energy: ", labelStyle);
-		exhaustion.setFontScale(1);
-		exhaustionBar = new MyProgressBar(skin2, 0, 100);
+		happy = new Label(": ", labelStyle);
+		Image happyImage = new Image(skin2.getDrawable("happy"));
+		happyImage.setOrigin(Align.center);
+		happyImage.setScale(0.7f);
+		happyBar = new MyProgressBar(skin2, 0, 100);
 		
 		time = new Label("Time:  "+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE), labelStyle);
 		time.setFontScale(1);
@@ -154,8 +161,7 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		containerTop.setPosition(0, 720 - 30*1);
 		containerTop.setBackground(skin.getDrawable("default-rect"));
 		
-		help = new ImageButton(skin2.getDrawable("helpButton"));
-		settings = new ImageButton(skin2.getDrawable("settingsButton"));
+		settings = new ImageButton(skin2.getDrawable("mainMenuButton"));
 		light = new ImageButton(skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOn"), skin2.getDrawable("lightBulbOff"));
 		light.setPosition(0, (720 - 30*1)-light.getHeight()*1);
 		
@@ -165,13 +171,13 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 		
 		containerTop.add(hungerImage).align(Align.right).expandX();
 		containerTop.add(hunger).height(30);
-		containerTop.add(hungerBar).size(150*UIRenderer.scaleX, 10).expandX().align(Align.left);
-		containerTop.add(exhaustion).height(30);
-		containerTop.add(exhaustionBar).size(150*UIRenderer.scaleX, 10).expandX().align(Align.left);
+		containerTop.add(hungerBar).size(150, 10).expandX().align(Align.left);
+		containerTop.add(happyImage).align(Align.right).expandX();
+		containerTop.add(happy).height(30);
+		containerTop.add(happyBar).size(150, 10).expandX().align(Align.left);
 //		containerTop.add(time).size(1280/4, 30);
 		
-		containerTop.add(help).padTop(30*1);
-		containerTop.add(settings).padTop(30*1);
+		containerTop.add(settings).padTop(60);
 		
 		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
@@ -233,15 +239,6 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
             	eManager.notify(new ScreenEvent(ScreenEvents.LIGHT_SWAP, !light.isChecked()));
             }
 		});
-		help.addListener(new ClickListener(){
-            @Override 
-            public void clicked(InputEvent event, float x, float y){
-            	String[] strings = new String[2];
-        		strings[0] = "Hey, how are you going? I need a hand raising this Linkmon egg.";
-        		strings[1] = "Blah blah blah blah blah. Stuff to type. I'm just writing stuff. I don't care what it is.";
-            	eManager.notify(new MessageEvent(MessageEvents.SHOW_CHAT, MessageType.GAME_MESSAGE, 1, "Heading", strings));
-            	}
-		});
 		settings.addListener(new ClickListener(){
             @Override 
             public void clicked(InputEvent event, float x, float y){
@@ -254,6 +251,10 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		if(playerController.getDailyReward()) {
+			new RewardsWidget(ui, skin2, eManager, playerController.addDailyTrainingPoints());
+		}
+		
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 		eManager.notify(new ScreenEvent(ScreenEvents.PLAY_MAIN_GAME_MUSIC));
 	}
@@ -311,7 +312,7 @@ public class GameUi implements Screen, IPlayerStats, ModelListener {
 				break;
 			}
 			case(ModelEvents.UPDATE_EXHAUSTION_LEVEL): {
-				exhaustionBar.update(event.value);
+				happyBar.update(event.value);
 				break;
 			}
 			case(ModelEvents.UPDATE_GOLD): {

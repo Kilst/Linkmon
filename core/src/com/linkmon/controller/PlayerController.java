@@ -15,6 +15,7 @@ import com.linkmon.model.aonevonebattle.moves.OneVMove;
 import com.linkmon.model.battles.BattleLinkmon;
 import com.linkmon.model.gameobject.GameObject;
 import com.linkmon.model.gameobject.ObjectFactory;
+import com.linkmon.model.gameobject.ObjectId;
 import com.linkmon.model.items.ItemType;
 import com.linkmon.model.items.components.ItemComponent;
 import com.linkmon.model.items.components.UsableItemComponent;
@@ -153,11 +154,6 @@ public class PlayerController implements ScreenListener {
 		return player.checkHelpFlag(helpId);
 	}
 
-	public int getLinkmonStatPoints() {
-		// TODO Auto-generated method stub
-		return player.getLinkmonStatPoints();
-	}
-
 	public void updateLinkmonStats(int addedHealth, int addedAttack, int addedDefense, int addedSpeed) {
 		// TODO Auto-generated method stub
 		((LinkmonExtraComponents)player.getLinkmon().getExtraComponents()).getStats().addHealth(addedHealth);
@@ -210,14 +206,34 @@ public class PlayerController implements ScreenListener {
 		else
 			return false;
 	}
-	
-	public void addLinkmonStatPoints(int totalPoints) {
+
+	public void removeTrainingPoints(int totalPoints) {
 		// TODO Auto-generated method stub
-		player.addLinkmonStatPoints(totalPoints);
+		player.removeTrainingPoints(totalPoints);
+	}
+	
+	public boolean getDailyReward() {
+		// Add rewards, 200g and 1 Meat
+		return player.getDailyRewards(200, ObjectId.MEAT);
 	}
 
-	public void removeLinkmonStatPoints(int totalPoints) {
+	public int addDailyTrainingPoints() {
 		// TODO Auto-generated method stub
-		player.removeLinkmonStatPoints(totalPoints);
+		int trainingPoints = 10 -(player.getYesterdaysCareMistakes()*2);
+		if(trainingPoints < 1)
+			trainingPoints = 1;
+		player.addTrainingPoints(trainingPoints);
+		return trainingPoints;
+	}
+	
+	
+	public void addTrainingPoints(int totalPoints) {
+		// TODO Auto-generated method stub
+		player.addTrainingPoints(totalPoints);
+	}
+	
+	public int getTrainingPoints() {
+		// TODO Auto-generated method stub
+		return player.getTrainingPoints();
 	}
 }

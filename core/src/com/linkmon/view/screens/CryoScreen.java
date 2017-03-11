@@ -121,7 +121,7 @@ public class CryoScreen implements Screen, ILinkmonStats, IMovesScreen {
 		labelStyle = new LabelStyle();
 		labelStyle.font = ResourceLoader.getLutFont("large");
 		
-		Image heading = new Image(skin2.getDrawable("menuHeading"));
+		Image heading = new Image(skin2.getDrawable("cryoTitle"));
 		
 		moveImage = new Image(skin2.getDrawable("moveImage"));
 		
@@ -234,6 +234,12 @@ public class CryoScreen implements Screen, ILinkmonStats, IMovesScreen {
 			strings[0] = "Welcome to the Cryogenics Lab! Here you can save your current Linkmon for later use in battles.";
     		strings[1] = "When you save your Linkmon, their current stats and moves are also saved. These cannot be edited after saving, so make sure you save with the right moves.";
     		new LocalChatMessage(1, 0, strings, ui, eManager).show();
+		}
+		else {
+			String[] strings = new String[2];
+			strings[0] = "Welcome to the Cryogenics Lab!";
+			strings[1] = "Looking to save some of your Linkmon's DNA?";
+			new LocalChatMessage(1, 0, strings, ui, eManager).show();
 		}
 	}
 

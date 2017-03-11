@@ -139,9 +139,9 @@ public class LocalBattleController implements ScreenListener {
 			}
 			case(ScreenEvents.LOCAL_BATTLE_GET_MOVES) : {
 				OneVOneBattleComponent bc = ((OneVOneBattleComponent)oneVBattle.getPlayer().getExtraComponents());
-				((ILocalBattle)event.screen).getMoves(bc.getMove1().getName(), bc.getMove1().getDamage()+"", bc.getMove1().getEnergy()+"", bc.getMove1().getId(), bc.getMove1().getStatusEffect().toString(),
-													bc.getMove2().getName(), bc.getMove2().getDamage()+"", bc.getMove2().getEnergy()+"", bc.getMove2().getId(), bc.getMove2().getStatusEffect().toString(),
-													bc.getMove3().getName(), bc.getMove3().getDamage()+"", bc.getMove3().getEnergy()+"", bc.getMove3().getId(), bc.getMove3().getStatusEffect().toString());
+				((ILocalBattle)event.screen).getMoves(bc.getMove1().getName(), bc.getMove1().getDamage(), bc.getMove1().getEnergy(), bc.getMove1().getId(), bc.getMove1().getType(), bc.getMove1().getStatusEffect().toString(),
+						bc.getMove2().getName(), bc.getMove2().getDamage(), bc.getMove2().getEnergy(), bc.getMove2().getId(), bc.getMove2().getType(), bc.getMove2().getStatusEffect().toString(),
+						bc.getMove3().getName(), bc.getMove3().getDamage(), bc.getMove3().getEnergy(), bc.getMove3().getId(), bc.getMove3().getType(), bc.getMove3().getStatusEffect().toString());
 				break;
 			}
 		}
@@ -150,9 +150,9 @@ public class LocalBattleController implements ScreenListener {
 	
 	public void getMoves(ILocalBattle screen) {
 		OneVOneBattleComponent bc = ((OneVOneBattleComponent)oneVBattle.getPlayer().getExtraComponents());
-		((ILocalBattle)screen).getMoves(bc.getMove1().getName(), bc.getMove1().getDamage()+"", bc.getMove1().getEnergy()+"", bc.getMove1().getId(), bc.getMove1().getStatusEffect().toString(),
-				bc.getMove2().getName(), bc.getMove2().getDamage()+"", bc.getMove2().getEnergy()+"", bc.getMove2().getId(), bc.getMove2().getStatusEffect().toString(),
-				bc.getMove3().getName(), bc.getMove3().getDamage()+"", bc.getMove3().getEnergy()+"", bc.getMove3().getId(), bc.getMove3().getStatusEffect().toString());
+		((ILocalBattle)screen).getMoves(bc.getMove1().getName(), bc.getMove1().getDamage(), bc.getMove1().getEnergy(), bc.getMove1().getId(), bc.getMove1().getType(), bc.getMove1().getStatusEffect().toString(),
+				bc.getMove2().getName(), bc.getMove2().getDamage(), bc.getMove2().getEnergy(), bc.getMove2().getId(), bc.getMove2().getType(), bc.getMove2().getStatusEffect().toString(),
+				bc.getMove3().getName(), bc.getMove3().getDamage(), bc.getMove3().getEnergy(), bc.getMove3().getId(), bc.getMove3().getType(), bc.getMove3().getStatusEffect().toString());
 	}
 	
 	public void updateHealths(ILocalBattle screen) {

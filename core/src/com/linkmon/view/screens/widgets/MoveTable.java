@@ -61,15 +61,17 @@ public class MoveTable extends Table {
 			type1Image.setSize(skin2.getDrawable("type-logo-grass").getMinWidth(), skin2.getDrawable("type-logo-grass").getMinHeight());
 		}
 		
-		this.add(name1).align(Align.left).expand().padLeft(20);
-		this.add(type1).align(Align.right).padRight(20);
-		this.add(type1Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight());
+		this.add(name1).align(Align.left).expand().padLeft(20).padTop(-15);
+		this.add(type1).align(Align.right).padRight(20).padTop(-15);
+		this.add(type1Image).padRight(20).size(skin2.getDrawable("type-logo-fire").getMinWidth(), skin2.getDrawable("type-logo-fire").getMinHeight()).padTop(-15);
 		this.row();
 		this.add(pow1).align(Align.left).padLeft(20).padTop(-20);
 		this.add(energy1).align(Align.right).padRight(20).padTop(-20).colspan(2);
 		this.row();
-		this.add(status1).expandX().padTop(-20).colspan(3);
-		
+		this.add(status1).expandX().padTop(-20).colspan(3).padBottom(-15);
+	}
+	
+	public void addMoveSwapListener() {
 		this.addListener(new ClickListener(){
 	        @Override 
 	        public void clicked(InputEvent event, float x, float y){

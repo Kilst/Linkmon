@@ -60,6 +60,7 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 	private ImageButton trainButton;
 	private ImageButton battleTowerButton;
 	private ImageButton miniGamesButton;
+	private ImageButton settingsButton;
 	
 	private ImageButton leftButton;
 	private ImageButton rightButton;
@@ -151,6 +152,7 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		trainButton = new ImageButton(skin2.getDrawable("trainButton"));
 		battleTowerButton = new ImageButton(skin2.getDrawable("battleTowerButton"));
 		miniGamesButton = new ImageButton(skin2.getDrawable("miniGamesButton"));
+		settingsButton = new ImageButton(skin2.getDrawable("settingsButton"));
 		
 		leftButton = new ImageButton(skin2.getDrawable("arrowButton"));
 		rightButton = new ImageButton(skin2.getDrawable("arrowButton"));
@@ -184,10 +186,11 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		
 		buttonTable.add(trainButton).size(shopButton.getWidth()).pad(10).padLeft(80);
 		buttonTable.add(cryoGenicsButton).size(shopButton.getWidth()).pad(10);
-		buttonTable.add(achievementsButton).size(shopButton.getWidth()).pad(10);
+		buttonTable.add(settingsButton).size(shopButton.getWidth()).pad(10);
 		buttonTable.add(battleTowerButton).size(shopButton.getWidth()).pad(10);
+		buttonTable.add(achievementsButton).size(shopButton.getWidth()).pad(10);
 		
-		buttonTable.add(onlineBattleButton).size(shopButton.getWidth()).pad(10);
+		// Padding
 		buttonTable.add(onlineBattleButton).size(shopButton.getWidth()).pad(10);
 		buttonTable.add(onlineBattleButton).size(shopButton.getWidth()).pad(10);
 		
@@ -213,70 +216,17 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		//buttonTable.debug();
 		
 		addListeners();
-		
-//		removeListeners();
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-//		enableButtons = true;
-		currentPointer = -1;
 		ui.addActor(scrolling);
 		ui.addActor(darken);
 		ui.addActor(rootTable);
 		eManager.notify(new ScreenEvent(ScreenEvents.GET_PLAYER_STATS, this));
 		
 		eManager.notify(new ScreenEvent(ScreenEvents.PLAY_MENU_MUSIC));
-	}
-	
-	private void removeListeners() {
-		buttonList.add(achievementsButton);
-		buttonList.add(battleTowerButton);
-		buttonList.add(cryoGenicsButton);
-		buttonList.add(itemButton);
-		buttonList.add(leftButton);
-		buttonList.add(miniGamesButton);
-		buttonList.add(movesButton);
-		buttonList.add(onlineBattleButton);
-		buttonList.add(backButton);
-		buttonList.add(rightButton);
-		buttonList.add(rightButton);
-		buttonList.add(statsButton);
-		buttonList.add(shopButton);
-		buttonList.add(trainButton);
-		
-//		rightButton.removeListener(rightButton.getClickListener());
-//		
-//		leftButton.removeListener(leftButton.getClickListener());
-//		
-//		backButton.removeListener(backButton.getClickListener());
-//		
-//		shopButton.removeListener(shopButton.getClickListener());
-//		
-//		itemButton.removeListener(itemButton.getClickListener());
-//		
-//		trainButton.removeListener(trainButton.getClickListener());
-//		
-//		battleTowerButton.removeListener(battleTowerButton.getClickListener());
-//		
-//		statsButton.removeListener(statsButton.getClickListener());
-//		
-//		movesButton.removeListener(movesButton.getClickListener());
-//		
-//		cryoGenicsButton.removeListener(cryoGenicsButton.getClickListener());
-//		
-//		achievementsButton.removeListener(achievementsButton.getClickListener());
-//		
-//		miniGamesButton.removeListener(miniGamesButton.getClickListener());
-//		
-//		onlineBattleButton.removeListener(onlineBattleButton.getClickListener());
-	}
-	
-	private void setButtonsTouchable(Touchable touchable) {
-		for(Button button : buttonList) {
-			button.setTouchable(touchable);
-		}
 	}
 
 	private void addListeners() {
@@ -330,12 +280,9 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		trainButton.addListener(new ClickListener(){
 	        @Override 
 	        public void clicked(InputEvent event, float x, float y){
-	        	super.clicked(event, x, y);
-//	        	if(currentPointer == 0) {
 	        	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.TRAIN_WINDOW));
 	        	eManager.notify(new ScreenEvent(ScreenEvents.PLAY_BUTTON_ACCEPT));
 	        	ui.getStage().cancelTouchFocus();
-//	        	}
 	        }
 		});
 		
@@ -351,12 +298,9 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		statsButton.addListener(new ClickListener(){
 	        @Override 
 	        public void clicked(InputEvent event, float x, float y){
-	        	super.clicked(event, x, y);
-//	        	if(currentPointer == 0) {
-		        	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
-		        	eManager.notify(new ScreenEvent(ScreenEvents.PLAY_BUTTON_ACCEPT));
-		        	ui.getStage().cancelTouchFocus();
-//	        	}
+	        	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.STATS_WINDOW));
+	        	eManager.notify(new ScreenEvent(ScreenEvents.PLAY_BUTTON_ACCEPT));
+	        	ui.getStage().cancelTouchFocus();
 	        }
 		});
 		
@@ -381,7 +325,14 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 		achievementsButton.addListener(new ClickListener(){
 	        @Override 
 	        public void clicked(InputEvent event, float x, float y){
-//	        	eManager.notify(new ScreenEvent(ScreenEvents.OPEN_MINIGAME, MiniGameIds.COIN_ROLL));
+//	        	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.SETTINGS));
+	        	ui.getStage().cancelTouchFocus();
+	        }
+		});
+		
+		settingsButton.addListener(new ClickListener(){
+	        @Override 
+	        public void clicked(InputEvent event, float x, float y){
 	        	eManager.notify(new ScreenEvent(ScreenEvents.SWAP_SCREEN, ScreenType.SETTINGS));
 	        	ui.getStage().cancelTouchFocus();
 	        }
@@ -410,14 +361,6 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
-		// BugFix: two buttons could be pressed at the same time, so we have to disable all the buttons each touchDown
-		// and set enableButtons = true in touchUp. This way, no 2 events can fire on the same frame.
-		// You could open 2 menus at the same time previously
-//		if(enableButtons) {
-//			setButtonsTouchable(Touchable.enabled);
-//			enableButtons = false;
-//		}
 	}
 	
 	@Override
@@ -441,7 +384,6 @@ public class Menu implements Screen, MyScreen, IPlayerStats {
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-//		enableButtons = true;
 		rootTable.remove();
 		darken.remove();
 		scrolling.remove();

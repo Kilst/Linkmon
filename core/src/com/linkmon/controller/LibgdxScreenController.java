@@ -78,7 +78,7 @@ public class LibgdxScreenController implements ScreenListener {
 		// Push every new screen to the stack, so we can just call swapScreen.previous event to go back
 		switch(screenType) {
 			case (ScreenType.SETTINGS) : {
-				Screen screen = new SettingsScreen(uiGroup, eManager, service.getSoundController());
+				Screen screen = new SettingsScreen(uiGroup, eManager, service.getSettingsController());
 				game.setScreen(screen);
 				screenStack.push(screen);
 				break;
@@ -139,7 +139,7 @@ public class LibgdxScreenController implements ScreenListener {
 				break;
 			}
 			case (ScreenType.SHOP) : {
-				Screen screen = new Shop(uiGroup, eManager);
+				Screen screen = new Shop(uiGroup, eManager, service.getPlayerController());
 				game.setScreen(screen);
 				screenStack.push(screen);
 				break;
@@ -162,7 +162,7 @@ public class LibgdxScreenController implements ScreenListener {
 				// No buttons should actually call this
 				// Though might not be a bad idea to do from Menu, as it will clear the stack
 				service.getWorldController().getGameWorld().setActive(true); // If we are at the main_ui, the world is active
-				gameUi = new GameUi(uiGroup, game, eManager);
+				gameUi = new GameUi(uiGroup, game, eManager, service.getPlayerController());
 				screenStack.clear(); // Clear stack since we are at the base screen
 				game.setScreen(gameUi);
 				screenStack.push(gameUi);

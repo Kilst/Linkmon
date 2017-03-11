@@ -13,7 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.eventmanager.EventManager;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.view.particles.ParticleIds;
 import com.linkmon.view.screens.widgets.ScrollingLabel;
 
 public class MessageTable extends Table {
@@ -32,7 +36,9 @@ public class MessageTable extends Table {
 	private Skin skin;
 	private Actor window = this;
 	
-	public MessageTable(Skin skin2) {
+	private EventManager eManager;
+	
+	public MessageTable(Skin skin2, EventManager eManager) {
 		border = new NinePatch(skin2.getRegion("battleTextWindow"), 12, 12, 12, 12);
 		bg = new TiledDrawable(skin2.getRegion("battleTextBackground"));
 		
@@ -55,10 +61,9 @@ public class MessageTable extends Table {
             		label.instantText();
             }
 		});
-		
 	}
 	
-	public MessageTable(Skin skin2, Actor chatMessage) {
+	public MessageTable(Skin skin2, Actor chatMessage, EventManager eManager) {
 		border = new NinePatch(skin2.getRegion("battleTextWindow"), 12, 12, 12, 12);
 		bg = new TiledDrawable(skin2.getRegion("battleTextBackground"));
 		
@@ -78,7 +83,6 @@ public class MessageTable extends Table {
             		label.instantText();
             }
 		});
-		
 	}
 	
 	public void setText(String message) {

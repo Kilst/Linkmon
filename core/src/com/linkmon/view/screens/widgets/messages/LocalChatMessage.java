@@ -9,8 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.messages.MessageEvent;
 import com.linkmon.eventmanager.messages.MessageEvents;
+import com.linkmon.eventmanager.screen.ScreenEvent;
+import com.linkmon.eventmanager.screen.ScreenEvents;
 import com.linkmon.helpers.ResourceLoader;
+import com.linkmon.helpers.Timer;
 import com.linkmon.view.UIRenderer;
+import com.linkmon.view.particles.ParticleIds;
 
 public class LocalChatMessage extends Actor {
 	
@@ -25,6 +29,8 @@ public class LocalChatMessage extends Actor {
 	private EventManager eManager;
 	
 	private int messageType;
+	
+	private Timer timer;
 	
 	public LocalChatMessage(int id, int messageType, String[] messages, Group gameUi, EventManager eManager) {
 		
@@ -49,11 +55,21 @@ public class LocalChatMessage extends Actor {
 		darken.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		darken.getColor().a = 0.7f;
 		
-		chatTable = new MessageTable(skin, this);
+		chatTable = new MessageTable(skin, this, eManager);
 		chatTable.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/3);
 		
 		chatTable.setText("Tinmon", messages);
 		
+		timer = new Timer(1, false);
+		timer.start();
+	}
+	
+	@Override
+	public void act(float delta) {
+		if(timer.checkTimer()) {
+			eManager.notify(new ScreenEvent(ScreenEvents.ADD_PARTICLE_EFFECT, ParticleIds.CHAT_TAP, 1220, 50));
+			timer.restart();
+		}
 	}
 
 	public void show() {
@@ -64,6 +80,7 @@ public class LocalChatMessage extends Actor {
 		characterImage.toFront();
 		gameUi.addActor(chatTable);
 		chatTable.toFront();
+		gameUi.addActor(this);
 	}
 	
 	@Override
@@ -79,6 +96,7 @@ public class LocalChatMessage extends Actor {
 		darken.remove();
 		characterImage.remove();
 		chatTable.remove();
+		this.remove();
 	}
 	
 	@Override

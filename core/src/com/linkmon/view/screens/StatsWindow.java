@@ -180,32 +180,38 @@ public class StatsWindow extends BaseMenuScreen implements Screen, ILinkmonStats
 		MyProgressBar pBarHappy = new MyProgressBar(skin2, 75, 100);
 		pBarHappy.update(75);
 //		Label linkmonHeading = new Label("Player Stats", skin);
-		Label linkmonDOBLabel = new Label("DOB:", labelStyleLut);
+		Label linkmonDOBLabel = new Label("DOB :", labelStyleLut);
 		linkmonDOBText = new Label("", labelStyleLut);	
-		Label linkmonHungerLabel = new Label("Hungry:", labelStyleLut);
-		Label linkmonHappyLabel = new Label("Happiness:", labelStyleLut);
+		Image linkmonHungerImage = new Image(skin2.getDrawable("meat"));
+//		linkmonHungerImage.setScale(0.7f);
+		Label linkmonHungerLabel = new Label(" :", labelStyleLut);
+		Image linkmonHappyImage = new Image(skin2.getDrawable("happy"));
+//		linkmonHappyImage.setScale(0.9f);
+		Label linkmonHappyLabel = new Label(" :", labelStyleLut);
 		
-		linkmonInfoTable.add(linkmonInfoTitle).expandX().center().colspan(2).padTop(linkmonInfoTitle.getHeight()/2*-1);
+		linkmonInfoTable.add(linkmonInfoTitle).expandX().center().colspan(3).padTop(linkmonInfoTitle.getHeight()/2*-1);
 		linkmonInfoTable.row();
 //		playerTable.add(playerHeading).expandX().center().colspan(2).padTop(-60).padLeft(-130).align(Align.topLeft);
 //		playerTable.row();
 		
-		linkmonInfoTable.add(linkmonDOBLabel).align(Align.left).expandX().padLeft(10);
-		linkmonInfoTable.add(linkmonDOBText).align(Align.center).expandX();
+		linkmonInfoTable.add(linkmonDOBLabel).align(Align.left).padLeft(10);
+		linkmonInfoTable.add(linkmonDOBText).align(Align.center).expandX().colspan(2);
 		linkmonInfoTable.row();
-		linkmonInfoTable.add(linkmonHungerLabel).align(Align.left).expandX().padLeft(10).padTop(20);
-		linkmonInfoTable.add(pBarHunger).align(Align.center).expandX().width(200).padTop(20);
+		linkmonInfoTable.add(linkmonHungerImage).align(Align.left).padLeft(10).size(40);
+		linkmonInfoTable.add(linkmonHungerLabel).align(Align.left).expandX();
+		linkmonInfoTable.add(pBarHunger).align(Align.center).expandX().width(200);
 		linkmonInfoTable.row();
-		linkmonInfoTable.add(linkmonHappyLabel).align(Align.left).expand().padLeft(10).padTop(-60);
-		linkmonInfoTable.add(pBarHappy).align(Align.center).expand().width(200).padTop(-60);
-		linkmonInfoTable.row();
+		linkmonInfoTable.add(linkmonHappyImage).align(Align.topLeft).padLeft(10).size(40);
+		linkmonInfoTable.add(linkmonHappyLabel).align(Align.topLeft).expand();
+		linkmonInfoTable.add(pBarHappy).align(Align.top).expand().width(200);
+//		linkmonInfoTable.debug();
 		
 		Table linkmonStatsTable = new Table();
 		linkmonStatsTable.setBackground(new Image(ResourceLoader.assetManager.get("bigContainerBlue.png", Texture.class)).getDrawable());
 		
 		linkmonTable = new Table();
 		
-		Image heading = new Image(skin2.getDrawable("menuHeading"));
+		Image heading = new Image(skin2.getDrawable("statsTitle"));
 		
 		// Build Layout
 		

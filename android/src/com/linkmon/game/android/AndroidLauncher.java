@@ -17,6 +17,10 @@ public class AndroidLauncher extends AndroidApplication {
 		
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		
+		// Deactivate these settings for battery performance
+		config.useAccelerometer = false;
+		config.useCompass = false;
+		
 		
 		initialize(new GameClass((INotifications)nHandler), config);
 	}

@@ -47,9 +47,13 @@ public class Player {
 	
 	private int[] helpFlags;
 	
-	private int linkmonStatPoints = 10;
+	private int trainingPoints = 0;
 	
-	private int linkmonStatPointsSpent = 0;
+	private int trainingPointsSpent = 0;
+	
+	private long lastRewardTime = 0;
+	
+	private int yesterdaysCareMistakes = 2;
 	
 	public Player() {
 		gold = 15000;
@@ -78,6 +82,8 @@ public class Player {
 		helpFlags[9] = 0;
 		
 		cryoLinkmons = new CryoLinkmon[3];
+		
+		lastRewardTime = 0;
 	}
 	
 	public void update() {
@@ -131,6 +137,8 @@ public class Player {
 		helpFlags[9] = 0;
 		
 		cryoLinkmons = new CryoLinkmon[3];
+		
+		lastRewardTime = 0;
 	}
 
 	public GameObject getLinkmon() {
@@ -274,6 +282,17 @@ public class Player {
 		giftId = itemId;
 		
 	}
+	
+	public boolean getDailyRewards(int gold, int itemId) {
+		// TODO Auto-generated method stub
+		if(System.currentTimeMillis() - lastRewardTime > 50000) {
+			lastRewardTime = System.currentTimeMillis();
+			addGold(gold);
+			addItem(ObjectFactory.getInstance().getObjectFromId(itemId));
+			return true;
+		}
+		return false;
+	}
 
 	public void receiveRewards(int[] rewards) {
 		// TODO Auto-generated method stub
@@ -352,25 +371,48 @@ public class Player {
 		return false;
 	}
 
-	public int getLinkmonStatPoints() {
-		return linkmonStatPoints;
-	}
-
-	public void addLinkmonStatPoints(int linkmonStatPoints) {
-		this.linkmonStatPoints += linkmonStatPoints;
+	public int getTrainingPoints() {
+		return trainingPoints;
 	}
 	
-	public void removeLinkmonStatPoints(int linkmonStatPoints) {
-		this.linkmonStatPoints -= linkmonStatPoints;
-		if(this.linkmonStatPoints < 0)
-			this.linkmonStatPoints = 0;
+	public void removeTrainingPoints(int trainingPoints) {
+		this.trainingPoints -= trainingPoints;
+		if(this.trainingPoints < 0)
+			this.trainingPoints = 0;
 	}
 
-	public int getLinkmonStatPointsSpent() {
-		return linkmonStatPointsSpent;
+	public int getTrainingPointsSpent() {
+		return trainingPointsSpent;
 	}
 
-	public void addLinkmonStatPointsSpent(int linkmonStatPointsSpent) {
-		this.linkmonStatPointsSpent += linkmonStatPointsSpent;
+	public void addTrainingPointsSpent(int linkmonStatPointsSpent) {
+		this.trainingPointsSpent += linkmonStatPointsSpent;
+	}
+
+	public long getLastRewardTime() {
+		// TODO Auto-generated method stub
+		return lastRewardTime;
+	}
+
+	public void setLastRewardTime(long lastRewardTime2) {
+		// TODO Auto-generated method stub
+		lastRewardTime = lastRewardTime2;
+	}
+
+	public int getYesterdaysCareMistakes() {
+		// TODO Auto-generated method stub
+		int careMistakes = yesterdaysCareMistakes;
+		yesterdaysCareMistakes = 0;
+		return careMistakes;
+	}
+
+	public void addTrainingPoints(int trainingPoints) {
+		// TODO Auto-generated method stub
+		this.trainingPoints += trainingPoints;
+	}
+
+	public void setTrainingPoints(int trainingPoints) {
+		// TODO Auto-generated method stub
+		this.trainingPoints = trainingPoints;
 	}
 }

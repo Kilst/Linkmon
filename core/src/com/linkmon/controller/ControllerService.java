@@ -30,10 +30,13 @@ public class ControllerService {
 	private MiniGameController miniGameController;
 	
 	private SoundController soundController;
+	private SettingsController settingsController;
 	
-	public ControllerService(GameClass game, Group ui, EventManager eManager, SoundController sound) {
+	public ControllerService(GameClass game, Group ui, EventManager eManager, SoundController sound, SettingsController settings) {
 		
 		ObjectFactory.init(new LibgdxObjectFactory(), eManager);
+		
+		this.settingsController = settings;
 		
 		mService = new MService(eManager);
 		playerController = new PlayerController(mService.getPlayer());
@@ -119,6 +122,11 @@ public class ControllerService {
 	public SoundController getSoundController() {
 		// TODO Auto-generated method stub
 		return soundController;
+	}
+	
+	public SettingsController getSettingsController() {
+		// TODO Auto-generated method stub
+		return settingsController;
 	}
 
 }

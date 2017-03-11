@@ -34,6 +34,7 @@ import com.linkmon.view.screens.interfaces.MyScreen;
 import com.linkmon.view.screens.widgets.LocalMessageBox;
 import com.linkmon.view.screens.widgets.MoveTable;
 import com.linkmon.view.screens.widgets.SelectableMoveButton;
+import com.linkmon.view.screens.widgets.messages.LocalChatMessage;
 
 public class Move implements Screen, IMovesScreen {
 	
@@ -123,7 +124,12 @@ public class Move implements Screen, IMovesScreen {
 		backButtonStyle.up = skin2.getDrawable("backButtonRed");
 		
 		backButton = new ImageButton(backButtonStyle);
-		swapButton = new ImageButton(backButtonStyle);
+		
+		ImageButtonStyle swapButtonStyle = new ImageButtonStyle();
+		swapButtonStyle.up = skin2.getDrawable("swapButtonGreen");
+		swapButtonStyle.down = skin2.getDrawable("swapButtonRed");
+		
+		swapButton = new ImageButton(swapButtonStyle);
 		swapButton.setVisible(false);
 		
 		darken = new Image(skin2.getDrawable("darkenWorld"));
@@ -174,6 +180,10 @@ public class Move implements Screen, IMovesScreen {
 		// TODO Auto-generated method stub
 		ui.addActor(darken);
 		ui.addActor(rootTable);
+		
+		String[] strings = new String[1];
+		strings[0] = "Want to swap your moves? Look no further!";
+		new LocalChatMessage(1, 0, strings, ui, eManager).show();
 	}
 
 	private void addListeners() {
@@ -242,14 +252,17 @@ public class Move implements Screen, IMovesScreen {
 	@Override
 	public void setLinkmonMoves(int id, String name, int type, int slot, int damage, int ignoreDamage, int energy, String effect) {
 		// TODO Auto-generated method stub
-		
-		linkmonButtonList.add(new MoveTable(skin2, id, name, damage, energy, type, effect, linkmonButtonList, this, true));
+		MoveTable button = new MoveTable(skin2, id, name, damage, energy, type, effect, linkmonButtonList, this, true);
+		button.addMoveSwapListener();
+		linkmonButtonList.add(button);
 	}
 
 	@Override
 	public void setChoosableMoves(int id, String name, int type, int slot, int damage, int ignoreDamage, int energy, String effect) {
 		// TODO Auto-generated method stub
-		choosableButtonList.add(new MoveTable(skin2, id, name, damage, energy, type, effect, choosableButtonList, this, false));
+		MoveTable button = new MoveTable(skin2, id, name, damage, energy, type, effect, choosableButtonList, this, false);
+		button.addMoveSwapListener();
+		choosableButtonList.add(button);
 	}
 	
 	private void setShowMovesList() {
@@ -263,7 +276,7 @@ public class Move implements Screen, IMovesScreen {
 		}
 		
 		for(Table move : showMovesButtonList) {
-			scrollTable.add(move).expand().pad(5);
+			scrollTable.add(move).expand().pad(5).width(492).height(120);
 			scrollTable.row();
 		}
 	}

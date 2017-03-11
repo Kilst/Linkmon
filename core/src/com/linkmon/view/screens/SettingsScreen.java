@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.linkmon.controller.SettingsController;
 import com.linkmon.controller.SoundController;
 import com.linkmon.eventmanager.EventManager;
 import com.linkmon.eventmanager.screen.ScreenEvent;
@@ -59,13 +60,13 @@ public class SettingsScreen implements Screen {
 	
 	Skin skin2;
 	
-	private SoundController soundController;
+	private SettingsController settingsController;
 	
-	public SettingsScreen(Group ui, EventManager eManager, SoundController soundController) {
+	public SettingsScreen(Group ui, EventManager eManager, SettingsController settingsController) {
 		
 		this.eManager = eManager;
 		this.ui = ui;
-		this.soundController = soundController;
+		this.settingsController = settingsController;
 		
 		Skin skin = new Skin(Gdx.files.internal("Skins/uiskin.json"));
 		
@@ -121,7 +122,7 @@ public class SettingsScreen implements Screen {
 		sliderStyle.background = skin2.getDrawable("sliderBackground");
 		
 		soundSlider = new Slider(0, 100, 1, false, sliderStyle);
-		soundSlider.setValue(soundController.getSoundVolume()*100);
+		soundSlider.setValue(settingsController.getSoundVolume()*100);
 		InputListener stopTouchDown = new InputListener() {
 			   public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 			      event.stop();
@@ -131,7 +132,7 @@ public class SettingsScreen implements Screen {
 		soundSlider.addListener(stopTouchDown);
 		
 		musicSlider = new Slider(0, 100, 1, false, sliderStyle);
-		musicSlider.setValue(soundController.getMusicVolume()*100);
+		musicSlider.setValue(settingsController.getMusicVolume()*100);
 		musicSlider.addListener(stopTouchDown);
 			
 		scrollTable.add(volumeLabel);
@@ -178,12 +179,12 @@ public class SettingsScreen implements Screen {
 		
 		soundSlider.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				soundController.setSoundVolume(soundSlider.getValue()/100);
+				settingsController.setSoundVolume(soundSlider.getValue()/100);
 			}
 		});
 		musicSlider.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				soundController.setMusicVolume(musicSlider.getValue()/100);
+				settingsController.setMusicVolume(musicSlider.getValue()/100);
 			}
 		});
 	}

@@ -74,5 +74,6 @@ public class ScreenEvents {
 	public static final int PLAY_BUTTON_ACCEPT = 3005;
 	public static final int PLAY_THEME_MUSIC = 3006;
 	public static final int PLAY_BATTLE_TOWER_MUSIC = 3007;
+	public static final int PLAY_DING = 3008;
 
 }

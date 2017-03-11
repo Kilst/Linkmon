@@ -38,4 +38,5 @@ public class ParticleIds {
 	public static final int BOUNCE = 120;
 	public static final int SLEEP = 121;
 	public static final int DARKNESS = 122;
+	public static final int CHAT_TAP = 123;
 }

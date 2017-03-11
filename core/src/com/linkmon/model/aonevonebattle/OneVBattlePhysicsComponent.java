@@ -93,10 +93,14 @@ public class OneVBattlePhysicsComponent implements IPhysicsComponent {
 	
 	public void applyTrajectory(float distanceX, float trajectoryAngle) {
 		
-//		distanceX = Math.abs(distanceX);
-		  Gdx.app.log("OneVBattlePhysics", "Distance: " + distanceX);
+		// Calculate the trajectory velocity based on distance, angle and gravity
+		
+		Gdx.app.log("OneVBattlePhysics", "Distance: " + distanceX);
 		angle = trajectoryAngle;
 		
+		// R = v^2*Sin(2*angle)/g
+		// Make velocity the subject
+		// v^2 = g*R/Sin(2*angle)	:see below
 		velocity = (float) Math.sqrt((gravity*distanceX)/Math.sin(2*angle));
 		
 		veloX = (float) ((velocity)*Math.cos(Math.toRadians(angle)));

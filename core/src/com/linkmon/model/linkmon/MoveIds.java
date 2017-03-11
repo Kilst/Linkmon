@@ -18,7 +18,6 @@ public class MoveIds {
 	public static final int MUDSLING = 15;
 	
 	// Medium Attacks
-	public static final int FIREBALL = 101;
 	public static final int FIREWHIRL = 102;
 	public static final int WATERFALL = 103;
 	public static final int WATERCANNON = 104;
@@ -47,6 +46,7 @@ public class MoveIds {
 	public static final int FROST = 304;
 	public static final int WATER_JET = 305;
 	public static final int SEED_CANNON = 306;
+	public static final int FIREBALL = 307;
 	
 	
 	public static final int SLEEP = 320;
